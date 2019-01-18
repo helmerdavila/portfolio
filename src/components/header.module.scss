@@ -1,0 +1,19 @@
+.navbar-menu.is-active {
+  a.navbar-item {
+    color: black;
+  }
+}
+
+a.navbar-item {
+  color white &:hover {
+    background-color: transparent;
+    color: white;
+  }
+}
+
+.navbar.is-scrolled {
+  background: white;
+  a.navbar-item {
+    color: black;
+  }
+}

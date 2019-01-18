@@ -1,0 +1,34 @@
+@import '~bulma/sass/utilities/mixins';
+
+.first_section {
+  background: url('../images/mac-development.jpg') center no-repeat;
+  background-size: cover;
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #000000;
+    opacity: 0.4;
+  }
+
+  .text-change-mobile {
+    .span-first-text {
+      display: block;
+    }
+  }
+
+  .a_title {
+    color: white;
+  }
+
+  .is_name {
+    font-size: 80px;
+    letter-spacing: 10px;
+    @include mobile() {
+      font-size: 60px;
+    }
+  }
+}
