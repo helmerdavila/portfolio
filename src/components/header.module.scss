@@ -1,19 +1,19 @@
-.navbar-menu.is-active {
-  a.navbar-item {
-    color: black;
+.navbar_scrolled {
+  background-color: white !important;
+}
+
+.link_navbar_scrolled {
+  color: black;
+  &:hover {
+    color: black !important;
+    background-color: transparent !important;
   }
 }
 
-a.navbar-item {
-  color white &:hover {
-    background-color: transparent;
-    color: white;
-  }
-}
-
-.navbar.is-scrolled {
-  background: white;
-  a.navbar-item {
-    color: black;
+.link_navbar_unscrolled {
+  color: white;
+  &:hover {
+    color: white !important;
+    background-color: transparent !important;
   }
 }
