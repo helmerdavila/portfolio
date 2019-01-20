@@ -4,6 +4,10 @@ import Slider from 'react-slick'
 import styles from './projects.module.scss'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
+import AmbreaImage from '../Images/AmbreaImage'
+import BipolarImage from '../Images/BipolarImage'
+import FitnesspassImage from '../Images/FitnesspassImage'
+import SpoontopImage from '../Images/SpoontopImage'
 
 const Projects = () => {
   const slides = [
@@ -13,6 +17,7 @@ const Projects = () => {
       url: 'http://ambrea.pe',
       backend: 'Laravel',
       frontend: 'Vue, Vuex',
+      image: <AmbreaImage/>
     },
     {
       id: 2,
@@ -20,6 +25,7 @@ const Projects = () => {
       url: 'http://bipolar.com.pe',
       backend: 'Laravel',
       frontend: 'React',
+      image: <BipolarImage/>
     },
     {
       id: 3,
@@ -27,6 +33,7 @@ const Projects = () => {
       url: 'http://fitnesspass.pe',
       backend: 'Express',
       frontend: 'React',
+      image: <FitnesspassImage/>
     },
     {
       id: 4,
@@ -34,6 +41,7 @@ const Projects = () => {
       url: 'http://spoontop.com',
       backend: 'Laravel',
       frontend: 'Angular, Ionic',
+      image: <SpoontopImage/>
     },
   ]
   const sliderSettings = {
@@ -44,17 +52,36 @@ const Projects = () => {
     slidesToScroll: 1,
     arrows: true,
     autoplay: true,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+        }
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1
+        }
+      }
+    ]
   }
 
   const slidesMapped = slides.map(slide => (
     <div className="card" key={slide.id}>
       <div className="card-image">
         <figure className={classNames(styles.image, 'image')}>
-          <img
-            className={styles.image_filter}
-            src="https://placehold.it/500"
-            alt={slide.name}
-          />
+          {slide.image}
           <div className={styles.image_overlay} />
         </figure>
       </div>
