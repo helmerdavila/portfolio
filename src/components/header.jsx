@@ -29,10 +29,10 @@ class Header extends React.Component {
             <div className="navbar-item">
               <div className="field is-grouped">
                 <p className="control">
-                  <button className={classnames(this.props.scrollPositionY === 0 ? 'is-inverted is-outlined' : 'is-primary', 'button is-primary')}>
+                  <a href="https://www.dropbox.com/s/xubgx2iei31njza/Helmer_CV.pdf?dl=0" className={classnames(this.props.scrollPositionY === 0 ? 'is-inverted is-outlined' : 'is-primary', 'button is-primary')}>
                     <span className="icon"><FontAwesomeIcon icon={faDownload}/></span>
                     <span>Download CV</span>
-                  </button>
+                  </a>
                 </p>
               </div>
             </div>
