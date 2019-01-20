@@ -1,0 +1,16 @@
+.footer {
+  background-color: black;
+  color: white;
+
+  .rounded_link {
+    padding: .5em;
+    background: white;
+    color: black;
+    border-radius: 50%;
+    margin: 0 .5em;
+  }
+
+  p {
+    margin-top: 20px;
+  }
+}
