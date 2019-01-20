@@ -1,11 +1,11 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLinkedinIn, faGithub } from '@fortawesome/free-brands-svg-icons'
-import classnames from 'classnames'
+import classNames from 'classnames'
 import styles from './footer.module.scss'
 
 const Footer = () => (
-  <footer className={classnames(styles.footer, 'footer')}>
+  <footer className={classNames('footer', styles.footer_portfolio)}>
     <div className="container">
       <div className="content has-text-centered">
         <a className={styles.rounded_link} href="https://www.linkedin.com/in/helmerdavila/" target="_blank" rel="noopener noreferrer">

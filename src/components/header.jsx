@@ -15,7 +15,7 @@ class Header extends React.Component {
     return (
       <nav className={classnames(navbarClass)}>
         <div className="navbar-brand">
-          <div onClick={scroll.scrollToTop} className={classnames(styles.home_button, 'navbar-item')}><FontAwesomeIcon icon={faHSquare} size="2x" color={iconColor}/></div>
+          <div onClick={scroll.scrollToTop} className={classnames('navbar-item', styles.home_button)}><FontAwesomeIcon icon={faHSquare} size="2x" color={iconColor}/></div>
         </div>
         <div className="navbar-menu">
           <div className="navbar-start">
