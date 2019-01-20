@@ -7,7 +7,7 @@ import Typing from 'react-typing-animation'
 const Presentation = () => (
   <div className={classnames(styles.first_section, 'section hero is-fullheight')}>
     <Header/>
-    <div className="hero-body">
+    <div id="who_am_i" className="hero-body">
       <div className={styles.overlay}/>
       <div className="container has-text-centered">
         <h3 className={classnames(styles.a_title, 'title is-3')}>Hi, my name is</h3>
