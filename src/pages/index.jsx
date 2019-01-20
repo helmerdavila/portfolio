@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'gatsby'
 import Layout from '../components/layout'
 import SEO from '../components/seo'
 import Presentation from '../components/presentation'
@@ -13,9 +12,9 @@ const IndexPage = () => (
   <Layout>
     <SEO title="Home" keywords={[`gatsby`, `application`, `react`]} />
     <Presentation />
-    <section className="section">
+    <section id="about_me" className="section">
       <div className="container">
-        <h1 className="title is-1 has-text-centered">About me</h1>
+        <h1 className="title is-1 has-text-centered" style={{marginBottom: '1em'}}>About me</h1>
         <p>
           Hi, my name is Helmer Dávila, and I am from Peru. I am a JS/PHP/Ruby
           Developer using secure and stable frameworks for quick development, I
@@ -25,7 +24,7 @@ const IndexPage = () => (
         </p>
       </div>
     </section>
-    <section className={classnames(styles.what_i_do, 'section')}>
+    <section id="what_i_do" className={classnames(styles.what_i_do, 'section')}>
       <div className="container">
         <h1 className={classnames(styles.title, 'title is-1 has-text-centered')}>What I do</h1>
         <div className="columns">
@@ -65,7 +64,7 @@ const IndexPage = () => (
         </div>
       </div>
     </section>
-    <section className="section">
+    <section id="my_stack" className="section">
       <div className="container">
         <h1 className="title is-1 has-text-centered title_my_stack" style={{marginBottom: '1em'}}>My stack</h1>
         <div className="level">
