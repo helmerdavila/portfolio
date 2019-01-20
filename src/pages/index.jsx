@@ -2,6 +2,7 @@ import React from 'react'
 import Layout from '../components/layout'
 import SEO from '../components/seo'
 import Presentation from '../components/presentation'
+import Projects from "../components/Projects/projects";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faJsSquare, faPhp, faCss3Alt, faAws, faChrome } from '@fortawesome/free-brands-svg-icons'
 import { faGem, faCode, faServer } from '@fortawesome/free-solid-svg-icons';
@@ -10,7 +11,7 @@ import classnames from "classnames"
 
 const IndexPage = () => (
   <Layout>
-    <SEO title="Home" keywords={[`gatsby`, `application`, `react`]} />
+    <SEO title="Resume" keywords={['helmer davila', 'fullstack', 'developer', 'react']} />
     <Presentation />
     <section id="about_me" className="section">
       <div className="container">
@@ -106,6 +107,7 @@ const IndexPage = () => (
         </div>
       </div>
     </section>
+    <Projects/>
   </Layout>
 )
 
