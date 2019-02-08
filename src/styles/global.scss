@@ -22,3 +22,12 @@ $family-primary: 'Quicksand', sans-serif;
 .section h1.title {
   margin-bottom: 1em;
 }
+
+.freeprojects_slider {
+  border: 1px solid #ccc;
+}
+
+.slick-prev:before,
+.slick-next:before {
+  color: black !important;
+}
