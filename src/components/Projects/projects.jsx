@@ -8,13 +8,15 @@ import AmbreaImage from '../Images/AmbreaImage'
 import BipolarImage from '../Images/BipolarImage'
 import FitnesspassImage from '../Images/FitnesspassImage'
 import SpoontopImage from '../Images/SpoontopImage'
+import VicunaImage from '../Images/VicunaImage'
+import KloeImage from '../Images/KloeImage'
 
 const Projects = () => {
   const slides = [
     {
       id: 1,
       name: 'Ambrea',
-      url: 'http://ambrea.pe',
+      url: 'https://ambrea.pe',
       backend: 'Laravel',
       frontend: 'Vue, Vuex',
       image: <AmbreaImage/>
@@ -22,7 +24,7 @@ const Projects = () => {
     {
       id: 2,
       name: 'Bipolar',
-      url: 'http://bipolar.com.pe',
+      url: 'https://bipolar.com.pe',
       backend: 'Laravel',
       frontend: 'React',
       image: <BipolarImage/>
@@ -42,6 +44,22 @@ const Projects = () => {
       backend: 'Laravel',
       frontend: 'Angular, Ionic',
       image: <SpoontopImage/>
+    },
+    {
+      id: 5,
+      name: 'Vicuña Beer',
+      url: 'https://vicuna.cervezacandelaria.com',
+      backend: 'Laravel',
+      frontend: 'JS, CSS',
+      image: <VicunaImage/>
+    },
+    {
+      id: 6,
+      name: 'Kloe',
+      url: 'https://kloe.pe',
+      backend: 'Laravel',
+      frontend: 'JS, CSS',
+      image: <KloeImage/>
     },
   ]
   const sliderSettings = {
