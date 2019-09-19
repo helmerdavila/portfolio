@@ -18,11 +18,12 @@ const IndexPage = () => (
       <div className="container">
         <h1 className="title is-1 has-text-centered">About me</h1>
         <p>
-          Hi, my name is Helmer Dávila, and I am from Peru. I am a JS/PHP/Ruby
-          Developer using secure and stable frameworks for quick development, I
-          write backend code in Javascript (Node JS, Express, Adonis JS), PHP
-          (Laravel/Zend/Codeigniter), Ruby (Rails) and frontend code in
-          Javascript (Vue/Angular/React), HTML, CSS (SCSS/Stylus).
+          Hi, my name is Helmer Davila, and I am from Peru. I am a JS/PHP
+          Developer and I have worked in framework and frameworkless projects.
+          My code languages for the backend are Javascript - Typescript (Node
+          JS, Express, Adonis JS), PHP (Laravel/Zend/Codeigniter). For frontend
+          work I code in Javascript (Vue/Angular/React/React Native/Ionic),
+          HTML, CSS (SCSS/Stylus).
         </p>
       </div>
     </section>
