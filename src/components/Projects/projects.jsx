@@ -6,20 +6,39 @@ import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import AmbreaImage from '../Images/AmbreaImage'
 import BipolarImage from '../Images/BipolarImage'
+import BitelineImage from '../Images/BitelineImage'
 import FitnesspassImage from '../Images/FitnesspassImage'
+import FitnesspassMobileImage from '../Images/FitnesspassMobileImage'
 import SpoontopImage from '../Images/SpoontopImage'
 import VicunaImage from '../Images/VicunaImage'
-import KloeImage from '../Images/KloeImage'
 
 const Projects = () => {
-  const slides = [
+  const slidesNative = [
+    {
+      id: 1,
+      name: 'Biteline',
+      url: 'https://biteline.net',
+      backend: 'NodeJS, ExpressJS',
+      frontend: 'Ionic',
+      image: <BitelineImage />,
+    },
+    {
+      id: 2,
+      name: 'Fitnesspass (App)',
+      url: 'https://apps.apple.com/us/app/fitness-pass/id1442657269',
+      backend: 'NodeJS, ExpressJS',
+      frontend: 'React Native',
+      image: <FitnesspassMobileImage />,
+    },
+  ]
+  const slidesDesktop = [
     {
       id: 1,
       name: 'Ambrea',
       url: 'https://ambrea.pe',
       backend: 'Laravel',
       frontend: 'Vue, Vuex',
-      image: <AmbreaImage/>
+      image: <AmbreaImage />,
     },
     {
       id: 2,
@@ -27,15 +46,15 @@ const Projects = () => {
       url: 'https://bipolar.com.pe',
       backend: 'Laravel',
       frontend: 'React',
-      image: <BipolarImage/>
+      image: <BipolarImage />,
     },
     {
       id: 3,
       name: 'Fitnesspass',
-      url: 'http://fitnesspass.pe',
+      url: 'https://fitnesspass.pe',
       backend: 'Express',
       frontend: 'React',
-      image: <FitnesspassImage/>
+      image: <FitnesspassImage />,
     },
     {
       id: 4,
@@ -43,7 +62,7 @@ const Projects = () => {
       url: 'http://spoontop.com',
       backend: 'Laravel',
       frontend: 'Angular, Ionic',
-      image: <SpoontopImage/>
+      image: <SpoontopImage />,
     },
     {
       id: 5,
@@ -51,18 +70,10 @@ const Projects = () => {
       url: 'https://vicuna.cervezacandelaria.com',
       backend: 'Laravel',
       frontend: 'JS, CSS',
-      image: <VicunaImage/>
-    },
-    {
-      id: 6,
-      name: 'Kloe',
-      url: 'https://kloe.pe',
-      backend: 'Laravel',
-      frontend: 'JS, CSS',
-      image: <KloeImage/>
+      image: <VicunaImage />,
     },
   ]
-  const sliderSettings = {
+  const sliderDesktopSettings = {
     dots: true,
     infinite: true,
     speed: 500,
@@ -76,70 +87,86 @@ const Projects = () => {
         settings: {
           slidesToShow: 3,
           slidesToScroll: 1,
-        }
+        },
       },
       {
         breakpoint: 600,
         settings: {
           slidesToShow: 2,
           slidesToScroll: 1,
-        }
+        },
       },
       {
         breakpoint: 480,
         settings: {
           slidesToShow: 1,
-          slidesToScroll: 1
-        }
-      }
-    ]
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  }
+  const sliderMobileSettings = {
+    ...sliderDesktopSettings,
+    slidesToShow: 2,
   }
 
-  const slidesMapped = slides.map(slide => (
-    <div className="card" key={slide.id}>
-      <div className="card-image">
-        <figure className={classNames(styles.image, 'image')}>
-          {slide.image}
-          <div className={styles.image_overlay} />
-        </figure>
-      </div>
-      <div className="card-content has-text-centered">
-        <h3 className="is-3 title">{slide.name}</h3>
-        <div className={classNames(styles.project_content, 'field is-grouped')}>
-          <div className="control">
-            <div className="tags has-addons">
-              <span className="tag">Backend</span>
-              <span className="tag is-black">{slide.backend}</span>
-            </div>
-          </div>
-          <div className="control">
-            <div className="tags has-addons">
-              <span className="tag">Frontend</span>
-              <span className="tag is-black">{slide.frontend}</span>
-            </div>
-          </div>
+  const SlideCard = slide => {
+    return (
+      <div className="card" key={slide.id}>
+        <div className="card-image">
+          <figure className={classNames(styles.image, 'image')}>
+            {slide.image}
+            <div className={styles.image_overlay} />
+          </figure>
         </div>
-      </div>
-      <div className="card-footer">
-        <div className="card-footer-item">
-          <a
-            href={slide.url}
-            target="_blank"
-            className="button is-small is-rounded is-primary"
-            rel="noopener noreferrer"
+        <div className="card-content has-text-centered">
+          <h3 className="is-3 title">{slide.name}</h3>
+          <div
+            className={classNames(styles.project_content, 'field is-grouped')}
           >
-            Visit site
-          </a>
+            <div className="control">
+              <div className="tags has-addons">
+                <span className="tag">Backend</span>
+                <span className="tag is-black">{slide.backend}</span>
+              </div>
+            </div>
+            <div className="control">
+              <div className="tags has-addons">
+                <span className="tag">Frontend</span>
+                <span className="tag is-black">{slide.frontend}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="card-footer">
+          <div className="card-footer-item">
+            <a
+              href={slide.url}
+              target="_blank"
+              className="button is-small is-rounded is-primary"
+              rel="noopener noreferrer"
+            >
+              Visit site
+            </a>
+          </div>
         </div>
       </div>
-    </div>
-  ))
+    )
+  }
+
+  const slidesMobile = slidesNative.map(slide => SlideCard(slide))
+  const slidesMapped = slidesDesktop.map(slide => SlideCard(slide))
 
   return (
     <section className={classNames(styles.section_projects, 'section')}>
       <div className="container">
-        <h1 className="title is-1 has-text-centered">My projects</h1>
-        <Slider {...sliderSettings}>{slidesMapped}</Slider>
+        <h1 className="title is-1 has-text-centered">Mobile & Web Projects</h1>
+        <div className={styles.slider_container}>
+          <Slider {...sliderMobileSettings}>{slidesMobile}</Slider>
+        </div>
+        <div className={styles.slider_container}>
+          <Slider {...sliderDesktopSettings}>{slidesMapped}</Slider>
+        </div>
       </div>
     </section>
   )
