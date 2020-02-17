@@ -35,7 +35,7 @@ const Projects = () => {
     {
       id: 1,
       name: 'Ambrea',
-      url: 'https://ambrea.pe',
+      url: 'https://ambrea.helmerdavila.com/menu/#/dia/1/turno/dia',
       backend: 'Laravel',
       frontend: 'Vue, Vuex',
       image: <AmbreaImage />,
