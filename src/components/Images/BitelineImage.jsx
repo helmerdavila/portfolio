@@ -11,7 +11,7 @@ const bitelineImage = () => {
             relativePath: { eq: "biteline_mobile_mockup.png" }
           ) {
             childImageSharp {
-              fluid(maxWidth: 300) {
+              fluid(maxWidth: 500) {
                 ...GatsbyImageSharpFluid_tracedSVG
               }
             }
