@@ -1,12 +1,12 @@
-.section_projects {
-  background-color: #f0f0f0;
-  padding-bottom: 4em;
-
-  .project_content {
-    justify-content: center !important;
-  }
+.section_book {
+  padding-top: 2em;
+  padding-bottom: 3em;
+  padding-left: 2em;
+  padding-right: 2em;
 
   .image {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.8);
+
     .image_filter {
       filter: grayscale(100%);
     }
@@ -33,5 +33,15 @@
         filter: grayscale(0%);
       }
     }
+  }
+
+  .description {
+    font-size: larger;
+    line-height: 2;
+    margin-bottom: 1em;
+  }
+
+  .button_text {
+    margin-left: 1em;
   }
 }

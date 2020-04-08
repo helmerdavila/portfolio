@@ -2,16 +2,14 @@ import React from 'react'
 import { StaticQuery, graphql } from 'gatsby'
 import Img from 'gatsby-image'
 
-const fitnesspassMobileImage = () => {
+const ctbookImage = () => {
   return (
     <StaticQuery
       query={graphql`
         query {
-          placeholderImage: file(
-            relativePath: { eq: "fitnesspass_mobile_mockup.png" }
-          ) {
+          placeholderImage: file(relativePath: { eq: "ctbook.png" }) {
             childImageSharp {
-              fluid(maxWidth: 500) {
+              fluid(maxWidth: 400, grayscale: true) {
                 ...GatsbyImageSharpFluid_tracedSVG
               }
             }
@@ -24,4 +22,4 @@ const fitnesspassMobileImage = () => {
     />
   )
 }
-export default fitnesspassMobileImage
+export default ctbookImage

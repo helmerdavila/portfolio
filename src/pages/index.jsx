@@ -6,6 +6,7 @@ import Projects from '../components/Projects/projects'
 import WhatIDo from '../components/WhatIDo/whatido'
 import MyStack from '../components/MyStack/mystack'
 import FreeProjects from '../components/FreeProjects/freeprojects'
+import MyBook from '../components/MyBook/MyBook'
 
 const IndexPage = () => (
   <Layout>
@@ -30,6 +31,7 @@ const IndexPage = () => (
     <WhatIDo />
     <MyStack />
     <Projects />
+    <MyBook />
     <FreeProjects />
   </Layout>
 )
