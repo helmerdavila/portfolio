@@ -1,10 +1,11 @@
 module.exports = {
   siteMetadata: {
     title: `Helmer Dávila`,
-    description: `Fullstack Web Developer.`,
+    description: `Fullstack and React Native Web Developer.`,
     author: `@helmerdavila`,
   },
   plugins: [
+    `gatsby-plugin-sitemap`,
     `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-source-filesystem`,
@@ -30,22 +31,30 @@ module.exports = {
     {
       resolve: `gatsby-plugin-sass`,
       options: {
-        implementation: require("sass"),
+        implementation: require('sass'),
       },
     },
     {
-      resolve: "gatsby-plugin-google-analytics",
+      resolve: 'gatsby-plugin-google-analytics',
       options: {
-        trackingId: 'UA-129069726-1'
-      }
+        trackingId: 'UA-129069726-1',
+      },
     },
     {
       resolve: `gatsby-plugin-google-fonts`,
       options: {
         fonts: [
-          `Quicksand\:500,700` // you can also specify font weights and styles
-        ]
-      }
+          `Quicksand\:500,700`, // you can also specify font weights and styles
+        ],
+      },
+    },
+    {
+      resolve: 'gatsby-plugin-robots-txt',
+      options: {
+        host: 'https://www.example.com',
+        sitemap: 'https://www.example.com/sitemap.xml',
+        policy: [{ userAgent: '*', allow: '/' }],
+      },
     },
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.app/offline
