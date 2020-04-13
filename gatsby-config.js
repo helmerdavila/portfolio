@@ -3,6 +3,7 @@ module.exports = {
     title: `Helmer Dávila`,
     description: `Fullstack and React Native Web Developer.`,
     author: `@helmerdavila`,
+    siteUrl: `https://www.helmerdavila.com`,
   },
   plugins: [
     `gatsby-plugin-sitemap`,
