@@ -11,7 +11,7 @@ const fitnesspassMobileImage = () => {
             relativePath: { eq: "fitnesspass_mobile_mockup.png" }
           ) {
             childImageSharp {
-              fluid(maxWidth: 500) {
+              fluid(maxWidth: 300) {
                 ...GatsbyImageSharpFluid_tracedSVG
               }
             }
