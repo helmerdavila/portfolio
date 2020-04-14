@@ -9,10 +9,7 @@ const MyBook = () => (
   <div className={classNames(styles.section_book, 'container')}>
     <div className="columns">
       <div className="column">
-        <figure className={classNames(styles.image, 'image')}>
-          <CtbookImage />
-          <div className={styles.image_overlay} />
-        </figure>
+        <CtbookImage />
       </div>
       <div className="column">
         <h2 className="title">CTBook</h2>
