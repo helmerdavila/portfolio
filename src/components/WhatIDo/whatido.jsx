@@ -63,7 +63,7 @@ const WhatIDo = () => (
               <FontAwesomeIcon icon={faServer} size="3x" />
             </span>
             <div className="content">
-              <h3>DevOps</h3>
+              <h3>SysOps</h3>
               <p>
                 Deploy new updates with pipelines, setting test and production
                 environments. Use of logging tools, checking where and when the

@@ -24,6 +24,7 @@ const MyBook = () => (
         <a
           href="https://leanpub.com/ctbook/read_sample"
           target="_blank"
+          rel="noopener noreferrer"
           className="button is-primary"
         >
           <FontAwesomeIcon icon={faBook} />
