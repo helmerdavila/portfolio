@@ -1,7 +1,5 @@
 import React from 'react'
-import classNames from 'classnames'
 import Slider from 'react-slick'
-import styles from './freeprojects.module.scss'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import ReactibookImage from '../Images/ReactibookImage'
@@ -42,7 +40,6 @@ const FreeProjects = () => {
     },
   ]
   const sliderSettings = {
-    className: 'freeprojects_slider',
     dots: true,
     infinite: true,
     speed: 500,
@@ -75,73 +72,69 @@ const FreeProjects = () => {
     ],
   }
 
-  const slidesMapped = slides.map(slide => {
+  const slidesMapped = slides.map((slide) => {
     const backend = slide.backend ? (
-      <div className="control">
-        <div className="tags has-addons">
-          <span className="tag">Backend</span>
-          <span className="tag is-black">{slide.backend}</span>
-        </div>
+      <div className="px-1">
+        <span className="bg-gray-200 text-sm p-1 rounded-l">Backend</span>
+        <span className="bg-black text-white text-sm p-1 rounded-r">
+          {slide.backend}
+        </span>
       </div>
     ) : null
 
     const frontend = slide.frontend ? (
-      <div className="control">
-        <div className="tags has-addons">
-          <span className="tag">Frontend</span>
-          <span className="tag is-black">{slide.frontend}</span>
-        </div>
+      <div className="px-1">
+        <span className="bg-gray-200 text-sm p-1 rounded-l">Frontend</span>
+        <span className="bg-black text-white text-sm p-1 rounded-r">
+          {slide.frontend}
+        </span>
       </div>
     ) : null
 
     return (
-      <div className="card" key={slide.id}>
-        <div className="card-image">
-          <figure className={classNames(styles.image, 'image')}>
+      <div className="bg-white" key={slide.id}>
+        <div className="relative">
+          <figure className="image">
             {slide.image}
-            <div className={styles.image_overlay} />
+            <div className="image-overlay" />
           </figure>
         </div>
-        <div className="card-content has-text-centered">
-          <h3 className="is-3 title">{slide.name}</h3>
-          <h4 className="is-6 subtitle">{slide.subtitle}</h4>
-          <div
-            className={classNames(styles.project_content, 'field is-grouped')}
-          >
+        <div className="border text-center h-40">
+          <h3 className="text-3xl font-semibold mt-3">{slide.name}</h3>
+          <h4 className="text-xl">{slide.subtitle}</h4>
+          <div className="flex justify-center mt-3">
             {backend}
             {frontend}
           </div>
         </div>
-        <div className="card-footer">
-          <div className="card-footer-item">
-            <div className="buttons">
-              <a
-                href={slide.url}
-                target="_blank"
-                className="button is-small is-rounded is-primary"
-                rel="noopener noreferrer"
-              >
-                Visit site
-              </a>
-              <a
-                href={slide.codeUrl}
-                target="_blank"
-                className="button is-small is-rounded is-outlined is-primary"
-                rel="noopener noreferrer"
-              >
-                Code
-              </a>
-            </div>
-          </div>
+        <div className="block p-5 border text-center">
+          <a
+            href={slide.url}
+            target="_blank"
+            className="font-semibold bg-black text-white rounded-full px-3 py-2 mr-1"
+            rel="noopener noreferrer"
+          >
+            Visit site
+          </a>
+          <a
+            href={slide.codeUrl}
+            target="_blank"
+            className="font-semibold border-black border rounded-full px-3 py-2 ml-1"
+            rel="noopener noreferrer"
+          >
+            Code
+          </a>
         </div>
       </div>
     )
   })
 
   return (
-    <section className={classNames(styles.section_projects, 'section')}>
-      <div className="container">
-        <h1 className="title is-1 has-text-centered">Code Samples</h1>
+    <section className="bg-gray-200 ">
+      <div className="container mx-auto py-10">
+        <h2 className="text-5xl font-semibold text-center pb-4">
+          Code Samples
+        </h2>
         <Slider {...sliderSettings}>{slidesMapped}</Slider>
       </div>
     </section>

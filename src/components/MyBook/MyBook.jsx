@@ -1,19 +1,17 @@
 import React from 'react'
-import styles from './mybook.module.scss'
 import CtbookImage from '../Images/Ctbook'
-import classNames from 'classnames'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBook } from '@fortawesome/free-solid-svg-icons'
 
 const MyBook = () => (
-  <div className={classNames(styles.section_book, 'container')}>
-    <div className="columns">
-      <div className="column">
+  <div className="bg-white py-10">
+    <div className="container mx-auto flex">
+      <div className="w-1/2">
         <CtbookImage />
       </div>
-      <div className="column">
-        <h2 className="title">CTBook</h2>
-        <p className={styles.description}>
+      <div className="w-1/2">
+        <h2 className="text-5xl font-semibold">CTBook</h2>
+        <p className="block mb-3 leading-loose">
           When I first started my career as a developer I saw that there was a
           gap between technology and business, I’ve collected all doubts that
           non-tech people have about tech startups, that’s how CTBOOK (CTO+Book)
@@ -25,10 +23,10 @@ const MyBook = () => (
           href="https://leanpub.com/ctbook/read_sample"
           target="_blank"
           rel="noopener noreferrer"
-          className="button is-primary"
+          className="inline-block bg-black text-white rounded-full px-5 py-3"
         >
           <FontAwesomeIcon icon={faBook} />
-          <span className={styles.button_text}>Read sample</span>
+          <span className="ml-3 font-semibold">Read sample</span>
         </a>
       </div>
     </div>

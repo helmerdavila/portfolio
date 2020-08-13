@@ -19,9 +19,9 @@
     "gatsby-plugin-google-fonts": "^1.0.1",
     "gatsby-plugin-manifest": "^2.3.3",
     "gatsby-plugin-offline": "^3.0.34",
+    "gatsby-plugin-postcss": "^2.3.11",
     "gatsby-plugin-react-helmet": "^3.1.22",
     "gatsby-plugin-robots-txt": "^1.5.0",
-    "gatsby-plugin-sass": "^2.1.28",
     "gatsby-plugin-sharp": "^2.5.4",
     "gatsby-plugin-sitemap": "^2.3.1",
     "gatsby-source-filesystem": "^2.1.48",
@@ -35,7 +35,8 @@
     "react-typing-animation": "^1.6.2",
     "react-window-decorators": "^1.0.6",
     "sass": "^1.25.0",
-    "slick-carousel": "^1.8.1"
+    "slick-carousel": "^1.8.1",
+    "uuid": "^8.3.0"
   },
   "keywords": [
     "gatsby"
@@ -49,7 +50,9 @@
     "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\""
   },
   "devDependencies": {
-    "prettier": "^2.0.5"
+    "autoprefixer": "^9.8.6",
+    "prettier": "^2.0.5",
+    "tailwindcss": "^1.6.2"
   },
   "repository": {
     "type": "git",
