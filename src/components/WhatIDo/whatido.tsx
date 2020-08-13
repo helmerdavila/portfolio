@@ -1,14 +1,10 @@
-import React from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChrome, IconDefinition } from '@fortawesome/free-brands-svg-icons'
-import { faCode, faMobile, faServer } from '@fortawesome/free-solid-svg-icons'
+import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChrome, IconDefinition } from '@fortawesome/free-brands-svg-icons';
+import { faCode, faMobile, faServer } from '@fortawesome/free-solid-svg-icons';
 
-const WhatIDoSection = (props: {
-  icon: IconDefinition
-  title: string
-  content: string
-}) => (
-  <div className="text-center px-4 py-4 w-full sm:w-1/4">
+const WhatIDoSection = (props: { icon: IconDefinition; title: string; content: string }) => (
+  <div className="text-center px-4 py-4 w-full sm:w-1/2 md:w-1/2 xl:w-1/4">
     <div className="bg-white py-8 px-6 rounded shadow-xl">
       <span>
         <FontAwesomeIcon icon={props.icon} size="3x" />
@@ -19,7 +15,7 @@ const WhatIDoSection = (props: {
       </div>
     </div>
   </div>
-)
+);
 
 const WhatIDo = () => (
   <section id="what_i_do" className="bg-gray-200 py-10">
@@ -57,6 +53,6 @@ const WhatIDo = () => (
       </div>
     </div>
   </section>
-)
+);
 
-export default WhatIDo
+export default WhatIDo;

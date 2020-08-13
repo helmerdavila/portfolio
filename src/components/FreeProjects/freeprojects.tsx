@@ -74,14 +74,14 @@ const FreeProjects = () => {
 
   const slidesMapped = slides.map((slide) => {
     const backend = slide.backend ? (
-      <div className="px-1">
+      <div className="px-1 py-2">
         <span className="bg-gray-200 text-sm p-1 rounded-l">Backend</span>
         <span className="bg-black text-white text-sm p-1 rounded-r">{slide.backend}</span>
       </div>
     ) : null;
 
     const frontend = slide.frontend ? (
-      <div className="px-1">
+      <div className="px-1 py-2">
         <span className="bg-gray-200 text-sm p-1 rounded-l">Frontend</span>
         <span className="bg-black text-white text-sm p-1 rounded-r">{slide.frontend}</span>
       </div>
@@ -95,10 +95,10 @@ const FreeProjects = () => {
             <div className="image-overlay" />
           </figure>
         </div>
-        <div className="border text-center h-40">
-          <h3 className="text-3xl font-semibold mt-3">{slide.name}</h3>
+        <div className="flex flex-col justify-center border text-center h-48">
+          <h3 className="text-3xl font-semibold">{slide.name}</h3>
           <h4 className="text-xl">{slide.subtitle}</h4>
-          <div className="flex justify-center mt-3">
+          <div className="flex flex-wrap justify-center mt-3">
             {backend}
             {frontend}
           </div>
