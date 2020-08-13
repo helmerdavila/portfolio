@@ -1,44 +1,48 @@
 import React from 'react'
-import classNames from 'classnames'
-import styles from './mystack.module.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAngular, faAws, faDocker, faNodeJs, faPhp, faReact, faVuejs } from '@fortawesome/free-brands-svg-icons'
+import {
+  faAngular,
+  faAws,
+  faDocker,
+  faNodeJs,
+  faPhp,
+  faReact,
+  faVuejs,
+} from '@fortawesome/free-brands-svg-icons'
+import { v4 as uuidv4 } from 'uuid'
+
+const MyStackSection = (props) => (
+  <div className="flex flex-col items-center">
+    <div className="icon-spacer mb-3">
+      {props.icons.map((icon) => (
+        <FontAwesomeIcon key={uuidv4()} icon={icon} size="3x" />
+      ))}
+    </div>
+    <h4 className="text-2xl font-semibold">{props.title}</h4>
+    <span>{props.description}</span>
+  </div>
+)
 
 const MyStack = () => (
-  <section id="my_stack" className="section">
-    <div className="container">
-      <h1
-        className="title is-1 has-text-centered title_my_stack"
-        style={{ marginBottom: '1em' }}
-      >
-        My stack
-      </h1>
-      <div className="level">
-        <div className={classNames(styles.level_item_stack, 'level-item')}>
-          <div className={styles.icon_container}>
-            <FontAwesomeIcon icon={faPhp} size="3x" />
-            <FontAwesomeIcon icon={faNodeJs} size="3x" />
-          </div>
-          <h4 className="title is-4">PHP | NodeJS</h4>
-          <span>Backend</span>
-        </div>
-        <div className={classNames(styles.level_item_stack, 'level-item')}>
-          <div className={styles.icon_container}>
-            <FontAwesomeIcon icon={faReact} size="3x" />
-            <FontAwesomeIcon icon={faAngular} size="3x" />
-            <FontAwesomeIcon icon={faVuejs} size="3x" />
-          </div>
-          <h4 className="title is-4">VueJs | Angular | React</h4>
-          <span>Frontend</span>
-        </div>
-        <div className={classNames(styles.level_item_stack, 'level-item')}>
-          <div className={styles.icon_container}>
-            <FontAwesomeIcon icon={faAws} size="3x" />
-            <FontAwesomeIcon icon={faDocker} size="3x" />
-          </div>
-          <h4 className="title is-4">AWS</h4>
-          <span>Servers | Container Management</span>
-        </div>
+  <section id="my_stack" className="py-10">
+    <div className="container mx-auto">
+      <h1 className="text-5xl font-semibold text-center mb-3">My stack</h1>
+      <div className="flex flex-row justify-around">
+        <MyStackSection
+          icons={[faPhp, faNodeJs]}
+          title="PHP | NodeJS"
+          description="Backend"
+        />
+        <MyStackSection
+          icons={[faReact, faAngular, faVuejs]}
+          title="VueJs | Angular | React"
+          description="Frontend"
+        />
+        <MyStackSection
+          icons={[faAws, faDocker]}
+          title="AWS | Docker"
+          description="Server managment | Devops"
+        />
       </div>
     </div>
   </section>

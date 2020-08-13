@@ -6,6 +6,7 @@ module.exports = {
     siteUrl: `https://www.helmerdavila.com`,
   },
   plugins: [
+    `gatsby-plugin-postcss`,
     `gatsby-plugin-sitemap`,
     `gatsby-plugin-react-helmet`,
     {
@@ -27,12 +28,6 @@ module.exports = {
         theme_color: `#000000`,
         display: `minimal-ui`,
         icon: `src/images/favicon-192.png`, // This path is relative to the root of the site.
-      },
-    },
-    {
-      resolve: `gatsby-plugin-sass`,
-      options: {
-        implementation: require('sass'),
       },
     },
     {

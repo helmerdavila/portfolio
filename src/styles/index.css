@@ -1,0 +1,87 @@
+/* purgecss start ignore */
+@tailwind base;
+@tailwind components;
+/* purgecss end ignore */
+
+@tailwind utilities;
+
+:root {
+  --main-family-font: 'Quicksand', sans-serif;
+  --primary-background: #ffffff;
+  --secondary-background: #f0f0f0;
+}
+
+* {
+  font-family: var(--main-family-font);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.image .image-filter {
+  filter: grayscale(100%);
+}
+.image .image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #000;
+  transition: 0.5s ease;
+  opacity: 0.4;
+  filter: grayscale(100%);
+}
+.image:hover .image-filter {
+  filter: grayscale(0%);
+}
+.image:hover .image-overlay {
+  opacity: 0;
+  filter: grayscale(0%);
+}
+
+.first-section {
+  background: url('../images/mac-development.jpg') center no-repeat;
+  background-size: cover;
+}
+
+.first-section .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #000000;
+  opacity: 0.4;
+}
+
+.navbar-scrolled {
+  background-color: white !important;
+}
+
+.navbar-link-scrolled {
+  color: black;
+}
+
+.navbar-link-scrolled:hover {
+  color: black !important;
+  background-color: transparent !important;
+}
+
+.navbar-link-unscrolled {
+  color: white !important;
+}
+
+.navbar-link-unscrolled:hover {
+  color: white !important;
+  background-color: transparent !important;
+}
+
+.icon-spacer svg {
+  margin-left: .3em;
+  margin-right: .3em;
+}
+
+.slick-prev:before,
+.slick-next:before {
+  color: black !important;
+}

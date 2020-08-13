@@ -1,7 +1,5 @@
 import React from 'react'
-import classNames from 'classnames'
 import Slider from 'react-slick'
-import styles from './projects.module.scss'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import AmbreaImage from '../Images/AmbreaImage'
@@ -110,61 +108,61 @@ const Projects = () => {
     slidesToShow: 2,
   }
 
-  const SlideCard = slide => {
+  const SlideCard = (slide) => {
     return (
-      <div className="card" key={slide.id}>
-        <div className="card-image">
-          <figure className={classNames(styles.image, 'image')}>
+      <div className="bg-white" key={slide.id}>
+        <div className="relative">
+          <figure className="image">
             {slide.image}
-            <div className={styles.image_overlay} />
+            <div className="image-overlay" />
           </figure>
         </div>
-        <div className="card-content has-text-centered">
-          <h3 className="is-3 title">{slide.name}</h3>
-          <div
-            className={classNames(styles.project_content, 'field is-grouped')}
-          >
-            <div className="control">
-              <div className="tags has-addons">
-                <span className="tag">Backend</span>
-                <span className="tag is-black">{slide.backend}</span>
-              </div>
+        <div className="flex flex-col justify-center border text-center h-32">
+          <h3 className="text-3xl font-semibold text-center">{slide.name}</h3>
+          <div className="flex justify-center mt-3">
+            <div className="px-1">
+              <span className="bg-gray-200 text-sm p-1 rounded-l">Backend</span>
+              <span className="bg-black text-white text-sm p-1 rounded-r">
+                {slide.backend}
+              </span>
             </div>
-            <div className="control">
-              <div className="tags has-addons">
-                <span className="tag">Frontend</span>
-                <span className="tag is-black">{slide.frontend}</span>
-              </div>
+            <div className="px-1">
+              <span className="bg-gray-200 text-sm p-1 rounded-l">
+                Frontend
+              </span>
+              <span className="bg-black text-white text-sm p-1 rounded-r">
+                {slide.frontend}
+              </span>
             </div>
           </div>
         </div>
-        <div className="card-footer">
-          <div className="card-footer-item">
-            <a
-              href={slide.url}
-              target="_blank"
-              className="button is-small is-rounded is-primary"
-              rel="noopener noreferrer"
-            >
-              Visit site
-            </a>
-          </div>
+        <div className="block p-5 border text-center">
+          <a
+            href={slide.url}
+            target="_blank"
+            className="bg-black text-white rounded-full px-5 py-2 mr-1 font-semibold"
+            rel="noopener noreferrer"
+          >
+            Go
+          </a>
         </div>
       </div>
     )
   }
 
-  const slidesMobile = slidesNative.map(slide => SlideCard(slide))
-  const slidesMapped = slidesDesktop.map(slide => SlideCard(slide))
+  const slidesMobile = slidesNative.map((slide) => SlideCard(slide))
+  const slidesMapped = slidesDesktop.map((slide) => SlideCard(slide))
 
   return (
-    <section className={classNames(styles.section_projects, 'section')}>
-      <div className="container">
-        <h1 className="title is-1 has-text-centered">Mobile & Web Projects</h1>
-        <div className={styles.slider_container}>
+    <section className="bg-gray-200 py-10">
+      <div className="container mx-auto">
+        <h1 className="text-5xl text-center font-semibold mb-3">
+          Mobile & Web Projects
+        </h1>
+        <div className="py-4">
           <Slider {...sliderMobileSettings}>{slidesMobile}</Slider>
         </div>
-        <div className={styles.slider_container}>
+        <div className="py-4">
           <Slider {...sliderDesktopSettings}>{slidesMapped}</Slider>
         </div>
       </div>
