@@ -3,7 +3,7 @@ import Header from '../Layouts/header'
 import Typing from 'react-typing-animation'
 
 const Presentation = () => (
-  <div className="min-h-screen first-section bg-black">
+  <div className="min-h-screen w-full first-section bg-black">
     <Header />
     <div
       id="who_am_i"

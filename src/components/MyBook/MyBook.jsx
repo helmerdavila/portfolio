@@ -5,11 +5,11 @@ import { faBook } from '@fortawesome/free-solid-svg-icons'
 
 const MyBook = () => (
   <div className="bg-white py-10">
-    <div className="container mx-auto flex">
-      <div className="w-1/2">
+    <div className="container mx-auto flex flex-wrap">
+      <div className="w-full sm:w-1/2">
         <CtbookImage />
       </div>
-      <div className="w-1/2">
+      <div className="w-full sm:w-1/2 p-6">
         <h2 className="text-5xl font-semibold">CTBook</h2>
         <p className="block mb-3 leading-loose">
           When I first started my career as a developer I saw that there was a
