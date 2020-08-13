@@ -1,17 +1,18 @@
-import React from 'react'
-import Slider from 'react-slick'
-import 'slick-carousel/slick/slick.css'
-import 'slick-carousel/slick/slick-theme.css'
-import AmbreaImage from '../Images/AmbreaImage'
-import BipolarImage from '../Images/BipolarImage'
-import BitelineImage from '../Images/BitelineImage'
-import FitnesspassImage from '../Images/FitnesspassImage'
-import FitnesspassMobileImage from '../Images/FitnesspassMobileImage'
-import SpoontopImage from '../Images/SpoontopImage'
-import VicunaImage from '../Images/VicunaImage'
+import React from 'react';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import AmbreaImage from '../Images/AmbreaImage';
+import BipolarImage from '../Images/BipolarImage';
+import BitelineImage from '../Images/BitelineImage';
+import FitnesspassImage from '../Images/FitnesspassImage';
+import FitnesspassMobileImage from '../Images/FitnesspassMobileImage';
+import SpoontopImage from '../Images/SpoontopImage';
+import VicunaImage from '../Images/VicunaImage';
+import { ISlide } from '../../interfaces';
 
 const Projects = () => {
-  const slidesNative = [
+  const slidesNative: ISlide[] = [
     {
       id: 1,
       name: 'Biteline',
@@ -28,8 +29,8 @@ const Projects = () => {
       frontend: 'React Native',
       image: <FitnesspassMobileImage />,
     },
-  ]
-  const slidesDesktop = [
+  ];
+  const slidesDesktop: ISlide[] = [
     {
       id: 1,
       name: 'Ambrea',
@@ -70,7 +71,7 @@ const Projects = () => {
       frontend: 'JS, CSS',
       image: <VicunaImage />,
     },
-  ]
+  ];
   const sliderDesktopSettings = {
     dots: true,
     infinite: true,
@@ -102,13 +103,13 @@ const Projects = () => {
         },
       },
     ],
-  }
+  };
   const sliderMobileSettings = {
     ...sliderDesktopSettings,
     slidesToShow: 2,
-  }
+  };
 
-  const SlideCard = (slide) => {
+  const SlideCard = (slide: ISlide) => {
     return (
       <div className="bg-white" key={slide.id}>
         <div className="relative">
@@ -122,17 +123,11 @@ const Projects = () => {
           <div className="flex justify-center mt-3">
             <div className="px-1">
               <span className="bg-gray-200 text-sm p-1 rounded-l">Backend</span>
-              <span className="bg-black text-white text-sm p-1 rounded-r">
-                {slide.backend}
-              </span>
+              <span className="bg-black text-white text-sm p-1 rounded-r">{slide.backend}</span>
             </div>
             <div className="px-1">
-              <span className="bg-gray-200 text-sm p-1 rounded-l">
-                Frontend
-              </span>
-              <span className="bg-black text-white text-sm p-1 rounded-r">
-                {slide.frontend}
-              </span>
+              <span className="bg-gray-200 text-sm p-1 rounded-l">Frontend</span>
+              <span className="bg-black text-white text-sm p-1 rounded-r">{slide.frontend}</span>
             </div>
           </div>
         </div>
@@ -147,18 +142,16 @@ const Projects = () => {
           </a>
         </div>
       </div>
-    )
-  }
+    );
+  };
 
-  const slidesMobile = slidesNative.map((slide) => SlideCard(slide))
-  const slidesMapped = slidesDesktop.map((slide) => SlideCard(slide))
+  const slidesMobile = slidesNative.map((slide) => SlideCard(slide));
+  const slidesMapped = slidesDesktop.map((slide) => SlideCard(slide));
 
   return (
-    <section className="bg-gray-200 py-10">
+    <section id="projects" className="bg-gray-200 py-10">
       <div className="container mx-auto">
-        <h1 className="text-5xl text-center font-semibold mb-3">
-          Mobile & Web Projects
-        </h1>
+        <h1 className="text-5xl text-center font-semibold mb-3">Mobile & Web Projects</h1>
         <div className="py-4">
           <Slider {...sliderMobileSettings}>{slidesMobile}</Slider>
         </div>
@@ -167,7 +160,7 @@ const Projects = () => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default Projects
+export default Projects;

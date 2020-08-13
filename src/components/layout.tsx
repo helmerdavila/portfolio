@@ -1,9 +1,9 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { graphql, StaticQuery } from 'gatsby'
-import Footer from './Layouts/footer'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { graphql, StaticQuery } from 'gatsby';
+import Footer from './Layouts/footer';
 
-const Layout = ({ children }) => (
+const Layout = ({ children }: { children: any }) => (
   <StaticQuery
     query={graphql`
       query SiteTitleQuery {
@@ -14,17 +14,17 @@ const Layout = ({ children }) => (
         }
       }
     `}
-    render={(data) => (
+    render={() => (
       <>
         {children}
         <Footer />
       </>
     )}
   />
-)
+);
 
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
-}
+};
 
-export default Layout
+export default Layout;

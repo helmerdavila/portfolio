@@ -1,6 +1,6 @@
-import React from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faGithub, faLinkedinIn } from '@fortawesome/free-brands-svg-icons'
+import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGithub, faLinkedinIn } from '@fortawesome/free-brands-svg-icons';
 
 const Footer = () => (
   <footer className="bg-black">
@@ -24,11 +24,10 @@ const Footer = () => (
         </a>
       </div>
       <p className="block text-white pt-6">
-        <span>© {new Date().getFullYear()}</span> -- <span>Helmer Dávila</span>{' '}
-        -- <span>Powered by Gatsby</span>
+        <span>© {new Date().getFullYear()}</span> -- <span>Helmer Dávila</span> -- <span>Powered by Gatsby</span>
       </p>
     </div>
   </footer>
-)
+);
 
-export default Footer
+export default Footer;

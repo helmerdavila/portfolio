@@ -1,9 +1,13 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChrome } from '@fortawesome/free-brands-svg-icons'
+import { faChrome, IconDefinition } from '@fortawesome/free-brands-svg-icons'
 import { faCode, faMobile, faServer } from '@fortawesome/free-solid-svg-icons'
 
-const WhatIDoSection = (props) => (
+const WhatIDoSection = (props: {
+  icon: IconDefinition
+  title: string
+  content: string
+}) => (
   <div className="text-center px-4 py-4 w-full sm:w-1/4">
     <div className="bg-white py-8 px-6 rounded shadow-xl">
       <span>
