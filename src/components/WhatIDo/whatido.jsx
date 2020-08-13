@@ -4,7 +4,7 @@ import { faChrome } from '@fortawesome/free-brands-svg-icons'
 import { faCode, faMobile, faServer } from '@fortawesome/free-solid-svg-icons'
 
 const WhatIDoSection = (props) => (
-  <div className="text-center mx-4 my-4">
+  <div className="text-center px-4 py-4 w-full sm:w-1/4">
     <div className="bg-white py-8 px-6 rounded shadow-xl">
       <span>
         <FontAwesomeIcon icon={props.icon} size="3x" />
