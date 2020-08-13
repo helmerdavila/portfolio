@@ -10,19 +10,19 @@ class Header extends React.Component {
     const iconColor = this.props.scrollPositionY === 0 ? 'white' : 'black'
     const navbarClass = classnames(
       this.props.scrollPositionY > 0 ? 'navbar-scrolled shadow-xl' : null,
-      'fixed w-full flex flex-row h-16 px-5 justify-between z-10 transition duration-200 ease-in-out'
+      'fixed flex flex-row w-screen h-16 px-5 md:px-8 justify-between z-10 transition duration-200 ease-in-out'
     )
     const navbarLinkClass = classnames(
       this.props.scrollPositionY === 0
         ? 'navbar-link-unscrolled'
         : 'navbar-link-scrolled',
-      'mx-3 cursor-pointer transition duration-200 ease-in-out'
+      'mx-3 cursor-pointer transition duration-200 ease-in-out hidden md:block'
     )
 
     return (
       <nav className={navbarClass}>
         <div className="flex flex-row items-center">
-          <div onClick={scroll.scrollToTop}>
+          <div onClick={scroll.scrollToTop} className="mr-3">
             <FontAwesomeIcon icon={faHSquare} size="2x" color={iconColor} />
           </div>
           <LinkScroll

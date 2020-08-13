@@ -23,7 +23,7 @@ const IndexPage = () => (
       ]}
     />
     <Presentation />
-    <section id="about_me" className="py-10">
+    <section id="about_me" className="p-10">
       <div className="container mx-auto">
         <h1 className="text-5xl text-center font-semibold">About me</h1>
         <p>
