@@ -3,5 +3,9 @@
   .icon_container {
     color: black;
     margin-bottom: 1.3em;
+    > svg {
+      margin-left: .3em;
+      margin-right: .3em;
+    }
   }
 }

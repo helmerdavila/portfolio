@@ -2,12 +2,7 @@ import React from 'react'
 import classNames from 'classnames'
 import styles from './mystack.module.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  faAws,
-  faCss3Alt,
-  faJsSquare,
-  faPhp,
-} from '@fortawesome/free-brands-svg-icons'
+import { faAngular, faAws, faDocker, faNodeJs, faPhp, faReact, faVuejs } from '@fortawesome/free-brands-svg-icons'
 
 const MyStack = () => (
   <section id="my_stack" className="section">
@@ -21,31 +16,28 @@ const MyStack = () => (
       <div className="level">
         <div className={classNames(styles.level_item_stack, 'level-item')}>
           <div className={styles.icon_container}>
-            <FontAwesomeIcon icon={faJsSquare} size="3x" />
-          </div>
-          <h4 className="title is-4">Javascript</h4>
-          <span>Mobile / Backend / Frontend</span>
-        </div>
-        <div className={classNames(styles.level_item_stack, 'level-item')}>
-          <div className={styles.icon_container}>
             <FontAwesomeIcon icon={faPhp} size="3x" />
+            <FontAwesomeIcon icon={faNodeJs} size="3x" />
           </div>
-          <h4 className="title is-4">PHP</h4>
+          <h4 className="title is-4">PHP | NodeJS</h4>
           <span>Backend</span>
         </div>
         <div className={classNames(styles.level_item_stack, 'level-item')}>
           <div className={styles.icon_container}>
-            <FontAwesomeIcon icon={faCss3Alt} size="3x" />
+            <FontAwesomeIcon icon={faReact} size="3x" />
+            <FontAwesomeIcon icon={faAngular} size="3x" />
+            <FontAwesomeIcon icon={faVuejs} size="3x" />
           </div>
-          <h4 className="title is-4">HTML + CSS</h4>
+          <h4 className="title is-4">VueJs | Angular | React</h4>
           <span>Frontend</span>
         </div>
         <div className={classNames(styles.level_item_stack, 'level-item')}>
           <div className={styles.icon_container}>
             <FontAwesomeIcon icon={faAws} size="3x" />
+            <FontAwesomeIcon icon={faDocker} size="3x" />
           </div>
           <h4 className="title is-4">AWS</h4>
-          <span>Tools</span>
+          <span>Servers | Container Management</span>
         </div>
       </div>
     </div>
