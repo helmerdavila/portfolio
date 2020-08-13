@@ -1,10 +1,10 @@
-import React from 'react'
-import Slider from 'react-slick'
-import 'slick-carousel/slick/slick.css'
-import 'slick-carousel/slick/slick-theme.css'
-import ReactibookImage from '../Images/ReactibookImage'
-import RoomieImage from '../Images/RoomieImage'
-import BattleshipImage from '../Images/BattleshipImage'
+import React from 'react';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import ReactibookImage from '../Images/ReactibookImage';
+import RoomieImage from '../Images/RoomieImage';
+import BattleshipImage from '../Images/BattleshipImage';
 
 const FreeProjects = () => {
   const slides = [
@@ -38,7 +38,7 @@ const FreeProjects = () => {
       frontend: 'React',
       image: <BattleshipImage />,
     },
-  ]
+  ];
   const sliderSettings = {
     dots: true,
     infinite: true,
@@ -70,26 +70,22 @@ const FreeProjects = () => {
         },
       },
     ],
-  }
+  };
 
   const slidesMapped = slides.map((slide) => {
     const backend = slide.backend ? (
       <div className="px-1">
         <span className="bg-gray-200 text-sm p-1 rounded-l">Backend</span>
-        <span className="bg-black text-white text-sm p-1 rounded-r">
-          {slide.backend}
-        </span>
+        <span className="bg-black text-white text-sm p-1 rounded-r">{slide.backend}</span>
       </div>
-    ) : null
+    ) : null;
 
     const frontend = slide.frontend ? (
       <div className="px-1">
         <span className="bg-gray-200 text-sm p-1 rounded-l">Frontend</span>
-        <span className="bg-black text-white text-sm p-1 rounded-r">
-          {slide.frontend}
-        </span>
+        <span className="bg-black text-white text-sm p-1 rounded-r">{slide.frontend}</span>
       </div>
-    ) : null
+    ) : null;
 
     return (
       <div className="bg-white" key={slide.id}>
@@ -126,19 +122,17 @@ const FreeProjects = () => {
           </a>
         </div>
       </div>
-    )
-  })
+    );
+  });
 
   return (
     <section className="bg-gray-200 ">
       <div className="container mx-auto py-10">
-        <h2 className="text-5xl font-semibold text-center pb-4">
-          Code Samples
-        </h2>
+        <h2 className="text-5xl font-semibold text-center pb-4">Code Samples</h2>
         <Slider {...sliderSettings}>{slidesMapped}</Slider>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default FreeProjects
+export default FreeProjects;

@@ -1,6 +1,6 @@
-import React from 'react'
-import { StaticQuery, graphql } from 'gatsby'
-import Img from 'gatsby-image'
+import React from 'react';
+import { StaticQuery, graphql } from 'gatsby';
+import Img from 'gatsby-image';
 
 const ctbookImage = () => {
   return (
@@ -16,10 +16,8 @@ const ctbookImage = () => {
           }
         }
       `}
-      render={data => (
-        <Img fluid={data.placeholderImage.childImageSharp.fluid} />
-      )}
+      render={(data) => <Img fluid={data.placeholderImage.childImageSharp.fluid} />}
     />
-  )
-}
-export default ctbookImage
+  );
+};
+export default ctbookImage;
