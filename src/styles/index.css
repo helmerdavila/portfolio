@@ -9,12 +9,15 @@
   --main-family-font: 'Quicksand', sans-serif;
   --primary-background: #ffffff;
   --secondary-background: #f0f0f0;
+  --dark-at-day: #000000;
+  --dark-at-night: #1a202c;
 }
 
 * {
   font-family: var(--main-family-font);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.6s ease, color 1s ease;
 }
 
 .image .image-filter {
@@ -26,7 +29,18 @@
   left: 0;
   height: 100%;
   width: 100%;
-  background-color: #000;
+  background-color: var(--dark-at-day);
+  transition: 0.5s ease;
+  opacity: 0.4;
+  filter: grayscale(100%);
+}
+.image .image-overlay-night {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: var(--dark-at-night);
   transition: 0.5s ease;
   opacity: 0.4;
   filter: grayscale(100%);
@@ -35,6 +49,10 @@
   filter: grayscale(0%);
 }
 .image:hover .image-overlay {
+  opacity: 0;
+  filter: grayscale(0%);
+}
+.image:hover .image-overlay-night {
   opacity: 0;
   filter: grayscale(0%);
 }
@@ -50,30 +68,18 @@
   left: 0;
   height: 100%;
   width: 100%;
-  background-color: #000000;
+  background-color: var(--dark-at-day);
   opacity: 0.4;
 }
 
-.navbar-scrolled {
-  background-color: white !important;
-}
-
-.navbar-link-scrolled {
-  color: black;
-}
-
-.navbar-link-scrolled:hover {
-  color: black !important;
-  background-color: transparent !important;
-}
-
-.navbar-link-unscrolled {
-  color: white !important;
-}
-
-.navbar-link-unscrolled:hover {
-  color: white !important;
-  background-color: transparent !important;
+.first-section .overlay-night {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: var(--dark-at-night);
+  opacity: 0.4;
 }
 
 .icon-spacer svg {
