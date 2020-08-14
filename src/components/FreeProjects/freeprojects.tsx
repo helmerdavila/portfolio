@@ -1,12 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import ReactibookImage from '../Images/ReactibookImage';
 import RoomieImage from '../Images/RoomieImage';
 import BattleshipImage from '../Images/BattleshipImage';
+import classNames from 'classnames';
+import { ProfileContext } from '../../pages';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCode, faExternalLinkAlt } from '@fortawesome/pro-duotone-svg-icons';
 
 const FreeProjects = () => {
+  const context = useContext(ProfileContext);
+
   const slides = [
     {
       id: 1,
@@ -73,62 +79,95 @@ const FreeProjects = () => {
   };
 
   const slidesMapped = slides.map((slide) => {
+    const lightLabelColor = {
+      'bg-gray-200 text-black': context.isLightTheme,
+      'bg-gray-700 text-white': !context.isLightTheme,
+    };
+    const darkLabelColor = {
+      'bg-black text-white': context.isLightTheme,
+      'bg-gray-400 text-black': !context.isLightTheme,
+    };
+    const textColor = { 'text-white': !context.isLightTheme, 'text-black': context.isLightTheme };
+    const borderColors = { 'border-gray-900': !context.isLightTheme, 'border-gray-400': context.isLightTheme };
+
     const backend = slide.backend ? (
       <div className="px-1 py-2">
-        <span className="bg-gray-200 text-sm p-1 rounded-l">Backend</span>
-        <span className="bg-black text-white text-sm p-1 rounded-r">{slide.backend}</span>
+        <span className={classNames('text-sm p-1 rounded-l', lightLabelColor)}>Backend</span>
+        <span className={classNames('text-sm p-1 rounded-r', darkLabelColor)}>{slide.backend}</span>
       </div>
     ) : null;
 
     const frontend = slide.frontend ? (
       <div className="px-1 py-2">
-        <span className="bg-gray-200 text-sm p-1 rounded-l">Frontend</span>
-        <span className="bg-black text-white text-sm p-1 rounded-r">{slide.frontend}</span>
+        <span className={classNames('text-sm p-1 rounded-l', lightLabelColor)}>Frontend</span>
+        <span className={classNames('text-sm p-1 rounded-r', darkLabelColor)}>{slide.frontend}</span>
       </div>
     ) : null;
 
     return (
-      <div className="bg-white" key={slide.id}>
+      <div
+        className={classNames({
+          'bg-white': context.isLightTheme,
+          'bg-gray-800': !context.isLightTheme,
+        })}
+        key={slide.id}
+      >
         <div className="relative">
           <figure className="image">
             {slide.image}
-            <div className="image-overlay" />
+            <div
+              className={classNames({
+                'image-overlay': context.isLightTheme,
+                'image-overlay-night': !context.isLightTheme,
+              })}
+            />
+            <a
+              href={slide.url}
+              target="_blank"
+              className={classNames(
+                'absolute bottom-0 right-0 mb-3 mr-3 p-3 flex justify-center items-center rounded-full font-semibold w-16 h-16',
+                { 'bg-white text-black': context.isLightTheme, 'bg-gray-900 text-white': !context.isLightTheme },
+              )}
+              rel="noopener noreferrer"
+            >
+              <FontAwesomeIcon icon={faExternalLinkAlt} size="2x" fixedWidth />
+            </a>
+            <a
+              href={slide.codeUrl}
+              target="_blank"
+              className={classNames(
+                'absolute bottom-0 left-0 mb-3 ml-3 p-3 flex justify-center items-center rounded-full font-semibold w-16 h-16',
+                { 'bg-white text-black': context.isLightTheme, 'bg-gray-900 text-white': !context.isLightTheme },
+              )}
+              rel="noopener noreferrer"
+            >
+              <FontAwesomeIcon icon={faCode} size="2x" fixedWidth />
+            </a>
           </figure>
         </div>
-        <div className="flex flex-col justify-center border text-center h-48">
-          <h3 className="text-3xl font-semibold">{slide.name}</h3>
-          <h4 className="text-xl">{slide.subtitle}</h4>
+        <div className={classNames('flex flex-col justify-center border text-center h-48', borderColors)}>
+          <h3 className={classNames('text-3xl font-semibold', textColor)}>{slide.name}</h3>
+          <h4 className={classNames('text-xl', textColor)}>{slide.subtitle}</h4>
           <div className="flex flex-wrap justify-center mt-3">
             {backend}
             {frontend}
           </div>
-        </div>
-        <div className="block p-5 border text-center">
-          <a
-            href={slide.url}
-            target="_blank"
-            className="font-semibold bg-black text-white rounded-full px-3 py-2 mr-1"
-            rel="noopener noreferrer"
-          >
-            Visit site
-          </a>
-          <a
-            href={slide.codeUrl}
-            target="_blank"
-            className="font-semibold border-black border rounded-full px-3 py-2 ml-1"
-            rel="noopener noreferrer"
-          >
-            Code
-          </a>
         </div>
       </div>
     );
   });
 
   return (
-    <section className="bg-gray-200 ">
+    <section className={classNames({ 'bg-gray-200': context.isLightTheme, 'bg-gray-900': !context.isLightTheme })}>
       <div className="container mx-auto py-10">
-        <h2 className="text-5xl font-semibold text-center pb-4">Code Samples</h2>
+        <h2
+          className={classNames('text-5xl font-semibold text-center pb-4', {
+            'text-dark': context.isLightTheme,
+            'text-white': !context.isLightTheme,
+          })}
+        >
+          Code Samples
+        </h2>
         <Slider {...sliderSettings}>{slidesMapped}</Slider>
       </div>
     </section>
