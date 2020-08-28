@@ -1,27 +1,23 @@
-import React from 'react'
-import { StaticQuery, graphql } from 'gatsby'
-import Img from 'gatsby-image'
+import React from 'react';
+import { StaticQuery, graphql } from 'gatsby';
+import Img from 'gatsby-image';
 
 const bitelineImage = () => {
   return (
     <StaticQuery
       query={graphql`
         query {
-          placeholderImage: file(
-            relativePath: { eq: "biteline_mobile_mockup.png" }
-          ) {
+          placeholderImage: file(relativePath: { eq: "biteline_mobile.jpg" }) {
             childImageSharp {
-              fluid(maxWidth: 300) {
-                ...GatsbyImageSharpFluid_tracedSVG
+              fluid(maxWidth: 1000) {
+                ...GatsbyImageSharpFluid
               }
             }
           }
         }
       `}
-      render={data => (
-        <Img fluid={data.placeholderImage.childImageSharp.fluid} />
-      )}
+      render={(data) => <Img fluid={data.placeholderImage.childImageSharp.fluid} />}
     />
-  )
-}
-export default bitelineImage
+  );
+};
+export default bitelineImage;
