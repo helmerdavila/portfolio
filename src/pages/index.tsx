@@ -8,6 +8,7 @@ import MyStack from '../components/MyStack/mystack';
 import FreeProjects from '../components/FreeProjects/freeprojects';
 import MyBook from '../components/MyBook/MyBook';
 import AboutMe from '../components/AboutMe/AboutMe';
+import PersonalProjects from '../components/PersonalProjects/personalprojects';
 
 export const ProfileContext = React.createContext<{ isLightTheme: boolean; toggleTheme: () => void }>({
   isLightTheme: true,
@@ -43,6 +44,7 @@ const IndexPage = () => (
     <AboutMe />
     <WhatIDo />
     <MyStack />
+    <PersonalProjects />
     <Projects />
     <MyBook />
     <FreeProjects />
