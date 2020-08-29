@@ -51,7 +51,7 @@ const apps: IApp[] = [
 const PersonalProjects = () => {
   const context = useContext(ProfileContext);
   const textColor = { 'text-white': !context.isLightTheme, 'text-black': context.isLightTheme };
-  const AppCards = apps.map((app) => <AppCard app={app} />);
+  const AppCards = apps.map((app) => <AppCard key={app.id} app={app} />);
 
   return (
     <section
@@ -71,10 +71,10 @@ const AppCard = (props: { app: IApp }) => {
   const textColor = { 'text-white': !context.isLightTheme, 'text-black': context.isLightTheme };
 
   return (
-    <div key={props.app.id} className="flex flex-col sm:flex-row">
+    <div className="flex flex-col sm:flex-row">
       <div className="flex-1 p-10">{props.app.image}</div>
       <div className="flex-1 p-6">
-        <h2 className={classNames('text-5xl font-semibold', textColor)}>{props.app.title}</h2>
+        <h2 className={classNames('text-4xl font-semibold', textColor)}>{props.app.title}</h2>
         <p className={classNames('block mb-3 leading-loose', textColor)}>{props.app.description}</p>
         <div className="flex">
           {props.app.apple ? <StoreButton title="AppStore" icon={faAppStore} link={props.app.apple} /> : null}
