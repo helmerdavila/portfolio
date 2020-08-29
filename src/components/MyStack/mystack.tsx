@@ -19,7 +19,7 @@ const MyStackSection = (props: { title: string; description: string; icons: Icon
   const textColor = { 'text-white': !context.isLightTheme, 'text-black': context.isLightTheme };
 
   return (
-    <div className="flex flex-col items-center my-4">
+    <div className="flex-1 flex flex-col items-center my-4">
       <div className={classNames('icon-spacer mb-3', textColor)}>
         {props.icons.map((icon) => (
           <FontAwesomeIcon key={uuidv4()} icon={icon} size="3x" />
@@ -42,7 +42,7 @@ const MyStack = () => {
     >
       <div className="container mx-auto">
         <h1 className={classNames('text-5xl font-semibold text-center mb-3', textColor)}>My stack</h1>
-        <div className="flex flex-row flex-wrap justify-around">
+        <div className="flex flex-col sm:flex-row justify-around">
           <MyStackSection icons={[faPhp, faNodeJs]} title="PHP | NodeJS" description="Backend" />
           <MyStackSection
             icons={[faReact, faAngular, faVuejs]}
