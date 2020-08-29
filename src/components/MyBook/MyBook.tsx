@@ -16,14 +16,14 @@ const MyBook = () => {
         'bg-gray-800': !context.isLightTheme,
       })}
     >
-      <div className="container mx-auto flex flex-wrap">
-        <div className="w-full sm:w-1/2">
+      <div className="container mx-auto flex flex-col sm:flex-row">
+        <div className="flex-1 p-10">
           <CtbookImage />
         </div>
-        <div className="w-full sm:w-1/2 p-6">
+        <div className="flex-1 p-6">
           <h2 className={classNames('text-5xl font-semibold', textColor)}>CTBook</h2>
           <p className={classNames('block mb-3 leading-loose', textColor)}>
-            When I first started my career as a developer I saw that there was a gap between technology and business,
+            When I first started my career as a developer, I saw that there was a gap between technology and business,
             I’ve collected all doubts that non-tech people have about tech startups, that’s how CTBOOK (CTO+Book) born.
             So, if you are starting in the tech startup world (or you know somebody who does), I recommend you this
             book, it’s written in the most simple language possible, avoiding any technical knowledge.
