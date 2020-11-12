@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import ReactibookImage from '../Images/ReactibookImage';
 import RoomieImage from '../Images/RoomieImage';
 import BattleshipImage from '../Images/BattleshipImage';
 import classNames from 'classnames';
@@ -15,7 +14,7 @@ const FreeProjects = () => {
 
   const slides = [
     {
-      id: 2,
+      id: 1,
       name: 'Roomie',
       subtitle: 'Roomie payment calculator',
       url: 'http://roomie.helmerdavila.com/',
@@ -39,7 +38,7 @@ const FreeProjects = () => {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 3,
+    slidesToShow: 2,
     slidesToScroll: 1,
     arrows: true,
     autoplay: true,
