@@ -15,16 +15,6 @@ const FreeProjects = () => {
 
   const slides = [
     {
-      id: 1,
-      name: 'Reactibook',
-      subtitle: 'Facebook Mini-clone',
-      url: 'http://reactibook.helmerdavila.com/',
-      codeUrl: 'https://github.com/helmerdavila/reactibook',
-      backend: 'Firebase',
-      frontend: 'React',
-      image: <ReactibookImage />,
-    },
-    {
       id: 2,
       name: 'Roomie',
       subtitle: 'Roomie payment calculator',
