@@ -20,5 +20,10 @@
   "what_i_do_mobile": "I used libraries like React Native & Ionic to create different screens and UI's flow similar to a native behavior. I launched apps for both stores (Play Store and App Store).",
   "what_i_do_frontend": "I used languages like HTML(5), CSS(3) and JavaScript to create useful UI in different projects. I built sites from scratch, with or without frameworks.",
   "what_i_do_backend": "I coded the requirements and restrictions for the businesses, using backend frameworks with excellent scalability options and faster releases of new features.",
-  "what_i_do_sysops": "I deployed new updates with pipelines, setting test and production environments, using logging tools for constants reviews of where and when the code failed."
+  "what_i_do_sysops": "I deployed new updates with pipelines, setting test and production environments, using logging tools for constants reviews of where and when the code failed.",
+  "my_stack_backend": "Backend",
+  "my_stack_frontend": "Frontend",
+  "my_stack_sysops": "Server management",
+  "personal_projects_httpixel": "An application to help developers test their APIs on the go. Works in iOS and Android devices.",
+  "personal_projects_pills": "Create and set any kind of pill reminder. Get notified when the time comes on."
 }

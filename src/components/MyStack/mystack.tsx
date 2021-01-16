@@ -34,8 +34,8 @@ const MyStackSection = (props: { title: string; description: string; icons: Icon
 
 const MyStack = (): JSX.Element => {
   const context = useContext(ProfileContext);
-  const textColor = { 'text-white': !context.isLightTheme, 'text-black': context.isLightTheme };
   const { t } = useTranslation();
+  const textColor = { 'text-white': !context.isLightTheme, 'text-black': context.isLightTheme };
 
   return (
     <section
@@ -45,13 +45,13 @@ const MyStack = (): JSX.Element => {
       <div className="container mx-auto">
         <h1 className={classNames('text-5xl font-semibold text-center mb-3', textColor)}>{t('my_stack')}</h1>
         <div className="flex flex-col sm:flex-row justify-around">
-          <MyStackSection icons={[faPhp, faNodeJs]} title="PHP | NodeJS" description="Backend" />
+          <MyStackSection icons={[faPhp, faNodeJs]} title="PHP | NodeJS" description={t('my_stack_backend')} />
           <MyStackSection
             icons={[faReact, faAngular, faVuejs]}
             title="VueJs | Angular | React"
-            description="Frontend"
+            description={t('my_stack_frontend')}
           />
-          <MyStackSection icons={[faAws, faDocker]} title="AWS | Docker" description="Server managment | Devops" />
+          <MyStackSection icons={[faAws, faDocker]} title="AWS | Docker" description={t('my_stack_sysops')} />
         </div>
       </div>
     </section>
