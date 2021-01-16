@@ -43,34 +43,10 @@ const WhatIDo = (): JSX.Element => {
       <div className="container mx-auto">
         <h2 className={classNames('text-5xl font-semibold text-center mb-4', textColor)}>{t('what_i_do')}</h2>
         <div className="flex flex-wrap">
-          <WhatIDoSection
-            icon={faMobile}
-            title="Mobile"
-            content="Use of the frameworks like React Native & Ionic to create screens
-          and navigation similar to native behavior.
-          Deployment process for both stores (Play Store and App Store)."
-          />
-          <WhatIDoSection
-            icon={faBrowser}
-            title="Frontend"
-            content="Use of the languages like HTML(5), CSS(3) and JavaScript to
-          create useful UI in different projects. Building sites from
-          scratch, with or without frameworks."
-          />
-          <WhatIDoSection
-            icon={faCode}
-            title="Backend"
-            content="Code the requirements and restrictions for the business, using
-          backend frameworks with good scalability option and quick
-          development of new features."
-          />
-          <WhatIDoSection
-            icon={faServer}
-            title="SysOps"
-            content="Deploy new updates with pipelines, setting test and production
-          environments. Use of logging tools, checking where and when the
-          code failed."
-          />
+          <WhatIDoSection icon={faMobile} title="Mobile" content={t('what_i_do_mobile')} />
+          <WhatIDoSection icon={faBrowser} title="Frontend" content={t('what_i_do_frontend')} />
+          <WhatIDoSection icon={faCode} title="Backend" content={t('what_i_do_backend')} />
+          <WhatIDoSection icon={faServer} title="SysOps" content={t('what_i_do_sysops')} />
         </div>
       </div>
     </section>
