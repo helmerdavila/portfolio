@@ -3,9 +3,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub, faLinkedinIn } from '@fortawesome/free-brands-svg-icons';
 import classNames from 'classnames';
 import { ProfileContext } from '../../pages';
+import { useTranslation } from 'gatsby-plugin-react-i18next';
 
-const Footer = () => {
+const Footer = (): JSX.Element => {
   const context = useContext(ProfileContext);
+  const { t } = useTranslation();
 
   return (
     <footer className={classNames({ 'bg-black': context.isLightTheme, 'bg-gray-800': !context.isLightTheme })}>
@@ -29,7 +31,8 @@ const Footer = () => {
           </a>
         </div>
         <p className="block text-white pt-6">
-          <span>© {new Date().getFullYear()}</span> -- <span>Helmer Dávila</span> -- <span>Powered by Gatsby</span>
+          <span>© {new Date().getFullYear()}</span> -- <span>Helmer Dávila</span> --{' '}
+          <span>{t('powered_by_gatsby')}</span>
         </p>
       </div>
     </footer>

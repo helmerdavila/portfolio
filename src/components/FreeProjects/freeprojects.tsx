@@ -8,9 +8,11 @@ import classNames from 'classnames';
 import { ProfileContext } from '../../pages';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCode, faExternalLinkAlt } from '@fortawesome/pro-duotone-svg-icons';
+import { useTranslation } from 'gatsby-plugin-react-i18next';
 
-const FreeProjects = () => {
+const FreeProjects = (): JSX.Element => {
   const context = useContext(ProfileContext);
+  const { t } = useTranslation();
 
   const slides = [
     {
@@ -155,7 +157,7 @@ const FreeProjects = () => {
             'text-white': !context.isLightTheme,
           })}
         >
-          Code Samples
+          {t('code_samples')}
         </h2>
         <Slider {...sliderSettings}>{slidesMapped}</Slider>
       </div>
