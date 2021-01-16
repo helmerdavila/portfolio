@@ -15,5 +15,10 @@
   "ecommerce_websites": "sitios e-commerce",
   "landing_pages": "páginas de presentación (landings)",
   "web_applications": "aplicaciones web",
-  "mobile_applications": "aplicaciones móviles"
+  "mobile_applications": "aplicaciones móviles",
+  "about_me_description": "Hola, me llamo Helmer. Soy un desarrollador con experiencia en JS/PHP/Python y he trabajado con distintos frameworks y lenguajes en general. Mis lenguajes para backend son Javascript - Typescript (Node JS, Express, NestJs), PHP (Laravel/Zend/Codeigniter). Para el frontend he trabajado con Javascript (Vue/Angular/React/React Native/Ionic), HTML, CSS (SCSS/Stylus).",
+  "what_i_do_mobile": "Usé librerías como React Native & Ionic para crear pantallas y una navegación similar a la nativa. He realizado lanzamientos en ambas plataformas (Play Store and App Store).",
+  "what_i_do_frontend": "Usé lenguajes como HTML(5), CSS(3) y JavaScript para crear UI sencillas en proyectos diferentes. Construí sitios desde cero, con o sin frameworks.",
+  "what_i_do_backend": "Programé requerimientos y restricciones para distintos negocios, usé frameworks backend con opciones de escalabilidad así como el desarrollo de nuevas características.",
+  "what_i_do_sysops": "Desplegué nuevas versiones con \"pipelines\", construyendo entornos de pruebas y de producción. Usé herramientas para hacer un log correcto, comprobando cuando y donde el código falló."
 }
