@@ -14,8 +14,9 @@ import classNames from 'classnames';
 import { ProfileContext } from '../../pages';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExternalLinkAlt } from '@fortawesome/pro-duotone-svg-icons';
+import { useTranslation } from 'gatsby-plugin-react-i18next';
 
-const Projects = () => {
+const Projects = (): JSX.Element => {
   const slidesNative: ISlide[] = [
     {
       id: 1,
@@ -176,6 +177,7 @@ const Projects = () => {
   const slidesMobile = slidesNative.map((slide) => SlideCard(slide));
   const slidesMapped = slidesDesktop.map((slide) => SlideCard(slide));
   const context = useContext(ProfileContext);
+  const { t } = useTranslation();
   const textColor = { 'text-white': !context.isLightTheme, 'text-black': context.isLightTheme };
 
   return (
@@ -184,7 +186,9 @@ const Projects = () => {
       className={classNames('py-10', { 'bg-gray-200': context.isLightTheme, 'bg-gray-900': !context.isLightTheme })}
     >
       <div className="container mx-auto">
-        <h1 className={classNames('text-5xl text-center font-semibold mb-3', textColor)}>Mobile & Web Projects</h1>
+        <h1 className={classNames('text-5xl text-center font-semibold mb-3', textColor)}>
+          {t('mobile_and_web_projects')}
+        </h1>
         <div className="py-4">
           <Slider {...sliderMobileSettings}>{slidesMobile}</Slider>
         </div>

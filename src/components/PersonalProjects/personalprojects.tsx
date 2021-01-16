@@ -10,6 +10,7 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { v4 as uuidv4 } from 'uuid';
+import { useTranslation } from 'gatsby-plugin-react-i18next';
 
 interface IApp {
   id: string;
@@ -48,10 +49,11 @@ const apps: IApp[] = [
   },
 ];
 
-const PersonalProjects = () => {
+const PersonalProjects = (): JSX.Element => {
   const context = useContext(ProfileContext);
   const textColor = { 'text-white': !context.isLightTheme, 'text-black': context.isLightTheme };
   const AppCards = apps.map((app) => <AppCard key={app.id} app={app} />);
+  const { t } = useTranslation();
 
   return (
     <section
@@ -59,7 +61,7 @@ const PersonalProjects = () => {
       className={classNames('py-10', { 'bg-gray-200': context.isLightTheme, 'bg-gray-900': !context.isLightTheme })}
     >
       <div className="container mx-auto">
-        <h1 className={classNames('text-5xl text-center font-semibold mb-3', textColor)}>Personal Projects</h1>
+        <h1 className={classNames('text-5xl text-center font-semibold mb-3', textColor)}>{t('projects')}</h1>
         <Slider {...sliderSettings}>{AppCards}</Slider>
       </div>
     </section>

@@ -1,0 +1,12 @@
+{
+  "who_am_i": "Qui suis je",
+  "about_me": "À propos de moi",
+  "what_i_do": "Ce que je fais",
+  "my_stack": "Mes compétences",
+  "projects": "Mes projets",
+  "download_cv": "Télécharger CV",
+  "cv_link": "https://www.dropbox.com/s/pwjlkfqyxjk34iu/HelmerFRCV.pdf",
+  "mobile_and_web_projects": "Des Projets Mobile et Web",
+  "code_samples": "Exemples de code",
+  "powered_by_gatsby": "Construit avec Gatsby"
+}

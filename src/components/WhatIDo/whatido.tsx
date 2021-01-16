@@ -4,6 +4,7 @@ import { IconDefinition } from '@fortawesome/free-brands-svg-icons';
 import { ProfileContext } from '../../pages';
 import classNames from 'classnames';
 import { faBrowser, faCode, faMobile, faServer } from '@fortawesome/pro-duotone-svg-icons';
+import { useTranslation } from 'gatsby-plugin-react-i18next';
 
 const WhatIDoSection = (props: { icon: IconDefinition; title: string; content: string }) => {
   const context = useContext(ProfileContext);
@@ -29,9 +30,10 @@ const WhatIDoSection = (props: { icon: IconDefinition; title: string; content: s
   );
 };
 
-const WhatIDo = () => {
+const WhatIDo = (): JSX.Element => {
   const context = useContext(ProfileContext);
   const textColor = { 'text-white': !context.isLightTheme, 'text-black': context.isLightTheme };
+  const { t } = useTranslation();
 
   return (
     <section
@@ -39,7 +41,7 @@ const WhatIDo = () => {
       className={classNames('py-10', { 'bg-gray-200': context.isLightTheme, 'bg-gray-900': !context.isLightTheme })}
     >
       <div className="container mx-auto">
-        <h2 className={classNames('text-5xl font-semibold text-center mb-4', textColor)}>What I do</h2>
+        <h2 className={classNames('text-5xl font-semibold text-center mb-4', textColor)}>{t('what_i_do')}</h2>
         <div className="flex flex-wrap">
           <WhatIDoSection
             icon={faMobile}
