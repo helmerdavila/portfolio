@@ -25,5 +25,9 @@
   "my_stack_frontend": "Frontend",
   "my_stack_sysops": "Server management",
   "personal_projects_httpixel": "An application to help developers test their APIs on the go. Works in iOS and Android devices.",
-  "personal_projects_pills": "Create and set any kind of pill reminder. Get notified when the time comes on."
+  "personal_projects_pills": "Create and set any kind of pill reminder. Get notified when the time comes on.",
+  "ctbook_description": "When I first started my career as a developer, I saw that there was a gap between technology and business,I’ve collected all doubts that non-tech people have about tech startups. That’s how CTBOOK (CTO+Book) born. So, if you are starting in the tech startup world (or you know somebody who does), I recommend you this book. It’s written in the most simple language possible, no matter your technical knowledge.",
+  "ctbook_readsample": "Read sample",
+  "roomie_description": "Rental payment calculator",
+  "battleship_description": "Simple game demo"
 }

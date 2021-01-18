@@ -18,7 +18,7 @@ const FreeProjects = (): JSX.Element => {
     {
       id: 1,
       name: 'Roomie',
-      subtitle: 'Roomie payment calculator',
+      subtitle: t('roomie_description'),
       url: 'http://roomie.helmerdavila.com/',
       codeUrl: 'https://github.com/helmerdavila/payment-roomie',
       backend: null,
@@ -28,7 +28,7 @@ const FreeProjects = (): JSX.Element => {
     {
       id: 2,
       name: 'Battleship',
-      subtitle: 'Simple game demo',
+      subtitle: t('battleship_description'),
       url: 'http://battleship.helmerdavila.com/',
       codeUrl: 'https://github.com/helmerdavila/battleship',
       backend: null,
