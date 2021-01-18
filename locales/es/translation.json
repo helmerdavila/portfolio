@@ -25,5 +25,9 @@
   "my_stack_frontend": "Frontend",
   "my_stack_sysops": "Administración de servidores",
   "personal_projects_httpixel": "Una aplicación para ayudar a los desarrolladores a probar sus APIs sobre la marcha. Funciona en dispositivos iOS y Android.",
-  "personal_projects_pills": "Crear y configurar recordatorio de píldoras de cualquier tipo. Envía notificaciones cuando la hora de consumirlas llega."
+  "personal_projects_pills": "Crear y configurar recordatorio de píldoras de cualquier tipo. Envía notificaciones cuando la hora de consumirlas llega.",
+  "ctbook_description": "Cuando comencé mi carrera como desarrollador, vi que había una gran brecha entre tecnología y negocio. He recolectado todas las dudas que las personas no-tecnológicas tienen sobre las startups con productos tecnológicos. Así fue como CTBOOK (CTO+Book) nació. Así que si estás comenzando en el mundo de startups tecnológicas (o conoces a alguien que lo esté), te recomiendo este libro. Está escrito con el lenguaje más simple posible, sin importar el nivel técnico que tengas.",
+  "ctbook_readsample": "Leer muestra",
+  "roomie_description": "Calculador de pago de renta",
+  "battleship_description": "Demo de un juego simple"
 }
