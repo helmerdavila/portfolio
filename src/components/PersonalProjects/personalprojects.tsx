@@ -10,11 +10,12 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { v4 as uuidv4 } from 'uuid';
+import { useTranslation } from 'gatsby-plugin-react-i18next';
 
 interface IApp {
   id: string;
   title: string;
-  description: string;
+  description_key: string;
   apple?: string;
   android?: string;
   image: JSX.Element;
@@ -34,7 +35,7 @@ const apps: IApp[] = [
   {
     id: uuidv4(),
     title: 'Httpixel',
-    description: 'An application to help developers test their APIs on the go. Works in iOS and Android devices.',
+    description_key: 'personal_projects_httpixel',
     apple: 'https://apps.apple.com/pa/app/httpixel/id1520739884',
     android: 'https://play.google.com/store/apps/details?id=com.taskalia.httpixel',
     image: <ImageHttpixel />,
@@ -42,14 +43,15 @@ const apps: IApp[] = [
   {
     id: uuidv4(),
     title: 'Pills247',
-    description: 'Create and set any kind of pill reminder. Get notified when the time comes on.',
+    description_key: 'personal_projects_pills',
     apple: 'https://apps.apple.com/qa/app/pills247/id1517724316',
     image: <ImagePills />,
   },
 ];
 
-const PersonalProjects = () => {
+const PersonalProjects = (): JSX.Element => {
   const context = useContext(ProfileContext);
+  const { t } = useTranslation();
   const textColor = { 'text-white': !context.isLightTheme, 'text-black': context.isLightTheme };
   const AppCards = apps.map((app) => <AppCard key={app.id} app={app} />);
 
@@ -59,7 +61,7 @@ const PersonalProjects = () => {
       className={classNames('py-10', { 'bg-gray-200': context.isLightTheme, 'bg-gray-900': !context.isLightTheme })}
     >
       <div className="container mx-auto">
-        <h1 className={classNames('text-5xl text-center font-semibold mb-3', textColor)}>Personal Projects</h1>
+        <h1 className={classNames('text-5xl text-center font-semibold mb-3', textColor)}>{t('projects')}</h1>
         <Slider {...sliderSettings}>{AppCards}</Slider>
       </div>
     </section>
@@ -68,6 +70,7 @@ const PersonalProjects = () => {
 
 const AppCard = (props: { app: IApp }) => {
   const context = useContext(ProfileContext);
+  const { t } = useTranslation();
   const textColor = { 'text-white': !context.isLightTheme, 'text-black': context.isLightTheme };
 
   return (
@@ -75,7 +78,7 @@ const AppCard = (props: { app: IApp }) => {
       <div className="flex-1 p-10">{props.app.image}</div>
       <div className="flex-1 p-6">
         <h2 className={classNames('text-4xl font-semibold', textColor)}>{props.app.title}</h2>
-        <p className={classNames('block mb-3 leading-loose', textColor)}>{props.app.description}</p>
+        <p className={classNames('block mb-3 leading-loose', textColor)}>{t(props.app.description_key)}</p>
         <div className="flex">
           {props.app.apple ? <StoreButton title="AppStore" icon={faAppStore} link={props.app.apple} /> : null}
           {props.app.android ? <StoreButton title="Playstore" icon={faGooglePlay} link={props.app.android} /> : null}

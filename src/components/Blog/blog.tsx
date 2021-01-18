@@ -3,7 +3,7 @@ import { ProfileContext } from '../../pages';
 import classNames from 'classnames';
 import { graphql, useStaticQuery } from 'gatsby';
 
-const Blog = () => {
+const Blog = (): JSX.Element => {
   const context = useContext(ProfileContext);
   const textColor = { 'text-white': !context.isLightTheme, 'text-black': context.isLightTheme };
   const data = useStaticQuery(graphql`
@@ -48,7 +48,7 @@ const PostCard = (props: { node: any }) => {
 
   return (
     <a
-      className={classNames('"flex-1 m-5 shadow-xl rounded-lg bg-gray-200"', {
+      className={classNames('flex-1 m-5 shadow-xl rounded-lg bg-gray-200', {
         'bg-gray-200': context.isLightTheme,
         'bg-gray-700': !context.isLightTheme,
       })}

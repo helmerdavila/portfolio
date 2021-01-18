@@ -4,9 +4,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBook } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
 import { ProfileContext } from '../../pages';
+import { useTranslation } from 'gatsby-plugin-react-i18next';
 
-const MyBook = () => {
+const MyBook = (): JSX.Element => {
   const context = useContext(ProfileContext);
+  const { t } = useTranslation();
   const textColor = { 'text-white': !context.isLightTheme, 'text-black': context.isLightTheme };
 
   return (
@@ -22,12 +24,7 @@ const MyBook = () => {
         </div>
         <div className="flex-1 p-6">
           <h2 className={classNames('text-5xl font-semibold', textColor)}>CTBook</h2>
-          <p className={classNames('block mb-3 leading-loose', textColor)}>
-            When I first started my career as a developer, I saw that there was a gap between technology and business,
-            I’ve collected all doubts that non-tech people have about tech startups, that’s how CTBOOK (CTO+Book) born.
-            So, if you are starting in the tech startup world (or you know somebody who does), I recommend you this
-            book, it’s written in the most simple language possible, avoiding any technical knowledge.
-          </p>
+          <p className={classNames('block mb-3 leading-loose', textColor)}>{t('ctbook_description')}</p>
           <a
             href="https://leanpub.com/ctbook/read_sample"
             target="_blank"
@@ -38,7 +35,7 @@ const MyBook = () => {
             })}
           >
             <FontAwesomeIcon icon={faBook} />
-            <span className="ml-3 font-semibold">Read sample</span>
+            <span className="ml-3 font-semibold">{t('ctbook_readsample')}</span>
           </a>
         </div>
       </div>
