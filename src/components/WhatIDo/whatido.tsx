@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconDefinition } from '@fortawesome/free-brands-svg-icons';
 import { ProfileContext } from '../../pages';
 import classNames from 'classnames';
-import { faBrowser, faCode, faMobile, faServer } from '@fortawesome/pro-duotone-svg-icons';
+import { faBrowser, faCode, faMobile, faServer } from '@helmerdavila/fontawesomehelmer/pro-duotone-svg-icons';
 import { useTranslation } from 'gatsby-plugin-react-i18next';
 
 const WhatIDoSection = (props: { icon: IconDefinition; title: string; content: string }) => {

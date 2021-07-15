@@ -7,7 +7,7 @@ import BattleshipImage from '../Images/BattleshipImage';
 import classNames from 'classnames';
 import { ProfileContext } from '../../pages';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCode, faExternalLinkAlt } from '@fortawesome/pro-duotone-svg-icons';
+import { faCode, faExternalLinkAlt } from '@helmerdavila/fontawesomehelmer/pro-duotone-svg-icons';
 import { useTranslation } from 'gatsby-plugin-react-i18next';
 
 const FreeProjects = (): JSX.Element => {
