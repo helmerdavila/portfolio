@@ -59,8 +59,11 @@ const PostCard = (props: { node: any }) => {
       <div className="relative bg-black pb-2/3 mb-3 rounded-lg">
         <img
           className="absolute h-full w-full object-cover rounded-t-lg"
-          alt={props.node.featuredImage.node.altText}
-          src={props.node.featuredImage.node.sourceUrl}
+          alt={props.node.featuredImage?.node?.altText ?? 'Helmer blog'}
+          src={
+            props.node.featuredImage?.node?.sourceUrl ??
+            'https://blog.helmerdavila.com/wp-content/uploads/2019/03/business-code-coding-943096-1-868x579.jpg'
+          }
         />
       </div>
       <h3 className={classNames('text-4xl font-semibold text-center p-4', textColor)}>{props.node.title}</h3>
