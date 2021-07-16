@@ -45,7 +45,9 @@ module.exports = {
         background_color: `#000000`,
         theme_color: `#000000`,
         display: `minimal-ui`,
-        icon: `src/images/favicon-192.png`, // This path is relative to the root of the site.
+        icon: `src/images/favicon-192.png`,
+      },
+    },
     {
       resolve: 'gatsby-plugin-mdx',
       options: {
@@ -64,9 +66,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-google-fonts`,
       options: {
-        fonts: [
-          `Quicksand\:500,700`, // you can also specify font weights and styles
-        ],
+        fonts: [`Quicksand\:500,700`],
       },
     },
     {
@@ -90,10 +90,13 @@ module.exports = {
           keySeparator: false,
           nsSeparator: false,
         },
+        pages: [
+          {
+            matchPath: '/:lang?/blog/:slug',
+            getLanguageFromPath: true,
+          },
+        ],
       },
     },
-    // this (optional) plugin enables Progressive Web App + Offline functionality
-    // To learn more, visit: https://gatsby.app/offline
-    // 'gatsby-plugin-offline',
   ],
 };
