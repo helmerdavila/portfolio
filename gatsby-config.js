@@ -17,6 +17,12 @@ module.exports = {
         path: `${__dirname}/src/images`,
       },
     },
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `locales`,
+        path: `${__dirname}/locales`,
+      },
+    },
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     {
@@ -56,14 +62,12 @@ module.exports = {
     {
       resolve: `gatsby-plugin-react-i18next`,
       options: {
-        path: `${__dirname}/locales`,
+        localeJsonSourceName: `locales`,
         languages: [`en`, `es`, `fr`],
         defaultLanguage: `en`,
-        // you can pass any i18next options
-        // pass following options to allow message content as a key
         i18nextOptions: {
           interpolation: {
-            escapeValue: false, // not needed for react as it escapes by default
+            escapeValue: false,
           },
           keySeparator: false,
           nsSeparator: false,
