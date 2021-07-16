@@ -1,3 +1,6 @@
+const path = require('path');
+const here = (...p) => path.join(__dirname, ...p);
+
 module.exports = {
   siteMetadata: {
     title: `Helmer Dávila`,
@@ -17,6 +20,14 @@ module.exports = {
         path: `${__dirname}/src/images`,
       },
     },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `blog`,
+        path: `${__dirname}/content/blog`,
+      },
+    },
+    {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `locales`,
@@ -35,6 +46,13 @@ module.exports = {
         theme_color: `#000000`,
         display: `minimal-ui`,
         icon: `src/images/favicon-192.png`, // This path is relative to the root of the site.
+    {
+      resolve: 'gatsby-plugin-mdx',
+      options: {
+        defaultLayouts: {
+          default: here('./src/templates/blog-markdown-page.tsx'),
+        },
+        extensions: ['.mdx', '.md', '.markdown'],
       },
     },
     {
