@@ -5,7 +5,7 @@ import LayoutBlog from '../components/LayoutBlog';
 interface IBlogPost {
   slug: string;
   excerpt: string;
-  frontmatter: { title: string; published: boolean; date: string; lang: string };
+  frontmatter: { title: string; description: string; published: boolean; date: string; lang: string };
 }
 interface IBlogPageQuery {
   blogposts: {
@@ -14,14 +14,21 @@ interface IBlogPageQuery {
 }
 
 const Blog = ({ data }: { data: IBlogPageQuery }) => {
-  console.log(data);
   const posts = data?.blogposts?.edges;
+
   return (
     <LayoutBlog>
-      <h1>This is a blog demo</h1>
-      {posts.map((post) => (
-        <h2 key={post.node.slug}>{post.node?.frontmatter?.title}</h2>
-      ))}
+      <div className="container pb-3 mx-auto">
+        {/* centered logo saying hblog */}
+        {posts.map((post) => (
+          <div  key={post.node.slug}>
+            <h2 className="text-5xl font-bold">{post.node?.frontmatter?.title}</h2>
+            <h3 className="mb-2 text-2xl">{post.node?.frontmatter?.description}</h3>
+            <img className="rounded-lg" src="https://blog.helmerdavila.com/wp-content/uploads/2019/03/business-code-coding-943096-1-1736x1157.jpg" />
+            <p className="mt-2 text-lg">{post.node?.excerpt}</p>
+          </div>
+        ))}
+      </div>
     </LayoutBlog>
   );
 };
@@ -47,6 +54,7 @@ export const query = graphql`
           frontmatter {
             title
             published
+            description
             date(formatString: "YYYY-MM-DD")
             lang
           }
