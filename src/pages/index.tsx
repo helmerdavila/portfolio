@@ -9,7 +9,7 @@ import FreeProjects from '../components/FreeProjects/freeprojects';
 import MyBook from '../components/MyBook/MyBook';
 import AboutMe from '../components/AboutMe/AboutMe';
 import PersonalProjects from '../components/PersonalProjects/personalprojects';
-import Blog from '../components/Blog/blog';
+import { graphql } from 'gatsby';
 
 export const ProfileContext = React.createContext<{ isLightTheme: boolean; toggleTheme: () => void }>({
   isLightTheme: true,
@@ -46,7 +46,6 @@ const IndexPage = () => (
     <WhatIDo />
     <MyStack />
     <PersonalProjects />
-    <Blog />
     <Projects />
     <MyBook />
     <FreeProjects />
