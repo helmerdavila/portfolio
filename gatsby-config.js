@@ -23,8 +23,8 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        name: `blog`,
-        path: `${__dirname}/content/blog`,
+        name: `content`,
+        path: `${__dirname}/content`,
       },
     },
     {
@@ -51,9 +51,6 @@ module.exports = {
     {
       resolve: 'gatsby-plugin-mdx',
       options: {
-        defaultLayouts: {
-          default: here('./src/templates/blog-markdown-page.tsx'),
-        },
         extensions: ['.mdx', '.md', '.markdown'],
       },
     },
@@ -90,12 +87,6 @@ module.exports = {
           keySeparator: false,
           nsSeparator: false,
         },
-        pages: [
-          {
-            matchPath: '/:lang?/blog/:slug',
-            getLanguageFromPath: true,
-          },
-        ],
       },
     },
   ],
