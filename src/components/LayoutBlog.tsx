@@ -11,7 +11,6 @@ const LayoutBlog = ({ children }: { children: any }) => (
       <>
         <HeaderBlog/>
         <div className="pt-20 bg-gray-200">{children}</div>
-        <Footer />
       </>
     )}
   />

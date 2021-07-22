@@ -1,6 +1,3 @@
-const path = require('path');
-const here = (...p) => path.join(__dirname, ...p);
-
 module.exports = {
   siteMetadata: {
     title: `Helmer Dávila`,
@@ -34,6 +31,12 @@ module.exports = {
         path: `${__dirname}/locales`,
       },
     },
+    {
+      resolve: 'gatsby-plugin-page-creator',
+      options: {
+        path: `${__dirname}/content`,
+      },
+    },
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     {
@@ -52,6 +55,9 @@ module.exports = {
       resolve: 'gatsby-plugin-mdx',
       options: {
         extensions: ['.mdx', '.md', '.markdown'],
+        defaultLayouts: {
+          default: require.resolve("./src/components/Blog/LayoutBlogPage.tsx")
+        }
       },
     },
     {
@@ -91,3 +97,4 @@ module.exports = {
     },
   ],
 };
+

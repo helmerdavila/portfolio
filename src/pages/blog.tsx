@@ -1,11 +1,19 @@
-import { graphql } from 'gatsby';
+import { graphql, Link } from 'gatsby';
 import React from 'react';
 import LayoutBlog from '../components/LayoutBlog';
 
 interface IBlogPost {
   slug: string;
   excerpt: string;
-  frontmatter: { title: string; description: string; published: boolean; date: string; lang: string };
+  frontmatter: {
+    title: string;
+    description: string;
+    published: boolean;
+    date: string;
+    lang: string;
+    imageCover: string;
+    imageAlt: string;
+  };
 }
 interface IBlogPageQuery {
   blogposts: {
@@ -18,15 +26,23 @@ const Blog = ({ data }: { data: IBlogPageQuery }) => {
 
   return (
     <LayoutBlog>
-      <div className="container pb-3 mx-auto">
-        {/* centered logo saying hblog */}
+      <div className="container max-w-3xl pb-3 mx-auto">
         {posts.map((post) => (
-          <div  key={post.node.slug}>
-            <h2 className="text-5xl font-bold">{post.node?.frontmatter?.title}</h2>
-            <h3 className="mb-2 text-2xl">{post.node?.frontmatter?.description}</h3>
-            <img className="rounded-lg" src="https://blog.helmerdavila.com/wp-content/uploads/2019/03/business-code-coding-943096-1-1736x1157.jpg" />
-            <p className="mt-2 text-lg">{post.node?.excerpt}</p>
-          </div>
+          <Link
+            to={`/${post.node.slug}`}
+            className="block mt-10 bg-white border-2 rounded-md shadow-sm first:mt-3"
+            key={post.node.slug}
+          >
+            <img
+              src={post.node?.frontmatter?.imageCover ?? 'https://assets.taskalia.com/blog/macbook.jpg'}
+              alt={post.node?.frontmatter?.imageAlt ?? 'Photo by Nikolay Tarashchenko on Unsplash'}
+            />
+            <div className="p-6">
+              <h2 className="text-4xl font-bold">{post.node?.frontmatter?.title}</h2>
+              <h5 className="mb-2 text-xl">{post.node?.frontmatter?.description}</h5>
+              <p className="mt-2 text-lg">{post.node?.excerpt}</p>
+            </div>
+          </Link>
         ))}
       </div>
     </LayoutBlog>
@@ -57,6 +73,8 @@ export const query = graphql`
             description
             date(formatString: "YYYY-MM-DD")
             lang
+            imageCover
+            imageAlt
           }
           excerpt(pruneLength: 90)
         }
@@ -64,3 +82,4 @@ export const query = graphql`
     }
   }
 `;
+

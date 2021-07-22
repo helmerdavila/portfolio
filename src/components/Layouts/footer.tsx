@@ -11,7 +11,7 @@ const Footer = (): JSX.Element => {
 
   return (
     <footer className={classNames({ 'bg-black': context.isLightTheme, 'bg-gray-800': !context.isLightTheme })}>
-      <div className="container mx-auto flex flex-col items-center py-6">
+      <div className="container flex flex-col items-center py-6 mx-auto">
         <div className="flex flex-row pt-5">
           <a
             className="bg-white p-3 rounded-full mr-2 w-10 h-10 flex justify-center items-center"

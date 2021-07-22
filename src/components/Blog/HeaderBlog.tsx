@@ -24,9 +24,9 @@ const HeaderBlog = (props: { scrollPositionY: number }) => {
   return (
     <nav className={navbarClass}>
       <div className="flex flex-row items-center">
-        <div onClick={scroll.scrollToTop} className={classNames('mr-3 text-black')}>
+        <Link to="/blog" className={classNames('mr-3 text-black')}>
           <FontAwesomeIcon icon={faHSquare} size="2x" />
-        </div>
+        </Link>
       </div>
       <div className="flex flex-row items-center">
         <ul className="flex flex-row justify-between">
