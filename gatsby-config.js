@@ -27,8 +27,8 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        name: `locales`,
-        path: `${__dirname}/locales`,
+        name: `translations`,
+        path: `${__dirname}/config/translations`,
       },
     },
     {
@@ -56,8 +56,8 @@ module.exports = {
       options: {
         extensions: ['.mdx', '.md', '.markdown'],
         defaultLayouts: {
-          default: require.resolve("./src/components/Blog/LayoutBlogPage.tsx")
-        }
+          default: require.resolve('./src/components/Blog/LayoutBlogPage.tsx'),
+        },
       },
     },
     {
@@ -80,21 +80,6 @@ module.exports = {
         policy: [{ userAgent: '*', allow: '/' }],
       },
     },
-    {
-      resolve: `gatsby-plugin-react-i18next`,
-      options: {
-        localeJsonSourceName: `locales`,
-        languages: [`en`, `es`, `fr`],
-        defaultLanguage: `en`,
-        i18nextOptions: {
-          interpolation: {
-            escapeValue: false,
-          },
-          keySeparator: false,
-          nsSeparator: false,
-        },
-      },
-    },
+    `gatsby-transformer-json`,
   ],
 };
-

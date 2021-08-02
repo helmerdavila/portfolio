@@ -3,13 +3,13 @@ import CtbookImage from '../Images/Ctbook';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBook } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
-import { ProfileContext } from '../../pages';
-import { useTranslation } from 'gatsby-plugin-react-i18next';
+import useTranslations from '../UseTranslations';
+import { ThemeContext } from '../Layout';
 
 const MyBook = (): JSX.Element => {
-  const context = useContext(ProfileContext);
-  const { t } = useTranslation();
+  const context = useContext(ThemeContext);
   const textColor = { 'text-white': !context.isLightTheme, 'text-black': context.isLightTheme };
+  const { ctbook_description, ctbook_readsample } = useTranslations();
 
   return (
     <div
@@ -24,7 +24,7 @@ const MyBook = (): JSX.Element => {
         </div>
         <div className="flex-1 p-6">
           <h2 className={classNames('text-5xl font-semibold', textColor)}>CTBook</h2>
-          <p className={classNames('block mb-3 leading-loose', textColor)}>{t('ctbook_description')}</p>
+          <p className={classNames('block mb-3 leading-loose', textColor)}>{ctbook_description}</p>
           <a
             href="https://leanpub.com/ctbook/read_sample"
             target="_blank"
@@ -35,7 +35,7 @@ const MyBook = (): JSX.Element => {
             })}
           >
             <FontAwesomeIcon icon={faBook} />
-            <span className="ml-3 font-semibold">{t('ctbook_readsample')}</span>
+            <span className="ml-3 font-semibold">{ctbook_readsample}</span>
           </a>
         </div>
       </div>

@@ -2,14 +2,15 @@ import React, { useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { withScroll } from 'react-window-decorators';
 import classNames from 'classnames';
-import { animateScroll as scroll, Link as LinkScroll } from 'react-scroll';
-import { ProfileContext } from '../../pages';
+import { animateScroll as scroll } from 'react-scroll';
 import { faDownload, faHSquare } from '@helmerdavila/fontawesomehelmer/pro-duotone-svg-icons';
 import DarkModeToggle from 'react-dark-mode-toggle';
 import useTranslations from '../UseTranslations';
+import { ThemeContext } from '../Layout';
+import { Link } from 'gatsby';
 
 const Header = (props: { scrollPositionY: number }) => {
-  const context = useContext(ProfileContext);
+  const context = useContext(ThemeContext);
   const navbarClass = classNames(
     'fixed flex flex-row w-screen h-16 px-5 md:px-8 justify-between z-20 transition duration-200 ease-in-out',
     {
@@ -18,6 +19,10 @@ const Header = (props: { scrollPositionY: number }) => {
     },
   );
   const { cv_link, download_cv } = useTranslations();
+  const stylesLink = classNames('mr-3 uppercase', {
+    'text-white': props.scrollPositionY === 0 || !context.isLightTheme,
+    'text-black': props.scrollPositionY > 0 && context.isLightTheme,
+  });
 
   return (
     <nav className={navbarClass}>
@@ -33,22 +38,23 @@ const Header = (props: { scrollPositionY: number }) => {
         </div>
       </div>
       <div className="flex flex-row items-center">
-        {/*<ul className="flex flex-row justify-between">*/}
-        {/*  {languages.map((lng) => (*/}
-        {/*    <li key={lng}>*/}
-        {/*      <Link*/}
-        {/*        to={originalPath}*/}
-        {/*        className={classNames('mr-3 uppercase', {*/}
-        {/*          'text-white': props.scrollPositionY === 0 || !context.isLightTheme,*/}
-        {/*          'text-black': props.scrollPositionY > 0 && context.isLightTheme,*/}
-        {/*        })}*/}
-        {/*        language={lng}*/}
-        {/*      >*/}
-        {/*        {lng}*/}
-        {/*      </Link>*/}
-        {/*    </li>*/}
-        {/*  ))}*/}
-        {/*</ul>*/}
+        <ul className="flex flex-row justify-between">
+          <li key="en">
+            <Link to="/" className={stylesLink}>
+              EN
+            </Link>
+          </li>
+          <li key="es">
+            <Link to="/es" className={stylesLink}>
+              ES
+            </Link>
+          </li>
+          <li key="fr">
+            <Link to="/fr" className={stylesLink}>
+              FR
+            </Link>
+          </li>
+        </ul>
         <DarkModeToggle size={50} onChange={context.toggleTheme} checked={!context.isLightTheme} />
         <a
           href={cv_link}

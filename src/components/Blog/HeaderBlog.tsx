@@ -1,17 +1,14 @@
 import React, { useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// @ts-ignore
 import { withScroll } from 'react-window-decorators';
 import classNames from 'classnames';
-import { animateScroll as scroll } from 'react-scroll';
-import { ProfileContext } from '../../pages';
 import { faHSquare } from '@helmerdavila/fontawesomehelmer/pro-duotone-svg-icons';
-import { Link, useI18next, useTranslation } from 'gatsby-plugin-react-i18next';
-// @ts-ignore
 import DarkModeToggle from 'react-dark-mode-toggle';
+import { ThemeContext } from '../Layout';
+import { Link } from 'gatsby';
 
 const HeaderBlog = (props: { scrollPositionY: number }) => {
-  const context = useContext(ProfileContext);
+  const context = useContext(ThemeContext);
   const navbarClass = classNames(
     'fixed flex flex-row w-screen h-16 px-5 md:px-8 justify-between z-20 transition duration-200 ease-in-out bg-white',
     {
@@ -45,4 +42,3 @@ const HeaderBlog = (props: { scrollPositionY: number }) => {
 };
 
 export default withScroll(HeaderBlog);
-

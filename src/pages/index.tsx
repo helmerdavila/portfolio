@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import Layout from '../components/layout';
+import React from 'react';
 import SEO from '../components/seo';
 import Presentation from '../components/Presentation/presentation';
 import Projects from '../components/Projects/projects';
@@ -9,33 +8,10 @@ import FreeProjects from '../components/FreeProjects/freeprojects';
 import MyBook from '../components/MyBook/MyBook';
 import AboutMe from '../components/AboutMe/AboutMe';
 import PersonalProjects from '../components/PersonalProjects/personalprojects';
-import { graphql } from 'gatsby';
-
-export const ProfileContext = React.createContext<{ isLightTheme: boolean; toggleTheme: () => void }>({
-  isLightTheme: true,
-  toggleTheme: () => {},
-});
-
-class ProfileContextProvider extends Component<unknown, unknown> {
-  state = {
-    isLightTheme: true,
-  };
-
-  onToggleTheme = () => {
-    this.setState({ isLightTheme: !this.state.isLightTheme });
-  };
-
-  render() {
-    return (
-      <ProfileContext.Provider value={{ isLightTheme: this.state.isLightTheme, toggleTheme: this.onToggleTheme }}>
-        {this.props.children}
-      </ProfileContext.Provider>
-    );
-  }
-}
+import Footer from '../components/Layouts/footer';
 
 const IndexPage = () => (
-  <Layout>
+  <>
     <SEO
       title="Fullstack Web Developer"
       keywords={['helmer davila', 'fullstack', 'developer', 'react', 'vue', 'angular', 'react native']}
@@ -49,27 +25,8 @@ const IndexPage = () => (
     <Projects />
     <MyBook />
     <FreeProjects />
-  </Layout>
+    <Footer />
+  </>
 );
 
-export default function App() {
-  return (
-    <ProfileContextProvider>
-      <IndexPage />
-    </ProfileContextProvider>
-  );
-}
-
-export const query = graphql`
-  query ($language: String!) {
-    locales: allLocale(filter: { language: { eq: $language } }) {
-      edges {
-        node {
-          ns
-          data
-          language
-        }
-      }
-    }
-  }
-`;
+export default IndexPage;

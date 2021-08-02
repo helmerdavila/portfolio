@@ -12,11 +12,11 @@ import {
 } from '@fortawesome/free-brands-svg-icons';
 import { v4 as uuidv4 } from 'uuid';
 import classNames from 'classnames';
-import { ProfileContext } from '../../pages';
-import { useTranslation } from 'gatsby-plugin-react-i18next';
+import useTranslations from '../UseTranslations';
+import { ThemeContext } from '../Layout';
 
 const MyStackSection = (props: { title: string; description: string; icons: IconDefinition[] }) => {
-  const context = useContext(ProfileContext);
+  const context = useContext(ThemeContext);
   const textColor = { 'text-white': !context.isLightTheme, 'text-black': context.isLightTheme };
 
   return (
@@ -33,9 +33,9 @@ const MyStackSection = (props: { title: string; description: string; icons: Icon
 };
 
 const MyStack = (): JSX.Element => {
-  const context = useContext(ProfileContext);
-  const { t } = useTranslation();
+  const context = useContext(ThemeContext);
   const textColor = { 'text-white': !context.isLightTheme, 'text-black': context.isLightTheme };
+  const { my_stack, my_stack_backend, my_stack_frontend, my_stack_sysops } = useTranslations();
 
   return (
     <section
@@ -43,15 +43,15 @@ const MyStack = (): JSX.Element => {
       className={classNames('py-10', { 'bg-white': context.isLightTheme, 'bg-gray-800': !context.isLightTheme })}
     >
       <div className="container mx-auto">
-        <h1 className={classNames('text-5xl font-semibold text-center mb-3', textColor)}>{t('my_stack')}</h1>
+        <h1 className={classNames('text-5xl font-semibold text-center mb-3', textColor)}>{my_stack}</h1>
         <div className="flex flex-col sm:flex-row justify-around">
-          <MyStackSection icons={[faPhp, faNodeJs]} title="PHP | NodeJS" description={t('my_stack_backend')} />
+          <MyStackSection icons={[faPhp, faNodeJs]} title="PHP | NodeJS" description={my_stack_backend} />
           <MyStackSection
             icons={[faReact, faAngular, faVuejs]}
             title="VueJs | Angular | React"
-            description={t('my_stack_frontend')}
+            description={my_stack_frontend}
           />
-          <MyStackSection icons={[faAws, faDocker]} title="AWS | Docker" description={t('my_stack_sysops')} />
+          <MyStackSection icons={[faAws, faDocker]} title="AWS | Docker" description={my_stack_sysops} />
         </div>
       </div>
     </section>

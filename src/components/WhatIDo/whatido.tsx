@@ -1,13 +1,13 @@
 import React, { useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconDefinition } from '@fortawesome/free-brands-svg-icons';
-import { ProfileContext } from '../../pages';
 import classNames from 'classnames';
 import { faBrowser, faCode, faMobile, faServer } from '@helmerdavila/fontawesomehelmer/pro-duotone-svg-icons';
-import { useTranslation } from 'gatsby-plugin-react-i18next';
+import useTranslations from '../UseTranslations';
+import { ThemeContext } from '../Layout';
 
 const WhatIDoSection = (props: { icon: IconDefinition; title: string; content: string }) => {
-  const context = useContext(ProfileContext);
+  const context = useContext(ThemeContext);
   const textColor = { 'text-white': !context.isLightTheme, 'text-black': context.isLightTheme };
 
   return (
@@ -31,9 +31,9 @@ const WhatIDoSection = (props: { icon: IconDefinition; title: string; content: s
 };
 
 const WhatIDo = (): JSX.Element => {
-  const context = useContext(ProfileContext);
+  const context = useContext(ThemeContext);
   const textColor = { 'text-white': !context.isLightTheme, 'text-black': context.isLightTheme };
-  const { t } = useTranslation();
+  const { what_i_do, what_i_do_mobile, what_i_do_frontend, what_i_do_backend, what_i_do_sysops } = useTranslations();
 
   return (
     <section
@@ -41,12 +41,12 @@ const WhatIDo = (): JSX.Element => {
       className={classNames('py-10', { 'bg-gray-200': context.isLightTheme, 'bg-gray-900': !context.isLightTheme })}
     >
       <div className="container mx-auto">
-        <h2 className={classNames('text-5xl font-semibold text-center mb-4', textColor)}>{t('what_i_do')}</h2>
+        <h2 className={classNames('text-5xl font-semibold text-center mb-4', textColor)}>{what_i_do}</h2>
         <div className="flex flex-wrap">
-          <WhatIDoSection icon={faMobile} title="Mobile" content={t('what_i_do_mobile')} />
-          <WhatIDoSection icon={faBrowser} title="Frontend" content={t('what_i_do_frontend')} />
-          <WhatIDoSection icon={faCode} title="Backend" content={t('what_i_do_backend')} />
-          <WhatIDoSection icon={faServer} title="SysOps" content={t('what_i_do_sysops')} />
+          <WhatIDoSection icon={faMobile} title="Mobile" content={what_i_do_mobile} />
+          <WhatIDoSection icon={faBrowser} title="Frontend" content={what_i_do_frontend} />
+          <WhatIDoSection icon={faCode} title="Backend" content={what_i_do_backend} />
+          <WhatIDoSection icon={faServer} title="SysOps" content={what_i_do_sysops} />
         </div>
       </div>
     </section>

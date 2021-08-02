@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import classNames from 'classnames';
-import { ProfileContext } from '../../pages';
 import ImageHttpixel from '../Images/ImageHttpixel';
 import ImagePills from '../Images/ImagePills';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,7 +9,8 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { v4 as uuidv4 } from 'uuid';
-import { useTranslation } from 'gatsby-plugin-react-i18next';
+import useTranslations from '../UseTranslations';
+import { ThemeContext } from '../Layout';
 
 interface IApp {
   id: string;
@@ -50,8 +50,8 @@ const apps: IApp[] = [
 ];
 
 const PersonalProjects = (): JSX.Element => {
-  const context = useContext(ProfileContext);
-  const { t } = useTranslation();
+  const context = useContext(ThemeContext);
+  const { projects } = useTranslations();
   const textColor = { 'text-white': !context.isLightTheme, 'text-black': context.isLightTheme };
   const AppCards = apps.map((app) => <AppCard key={app.id} app={app} />);
 
@@ -61,7 +61,7 @@ const PersonalProjects = (): JSX.Element => {
       className={classNames('py-10', { 'bg-gray-200': context.isLightTheme, 'bg-gray-900': !context.isLightTheme })}
     >
       <div className="container mx-auto">
-        <h1 className={classNames('text-5xl text-center font-semibold mb-3', textColor)}>{t('projects')}</h1>
+        <h1 className={classNames('text-5xl text-center font-semibold mb-3', textColor)}>{projects}</h1>
         <Slider {...sliderSettings}>{AppCards}</Slider>
       </div>
     </section>
@@ -69,8 +69,8 @@ const PersonalProjects = (): JSX.Element => {
 };
 
 const AppCard = (props: { app: IApp }) => {
-  const context = useContext(ProfileContext);
-  const { t } = useTranslation();
+  const context = useContext(ThemeContext);
+  const t = useTranslations();
   const textColor = { 'text-white': !context.isLightTheme, 'text-black': context.isLightTheme };
 
   return (
@@ -78,7 +78,7 @@ const AppCard = (props: { app: IApp }) => {
       <div className="flex-1 p-10">{props.app.image}</div>
       <div className="flex-1 p-6">
         <h2 className={classNames('text-4xl font-semibold', textColor)}>{props.app.title}</h2>
-        <p className={classNames('block mb-3 leading-loose', textColor)}>{t(props.app.description_key)}</p>
+        <p className={classNames('block mb-3 leading-loose', textColor)}>{t[props.app.description_key]}</p>
         <div className="flex">
           {props.app.apple ? <StoreButton title="AppStore" icon={faAppStore} link={props.app.apple} /> : null}
           {props.app.android ? <StoreButton title="Playstore" icon={faGooglePlay} link={props.app.android} /> : null}
@@ -89,7 +89,7 @@ const AppCard = (props: { app: IApp }) => {
 };
 
 const StoreButton = (props: { title: string; icon: IconProp; link: string }) => {
-  const context = useContext(ProfileContext);
+  const context = useContext(ThemeContext);
 
   return (
     <a

@@ -2,12 +2,12 @@ import React, { useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub, faLinkedinIn } from '@fortawesome/free-brands-svg-icons';
 import classNames from 'classnames';
-import { ProfileContext } from '../../pages';
-import { useTranslation } from 'gatsby-plugin-react-i18next';
+import { ThemeContext } from '../Layout';
+import useTranslations from '../UseTranslations';
 
 const Footer = (): JSX.Element => {
-  const context = useContext(ProfileContext);
-  const { t } = useTranslation();
+  const context = useContext(ThemeContext);
+  const { powered_by_gatsby } = useTranslations();
 
   return (
     <footer className={classNames({ 'bg-black': context.isLightTheme, 'bg-gray-800': !context.isLightTheme })}>
@@ -31,8 +31,7 @@ const Footer = (): JSX.Element => {
           </a>
         </div>
         <p className="block text-white pt-6">
-          <span>© {new Date().getFullYear()}</span> -- <span>Helmer Dávila</span> --{' '}
-          <span>{t('powered_by_gatsby')}</span>
+          <span>© {new Date().getFullYear()}</span> -- <span>Helmer Dávila</span> -- <span>{powered_by_gatsby}</span>
         </p>
       </div>
     </footer>
