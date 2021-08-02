@@ -20,8 +20,8 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        name: `content`,
-        path: `${__dirname}/content`,
+        name: `blog`,
+        path: `${__dirname}/blog`,
       },
     },
     {
@@ -55,9 +55,6 @@ module.exports = {
       resolve: 'gatsby-plugin-mdx',
       options: {
         extensions: ['.mdx', '.md', '.markdown'],
-        defaultLayouts: {
-          default: require.resolve('./src/components/Blog/LayoutBlogPage.tsx'),
-        },
       },
     },
     {

@@ -22,10 +22,10 @@ module.exports = {
   },
   fr: {
     path: `fr`,
-    locale: `es-ES`,
+    locale: `fr-FR`,
     dateFormat: `DD/MM/YYYY`,
-    siteLanguage: `es`,
-    ogLanguage: `es-ES`,
+    siteLanguage: `fr`,
+    ogLanguage: `fr-FR`,
     defaultTitle: `i18n mit Gatsby nutzen`,
     defaultDescription: `Gatsby Beispielseite, die MDX und i18n (frei von dependencies) nutzt`,
   },
