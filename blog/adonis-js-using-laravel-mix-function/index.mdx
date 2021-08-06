@@ -1,0 +1,50 @@
+---
+title: "[Adonis JS] Using Laravel Mix function"
+description: A function often used in many Laravel projects
+lang: en
+date: 2019-04-04
+published: true
+imageCover: https://assets.taskalia.com/blog/adonis.png
+imageAlt: Photo by Jack Delulio on Unsplash
+---
+import { Gist } from 'mdx-embed'
+
+# [Adonis JS] Using Laravel Mix function
+
+I come from a Laravel background, so when I started developing a project in Adonis JS I was missing their most useful frontend tool: **Laravel Mix**
+
+What I missed was the useful `mix` function, with this function you can use a hashed version of your assets because, you know, if you are always serving assets from the server with the same filename, the browser will serve the old version that it has stored, this could increase the speed of your site, but you will need to always serve the last version of your assets. To avoid this, developers can add a hash or create a function from scratch, but if Laravel has the function, why not use the same logic in Adonis JS?
+
+The goal is to create a global function for the views. We can add it in `start/hooks.js.`
+
+```js
+const { hooks } = require('@adonisjs/ignitor');
+// Import the mix manifest file
+const manifest = require('../public/mix-manifest');
+
+hooks.after.providersBooted(() => {
+  const View = use('View');
+
+  // Creating the mix function in edge views
+  View.global('mix', function (asset) {
+    if (!manifest[`/${asset}`]) {
+      return '404-asset-not-found';
+    }
+
+    return manifest[`/${asset}`];
+  })
+});
+```
+
+Then, restart your AdonisJS server and you can use it in your views in two different ways, using AdonisJS functions or Html.
+
+```jsx
+{{ css(mix('css/your-styles.css')) }}
+
+# Or
+<link href="{{ mix('css/your-styles.css') }}" rel="stylesheet">
+```
+
+Here is a complete GIST with all the instructions
+
+<Gist gistLink="helmerdavila/8045b4520be253461055f5e35170a924"/>

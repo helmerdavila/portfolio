@@ -3,12 +3,18 @@ import LayoutBlog from './LayoutBlog';
 import { graphql } from 'gatsby';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 
-const LayoutBlogPage = ({ children, data: { mdx } }) => {
+const LayoutBlogPage = ({ data: { mdx } }) => {
   return (
     <LayoutBlog>
-      <div className="container max-w-4xl py-5 mx-auto">
+      <div className="container max-w-3xl xl:max-w-6xl py-5 mx-auto">
         <div className="bg-white border-2 shadow-sm">
-          <img className="" src={mdx.frontmatter?.imageCover ?? ''} alt={mdx.frontmatter?.imageAlt ?? ''} />
+          <div>
+            <img
+              className="object-cover w-full"
+              src={mdx.frontmatter?.imageCover ?? ''}
+              alt={mdx.frontmatter?.imageAlt ?? ''}
+            />
+          </div>
           <div className="p-12">
             <MDXRenderer>{mdx.body}</MDXRenderer>
           </div>

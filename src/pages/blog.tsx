@@ -1,4 +1,4 @@
-import { graphql, Link, useStaticQuery } from 'gatsby';
+import { graphql } from 'gatsby';
 import React from 'react';
 import LayoutBlog from '../components/LayoutBlog';
 import LocalizedLink from '../components/LocalizedLink';
@@ -32,17 +32,20 @@ const Blog = ({ data }: { data: IBlogPageQuery }) => {
 
   return (
     <LayoutBlog>
-      <div className="container max-w-3xl pb-3 mx-auto">
+      <div className="container max-w-3xl xl:max-w-6xl pb-3 mx-auto">
         {posts.map((post) => (
           <LocalizedLink
             to={`/blog/${post.node.parent.relativeDirectory}`}
             className="block mt-10 bg-white border-2 rounded-md shadow-sm first:mt-3"
             key={post.node.parent.relativeDirectory}
           >
-            <img
-              src={post.node?.frontmatter?.imageCover ?? 'https://assets.taskalia.com/blog/macbook.jpg'}
-              alt={post.node?.frontmatter?.imageAlt ?? 'Photo by Nikolay Tarashchenko on Unsplash'}
-            />
+            <div>
+              <img
+                className="object-cover h-full w-full"
+                src={post.node?.frontmatter?.imageCover ?? 'https://assets.taskalia.com/blog/macbook.jpg'}
+                alt={post.node?.frontmatter?.imageAlt ?? 'Photo by Nikolay Tarashchenko on Unsplash'}
+              />
+            </div>
             <div className="p-6">
               <h2 className="text-4xl font-bold">{post.node?.frontmatter?.title}</h2>
               <h5 className="mb-2 text-xl">{post.node?.frontmatter?.description}</h5>

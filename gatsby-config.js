@@ -6,6 +6,7 @@ module.exports = {
     siteUrl: `https://www.helmerdavila.com`,
   },
   plugins: [
+    `gatsby-plugin-mdx-embed`,
     `gatsby-plugin-postcss`,
     `gatsby-plugin-sitemap`,
     `gatsby-plugin-react-helmet`,

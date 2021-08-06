@@ -5,7 +5,7 @@ const LayoutBlog = ({ children }: { children: any }) => {
   return (
     <>
       <HeaderBlog />
-      <div className="pt-20 bg-gray-200 h-screen">{children}</div>
+      <div className="pt-20 bg-gray-200 h-full">{children}</div>
     </>
   );
 };
