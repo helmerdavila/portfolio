@@ -32,12 +32,6 @@ module.exports = {
         path: `${__dirname}/config/translations`,
       },
     },
-    {
-      resolve: 'gatsby-plugin-page-creator',
-      options: {
-        path: `${__dirname}/content`,
-      },
-    },
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     {
