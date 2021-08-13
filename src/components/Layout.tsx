@@ -9,7 +9,9 @@ const ThemeContext = React.createContext<{ isLightTheme: boolean; toggleTheme: (
 });
 
 const ThemeContextProvider = ({ children }) => {
-  let themeValueInMemory = (localStorage.getItem('helmer_portfolio_is_light') as unknown as boolean) ?? true;
+  const windowGlobal = typeof window !== 'undefined' && window;
+  let themeValueInMemory =
+    (windowGlobal?.localStorage?.getItem('helmer_portfolio_is_light') as unknown as boolean) ?? true;
   themeValueInMemory = typeof themeValueInMemory === 'string' ? JSON.parse(themeValueInMemory) : themeValueInMemory;
   const [isLightTheme, setIsLightTheme] = useState<boolean>(themeValueInMemory);
 
