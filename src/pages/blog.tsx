@@ -4,6 +4,7 @@ import React, { useContext } from 'react';
 import { ThemeContext } from '../components/Layout';
 import LayoutBlog from '../components/LayoutBlog';
 import LocalizedLink from '../components/LocalizedLink';
+import SEO from '../components/seo';
 
 interface IBlogPost {
   excerpt: string;
@@ -36,6 +37,11 @@ const Blog = ({ data }: { data: IBlogPageQuery }) => {
 
   return (
     <LayoutBlog>
+      <SEO
+        title="Helmer Blog"
+        keywords={['fullstack', 'developer', 'react', 'vue', 'angular', 'react native']}
+        description="My technical blog"
+      />
       <div className="container max-w-3xl pb-3 mx-auto xl:max-w-6xl">
         {posts.map((post) => (
           <LocalizedLink

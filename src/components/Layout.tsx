@@ -1,17 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const LocaleContext = React.createContext(null);
 const ThemeContext = React.createContext<{ isLightTheme: boolean; toggleTheme: () => void }>({
-  isLightTheme: true,
+  isLightTheme: (localStorage.getItem('helmer_portfolio_is_light') as unknown as boolean) ?? true,
   toggleTheme: () => {
     return;
   },
 });
 
 const ThemeContextProvider = ({ children }) => {
-  const [isLightTheme, setIsLightTheme] = useState<boolean>(true);
+  let themeValueInMemory = (localStorage.getItem('helmer_portfolio_is_light') as unknown as boolean) ?? true;
+  themeValueInMemory = typeof themeValueInMemory === 'string' ? JSON.parse(themeValueInMemory) : themeValueInMemory;
+  const [isLightTheme, setIsLightTheme] = useState<boolean>(themeValueInMemory);
 
   const onToggleTheme = () => {
+    localStorage.setItem('helmer_portfolio_is_light', (!isLightTheme).toString());
     setIsLightTheme(!isLightTheme);
   };
 
@@ -29,3 +32,4 @@ const Layout = ({ children, pageContext: { locale } }: { children: unknown; page
 );
 
 export { Layout, LocaleContext, ThemeContext };
+

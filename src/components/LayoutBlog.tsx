@@ -10,7 +10,7 @@ const LayoutBlog = ({ children }: { children: any }) => {
   return (
     <>
       <HeaderBlog />
-      <div className={classNames(pageBackground, 'pt-20 h-full')}>{children}</div>
+      <div className={classNames(pageBackground, 'pt-20 h-full min-h-screen')}>{children}</div>
     </>
   );
 };
