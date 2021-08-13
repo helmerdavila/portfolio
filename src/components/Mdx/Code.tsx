@@ -1,12 +1,20 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Highlight, { defaultProps } from 'prism-react-renderer';
 import nightOwlNight from 'prism-react-renderer/themes/nightOwlLight';
+import nightOwl from 'prism-react-renderer/themes/nightOwl';
+import { ThemeContext } from '../Layout';
 
 export default ({ children, className }) => {
+  const context = useContext(ThemeContext);
   const language = className.replace(/language-/, '') || '';
 
   return (
-    <Highlight {...defaultProps} theme={nightOwlNight} code={children} language={language}>
+    <Highlight
+      {...defaultProps}
+      theme={context.isLightTheme ? nightOwlNight : nightOwl}
+      code={children}
+      language={language}
+    >
       {({ className, style, tokens, getLineProps, getTokenProps }) => (
         <pre className={className} style={{ ...style }}>
           {tokens.map((line, index) => {
@@ -24,3 +32,4 @@ export default ({ children, className }) => {
     </Highlight>
   );
 };
+

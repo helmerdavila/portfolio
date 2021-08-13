@@ -1,13 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import LayoutBlog from './LayoutBlog';
 import { graphql } from 'gatsby';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
+import { ThemeContext } from './Layout';
+import classNames from 'classnames';
 
 const LayoutBlogPage = ({ data: { mdx } }) => {
+  const context = useContext(ThemeContext);
+  const pageBackground = { 'bg-white shadow-sm': context.isLightTheme, 'bg-gray-800 border-gray-800': !context.isLightTheme };
+
   return (
     <LayoutBlog>
-      <div className="container max-w-3xl xl:max-w-6xl py-5 mx-auto">
-        <div className="bg-white border-2 shadow-sm">
+      <div className="container max-w-3xl py-5 mx-auto xl:max-w-6xl">
+        <div className={classNames(pageBackground, 'border-2')}>
           <div>
             <img
               className="object-cover w-full"
@@ -30,7 +35,6 @@ export const query = graphql`
   query Post($locale: String!, $title: String!) {
     mdx(frontmatter: { title: { eq: $title } }, fields: { locale: { eq: $locale } }) {
       frontmatter {
-        title
         imageCover
         imageAlt
       }
@@ -38,3 +42,4 @@ export const query = graphql`
     }
   }
 `;
+

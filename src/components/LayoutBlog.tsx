@@ -1,11 +1,16 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import HeaderBlog from './Layouts/HeaderBlog';
+import { ThemeContext } from './Layout';
+import classNames from 'classnames';
 
 const LayoutBlog = ({ children }: { children: any }) => {
+  const context = useContext(ThemeContext);
+  const pageBackground = { 'bg-gray-200': context.isLightTheme, 'bg-gray-900': !context.isLightTheme };
+
   return (
     <>
       <HeaderBlog />
-      <div className="pt-20 bg-gray-200 h-full">{children}</div>
+      <div className={classNames(pageBackground, 'pt-20 h-full')}>{children}</div>
     </>
   );
 };
