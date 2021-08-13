@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 const LocaleContext = React.createContext(null);
 const ThemeContext = React.createContext<{ isLightTheme: boolean; toggleTheme: () => void }>({
@@ -27,7 +27,13 @@ const ThemeContextProvider = ({ children }) => {
 // This e.g. enables the LocalizedLink to function correctly
 // As this component wraps every page (due to the wrapPageElement API) we can be sure to have
 // the locale available everywhere!
-const Layout = ({ children, pageContext: { locale } }: { children: unknown; pageContext?: { locale: string } }) => (
+const Layout = ({
+  children,
+  pageContext: { locale },
+}: {
+  children: unknown;
+  pageContext?: { locale: string };
+}): JSX.Element => (
   <LocaleContext.Provider value={{ locale }}>
     <ThemeContextProvider>{children}</ThemeContextProvider>
   </LocaleContext.Provider>

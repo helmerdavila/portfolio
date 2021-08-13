@@ -5,9 +5,9 @@ import { ThemeContext } from '../components/Layout';
 import LayoutBlog from '../components/LayoutBlog';
 import LocalizedLink from '../components/LocalizedLink';
 import SEO from '../components/seo';
-import {IBlogPageQuery} from '../interfaces';
+import { IBlogPageQuery } from '../interfaces';
 
-const Blog = ({ data }: { data: IBlogPageQuery }) => {
+const Blog = ({ data }: { data: IBlogPageQuery }): JSX.Element => {
   const context = useContext(ThemeContext);
   const themeStyles = { 'text-black': context.isLightTheme, 'text-white': !context.isLightTheme };
   const posts = data?.allMdx?.edges;

@@ -4,10 +4,14 @@ import { graphql } from 'gatsby';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 import { ThemeContext } from './Layout';
 import classNames from 'classnames';
+import { IBlogPost } from '../interfaces';
 
-const LayoutBlogPage = ({ data: { mdx } }) => {
+const LayoutBlogPage = ({ data: { mdx } }: { data: { mdx: IBlogPost } }): JSX.Element => {
   const context = useContext(ThemeContext);
-  const pageBackground = { 'bg-white shadow-sm': context.isLightTheme, 'bg-gray-800 border-gray-800': !context.isLightTheme };
+  const pageBackground = {
+    'bg-white shadow-sm': context.isLightTheme,
+    'bg-gray-800 border-gray-800': !context.isLightTheme,
+  };
 
   return (
     <LayoutBlog>

@@ -4,7 +4,7 @@ import { LocaleContext } from './Layout';
 import locales from '../../config/i18n';
 
 // Use the globally available context to choose the right path
-const LocalizedLink = ({ to, ...props }) => {
+const LocalizedLink = ({ to, ...props }: { to: string }): JSX.Element => {
   const { locale } = React.useContext(LocaleContext);
 
   const isIndex = to === `/`;
@@ -19,3 +19,4 @@ const LocalizedLink = ({ to, ...props }) => {
 };
 
 export default LocalizedLink;
+

@@ -12,10 +12,10 @@ function SEO({
 }: {
   description: string;
   lang: string;
-  meta: any[];
+  meta: unknown[];
   keywords: string[];
   title: string;
-}) {
+}): JSX.Element {
   return (
     <StaticQuery
       query={detailsQuery}
@@ -105,3 +105,4 @@ const detailsQuery = graphql`
     }
   }
 `;
+

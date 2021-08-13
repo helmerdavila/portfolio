@@ -4,7 +4,7 @@ import nightOwlNight from 'prism-react-renderer/themes/nightOwlLight';
 import nightOwl from 'prism-react-renderer/themes/nightOwl';
 import { ThemeContext } from '../Layout';
 
-export default ({ children, className }) => {
+export default ({ children, className }: { children: unknown; className: string }): JSX.Element => {
   const context = useContext(ThemeContext);
   const language = className.replace(/language-/, '') || '';
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { StaticQuery, graphql } from 'gatsby';
 import Img from 'gatsby-image';
 
-const reactibookImage = () => {
+const reactibookImage = (): unknown => {
   return (
     <StaticQuery
       query={graphql`

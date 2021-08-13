@@ -2,7 +2,7 @@ import React from 'react';
 import { graphql, StaticQuery } from 'gatsby';
 import Img from 'gatsby-image';
 
-const fitnesspassMobileImage = () => {
+const fitnesspassMobileImage = (): unknown => {
   return (
     <StaticQuery
       query={graphql`

@@ -2,7 +2,7 @@ import React from 'react';
 import { graphql, useStaticQuery } from 'gatsby';
 import Img from 'gatsby-image';
 
-const imageHttpixel = () => {
+const imageHttpixel = (): unknown => {
   const data = useStaticQuery(graphql`
     query {
       placeholderImage: file(relativePath: { eq: "portfolio-httpixel.png" }) {

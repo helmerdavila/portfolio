@@ -2,7 +2,7 @@ import React from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
 import { LocaleContext } from './Layout';
 
-const useTranslations = () => {
+const useTranslations = (): Record<string, string> => {
   // Grab the locale (passed through context) from the Context Provider
   const { locale } = React.useContext(LocaleContext);
   // Query the JSON files in <rootDir>/i18n/translations
