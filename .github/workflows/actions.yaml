@@ -3,16 +3,16 @@ on:
     branches:
       - main
 jobs:
-  build:
+  linting:
     runs-on: ubuntu-latest
+    env:
+      FONTAWESOME_GITHUB_NPM_TOKEN: ${{ secrets.FONTAWESOME_GITHUB_NPM_TOKEN }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
           node-version: '14.17.3'
           cache: yarn
-        env:
-          FONTAWESOME_GITHUB_NPM_TOKEN: ${{ secrets.FONTAWESOME_GITHUB_NPM_TOKEN }}
       - name: Installing dependencies
         run: yarn --frozen-lockfile
       - name: Running eslint
