@@ -9,19 +9,23 @@ import MyBook from '../components/MyBook/MyBook';
 import AboutMe from '../components/AboutMe/AboutMe';
 import PersonalProjects from '../components/PersonalProjects/personalprojects';
 import Footer from '../components/Layouts/footer';
+import BlogPreview from '../components/Blog/blog';
+import { graphql } from 'gatsby';
+import { IBlogPageQuery } from '../interfaces';
 
-const IndexPage = () => (
+const IndexPage = ({ data }: { data: IBlogPageQuery }): JSX.Element => (
   <>
     <SEO
       title="Fullstack Web Developer"
       keywords={['helmer davila', 'fullstack', 'developer', 'react', 'vue', 'angular', 'react native']}
-      description="My technical blog"
+      description="My personal portfolio"
     />
     <Presentation />
     <AboutMe />
     <WhatIDo />
     <MyStack />
     <PersonalProjects />
+    <BlogPreview data={data} />
     <Projects />
     <MyBook />
     <FreeProjects />
@@ -29,4 +33,34 @@ const IndexPage = () => (
   </>
 );
 
+export const query = graphql`
+  query blogpreview($locale: String!, $dateFormat: String!) {
+    allMdx(
+      filter: { fields: { locale: { eq: $locale } } }
+      sort: { fields: [frontmatter___date], order: DESC }
+      limit: 2
+    ) {
+      edges {
+        node {
+          frontmatter {
+            title
+            imageAlt
+            imageCover
+            date(formatString: $dateFormat)
+          }
+          fields {
+            locale
+          }
+          parent {
+            ... on File {
+              relativeDirectory
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
 export default IndexPage;
+

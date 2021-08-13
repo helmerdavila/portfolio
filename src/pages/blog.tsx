@@ -5,30 +5,7 @@ import { ThemeContext } from '../components/Layout';
 import LayoutBlog from '../components/LayoutBlog';
 import LocalizedLink from '../components/LocalizedLink';
 import SEO from '../components/seo';
-
-interface IBlogPost {
-  excerpt: string;
-  frontmatter: {
-    title: string;
-    description: string;
-    published: boolean;
-    date: string;
-    lang: string;
-    imageCover: string;
-    imageAlt: string;
-  };
-  fields: {
-    locale: string;
-  };
-  parent: {
-    relativeDirectory: string;
-  };
-}
-interface IBlogPageQuery {
-  allMdx: {
-    edges: { node: IBlogPost }[];
-  };
-}
+import {IBlogPageQuery} from '../interfaces';
 
 const Blog = ({ data }: { data: IBlogPageQuery }) => {
   const context = useContext(ThemeContext);

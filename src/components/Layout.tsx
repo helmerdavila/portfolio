@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 const LocaleContext = React.createContext(null);
 const ThemeContext = React.createContext<{ isLightTheme: boolean; toggleTheme: () => void }>({
-  isLightTheme: (localStorage.getItem('helmer_portfolio_is_light') as unknown as boolean) ?? true,
+  isLightTheme: true,
   toggleTheme: () => {
     return;
   },
