@@ -4,7 +4,7 @@
       "target": "esnext",
       "jsx": "preserve",
       "lib": ["dom", "esnext"],
-      "strict": true,
+      "strict": false,
       "noEmit": true,
       "isolatedModules": true,
       "esModuleInterop": true,

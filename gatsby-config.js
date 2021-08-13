@@ -6,6 +6,7 @@ module.exports = {
     siteUrl: `https://www.helmerdavila.com`,
   },
   plugins: [
+    `gatsby-plugin-mdx-embed`,
     `gatsby-plugin-postcss`,
     `gatsby-plugin-sitemap`,
     `gatsby-plugin-react-helmet`,
@@ -15,6 +16,20 @@ module.exports = {
       options: {
         name: `images`,
         path: `${__dirname}/src/images`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `blog`,
+        path: `${__dirname}/blog`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `translations`,
+        path: `${__dirname}/config/translations`,
       },
     },
     `gatsby-transformer-sharp`,
@@ -28,7 +43,13 @@ module.exports = {
         background_color: `#000000`,
         theme_color: `#000000`,
         display: `minimal-ui`,
-        icon: `src/images/favicon-192.png`, // This path is relative to the root of the site.
+        icon: `src/images/favicon-192.png`,
+      },
+    },
+    {
+      resolve: 'gatsby-plugin-mdx',
+      options: {
+        extensions: ['.mdx', '.md', '.markdown'],
       },
     },
     {
@@ -40,9 +61,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-google-fonts`,
       options: {
-        fonts: [
-          `Quicksand\:500,700`, // you can also specify font weights and styles
-        ],
+        fonts: [`Quicksand\:500,700`],
       },
     },
     {
@@ -53,51 +72,6 @@ module.exports = {
         policy: [{ userAgent: '*', allow: '/' }],
       },
     },
-    {
-      resolve: `gatsby-source-wordpress-experimental`,
-      options: {
-        url:
-          // allows a fallback url if WPGRAPHQL_URL is not set in the env, this may be a local or remote WP instance.
-          process.env.WPGRAPHQL_URL || `https://blog.helmerdavila.com/graphql`,
-        schema: {
-          //Prefixes all WP Types with "Wp" so "Post and allPost" become "WpPost and allWpPost".
-          typePrefix: `Wp`,
-        },
-        develop: {
-          //caches media files outside of Gatsby's default cache an thus allows them to persist through a cache reset.
-          hardCacheMediaFiles: true,
-        },
-        type: {
-          Post: {
-            limit:
-              process.env.NODE_ENV === `development`
-                ? // Lets just pull 50 posts in development to make it easy on ourselves (aka. faster).
-                  2
-                : // and we don't actually need more than 5000 in production for this particular site
-                  2,
-          },
-        },
-      },
-    },
-    {
-      resolve: `gatsby-plugin-react-i18next`,
-      options: {
-        path: `${__dirname}/locales`,
-        languages: [`en`, `es`, `fr`],
-        defaultLanguage: `en`,
-        // you can pass any i18next options
-        // pass following options to allow message content as a key
-        i18nextOptions: {
-          interpolation: {
-            escapeValue: false, // not needed for react as it escapes by default
-          },
-          keySeparator: false,
-          nsSeparator: false,
-        },
-      },
-    },
-    // this (optional) plugin enables Progressive Web App + Offline functionality
-    // To learn more, visit: https://gatsby.app/offline
-    // 'gatsby-plugin-offline',
+    `gatsby-transformer-json`,
   ],
 };

@@ -5,20 +5,20 @@ import 'slick-carousel/slick/slick-theme.css';
 import RoomieImage from '../Images/RoomieImage';
 import BattleshipImage from '../Images/BattleshipImage';
 import classNames from 'classnames';
-import { ProfileContext } from '../../pages';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCode, faExternalLinkAlt } from '@fortawesome/pro-duotone-svg-icons';
-import { useTranslation } from 'gatsby-plugin-react-i18next';
+import { faCode, faExternalLinkAlt } from '@helmerdavila/fontawesomehelmer/pro-duotone-svg-icons';
+import useTranslations from '../UseTranslations';
+import { ThemeContext } from '../Layout';
 
 const FreeProjects = (): JSX.Element => {
-  const context = useContext(ProfileContext);
-  const { t } = useTranslation();
+  const context = useContext(ThemeContext);
+  const { roomie_description, battleship_description, code_samples } = useTranslations();
 
   const slides = [
     {
       id: 1,
       name: 'Roomie',
-      subtitle: t('roomie_description'),
+      subtitle: roomie_description,
       url: 'http://roomie.helmerdavila.com/',
       codeUrl: 'https://github.com/helmerdavila/payment-roomie',
       backend: null,
@@ -28,7 +28,7 @@ const FreeProjects = (): JSX.Element => {
     {
       id: 2,
       name: 'Battleship',
-      subtitle: t('battleship_description'),
+      subtitle: battleship_description,
       url: 'http://battleship.helmerdavila.com/',
       codeUrl: 'https://github.com/helmerdavila/battleship',
       backend: null,
@@ -157,7 +157,7 @@ const FreeProjects = (): JSX.Element => {
             'text-white': !context.isLightTheme,
           })}
         >
-          {t('code_samples')}
+          {code_samples}
         </h2>
         <Slider {...sliderSettings}>{slidesMapped}</Slider>
       </div>

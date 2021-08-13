@@ -13,11 +13,15 @@
   --dark-at-night: #1a202c;
 }
 
-* {
+h1, h2, h3, h4, h5, h6, p {
   font-family: var(--main-family-font);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   transition: background-color 0.6s ease, color 1s ease;
+}
+
+.prism-code {
+  padding: 1rem;
 }
 
 .image .image-filter {

@@ -1,69 +1,55 @@
 import React, { useContext } from 'react';
-import { ProfileContext } from '../../pages';
 import classNames from 'classnames';
-import { graphql, useStaticQuery } from 'gatsby';
+import { ThemeContext } from '../Layout';
+import { IBlogPageQuery, IBlogPost } from '../../interfaces';
+import LocalizedLink from '../../components/LocalizedLink';
 
-const Blog = (): JSX.Element => {
-  const context = useContext(ProfileContext);
+const BlogPreview = (props: { data: IBlogPageQuery }): JSX.Element => {
+  const context = useContext(ThemeContext);
   const textColor = { 'text-white': !context.isLightTheme, 'text-black': context.isLightTheme };
-  const data = useStaticQuery(graphql`
-    query {
-      allWpPost(sort: { fields: [date] }) {
-        nodes {
-          id
-          uri
-          title
-          featuredImage {
-            node {
-              sourceUrl
-              altText
-            }
-          }
-        }
-      }
-    }
-  `);
+  const posts = props.data?.allMdx?.edges;
 
-  return (
+  return posts.length ? (
     <section
       className={classNames('py-10', { 'bg-white': context.isLightTheme, 'bg-gray-800': !context.isLightTheme })}
     >
       <div className="container mx-auto">
         <h2 className={classNames('text-5xl font-semibold text-center mb-4', textColor)}>Blog</h2>
         <div className="flex flex-col sm:flex-row">
-          {data?.allWpPost.nodes.map((node: any) => (
-            <PostCard key={node.id} node={node} />
+          {posts?.map((post) => (
+            <PostCard key={post.node.parent.relativeDirectory} post={post.node} />
           ))}
         </div>
       </div>
     </section>
-  );
+  ) : null;
 };
 
-export default Blog;
-
-const PostCard = (props: { node: any }) => {
-  const context = useContext(ProfileContext);
+const PostCard = ({ post }: { post: IBlogPost }): JSX.Element => {
+  const context = useContext(ThemeContext);
   const textColor = { 'text-white': !context.isLightTheme, 'text-black': context.isLightTheme };
 
   return (
-    <a
+    <LocalizedLink
       className={classNames('flex-1 m-5 shadow-xl rounded-lg bg-gray-200', {
         'bg-gray-200': context.isLightTheme,
         'bg-gray-700': !context.isLightTheme,
       })}
-      href={`https://blog.helmerdavila.com${props.node.uri}`}
+      to={`/blog/${post.parent.relativeDirectory}`}
       target="_blank"
       rel="noopener noreferrer"
     >
-      <div className="relative bg-black pb-2/3 mb-3 rounded-lg">
+      <div className="relative mb-3 bg-black rounded-lg pb-2/3">
         <img
-          className="absolute h-full w-full object-cover rounded-t-lg"
-          alt={props.node.featuredImage.node.altText}
-          src={props.node.featuredImage.node.sourceUrl}
+          className="absolute object-cover w-full h-full rounded-t-lg"
+          src={post.frontmatter?.imageCover ?? 'https://assets.taskalia.com/blog/macbook.jpg'}
+          alt={post.frontmatter?.imageAlt ?? 'Photo by Nikolay Tarashchenko on Unsplash'}
         />
       </div>
-      <h3 className={classNames('text-4xl font-semibold text-center p-4', textColor)}>{props.node.title}</h3>
-    </a>
+      <h3 className={classNames('text-4xl font-semibold text-center p-4', textColor)}>{post.frontmatter?.title}</h3>
+    </LocalizedLink>
   );
 };
+
+export default BlogPreview;
+

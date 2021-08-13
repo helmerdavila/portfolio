@@ -70,3 +70,8 @@ yarn-error.log
 
 .idea
 .wordpress-cache
+
+# Vim stuff
+*.vim
+*.swp
+*.swo

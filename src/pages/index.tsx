@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import Layout from '../components/layout';
+import React from 'react';
 import SEO from '../components/seo';
 import Presentation from '../components/Presentation/presentation';
 import Projects from '../components/Projects/projects';
@@ -9,54 +8,59 @@ import FreeProjects from '../components/FreeProjects/freeprojects';
 import MyBook from '../components/MyBook/MyBook';
 import AboutMe from '../components/AboutMe/AboutMe';
 import PersonalProjects from '../components/PersonalProjects/personalprojects';
-import Blog from '../components/Blog/blog';
+import Footer from '../components/Layouts/footer';
+import BlogPreview from '../components/Blog/blog';
+import { graphql } from 'gatsby';
+import { IBlogPageQuery } from '../interfaces';
 
-export const ProfileContext = React.createContext<{ isLightTheme: boolean; toggleTheme: () => void }>({
-  isLightTheme: true,
-  toggleTheme: () => {},
-});
-
-class ProfileContextProvider extends Component<unknown, unknown> {
-  state = {
-    isLightTheme: true,
-  };
-
-  onToggleTheme = () => {
-    this.setState({ isLightTheme: !this.state.isLightTheme });
-  };
-
-  render() {
-    return (
-      <ProfileContext.Provider value={{ isLightTheme: this.state.isLightTheme, toggleTheme: this.onToggleTheme }}>
-        {this.props.children}
-      </ProfileContext.Provider>
-    );
-  }
-}
-
-const IndexPage = () => (
-  <Layout>
+const IndexPage = ({ data }: { data: IBlogPageQuery }): JSX.Element => (
+  <>
     <SEO
       title="Fullstack Web Developer"
       keywords={['helmer davila', 'fullstack', 'developer', 'react', 'vue', 'angular', 'react native']}
-      description="My technical blog"
+      description="My personal portfolio"
     />
     <Presentation />
     <AboutMe />
     <WhatIDo />
     <MyStack />
     <PersonalProjects />
-    <Blog />
+    <BlogPreview data={data} />
     <Projects />
     <MyBook />
     <FreeProjects />
-  </Layout>
+    <Footer />
+  </>
 );
 
-export default function App() {
-  return (
-    <ProfileContextProvider>
-      <IndexPage />
-    </ProfileContextProvider>
-  );
-}
+export const query = graphql`
+  query blogpreview($locale: String!, $dateFormat: String!) {
+    allMdx(
+      filter: { fields: { locale: { eq: $locale } } }
+      sort: { fields: [frontmatter___date], order: DESC }
+      limit: 2
+    ) {
+      edges {
+        node {
+          frontmatter {
+            title
+            imageAlt
+            imageCover
+            date(formatString: $dateFormat)
+          }
+          fields {
+            locale
+          }
+          parent {
+            ... on File {
+              relativeDirectory
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+export default IndexPage;
+
