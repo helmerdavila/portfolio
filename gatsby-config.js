@@ -7,11 +7,14 @@ module.exports = {
   },
   plugins: [
     `gatsby-plugin-mdx-embed`,
-    `gatsby-plugin-postcss`,
-    `gatsby-plugin-sitemap`,
-    `gatsby-plugin-react-helmet`,
-    `gatsby-plugin-typescript`,
     `gatsby-plugin-netlify`,
+    `gatsby-plugin-postcss`,
+    `gatsby-plugin-react-helmet`,
+    `gatsby-plugin-sharp`,
+    `gatsby-plugin-sitemap`,
+    `gatsby-plugin-typescript`,
+    `gatsby-transformer-json`,
+    `gatsby-transformer-sharp`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -33,8 +36,6 @@ module.exports = {
         path: `${__dirname}/config/translations`,
       },
     },
-    `gatsby-transformer-sharp`,
-    `gatsby-plugin-sharp`,
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
@@ -74,6 +75,5 @@ module.exports = {
         policy: [{ userAgent: '*', allow: '/' }],
       },
     },
-    `gatsby-transformer-json`,
   ],
 };
