@@ -65,7 +65,6 @@ exports.onCreateNode = ({ node, actions }) => {
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions;
 
-  // const postTemplate = require.resolve(`./src/templates/post.js`);
   const postTemplate = require.resolve(`./src/components/LayoutBlogPage.tsx`);
 
   const result = await graphql(`

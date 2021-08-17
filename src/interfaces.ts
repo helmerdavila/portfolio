@@ -8,6 +8,7 @@ export interface ISlide {
 }
 export interface IBlogPost {
   excerpt: string;
+  body: string;
   frontmatter: {
     title: string;
     description: string;
