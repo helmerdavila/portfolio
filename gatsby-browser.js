@@ -6,8 +6,6 @@ import Code from './src/components/Mdx/Code';
 import { ThemeContext } from './src/components/Layout';
 import classNames from 'classnames';
 
-// TODO: Move all this to another file and export it in gatsby-ssr and gatsby-frontend
-// TODO: Add thumbnail preview for links (like Twitter)
 const MyH1 = (props) => {
   const context = useContext(ThemeContext);
   const themeStyles = { 'text-black': context.isLightTheme, 'text-white': !context.isLightTheme };
@@ -63,4 +61,3 @@ const components = {
 export const wrapRootElement = ({ element }) => <MDXProvider components={components}>{element}</MDXProvider>;
 
 export const wrapPageElement = CustomLayout;
-

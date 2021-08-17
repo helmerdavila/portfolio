@@ -1,7 +1,7 @@
 module.exports = {
   siteMetadata: {
     title: `Helmer Dávila`,
-    description: `Fullstack and React Native Web Developer.`,
+    description: `Web and Web Developer.`,
     author: `@helmerdavila`,
     siteUrl: `https://www.helmerdavila.com`,
   },
@@ -11,6 +11,7 @@ module.exports = {
     `gatsby-plugin-sitemap`,
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-typescript`,
+    `gatsby-plugin-netlify`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -62,12 +63,13 @@ module.exports = {
       resolve: `gatsby-plugin-google-fonts`,
       options: {
         fonts: [`Quicksand\:500,700`],
+        display: `swap`,
       },
     },
     {
       resolve: 'gatsby-plugin-robots-txt',
       options: {
-        host: 'https://helmerdavila.com',
+        host: 'https://www.helmerdavila.com',
         sitemap: 'https://www.helmerdavila.com/sitemap.xml',
         policy: [{ userAgent: '*', allow: '/' }],
       },
