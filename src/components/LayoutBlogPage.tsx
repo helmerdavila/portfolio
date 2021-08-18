@@ -71,7 +71,7 @@ const LayoutBlogPage = ({ data: { mdx } }: { data: { mdx: IBlogPost } }): JSX.El
 
   return (
     <LayoutBlog>
-      <SEO title={mdx?.frontmatter?.title} description={mdx?.frontmatter?.description || mdx?.excerpt} image={image} />
+      <SEO title={mdx?.frontmatter?.title} ogType="article" description={mdx?.frontmatter?.description || mdx?.excerpt} image={image} />
       <div className="container max-w-3xl py-5 mx-auto xl:max-w-6xl">
         <div className={classNames(pageBackground, 'border-2')}>
           <div>
