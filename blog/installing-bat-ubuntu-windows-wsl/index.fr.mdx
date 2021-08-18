@@ -1,0 +1,38 @@
+---
+title: "Installer Bat sur Ubuntu Windows WSL"
+description: Télécharger l'installateur comme un package DEB
+lang: fr
+date: 2020-04-20
+published: true
+imageCover: https://assets.taskalia.com/blog/bat-screenshot.png
+---
+
+# Installer Bat sur Ubuntu Windows WSL
+
+## Télécharger bat
+
+J'ai migré vers Windows, et quand j'ai installé Ubuntu dans WSL, il faut des outils que j'ai dans ma Macbook maintenant. **BAT** était l'un de ceux. Donc, comment j'ai trouvé des guides en internet, je les laisser por références futures.
+
+Tout d'abord, ouvrez votre terminal dans Windows (avec Ubuntu) et recherchez la [dernière version disponible](https://github.com/sharkdp/bat/releases). Pour moi, c'est la `0.18.2`.
+
+Verifiez ensuite que vous êtes bien installé wget. Le moyen le plus courant est avec `wget --version`. Si vous ne l'avez pas, vous utilize le prochain script pour le faire.
+
+```bash
+sudo apt-get install wget
+```
+
+Ya puedes instalar Bat con el siguiente script, recuerda reemplazar `VERSION` por la versión actual que viste en Github.
+
+```bash
+wget https://github.com/sharkdp/bat/releases/download/v${VERSION}/bat_${VERSION}_amd64.deb
+# Si on utilise par exemple 0.18.2
+# wget https://github.com/sharkdp/bat/releases/download/v0.18.2/bat_0.18.2_amd64.deb
+```
+
+## Installer avec dpkg
+
+Vous pouvez utiliser dpkg pour l'installation de packages Debian
+
+```bash
+sudo dpkg -i bat_0.18.2_amd64.deb
+```

@@ -1,0 +1,40 @@
+---
+title: "Installing Bat in Ubuntu Windows WSL"
+description: Downloading the installer as a deb package
+lang: en
+date: 2020-04-20
+published: true
+imageCover: https://assets.taskalia.com/blog/bat-screenshot.png
+---
+
+# Installing Bat in Ubuntu Windows WSL
+
+## Downloading bat
+
+I migrated to Windows and when I was installing Ubuntu through WSL I missed some tools that I have in my current MacBook, **BAT** was one of them. So as soon as I found a couple of guides online, here I will try to leave it as a reminder and with simple steps.
+
+First, open your Windows Terminal (with Ubuntu) and search for the [latest version on Github](https://github.com/sharkdp/bat/releases) . It was `0.18.2` for me.
+
+Then check if you have wget working. The most common way to do it is checking it with `wget --version`, else use the following script:
+
+```bash
+sudo apt-get install wget
+```
+
+Now you can download Bat with the following script, remember replacing `VERSION` by the latest version that you saw on Github.
+
+```bash
+wget https://github.com/sharkdp/bat/releases/download/v${VERSION}/bat_${VERSION}_amd64.deb
+# If we use 0.18.2 e.g:
+# wget https://github.com/sharkdp/bat/releases/download/v0.18.2/bat_0.18.2_amd64.deb
+```
+
+## Installing it using dpkg
+
+Then you can use dpkg to install Debian packages
+
+```bash
+sudo dpkg -i bat_0.18.2_amd64.deb
+```
+
+And that’s all, now you can use bat to see the content of your files inside of the terminal.
