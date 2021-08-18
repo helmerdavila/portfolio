@@ -10,6 +10,7 @@ function SEO({
   keywords,
   title,
   image,
+  ogType,
 }: {
   description: string;
   lang: string;
@@ -17,6 +18,7 @@ function SEO({
   keywords: string[];
   title: string;
   image?: string;
+  ogType?: string;
 }): JSX.Element {
   const { site } = useStaticQuery(detailsQuery);
   const metaDescription = description || site.siteMetadata.description;
@@ -41,7 +43,11 @@ function SEO({
         },
         {
           property: `og:type`,
-          content: `website`,
+          content: ogType ?? `website`,
+        },
+        {
+          property: `og:image`,
+          content: image,
         },
         {
           name: `twitter:card`,
@@ -96,3 +102,4 @@ const detailsQuery = graphql`
     }
   }
 `;
+
