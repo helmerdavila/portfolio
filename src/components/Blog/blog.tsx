@@ -33,7 +33,7 @@ const PostCard = ({ post }: { post: IBlogPost }): JSX.Element => {
 
   return (
     <LocalizedLink
-      className={classNames('flex-1 w-1/2 m-5 shadow-xl rounded-lg bg-gray-200', {
+      className={classNames('flex-1 sm:w-1/2 m-5 shadow-xl rounded-lg bg-gray-200', {
         'bg-gray-200': context.isLightTheme,
         'bg-gray-700': !context.isLightTheme,
       })}
