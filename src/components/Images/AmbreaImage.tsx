@@ -1,23 +1,19 @@
 import React from 'react';
-import { StaticQuery, graphql } from 'gatsby';
-import Img from 'gatsby-image';
+import { graphql } from 'gatsby';
+import { GatsbyImage } from 'gatsby-plugin-image';
+import { useStaticQuery } from 'gatsby';
 
 const ambreaImage = (): unknown => {
-  return (
-    <StaticQuery
-      query={graphql`
-        query {
-          placeholderImage: file(relativePath: { eq: "ambrea_mockup.png" }) {
-            childImageSharp {
-              fluid(maxWidth: 300) {
-                ...GatsbyImageSharpFluid_tracedSVG
-              }
-            }
-          }
+  const data = useStaticQuery(graphql`
+    query {
+      file(relativePath: { eq: "ambrea_mockup.png" }) {
+        childImageSharp {
+          gatsbyImageData(layout: CONSTRAINED)
         }
-      `}
-      render={(data) => <Img fluid={data.placeholderImage.childImageSharp.fluid} />}
-    />
-  );
+      }
+    }
+  `);
+
+  return <GatsbyImage image={data.file.childImageSharp.gatsbyImageData} alt="Ambrea" />;
 };
 export default ambreaImage;
