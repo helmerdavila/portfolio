@@ -1,6 +1,7 @@
 const locales = require(`./config/i18n`);
 const { removeTrailingSlash, localizedSlug, findKey } = require('./src/utils/gatsby-node-helpers');
 const path = require('path');
+const { createRemoteFileNode } = require('gatsby-source-filesystem');
 
 exports.onCreatePage = ({ page, actions }) => {
   const { createPage, deletePage } = actions;
@@ -35,8 +36,8 @@ exports.onCreatePage = ({ page, actions }) => {
 // As you don't want to manually add the correct language to the frontmatter of each file
 // a new node is created automatically with the filename
 // It's necessary to do that -- otherwise you couldn't filter by language
-exports.onCreateNode = ({ node, actions }) => {
-  const { createNodeField } = actions;
+exports.onCreateNode = async ({ node, actions, createNodeId, store, cache }) => {
+  const { createNodeField, createNode } = actions;
 
   // Check for "Mdx" type so that other files (e.g. images) are exluded
   if (node.internal.type === `Mdx`) {
@@ -59,6 +60,21 @@ exports.onCreateNode = ({ node, actions }) => {
 
     createNodeField({ node, name: `locale`, value: lang });
     createNodeField({ node, name: `isDefault`, value: isDefault });
+
+    if (node.frontmatter.imageCover !== null) {
+      let fileNode = await createRemoteFileNode({
+        url: node.frontmatter.imageCover,
+        parentNodeId: node.id,
+        createNode,
+        createNodeId,
+        cache,
+        store,
+      });
+      // if the file was created, attach the new node to the parent node
+      if (fileNode) {
+        node.imageCover___NODE = fileNode.id;
+      }
+    }
   }
 };
 

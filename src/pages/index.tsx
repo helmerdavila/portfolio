@@ -48,6 +48,11 @@ export const query = graphql`
             imageCover
             date(formatString: $dateFormat)
           }
+          imageCover {
+            childImageSharp {
+              gatsbyImageData(layout: FULL_WIDTH, placeholder: TRACED_SVG, aspectRatio: 1.7)
+            }
+          }
           fields {
             locale
           }
@@ -63,4 +68,3 @@ export const query = graphql`
 `;
 
 export default IndexPage;
-
