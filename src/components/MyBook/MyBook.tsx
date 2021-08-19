@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
-import CtbookImage from '../Images/Ctbook';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBook } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
 import useTranslations from '../UseTranslations';
 import { ThemeContext } from '../Layout';
+import { StaticImage } from 'gatsby-plugin-image';
 
 const MyBook = (): JSX.Element => {
   const context = useContext(ThemeContext);
@@ -20,7 +20,13 @@ const MyBook = (): JSX.Element => {
     >
       <div className="container mx-auto flex flex-col sm:flex-row">
         <div className="flex-1 p-10">
-          <CtbookImage />
+          <StaticImage
+            src="../../images/ctbook.png"
+            className="filter grayscale hover:grayscale-0 transition-all ease-in duration-500"
+            layout="fullWidth"
+            alt="Biteline"
+            placeholder="tracedSVG"
+          />
         </div>
         <div className="flex-1 p-6">
           <h2 className={classNames('text-5xl font-semibold', textColor)}>CTBook</h2>

@@ -2,13 +2,12 @@ import React, { useContext } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import RoomieImage from '../Images/RoomieImage';
-import BattleshipImage from '../Images/BattleshipImage';
 import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCode, faExternalLinkAlt } from '@helmerdavila/fontawesomehelmer/pro-duotone-svg-icons';
 import useTranslations from '../UseTranslations';
 import { ThemeContext } from '../Layout';
+import { StaticImage } from 'gatsby-plugin-image';
 
 const FreeProjects = (): JSX.Element => {
   const context = useContext(ThemeContext);
@@ -23,7 +22,15 @@ const FreeProjects = (): JSX.Element => {
       codeUrl: 'https://github.com/helmerdavila/payment-roomie',
       backend: null,
       frontend: 'Vue',
-      image: <RoomieImage />,
+      image: (
+        <StaticImage
+          src="../../images/roomie_mockup.png"
+          className="filter grayscale hover:grayscale-0 transition-all ease-in duration-500"
+          layout="fullWidth"
+          alt="Biteline"
+          placeholder="tracedSVG"
+        />
+      ),
     },
     {
       id: 2,
@@ -33,7 +40,15 @@ const FreeProjects = (): JSX.Element => {
       codeUrl: 'https://github.com/helmerdavila/battleship',
       backend: null,
       frontend: 'React',
-      image: <BattleshipImage />,
+      image: (
+        <StaticImage
+          src="../../images/battleship_mockup.png"
+          className="filter grayscale hover:grayscale-0 transition-all ease-in duration-500"
+          layout="fullWidth"
+          alt="Biteline"
+          placeholder="tracedSVG"
+        />
+      ),
     },
   ];
   const sliderSettings = {
@@ -103,39 +118,31 @@ const FreeProjects = (): JSX.Element => {
         })}
         key={slide.id}
       >
-        <div className="relative">
-          <figure className="image">
-            {slide.image}
-            <div
-              className={classNames({
-                'image-overlay': context.isLightTheme,
-                'image-overlay-night': !context.isLightTheme,
-              })}
-            />
-            <a
-              href={slide.url}
-              target="_blank"
-              className={classNames(
-                'absolute bottom-0 right-0 mb-3 mr-3 p-3 flex justify-center items-center rounded-full font-semibold w-16 h-16',
-                { 'bg-white text-black': context.isLightTheme, 'bg-gray-900 text-white': !context.isLightTheme },
-              )}
-              rel="noopener noreferrer"
-            >
-              <FontAwesomeIcon icon={faExternalLinkAlt} size="2x" fixedWidth />
-            </a>
-            <a
-              href={slide.codeUrl}
-              target="_blank"
-              className={classNames(
-                'absolute bottom-0 left-0 mb-3 ml-3 p-3 flex justify-center items-center rounded-full font-semibold w-16 h-16',
-                { 'bg-white text-black': context.isLightTheme, 'bg-gray-900 text-white': !context.isLightTheme },
-              )}
-              rel="noopener noreferrer"
-            >
-              <FontAwesomeIcon icon={faCode} size="2x" fixedWidth />
-            </a>
-          </figure>
-        </div>
+        <figure className="relative">
+          {slide.image}
+          <a
+            href={slide.url}
+            target="_blank"
+            className={classNames(
+              'absolute bottom-0 right-0 mb-3 mr-3 p-3 flex justify-center items-center rounded-full font-semibold w-16 h-16',
+              { 'bg-white text-black': context.isLightTheme, 'bg-gray-900 text-white': !context.isLightTheme },
+            )}
+            rel="noopener noreferrer"
+          >
+            <FontAwesomeIcon icon={faExternalLinkAlt} size="2x" fixedWidth />
+          </a>
+          <a
+            href={slide.codeUrl}
+            target="_blank"
+            className={classNames(
+              'absolute bottom-0 left-0 mb-3 ml-3 p-3 flex justify-center items-center rounded-full font-semibold w-16 h-16',
+              { 'bg-white text-black': context.isLightTheme, 'bg-gray-900 text-white': !context.isLightTheme },
+            )}
+            rel="noopener noreferrer"
+          >
+            <FontAwesomeIcon icon={faCode} size="2x" fixedWidth />
+          </a>
+        </figure>
         <div className={classNames('flex flex-col justify-center border text-center h-48', borderColors)}>
           <h3 className={classNames('text-3xl font-semibold', textColor)}>{slide.name}</h3>
           <h4 className={classNames('text-xl', textColor)}>{slide.subtitle}</h4>
@@ -150,7 +157,7 @@ const FreeProjects = (): JSX.Element => {
 
   return (
     <section className={classNames({ 'bg-gray-200': context.isLightTheme, 'bg-gray-900': !context.isLightTheme })}>
-      <div className="container mx-auto py-10">
+      <div className="container mx-auto 2xl:max-w-7xl py-10">
         <h2
           className={classNames('text-5xl font-semibold text-center pb-4', {
             'text-dark': context.isLightTheme,

@@ -4,8 +4,12 @@ import Typing from 'react-typing-animation';
 import classNames from 'classnames';
 import useTranslations from '../UseTranslations';
 import { ThemeContext } from '../Layout';
+import { getImage } from 'gatsby-plugin-image';
+import { FileNode } from 'gatsby-plugin-image/dist/src/components/hooks';
+import { convertToBgImage } from 'gbimage-bridge';
+import BackgroundImage from 'gatsby-background-image';
 
-const Presentation = (): JSX.Element => {
+const Presentation = (props: { backgroundImage: FileNode }): JSX.Element => {
   const context = useContext(ThemeContext);
   const {
     hi_my_name_is,
@@ -16,9 +20,12 @@ const Presentation = (): JSX.Element => {
     web_applications,
     mobile_applications,
   } = useTranslations();
+  console.log(props);
+  const image = getImage(props.backgroundImage);
+  const bgImage = convertToBgImage(image);
 
   return (
-    <div className="min-h-screen w-full first-section bg-black">
+    <BackgroundImage Tag="section" className="first-section" {...bgImage} preserveStackingContext>
       <Header />
       <div id="who_am_i" className="min-h-screen flex justify-center items-center">
         <div className={classNames({ overlay: context.isLightTheme, 'overlay-night': !context.isLightTheme })} />
@@ -41,7 +48,7 @@ const Presentation = (): JSX.Element => {
           </h2>
         </div>
       </div>
-    </div>
+    </BackgroundImage>
   );
 };
 

@@ -2,19 +2,13 @@ import React, { useContext } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import AmbreaImage from '../Images/AmbreaImage';
-import BipolarImage from '../Images/BipolarImage';
-import BitelineImage from '../Images/BitelineImage';
-import FitnesspassImage from '../Images/FitnesspassImage';
-import FitnesspassMobileImage from '../Images/FitnesspassMobileImage';
-import SpoontopImage from '../Images/SpoontopImage';
-import VicunaImage from '../Images/VicunaImage';
 import { ISlide } from '../../interfaces';
 import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExternalLinkAlt } from '@helmerdavila/fontawesomehelmer/pro-duotone-svg-icons';
 import useTranslations from '../UseTranslations';
 import { ThemeContext } from '../Layout';
+import { StaticImage } from 'gatsby-plugin-image';
 
 const Projects = (): JSX.Element => {
   const slidesNative: ISlide[] = [
@@ -24,7 +18,15 @@ const Projects = (): JSX.Element => {
       url: 'https://biteline.net',
       backend: 'NodeJS, ExpressJS',
       frontend: 'Ionic',
-      image: <BitelineImage />,
+      image: (
+        <StaticImage
+          src="../../images/biteline_mobile.jpg"
+          layout="fullWidth"
+          alt="Biteline"
+          placeholder="tracedSVG"
+          className="filter grayscale hover:grayscale-0 transition-all ease-in duration-500"
+        />
+      ),
     },
     {
       id: 2,
@@ -32,7 +34,15 @@ const Projects = (): JSX.Element => {
       url: 'https://apps.apple.com/us/app/fitness-pass/id1442657269',
       backend: 'NodeJS, ExpressJS',
       frontend: 'React Native',
-      image: <FitnesspassMobileImage />,
+      image: (
+        <StaticImage
+          src="../../images/fitnesspass_mobile.jpg"
+          layout="fullWidth"
+          alt="Biteline"
+          placeholder="tracedSVG"
+          className="filter grayscale hover:grayscale-0 transition-all ease-in duration-500"
+        />
+      ),
     },
   ];
   const slidesDesktop: ISlide[] = [
@@ -42,7 +52,15 @@ const Projects = (): JSX.Element => {
       url: 'https://ambrea.helmerdavila.com/menu/#/dia/1/turno/dia',
       backend: 'Laravel',
       frontend: 'Vue, Vuex',
-      image: <AmbreaImage />,
+      image: (
+        <StaticImage
+          src="../../images/ambrea_mockup.png"
+          layout="fullWidth"
+          alt="Biteline"
+          placeholder="tracedSVG"
+          className="filter grayscale hover:grayscale-0 transition-all ease-in duration-500"
+        />
+      ),
     },
     {
       id: 2,
@@ -50,7 +68,15 @@ const Projects = (): JSX.Element => {
       url: 'https://bipolar.com.pe',
       backend: 'Laravel',
       frontend: 'React',
-      image: <BipolarImage />,
+      image: (
+        <StaticImage
+          src="../../images/bipolar_mockup.png"
+          layout="fullWidth"
+          alt="Biteline"
+          placeholder="tracedSVG"
+          className="filter grayscale hover:grayscale-0 transition-all ease-in duration-500"
+        />
+      ),
     },
     {
       id: 3,
@@ -58,23 +84,15 @@ const Projects = (): JSX.Element => {
       url: 'https://fitnesspass.pe',
       backend: 'Express',
       frontend: 'React',
-      image: <FitnesspassImage />,
-    },
-    {
-      id: 4,
-      name: 'Spoontop',
-      url: 'http://spoontop.com',
-      backend: 'Laravel',
-      frontend: 'Angular, Ionic',
-      image: <SpoontopImage />,
-    },
-    {
-      id: 5,
-      name: 'Vicuña Beer',
-      url: 'https://vicuna.cervezacandelaria.com',
-      backend: 'Laravel',
-      frontend: 'JS, CSS',
-      image: <VicunaImage />,
+      image: (
+        <StaticImage
+          src="../../images/fitnesspass_mockup.png"
+          layout="fullWidth"
+          alt="Biteline"
+          placeholder="tracedSVG"
+          className="filter grayscale hover:grayscale-0 transition-all ease-in duration-500"
+        />
+      ),
     },
   ];
   const sliderDesktopSettings = {
@@ -135,28 +153,20 @@ const Projects = (): JSX.Element => {
         })}
         key={slide.id}
       >
-        <div className="relative">
-          <figure className="image">
-            {slide.image}
-            <div
-              className={classNames({
-                'image-overlay': context.isLightTheme,
-                'image-overlay-night': !context.isLightTheme,
-              })}
-            />
-            <a
-              href={slide.url}
-              target="_blank"
-              className={classNames(
-                'absolute bottom-0 right-0 mb-3 mr-3 p-3 flex justify-center items-center rounded-full font-semibold w-16 h-16',
-                { 'bg-white text-black': context.isLightTheme, 'bg-gray-900 text-white': !context.isLightTheme },
-              )}
-              rel="noopener noreferrer"
-            >
-              <FontAwesomeIcon icon={faExternalLinkAlt} size="2x" fixedWidth />
-            </a>
-          </figure>
-        </div>
+        <figure className="relative">
+          {slide.image}
+          <a
+            href={slide.url}
+            target="_blank"
+            className={classNames(
+              'absolute bottom-0 right-0 mb-3 mr-3 p-3 flex justify-center items-center rounded-full font-semibold w-16 h-16',
+              { 'bg-white text-black': context.isLightTheme, 'bg-gray-900 text-white': !context.isLightTheme },
+            )}
+            rel="noopener noreferrer"
+          >
+            <FontAwesomeIcon icon={faExternalLinkAlt} size="2x" fixedWidth />
+          </a>
+        </figure>
         <div className={classNames('flex flex-col justify-center border-l border-r text-center h-40', borderColors)}>
           <h3 className={classNames('text-3xl font-semibold text-center', textColor)}>{slide.name}</h3>
           <div className="flex justify-center mt-3 flex-wrap">
@@ -185,7 +195,7 @@ const Projects = (): JSX.Element => {
       id="projects"
       className={classNames('py-10', { 'bg-gray-200': context.isLightTheme, 'bg-gray-900': !context.isLightTheme })}
     >
-      <div className="container mx-auto">
+      <div className="container mx-auto 2xl:max-w-7xl">
         <h1 className={classNames('text-5xl text-center font-semibold mb-3', textColor)}>{mobile_and_web_projects}</h1>
         <div className="py-4">
           <Slider {...sliderMobileSettings}>{slidesMobile}</Slider>

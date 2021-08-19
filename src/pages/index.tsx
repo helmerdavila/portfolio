@@ -20,7 +20,7 @@ const IndexPage = ({ data }: { data: IBlogPageQuery }): JSX.Element => (
       keywords={['helmer davila', 'fullstack', 'developer', 'react', 'vue', 'angular', 'react native']}
       description="My personal portfolio"
     />
-    <Presentation />
+    <Presentation backgroundImage={data.backgroundImage} />
     <AboutMe />
     <WhatIDo />
     <MyStack />
@@ -48,6 +48,11 @@ export const query = graphql`
             imageCover
             date(formatString: $dateFormat)
           }
+          imageCover {
+            childImageSharp {
+              gatsbyImageData(layout: FULL_WIDTH, placeholder: TRACED_SVG, aspectRatio: 1.7)
+            }
+          }
           fields {
             locale
           }
@@ -59,8 +64,12 @@ export const query = graphql`
         }
       }
     }
+    backgroundImage: file(relativePath: { eq: "mac-development.jpg" }) {
+      childImageSharp {
+        gatsbyImageData(layout: FULL_WIDTH, placeholder: BLURRED)
+      }
+    }
   }
 `;
 
 export default IndexPage;
-

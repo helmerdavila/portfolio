@@ -16,7 +16,7 @@ export default ({ children, className }: { children: unknown; className: string 
       language={language}
     >
       {({ className, style, tokens, getLineProps, getTokenProps }) => (
-        <pre className={className} style={{ ...style }}>
+        <pre className={`${className} overflow-x-auto`} style={{ ...style }}>
           {tokens.map((line, index) => {
             const lineProps = getLineProps({ line, key: index });
             return (
@@ -32,4 +32,3 @@ export default ({ children, className }: { children: unknown; className: string 
     </Highlight>
   );
 };
-

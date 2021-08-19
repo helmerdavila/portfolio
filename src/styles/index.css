@@ -13,7 +13,13 @@
   --dark-at-night: #1a202c;
 }
 
-h1, h2, h3, h4, h5, h6, p {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
   font-family: var(--main-family-font);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -61,11 +67,6 @@ h1, h2, h3, h4, h5, h6, p {
   filter: grayscale(0%);
 }
 
-.first-section {
-  background: url('../images/mac-development.jpg') center no-repeat;
-  background-size: cover;
-}
-
 .first-section .overlay {
   position: absolute;
   top: 0;
@@ -87,8 +88,8 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 .icon-spacer svg {
-  margin-left: .3em;
-  margin-right: .3em;
+  margin-left: 0.3em;
+  margin-right: 0.3em;
 }
 
 .slick-prev:before,

@@ -1,7 +1,5 @@
 import React, { useContext } from 'react';
 import classNames from 'classnames';
-import ImageHttpixel from '../Images/ImageHttpixel';
-import ImagePills from '../Images/ImagePills';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAppStore, faGooglePlay } from '@fortawesome/free-brands-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
@@ -11,6 +9,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import { v4 as uuidv4 } from 'uuid';
 import useTranslations from '../UseTranslations';
 import { ThemeContext } from '../Layout';
+import { StaticImage } from 'gatsby-plugin-image';
 
 interface IApp {
   id: string;
@@ -38,14 +37,30 @@ const apps: IApp[] = [
     description_key: 'personal_projects_httpixel',
     apple: 'https://apps.apple.com/pa/app/httpixel/id1520739884',
     android: 'https://play.google.com/store/apps/details?id=com.taskalia.httpixel',
-    image: <ImageHttpixel />,
+    image: (
+      <StaticImage
+        className="filter grayscale hover:grayscale-0 transition-all ease-in duration-500"
+        src="../../images/portfolio-httpixel.png"
+        layout="fullWidth"
+        alt="Biteline"
+        placeholder="tracedSVG"
+      />
+    ),
   },
   {
     id: uuidv4(),
     title: 'Pills247',
     description_key: 'personal_projects_pills',
     apple: 'https://apps.apple.com/qa/app/pills247/id1517724316',
-    image: <ImagePills />,
+    image: (
+      <StaticImage
+        className="filter grayscale hover:grayscale-0 transition-all ease-in duration-500"
+        src="../../images/portfolio-pills.png"
+        layout="fullWidth"
+        alt="Biteline"
+        placeholder="tracedSVG"
+      />
+    ),
   },
 ];
 
@@ -60,7 +75,7 @@ const PersonalProjects = (): JSX.Element => {
       id="projects"
       className={classNames('py-10', { 'bg-gray-200': context.isLightTheme, 'bg-gray-900': !context.isLightTheme })}
     >
-      <div className="container mx-auto">
+      <div className="container mx-auto 2xl:max-w-7xl">
         <h1 className={classNames('text-5xl text-center font-semibold mb-3', textColor)}>{projects}</h1>
         <Slider {...sliderSettings}>{AppCards}</Slider>
       </div>
