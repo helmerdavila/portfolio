@@ -47,7 +47,7 @@ const PostCard = ({ post }: { post: IBlogPost }): JSX.Element => {
         image={post.imageCover?.childImageSharp.gatsbyImageData}
         alt={imageAlt}
       />
-      <h3 className={classNames('text-4xl font-semibold text-center p-4', textColor)}>{post.frontmatter?.title}</h3>
+      <h3 className={classNames('text-3xl font-semibold text-center p-4', textColor)}>{post.frontmatter?.title}</h3>
     </LocalizedLink>
   );
 };

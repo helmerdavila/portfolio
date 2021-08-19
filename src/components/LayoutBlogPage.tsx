@@ -44,8 +44,8 @@ const MyBlockquote = (props: unknown) => {
 const MyInlineCode = (props: unknown) => {
   const context = useContext(ThemeContext);
   const themeStyles = {
-    'text-blue-700 bg-gray-200': context.isLightTheme,
-    'text-gray-400 bg-blue-900': !context.isLightTheme,
+    'text-blue-600 bg-gray-100': context.isLightTheme,
+    'text-gray-300 bg-blue-800': !context.isLightTheme,
   };
   return <code className={classNames(themeStyles, 'rounded text-base px-2')} {...props} />;
 };
