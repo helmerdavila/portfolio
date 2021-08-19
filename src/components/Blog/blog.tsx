@@ -14,7 +14,7 @@ const BlogPreview = (props: { data: IBlogPageQuery }): JSX.Element => {
     <section
       className={classNames('py-10', { 'bg-white': context.isLightTheme, 'bg-gray-800': !context.isLightTheme })}
     >
-      <div className="container mx-auto">
+      <div className="container mx-auto 2xl:max-w-7xl">
         <h2 className={classNames('text-5xl font-semibold text-center mb-4', textColor)}>Blog</h2>
         <div className="flex flex-col sm:flex-row">
           {posts?.map((post) => (

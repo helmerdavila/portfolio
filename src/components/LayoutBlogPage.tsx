@@ -8,6 +8,7 @@ import SEO from './seo';
 import { MDXProvider } from '@mdx-js/react';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 import Code from '../components/Mdx/Code';
+import { GatsbyImage } from 'gatsby-plugin-image';
 
 const MyH1 = (props: unknown) => {
   const context = useContext(ThemeContext);
@@ -47,7 +48,7 @@ const MyInlineCode = (props: unknown) => {
     'text-blue-600 bg-gray-100': context.isLightTheme,
     'text-gray-300 bg-blue-800': !context.isLightTheme,
   };
-  return <code className={classNames(themeStyles, 'rounded text-base px-2')} {...props} />;
+  return <code className={classNames(themeStyles, 'rounded text-base px-1')} {...props} />;
 };
 const MyCode = (props: { children: unknown; className: string }) => <Code {...props} />;
 
@@ -68,6 +69,7 @@ const LayoutBlogPage = ({ data: { mdx } }: { data: { mdx: IBlogPost } }): JSX.El
     'bg-gray-800 border-gray-800': !context.isLightTheme,
   };
   const image = mdx?.frontmatter?.imageCover ?? '';
+  const imageAlt = mdx?.frontmatter?.imageAlt ?? '';
 
   return (
     <LayoutBlog>
@@ -79,9 +81,7 @@ const LayoutBlogPage = ({ data: { mdx } }: { data: { mdx: IBlogPost } }): JSX.El
       />
       <div className="container max-w-3xl py-5 mx-auto xl:max-w-6xl">
         <div className={classNames(pageBackground, 'border-2')}>
-          <div>
-            <img className="object-cover w-full" src={image ?? ''} alt={mdx.frontmatter?.imageAlt ?? ''} />
-          </div>
+          <GatsbyImage image={mdx.imageCover?.childImageSharp.gatsbyImageData} alt={imageAlt} />
           <div className="p-12">
             <MDXProvider components={components}>
               <MDXRenderer>{mdx.body}</MDXRenderer>
@@ -103,6 +103,11 @@ export const query = graphql`
         imageAlt
         title
         description
+      }
+      imageCover {
+        childImageSharp {
+          gatsbyImageData(layout: FULL_WIDTH, placeholder: TRACED_SVG)
+        }
       }
       excerpt(pruneLength: 100)
       body

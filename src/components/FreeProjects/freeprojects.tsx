@@ -158,7 +158,7 @@ const FreeProjects = (): JSX.Element => {
 
   return (
     <section className={classNames({ 'bg-gray-200': context.isLightTheme, 'bg-gray-900': !context.isLightTheme })}>
-      <div className="container mx-auto py-10">
+      <div className="container mx-auto 2xl:max-w-7xl py-10">
         <h2
           className={classNames('text-5xl font-semibold text-center pb-4', {
             'text-dark': context.isLightTheme,

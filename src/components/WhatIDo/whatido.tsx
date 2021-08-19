@@ -40,7 +40,7 @@ const WhatIDo = (): JSX.Element => {
       id="what_i_do"
       className={classNames('py-10', { 'bg-gray-200': context.isLightTheme, 'bg-gray-900': !context.isLightTheme })}
     >
-      <div className="container mx-auto">
+      <div className="container mx-auto 2xl:max-w-7xl">
         <h2 className={classNames('text-5xl font-semibold text-center mb-4', textColor)}>{what_i_do}</h2>
         <div className="flex flex-wrap">
           <WhatIDoSection icon={faMobile} title="Mobile" content={what_i_do_mobile} />

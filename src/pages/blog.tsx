@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import { graphql } from 'gatsby';
+import { GatsbyImage } from 'gatsby-plugin-image';
 import React, { useContext } from 'react';
 import { ThemeContext } from '../components/Layout';
 import LayoutBlog from '../components/LayoutBlog';
@@ -29,13 +30,10 @@ const Blog = ({ data }: { data: IBlogPageQuery }): JSX.Element => {
             )}
             key={post.node.parent.relativeDirectory}
           >
-            <div>
-              <img
-                className="object-cover w-full h-full"
-                src={post.node?.frontmatter?.imageCover ?? 'https://assets.taskalia.com/blog/macbook.jpg'}
-                alt={post.node?.frontmatter?.imageAlt ?? 'Photo by Nikolay Tarashchenko on Unsplash'}
-              />
-            </div>
+            <GatsbyImage
+              image={post.node.imageCover?.childImageSharp.gatsbyImageData}
+              alt={post.node?.frontmatter?.imageAlt ?? ''}
+            />
             <div className="p-6">
               <h2 className={classNames(themeStyles, 'text-4xl font-bold')}>{post.node?.frontmatter?.title}</h2>
               <h5 className={classNames(themeStyles, 'mb-2 text-xl')}>{post.node?.frontmatter?.description}</h5>
@@ -63,6 +61,11 @@ export const query = graphql`
           fields {
             locale
           }
+          imageCover {
+            childImageSharp {
+              gatsbyImageData(layout: FULL_WIDTH, placeholder: TRACED_SVG)
+            }
+          }
           parent {
             ... on File {
               relativeDirectory
@@ -75,4 +78,3 @@ export const query = graphql`
 `;
 
 export default Blog;
-

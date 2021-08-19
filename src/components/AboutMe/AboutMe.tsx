@@ -13,7 +13,7 @@ const AboutMe = (): JSX.Element => {
       id="about_me"
       className={classNames('p-10', { 'bg-white': context.isLightTheme, 'bg-gray-800': !context.isLightTheme })}
     >
-      <div className="container mx-auto">
+      <div className="container mx-auto 2xl:max-w-7xl">
         <h1 className={classNames('text-5xl text-center font-semibold', textColor)}>{about_me}</h1>
         <p className={classNames(textColor)}>{about_me_description}</p>
       </div>

@@ -183,7 +183,7 @@ const Projects = (): JSX.Element => {
       id="projects"
       className={classNames('py-10', { 'bg-gray-200': context.isLightTheme, 'bg-gray-900': !context.isLightTheme })}
     >
-      <div className="container mx-auto">
+      <div className="container mx-auto 2xl:max-w-7xl">
         <h1 className={classNames('text-5xl text-center font-semibold mb-3', textColor)}>{mobile_and_web_projects}</h1>
         <div className="py-4">
           <Slider {...sliderMobileSettings}>{slidesMobile}</Slider>
