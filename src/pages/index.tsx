@@ -20,7 +20,7 @@ const IndexPage = ({ data }: { data: IBlogPageQuery }): JSX.Element => (
       keywords={['helmer davila', 'fullstack', 'developer', 'react', 'vue', 'angular', 'react native']}
       description="My personal portfolio"
     />
-    <Presentation />
+    <Presentation backgroundImage={data.backgroundImage} />
     <AboutMe />
     <WhatIDo />
     <MyStack />
@@ -62,6 +62,11 @@ export const query = graphql`
             }
           }
         }
+      }
+    }
+    backgroundImage: file(relativePath: { eq: "mac-development.jpg" }) {
+      childImageSharp {
+        gatsbyImageData(layout: FULL_WIDTH, placeholder: BLURRED)
       }
     }
   }

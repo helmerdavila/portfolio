@@ -70,7 +70,7 @@ const Header = (props: { scrollPositionY: number }) => {
           )}
         >
           <FontAwesomeIcon icon={faDownload} />
-          <span className="ml-2">{download_cv}</span>
+          <span className="hidden md:inline-block ml-2">{download_cv}</span>
         </a>
       </div>
     </nav>

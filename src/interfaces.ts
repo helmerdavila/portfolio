@@ -1,3 +1,4 @@
+import { FileNode } from 'gatsby-plugin-image/dist/src/components/hooks';
 import { FileSystemNode } from 'gatsby-source-filesystem';
 
 export interface ISlide {
@@ -35,4 +36,5 @@ export interface IBlogPageQuery {
   allMdx: {
     edges: { node: IBlogPost }[];
   };
+  backgroundImage: FileNode;
 }
