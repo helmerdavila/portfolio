@@ -1,5 +1,5 @@
 module.exports = {
-  purge: ['./src/**/*.js', './src/**/*.jsx', './src/**/*.ts', './src/**/*.tsx'],
+  purge: ['./src/components/**/*.{js,jsx,ts,tsx}', './src/pages/**/*.{js,jsx,ts,tsx}'],
   theme: {
     extend: {
       spacing: {
@@ -35,4 +35,3 @@ module.exports = {
   variants: { padding: ['first'] },
   plugins: [],
 };
-
