@@ -32,6 +32,6 @@ module.exports = {
       },
     },
   },
-  variants: { padding: ['first'] },
+  variants: { padding: ['first'], grayscale: ['hover'] },
   plugins: [],
 };

@@ -39,6 +39,7 @@ const apps: IApp[] = [
     android: 'https://play.google.com/store/apps/details?id=com.taskalia.httpixel',
     image: (
       <StaticImage
+        className="filter grayscale hover:grayscale-0 transition-all ease-in duration-500"
         src="../../images/portfolio-httpixel.png"
         layout="fullWidth"
         alt="Biteline"
@@ -52,7 +53,13 @@ const apps: IApp[] = [
     description_key: 'personal_projects_pills',
     apple: 'https://apps.apple.com/qa/app/pills247/id1517724316',
     image: (
-      <StaticImage src="../../images/portfolio-pills.png" layout="fullWidth" alt="Biteline" placeholder="tracedSVG" />
+      <StaticImage
+        className="filter grayscale hover:grayscale-0 transition-all ease-in duration-500"
+        src="../../images/portfolio-pills.png"
+        layout="fullWidth"
+        alt="Biteline"
+        placeholder="tracedSVG"
+      />
     ),
   },
 ];

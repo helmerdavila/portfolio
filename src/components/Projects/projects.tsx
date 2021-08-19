@@ -19,7 +19,13 @@ const Projects = (): JSX.Element => {
       backend: 'NodeJS, ExpressJS',
       frontend: 'Ionic',
       image: (
-        <StaticImage src="../../images/biteline_mobile.jpg" layout="fullWidth" alt="Biteline" placeholder="tracedSVG" />
+        <StaticImage
+          src="../../images/biteline_mobile.jpg"
+          layout="fullWidth"
+          alt="Biteline"
+          placeholder="tracedSVG"
+          className="filter grayscale hover:grayscale-0 transition-all ease-in duration-500"
+        />
       ),
     },
     {
@@ -34,6 +40,7 @@ const Projects = (): JSX.Element => {
           layout="fullWidth"
           alt="Biteline"
           placeholder="tracedSVG"
+          className="filter grayscale hover:grayscale-0 transition-all ease-in duration-500"
         />
       ),
     },
@@ -46,7 +53,13 @@ const Projects = (): JSX.Element => {
       backend: 'Laravel',
       frontend: 'Vue, Vuex',
       image: (
-        <StaticImage src="../../images/ambrea_mockup.png" layout="fullWidth" alt="Biteline" placeholder="tracedSVG" />
+        <StaticImage
+          src="../../images/ambrea_mockup.png"
+          layout="fullWidth"
+          alt="Biteline"
+          placeholder="tracedSVG"
+          className="filter grayscale hover:grayscale-0 transition-all ease-in duration-500"
+        />
       ),
     },
     {
@@ -56,7 +69,13 @@ const Projects = (): JSX.Element => {
       backend: 'Laravel',
       frontend: 'React',
       image: (
-        <StaticImage src="../../images/bipolar_mockup.png" layout="fullWidth" alt="Biteline" placeholder="tracedSVG" />
+        <StaticImage
+          src="../../images/bipolar_mockup.png"
+          layout="fullWidth"
+          alt="Biteline"
+          placeholder="tracedSVG"
+          className="filter grayscale hover:grayscale-0 transition-all ease-in duration-500"
+        />
       ),
     },
     {
@@ -71,6 +90,7 @@ const Projects = (): JSX.Element => {
           layout="fullWidth"
           alt="Biteline"
           placeholder="tracedSVG"
+          className="filter grayscale hover:grayscale-0 transition-all ease-in duration-500"
         />
       ),
     },
@@ -133,28 +153,20 @@ const Projects = (): JSX.Element => {
         })}
         key={slide.id}
       >
-        <div className="relative">
-          <figure className="image">
-            {slide.image}
-            <div
-              className={classNames({
-                'image-overlay': context.isLightTheme,
-                'image-overlay-night': !context.isLightTheme,
-              })}
-            />
-            <a
-              href={slide.url}
-              target="_blank"
-              className={classNames(
-                'absolute bottom-0 right-0 mb-3 mr-3 p-3 flex justify-center items-center rounded-full font-semibold w-16 h-16',
-                { 'bg-white text-black': context.isLightTheme, 'bg-gray-900 text-white': !context.isLightTheme },
-              )}
-              rel="noopener noreferrer"
-            >
-              <FontAwesomeIcon icon={faExternalLinkAlt} size="2x" fixedWidth />
-            </a>
-          </figure>
-        </div>
+        <figure className="relative">
+          {slide.image}
+          <a
+            href={slide.url}
+            target="_blank"
+            className={classNames(
+              'absolute bottom-0 right-0 mb-3 mr-3 p-3 flex justify-center items-center rounded-full font-semibold w-16 h-16',
+              { 'bg-white text-black': context.isLightTheme, 'bg-gray-900 text-white': !context.isLightTheme },
+            )}
+            rel="noopener noreferrer"
+          >
+            <FontAwesomeIcon icon={faExternalLinkAlt} size="2x" fixedWidth />
+          </a>
+        </figure>
         <div className={classNames('flex flex-col justify-center border-l border-r text-center h-40', borderColors)}>
           <h3 className={classNames('text-3xl font-semibold text-center', textColor)}>{slide.name}</h3>
           <div className="flex justify-center mt-3 flex-wrap">

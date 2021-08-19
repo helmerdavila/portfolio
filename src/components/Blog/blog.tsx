@@ -42,7 +42,7 @@ const PostCard = ({ post }: { post: IBlogPost }): JSX.Element => {
       rel="noopener noreferrer"
     >
       <GatsbyImage
-        className="bg-black rounded-t-lg"
+        className="rounded-t-lg filter grayscale hover:grayscale-0 transition-all ease-in duration-500"
         imgClassName="rounded-t-lg"
         image={post.imageCover?.childImageSharp.gatsbyImageData}
         alt={imageAlt}

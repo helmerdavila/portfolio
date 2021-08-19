@@ -20,7 +20,13 @@ const MyBook = (): JSX.Element => {
     >
       <div className="container mx-auto flex flex-col sm:flex-row">
         <div className="flex-1 p-10">
-          <StaticImage src="../../images/ctbook.png" layout="fullWidth" alt="Biteline" placeholder="tracedSVG" />
+          <StaticImage
+            src="../../images/ctbook.png"
+            className="filter grayscale hover:grayscale-0 transition-all ease-in duration-500"
+            layout="fullWidth"
+            alt="Biteline"
+            placeholder="tracedSVG"
+          />
         </div>
         <div className="flex-1 p-6">
           <h2 className={classNames('text-5xl font-semibold', textColor)}>CTBook</h2>
