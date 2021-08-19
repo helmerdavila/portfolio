@@ -2,13 +2,12 @@ import React, { useContext } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import RoomieImage from '../Images/RoomieImage';
-import BattleshipImage from '../Images/BattleshipImage';
 import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCode, faExternalLinkAlt } from '@helmerdavila/fontawesomehelmer/pro-duotone-svg-icons';
 import useTranslations from '../UseTranslations';
 import { ThemeContext } from '../Layout';
+import { StaticImage } from 'gatsby-plugin-image';
 
 const FreeProjects = (): JSX.Element => {
   const context = useContext(ThemeContext);
@@ -23,7 +22,9 @@ const FreeProjects = (): JSX.Element => {
       codeUrl: 'https://github.com/helmerdavila/payment-roomie',
       backend: null,
       frontend: 'Vue',
-      image: <RoomieImage />,
+      image: (
+        <StaticImage src="../../images/roomie_mockup.png" layout="fullWidth" alt="Biteline" placeholder="tracedSVG" />
+      ),
     },
     {
       id: 2,
@@ -33,7 +34,14 @@ const FreeProjects = (): JSX.Element => {
       codeUrl: 'https://github.com/helmerdavila/battleship',
       backend: null,
       frontend: 'React',
-      image: <BattleshipImage />,
+      image: (
+        <StaticImage
+          src="../../images/battleship_mockup.png"
+          layout="fullWidth"
+          alt="Biteline"
+          placeholder="tracedSVG"
+        />
+      ),
     },
   ];
   const sliderSettings = {

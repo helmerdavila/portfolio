@@ -2,19 +2,13 @@ import React, { useContext } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import AmbreaImage from '../Images/AmbreaImage';
-import BipolarImage from '../Images/BipolarImage';
-import BitelineImage from '../Images/BitelineImage';
-import FitnesspassImage from '../Images/FitnesspassImage';
-import FitnesspassMobileImage from '../Images/FitnesspassMobileImage';
-import SpoontopImage from '../Images/SpoontopImage';
-import VicunaImage from '../Images/VicunaImage';
 import { ISlide } from '../../interfaces';
 import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExternalLinkAlt } from '@helmerdavila/fontawesomehelmer/pro-duotone-svg-icons';
 import useTranslations from '../UseTranslations';
 import { ThemeContext } from '../Layout';
+import { StaticImage } from 'gatsby-plugin-image';
 
 const Projects = (): JSX.Element => {
   const slidesNative: ISlide[] = [
@@ -24,7 +18,9 @@ const Projects = (): JSX.Element => {
       url: 'https://biteline.net',
       backend: 'NodeJS, ExpressJS',
       frontend: 'Ionic',
-      image: <BitelineImage />,
+      image: (
+        <StaticImage src="../../images/biteline_mobile.jpg" layout="fullWidth" alt="Biteline" placeholder="tracedSVG" />
+      ),
     },
     {
       id: 2,
@@ -32,7 +28,14 @@ const Projects = (): JSX.Element => {
       url: 'https://apps.apple.com/us/app/fitness-pass/id1442657269',
       backend: 'NodeJS, ExpressJS',
       frontend: 'React Native',
-      image: <FitnesspassMobileImage />,
+      image: (
+        <StaticImage
+          src="../../images/fitnesspass_mobile.jpg"
+          layout="fullWidth"
+          alt="Biteline"
+          placeholder="tracedSVG"
+        />
+      ),
     },
   ];
   const slidesDesktop: ISlide[] = [
@@ -42,7 +45,9 @@ const Projects = (): JSX.Element => {
       url: 'https://ambrea.helmerdavila.com/menu/#/dia/1/turno/dia',
       backend: 'Laravel',
       frontend: 'Vue, Vuex',
-      image: <AmbreaImage />,
+      image: (
+        <StaticImage src="../../images/ambrea_mockup.png" layout="fullWidth" alt="Biteline" placeholder="tracedSVG" />
+      ),
     },
     {
       id: 2,
@@ -50,7 +55,9 @@ const Projects = (): JSX.Element => {
       url: 'https://bipolar.com.pe',
       backend: 'Laravel',
       frontend: 'React',
-      image: <BipolarImage />,
+      image: (
+        <StaticImage src="../../images/bipolar_mockup.png" layout="fullWidth" alt="Biteline" placeholder="tracedSVG" />
+      ),
     },
     {
       id: 3,
@@ -58,23 +65,14 @@ const Projects = (): JSX.Element => {
       url: 'https://fitnesspass.pe',
       backend: 'Express',
       frontend: 'React',
-      image: <FitnesspassImage />,
-    },
-    {
-      id: 4,
-      name: 'Spoontop',
-      url: 'http://spoontop.com',
-      backend: 'Laravel',
-      frontend: 'Angular, Ionic',
-      image: <SpoontopImage />,
-    },
-    {
-      id: 5,
-      name: 'Vicuña Beer',
-      url: 'https://vicuna.cervezacandelaria.com',
-      backend: 'Laravel',
-      frontend: 'JS, CSS',
-      image: <VicunaImage />,
+      image: (
+        <StaticImage
+          src="../../images/fitnesspass_mockup.png"
+          layout="fullWidth"
+          alt="Biteline"
+          placeholder="tracedSVG"
+        />
+      ),
     },
   ];
   const sliderDesktopSettings = {
