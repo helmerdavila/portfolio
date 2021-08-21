@@ -25,6 +25,16 @@ const MyH3 = (props: unknown) => {
   const themeStyles = { 'text-black': context.isLightTheme, 'text-white': !context.isLightTheme };
   return <h3 className={classNames(themeStyles, 'mt-3 mb-2 text-3xl font-bold')} {...props} />;
 };
+const MyList = (props: unknown) => {
+  const context = useContext(ThemeContext);
+  const themeStyles = { 'text-black': context.isLightTheme, 'text-white': !context.isLightTheme };
+  return <ul className={classNames(themeStyles, 'block my-5 text-xl')} {...props} />;
+};
+const MyListItem = (props: unknown) => {
+  const context = useContext(ThemeContext);
+  const themeStyles = { 'text-black': context.isLightTheme, 'text-white': !context.isLightTheme };
+  return <li className={classNames(themeStyles, 'block py-2 text-xl')} {...props} />;
+};
 const MyParagraph = (props: unknown) => {
   const context = useContext(ThemeContext);
   const themeStyles = { 'text-black': context.isLightTheme, 'text-white': !context.isLightTheme };
@@ -56,6 +66,8 @@ const components = {
   h1: MyH1,
   h2: MyH2,
   h3: MyH3,
+  ul: MyList,
+  li: MyListItem,
   p: MyParagraph,
   blockquote: MyBlockquote,
   inlineCode: MyInlineCode,

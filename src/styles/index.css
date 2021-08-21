@@ -19,6 +19,8 @@ h3,
 h4,
 h5,
 h6,
+ul,
+li,
 p {
   font-family: var(--main-family-font);
   -webkit-font-smoothing: antialiased;
