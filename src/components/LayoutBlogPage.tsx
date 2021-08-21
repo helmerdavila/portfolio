@@ -13,7 +13,7 @@ import { GatsbyImage } from 'gatsby-plugin-image';
 const MyH1 = (props: unknown) => {
   const context = useContext(ThemeContext);
   const themeStyles = { 'text-black': context.isLightTheme, 'text-white': !context.isLightTheme };
-  return <h1 className={classNames(themeStyles, 'mb-6 text-5xl font-bold')} {...props} />;
+  return <h1 className={classNames(themeStyles, 'mb-6 text-5xl font-bold leading-normal')} {...props} />;
 };
 const MyH2 = (props: unknown) => {
   const context = useContext(ThemeContext);
