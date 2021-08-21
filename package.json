@@ -58,7 +58,7 @@
   "scripts": {
     "build": "gatsby build",
     "develop": "gatsby develop",
-    "start": "cross-env GATSBY_GRAPHQL_IDE=playground npm run develop",
+    "start": "cross-env GATSBY_GRAPHQL_IDE=playground gatsby clean && npm run develop",
     "format": "prettier --write \"src/**/*.js\"",
     "lint": "eslint src/",
     "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\"",
