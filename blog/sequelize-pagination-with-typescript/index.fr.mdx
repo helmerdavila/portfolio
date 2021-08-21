@@ -1,0 +1,75 @@
+---
+title: Faire une pagination avec Sequelize (sur Typescript)
+description: L'otre jour j'ai cherché un moyen pour realizer une pagination avec Sequelize sur Typescript. Il y a beaucoup de tutoriels sur comment vous pouvez calculer l'offset et les numeros de pages. Après que j'ai voir autre plugin, j'ai pensé à une solution similaire.
+date: 2021-08-20
+published: true
+imageCover: https://assets.taskalia.com/blog/book.jpg
+---
+
+# Faire une pagination avec Sequelize (sur Typescript)
+
+L'otre jour j'ai cherché un moyen pour realizer une pagination avec Sequelize sur Typescript. Il y a beaucoup de tutoriels sur comment vous pouvez calculer l'offset et les numeros de pages. Après que j'ai voir autre plugin, j'ai pensé à une solution similaire.
+
+```json
+{
+  "lastPage": 20,
+  "totalRecords": 400,
+  "currentPage": 1,
+  "hasMorePages": true,
+  "data": []
+}
+```
+
+Ce que j'avais besoin était d'ajouter une pagination en utilisant différents modèles sur Sequelize. Donc, créer une clase et utiliser le pouvouir de `strong typing` en Typescript, le fichier était prêt à l'emploi. Si on passe le modèle comme type, l'editeur de code reconnaîtra que `data` est un _array_ avec le type de données établi. Ensuite ici, le fichier.
+
+```ts
+import { Model, ModelCtor } from 'sequelize-typescript';
+import { FindOptions } from 'sequelize';
+import to from 'await-to-js';
+
+export default class Paginator<T extends Model> {
+  private model: ModelCtor<T>;
+
+  constructor(model: ModelCtor<T>) {
+    this.model = model;
+  }
+
+  async paginate(options: FindOptions, currentPage: number, limitTo: number, optionsForCalculateTotal?: FindOptions) {
+    const offset = (currentPage - 1) * limitTo;
+
+    const [errorTotal, resultsTotal] = await to(this.model.findAll<T>(optionsForCalculateTotal ?? options));
+
+    if (errorTotal) {
+      throw errorTotal;
+    }
+
+    const totalRecords = resultsTotal.length;
+
+    const [error, results] = await to(
+      this.model.findAll<T>({ ...options, offset, limit: limitTo })
+    );
+
+    if (error) {
+      throw error;
+    }
+
+    const lastPage = totalRecords > 0 ? Math.ceil(totalRecords / limitTo) : 0;
+    const hasMorePages = currentPage < lastPage;
+
+    return { lastPage, totalRecords, currentPage, hasMorePages, data: results };
+  }
+}
+```
+
+Comme tu peux le voir pour le confor j'utilise `await-to-js`, c'est un capteur d'erreurs dans une fonction `async`, Et tu les peux retourner plutôt que faire un `throw`. Et, bien sûr, j'utilise le package `sequelize-typescript`.
+
+Après avoir copié e installé le fichier où vous voulez, donc vous pouvez l'utiliser dans votre projet.
+
+Les paramètres sont les suivants:
+
+- **Options:** Les options de la query dans Sequelize. Voici où vous passez les _where_ et toute autre option. Même chose que vous passerais dans un _findAll_.
+- **Page:** Le nombre de la page, d'habitude elle vient de votre _request_.
+- **Limit:** Limite d'enregistrements par page, aussi ils viennent du _request_.
+- **Options for calculating total people:** C'est optional, si vous ne la passez pas, elle prendre ce que tu mets dans le premier paramèter _options_. Elle faire un `COUNT` d'abord pour savoir le nombre total d'enregistrements. La _query_ ne doit pas être si gros pour une exécution rapide. Pour moi, c'était la même option mais sans les _include_ que Sequelize a besoin pour se connecter des tables distinctes, parce que ce n'est pas important pour le _count_.
+
+Et `paginated` aurait la même structure que le json que vous pouvez voir. Ça va dépendre de votre framework web, qu'il convertit à  Json.
