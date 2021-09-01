@@ -2,7 +2,12 @@ import React, { useContext } from 'react';
 import Highlight, { defaultProps } from 'prism-react-renderer';
 import nightOwlNight from 'prism-react-renderer/themes/nightOwlLight';
 import nightOwl from 'prism-react-renderer/themes/nightOwl';
+import Prism from 'prism-react-renderer/prism';
 import { ThemeContext } from '../Layout';
+
+(typeof global !== 'undefined' ? global : window).Prism = Prism;
+
+require('prismjs/components/prism-php');
 
 export default ({ children, className }: { children: unknown; className: string }): JSX.Element => {
   const context = useContext(ThemeContext);
