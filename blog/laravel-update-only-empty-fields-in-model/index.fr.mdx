@@ -1,0 +1,52 @@
+---
+title: Laravel - Seulement mise a jour des champs vides d’un model
+description: En Laravel, vous avez la méthode updateOrCreate. J’ai développé une application et j’ai besoin de mise a jour seulement le blank  propriétés. La logique était la suivante si l’enregistrement n’existe pas, le code devrait le créer.
+date: 2021-08-31
+published: true
+imageCover: https://assets.taskalia.com/blog/book.jpg
+---
+
+# Laravel - Seulement mise a jour des champs vides d’un model
+
+En Laravel, vous avez la méthode `updateOrCreate`. J’ai développé une application et j’ai besoin de mise a jour seulement le `blank` propriétés. La logique était la suivante: si l’enregistrement n’existe pas, le code devrait le créer.
+
+Donc, j’ai pensé, et si j’ai besoin de la même fonctionnalité dans les suivants _models_? La solution est arrivée instantanément, utilisez un `Trait`
+
+Ce `trait` prendre les mêmes paramètres comment `updateOrCreate` , les attributs de filtration et les valeurs de remplissage. Je vais vous montrer le code.
+
+```php
+<?php
+
+namespace App\Traits;
+
+trait SecureUpdatable
+{
+    /** @method static $this updateBlankOrCreate($hashedId, array $columns = []) */
+
+    /**
+     * @param $attributes
+     * @param $values
+     * @return \Illuminate\Database\Eloquent\Model|$this
+     */
+    public static function updateBlankOrCreate($attributes, $values)
+    {
+        /** @var \Illuminate\Database\Eloquent\Model $model */
+        $model = static::firstOrNew($attributes);
+
+        $blankValues = collect($values)->filter(function ($fieldValue, $fieldName) use ($model) {
+            /** @var \Illuminate\Database\Eloquent\Model $model */
+            return blank($model->getAttribute($fieldName));
+        })->toArray();
+
+        $model->fill($blankValues)->save();
+
+        return $model;
+    }
+}
+```
+
+Avec ça, vous avez juste besoin d’inclure le `trait` dans votre modèle Laravel: `use SecureUpdatable;`. Aussi, vous aurez complétion de code pour votre IDE.
+
+## Comment ça fonctionne?
+
+Comme vous le voyez, essaie de trouver le modèle existant ou de créer une nouvelle instance avec la fonction statique `firstOrNew`. Filtrez ensuite uniquement les valeurs vides avec le _blank helper_ de Laravel.
