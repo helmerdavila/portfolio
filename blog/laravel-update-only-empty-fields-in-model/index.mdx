@@ -1,0 +1,53 @@
+---
+title: 'Laravel - Update only blank/empty fields in models'
+description: I was looking if there was a function to make a paginator for myself using Sequelize with Typescript. I found a lot of tutorials that teach you how to calculate the offset and the number of pages.
+date: 2021-08-31
+published: true
+imageCover: https://assets.taskalia.com/blog/php-elephant.jpg
+imageAlt: Photo by Ben Griffiths on Unsplash
+---
+
+# Laravel - Update only blank/empty fields in models
+
+In Laravel you have the `updateOrCreate` method, I was developing an application and I needed to update only the _blank_ fields, but the logic was the same as the update or create method, if the record doesn’t exist, the code needs to create it.
+
+Then I thought, “What if I need the same methods in different models?”, the solution was so close, then I figured out the quickest for me: create a `Trait`
+
+So, this trait takes the same params as `updateOrCreate` method, the filter attributes, and the filling values. I will show you the code, so you can replicate this feature in your own project.
+
+```php
+<?php
+
+namespace App\Traits;
+
+trait SecureUpdatable
+{
+    /** @method static $this updateBlankOrCreate($hashedId, array $columns = []) */
+
+    /**
+     * @param $attributes
+     * @param $values
+     * @return \Illuminate\Database\Eloquent\Model|$this
+     */
+    public static function updateBlankOrCreate($attributes, $values)
+    {
+        /** @var \Illuminate\Database\Eloquent\Model $model */
+        $model = static::firstOrNew($attributes);
+
+        $blankValues = collect($values)->filter(function ($fieldValue, $fieldName) use ($model) {
+            /** @var \Illuminate\Database\Eloquent\Model $model */
+            return blank($model->getAttribute($fieldName));
+        })->toArray();
+
+        $model->fill($blankValues)->save();
+
+        return $model;
+    }
+}
+```
+
+With this, you just need to include the trait into your Laravel Model: `use SecureUpdatable;`. Also, you have code completion for your IDE.
+
+## How it works?
+
+As you see tries to find the existing model or create a new instance with the static `firstOrNew` function. Then filter only the empty values with the blank helper from Laravel.
