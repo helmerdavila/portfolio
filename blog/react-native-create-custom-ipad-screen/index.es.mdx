@@ -1,0 +1,46 @@
+---
+title: React Native - Creando una pantalla especial para iPad
+description: Usando React Native y React Navigation
+date: 2021-11-23
+published: true
+imageCover: https://assets.taskalia.com/blog/ipad-react-native.jpg
+imageAlt: Photo by Francois Hoang on Unsplash
+---
+
+# React Native - Creando una pantalla especial para iPad
+
+La última semana estaba mejorando mi aplicación en React Native. Funciona de maravilla en dispositivos móviles. Sin embargo, quería brindar soporte para iPad porque me permitía ahorrar un par de pasos extras para realizar una acción, usando los menús laterales.
+
+En mi actual versión sólo para móviles, tengo distintas pantallas para ejecutar una tarea. La meta de una pantalla exclusiva sólo para iPad es colocar una lista de recursos a la izquierda (peticiones HTTP en este caso) y el contenido al lado derecho.
+
+Ya que estoy usando **React Native Navigation**. La única solución que pensé es crear una pantalla personalizada sólo para iPad. Pero, ¿puede React Native detectar un dispositivo iPad? Bueno, he aquí la solución.
+
+## El valor de isPad
+
+Este valor sólo está disponible si `Platform` detecta que es un dispositivo iOS. Así que ten cuidado con eso y agrega las respectivas validaciones.
+
+## Solución
+
+```jsx
+import { Platform } from 'react-native';
+import PantallaIosMovil from 'tu-pantalla-movil';
+import PantallaIosTablet from 'tu-pantalla-tablet';
+import PantallaAndroid from 'tu-pantalla-android';
+
+const PantallaPrincipal = () => {
+  const esIos = Platform.OS === 'ios';
+  let esTablet = false;
+
+  if (esIos) {
+    esTablet = Platform.isPad;
+  }
+
+  return esIos ? esTablet ? <PantallaIosTablet /> : <PantallaIosMovil /> : <PantallaAndroid />;
+};
+
+export default PantallaPrincipal;
+```
+
+Traté de hacer el código más largo para un mejor entendimiento. Y asumiendo que tienes tres diferentes pantallas como componentes, una para dispositivos móviles iOS, otra para iPad y otra para dispositivos Android.
+
+Así que primero validamos si el dispositivo es realmente iOS, y preparamos la variable `esTablet` como falso por defecto. Solamente entramos a la condicional si cumple que si funciona sobre iOS. La constante `Platform.isPad` es un boleano. Una vez que tenemos ese valor como `true`, podemos mostrar nuestro componente. Para este ejemplo lo he nombrado como `PantallaIosTablet`. Tenemos otros dos componentes si la condición fue evaluada y retorne lo que corresponde ya sea un móvil iOS o uno Android.
