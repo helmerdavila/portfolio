@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Helmet from 'react-helmet';
 import { graphql } from 'gatsby';
 import { useStaticQuery } from 'gatsby';
+import { ThemeContext } from './Layout';
 
 function SEO({
   description,
@@ -20,6 +21,7 @@ function SEO({
   image?: string;
   ogType?: string;
 }): JSX.Element {
+  const context = useContext(ThemeContext);
   const { site } = useStaticQuery(detailsQuery);
   const metaDescription = description || site.siteMetadata.description;
 
@@ -69,6 +71,9 @@ function SEO({
           name: `twitter:description`,
           content: metaDescription,
         },
+        context.isLightTheme
+          ? { name: 'theme-color', content: 'white' }
+          : { name: 'theme-color', content: '#1f2937' },
       ]
         .concat(
           keywords.length > 0
@@ -102,4 +107,3 @@ const detailsQuery = graphql`
     }
   }
 `;
-
