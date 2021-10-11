@@ -1,0 +1,42 @@
+---
+title: React Native - Creér un écran iPad personnalisé dans React Native
+description: Avec React Native et React Navigation
+date: 2021-10-11
+published: true
+imageCover: https://assets.taskalia.com/blog/ipad-react-native.jpg
+imageAlt: Photo by Francois Hoang on Unsplash
+---
+
+# React Native - Creér un écran iPad personnalisé dans React Native
+
+La semaine dernière, j'améliorais ma propre application React Native. Cela fonctionne très bien sur les appareils mobiles. Cependant, je voulais apporter un support pour l'iPad car tous les écrans pouvaient permettre moins d'étapes. Et nous pouvons profiter des menus secondaires de celui-ci.
+
+Mais dans le flux mobile actuel, j'ai différents écrans pour exécuter une tâche spécifique. Le but d'un écran iPad personnalisé est de mettre une liste (HTTP requests dans ce cas) à gauche et l'écran de contenu à droite.
+
+Depuis que j'utilise **React Native Navigation**. La seule solution que j'ai trouvée est de créer un écran personnalisé uniquement pour les appareils iPad. Mais, React Native peut-il détecter si un appareil est un iPad? Eh bien, voici la solution.
+
+## La valeur isPad
+
+Cette valeur est seulement disponible sur les iOS appareils. Alors, sois prudent avec ça et ajoutez une méthode de validation avant.
+
+## Solution
+
+```jsx
+import { Platform } from 'react-native';
+import IosEcranMobile from 'votre-ecran-mobile';
+import IosEcranTablette from 'votre-ecran-tablette';
+import AndroidEcran from 'votre-ecran-android';
+
+const EcranPrincipal = () => {
+  const siIos = Platform.OS === 'ios';
+  let siTablette = false;
+
+  if (siIos) {
+    siTablette = Platform.isPad;
+  }
+
+  return siIos ? siTablette ? <IosEcranTablette /> : <IosEcranMobile /> : <AndroidEcran />;
+};
+
+export default EcranPrincipal;
+```

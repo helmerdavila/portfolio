@@ -44,7 +44,6 @@ module.exports = {
         short_name: `starter`,
         start_url: `/`,
         background_color: `#000000`,
-        theme_color: `#000000`,
         display: `minimal-ui`,
         icon: `src/images/favicon-192.png`,
       },
