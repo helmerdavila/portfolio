@@ -61,6 +61,7 @@ const MyInlineCode = (props: unknown) => {
   return <code className={classNames(themeStyles, 'rounded text-base px-1')} {...props} />;
 };
 const MyCode = (props: { children: unknown; className: string }) => <Code {...props} />;
+const MyImage = (props: unknown) => <img className="shadow-lg rounded" {...props} />;
 
 const components = {
   h1: MyH1,
@@ -72,6 +73,7 @@ const components = {
   blockquote: MyBlockquote,
   inlineCode: MyInlineCode,
   code: MyCode,
+  img: MyImage,
 };
 
 const LayoutBlogPage = ({ data: { mdx } }: { data: { mdx: IBlogPost } }): JSX.Element => {
