@@ -8,6 +8,7 @@ import { ThemeContext } from '../Layout';
 (typeof global !== 'undefined' ? global : window).Prism = Prism;
 
 require('prismjs/components/prism-php');
+require('prismjs/components/prism-ruby');
 
 export default ({ children, className }: { children: unknown; className: string }): JSX.Element => {
   const context = useContext(ThemeContext);
