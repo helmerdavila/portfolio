@@ -1,5 +1,5 @@
 ---
-title: React Native - Creér un écran iPad personnalisé dans React Native
+title: React Native - Créer un écran iPad personnalisé dans React Native
 description: Avec React Native et React Navigation
 date: 2021-10-11
 published: true
@@ -7,7 +7,7 @@ imageCover: https://assets.taskalia.com/blog/ipad-react-native.jpg
 imageAlt: Photo by Francois Hoang on Unsplash
 ---
 
-# React Native - Creér un écran iPad personnalisé dans React Native
+# React Native - Créer un écran iPad personnalisé dans React Native
 
 La semaine dernière, j'améliorais ma propre application React Native. Cela fonctionne très bien sur les appareils mobiles. Cependant, je voulais apporter un support pour l'iPad car tous les écrans pouvaient permettre moins d'étapes. Et nous pouvons profiter des menus secondaires de celui-ci.
 
@@ -43,7 +43,7 @@ export default EcranPrincipal;
 
 J'ai essayé de rendre le code plus long pour une meilleure compréhension. Et en supposant que tu as trois composants d'écran différents. Un pour les appareils mobiles iOS, un autre pour iPad et le dernier si tu veux un écran Android personnalisé.
 
-Donc, d'abord, on valide si l'appareil est vraiment un appareil iOS, et nous préparons la variable `siTablet` comme `false` par défaut. Nous n'entrons le conditionnel que s'il correspond à la condition iOS. La constante `Platform.isPad` est un booléen. Une fois que nous avons cette valeur comme `vrai`, nous pouvons rendre notre composant iPad. Seulement pour l'exemple, je l'ai nommé `IosEcranTablette`. Nous avons les deux autres composants si aucune condition n'a été validée et renvoie s'il s'agit d'un appareil Android ou d'un appareil mobile iOS.
+Donc, d'abord, on vérifie si l'appareil est vraiment un appareil iOS, et nous préparons la variable `siTablet` comme `false` par défaut. Nous n'entrons le conditionnel que s'il correspond à la condition iOS. La constante `Platform.isPad` est un booléen. Une fois que nous avons cette valeur comme `true`, nous pouvons rendre notre composant iPad. Seulement pour l'exemple, je l'ai nommé `IosEcranTablette`. Nous avons les deux autres composants si aucune condition n'a été validée et renvoie s'il s'agit d'un appareil Android ou d'un appareil mobile iOS.
 
 ## Une démo
 
