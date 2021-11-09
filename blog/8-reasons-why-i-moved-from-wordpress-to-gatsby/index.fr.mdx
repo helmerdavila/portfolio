@@ -1,0 +1,52 @@
+---
+title: Pourquoi j’ai migré mon blogue de Wordpress à Gatsby (8 raisons)
+description: Des 8 raisons comment developpeur
+date: 2021-11-09
+published: true
+imageCover: https://assets.taskalia.com/blog/wordpress-ipad.jpg
+imageAlt: Photo by Souvik Banerjee on Unsplash
+---
+
+# Pourquoi j’ai migré mon blogue de Wordpress à Gatsby (8 raisons)
+
+## 1. 💾 Je n’ai pas besoin de base de donnés
+
+Quand tu as installé Wordpress, tu as besoin de configurer les utilisateurs. Par défaut, ils viennent avec une base de données pour administrer toutes les pages, des articles et des utilisateurs. Mais puisque je suis le seul à écrire sur mon site personnel, je n’ai pas besoin de choses complexes. Seulement avec code, Gatsby donner d’administration des pages et les utilise pour la génération des articles.
+
+## 2. 💵 Je n’ai pas besoin d’hébergement
+
+Même s’il y a des hébergements que donne un plan gratuit pour ton site Wordpress. Si tu veux un serveur stable de Wordpress, il coûte environ de $10 par mois. Ça n’est pas grand-chose pour la quantité des visites que j’ai par mois. Mais si je peux profiter d’un plan gratuit et je ne veux pas me compliquer avec PHP + Nginx, c’est une autre raison pour choisir Gatsby.
+
+## 3. 🖍 Flexibilité pour modifier l’IU
+
+Wordpress a l’avantage d’avoir des milliers des thèmes avec une installation rapide. Mais je veux créer mon propre style et utiliser mes _frameworks_. Je voulais contrôler tous les éléments de la page que je peux modifier: comment des boutons, des listes et des titres, et faire des modifications sans entrer dans le serveur. Avec Gatsby, je peux le faire. En outre, plusieurs thèmes Wordpress ajoutent des styles pour ses plugiciels, même si tu ne les utilises pas. Non, merci.
+
+## 4. 📝 Je préfère utiliser Markdown plutôt que le TEL-TEL
+
+Markdown, il est devenu mon outil d’écriture préféré. C’est utilisé par plusieurs développeurs pour écrire la documentation en **Github**. C’est beaucoup plus facile qu’écrire en HTML et avec Gatsby, tu peux modifier le style des composants de Markdown à volonté.
+
+Mieux encore, avec Gatsby, tu pourrais utiliser **MDX** (Markdown + JSX), c’est un outil pour faire des composants React dans Markdown. Je peux dire, tu peux réaliser des publications techniques plus interactives.
+
+## 5. 👨🏻‍💻 Basse probabilité d’être piraté
+
+À moins que tu n’ajoutes quelque chose de dynamique à ton site, ou même si tu reçois une attaque DDoS, un site Gatsby se compose des pages en HTML. Rien de plus. Si je le traduis pour des personnes non techniques: Gatsby est comme un group des _landing pages_. S’il n’y a pas des serveurs ou de base de données, c’est presque impossible pour quiconque d'avoir le contrôle de ton site.
+
+## 6. 🚚 Migrer d’hébergement est beaucoup plus facile
+
+Si tu as beaucoup des articles dans ton blogue, probablement ta base de données est très grosse. Si tu veux changer de serveur, tu dois déménager toute la base de données ensemble avec les fichiers de Wordpress, et plus tous les plugiciels qui sont nécessaires. Même s’ils sont compressés, déplacer de grosse quantité des fichiers peut prendre depuis un jour ou deux.
+
+Avec Gatsby, ton code doit être dans un logiciel de versions décentralisé (c’est qu’on appelle communément GIT). Avec ça, tu peux utiliser le même code et générer de HTML qui peut-être servi dans différents hébergements. Un processus de compilation et de rendu devrait prendre moins de deux heures et même des quelques minutes.
+
+## 7. 🧱 Les blocs de code
+
+Les blocs de code appartiennent à la syntaxe Markdown. Ils sont créés pour écrire des articles techniques, tu peux écrire comme suit:
+
+```ruby
+puts "Allô, bonjour, comment ça va?"
+```
+
+Dans Wordpress, tu peux faire la même chose, mais tu devrais modifier le code en PHP avec CSS et les mettre avec leurs fichiers respectifs pour que cela fonctionne bien. Si tu veux avoir des beaucoup thèmes, ça peut être compliqué pour le faire.
+
+## 8. 🔄 Partager le code entre mon portfolio et mon blogue
+
+Comment tu l’auras remarqué, mon blogue est maintenant très similaire à mon portfolio. C’est la chose que je voulais depuis le début: d’abord parce que je peux montrer dans mon portfolio mes deux derniers articles dépend la langue que le visiteur a choisie, et enfin parce que je peux partager mes composants et le code d’IU entre mon portfolio et mon blogue. Des buttons, des titres, etc. Alors, la navigation entre les deux sites est plus confortable visuellement.

@@ -1,0 +1,56 @@
+---
+title: ¿Por qué moví mi blog de WordPress a Gatsby? (8 razones como desarrollador)
+description: 8 razones como desarrollador
+date: 2021-11-09
+published: true
+imageCover: https://assets.taskalia.com/blog/wordpress-ipad.jpg
+imageAlt: Photo by Souvik Banerjee on Unsplash
+---
+
+# ¿Por qué moví mi blog de WordPress a Gatsby? (8 razones como desarrollador)
+
+Desde hace más de dos años llevo utilizando WordPress para mostrar tutoriales técnicos y contar experiencias laborales (no sólo mías, sino de distintas fuentes).
+
+Pero usar WordPress se estaba volviendo un poco tedioso para mi. Sí, tiene una interfaz amigable y se siente como escribir en Word. Lo que ves es lo que se refleja en la página. Pero modificar algo de WordPress puede volverse complicado de acuerdo al nivel de la tarea. Así que a continuación las principales de las razones por las que me estoy moviendo a Gatsby.
+
+## 1. 💾 No necesito una base de datos
+
+Una vez que instalas WordPress necesitas configurar usuarios. Por defecto, viene con una base de datos suficiente para administrar páginas, publicaciones y usuarios. Pero como yo soy el único escribiendo en mi sitio personal, no necesito de cosas tan complejas. Gatsby, sólo con código, provee administración de páginas, y utiliza la generación de éstas también para generar _posts_.
+
+## 2. 💵 No necesito pagar un hosting
+
+A pesar que existen _hostings_ que te proveen de una capa gratuita para tu WordPress. Si quieres un servidor decente de WordPress, te costará algo de $10 mensual. No mucho para la cantidad de visitas que tengo al mes. Pero si puedo tomar ventaja de una capa gratuita mientras trato de evitar de usar servidores con PHP + Nginx, es otra razón para ir por Gatsby.
+
+## 3. 🖍 Flexibilidad al modificar los estilos
+
+WordPress tiene la ventaja de tener miles de temas en el mercado con una rápida instalación. Pero yo quiero crear mi propio estilo y utilizar mis propios _frameworks_. Quería tener control de los elementos de la página que yo puedo modificar: como botones, listas, títulos, etc. Y hacer una modificación sin necesidad de entrar en el servidor. Con Gatsby, puedo hacerlo. Además que varios temas de WordPress agregan estilos para sus plugins, incluso si no los usas, lo que incrementa el tamaño de los archivos de estilo _CSS_ generados. No, gracias.
+
+## 4. 📝 Prefiero utilizar Markdown (MDX) que herramientas WYSIWYG
+
+Markdown se ha vuelto mi herramienta favorita para escribir. Utilizada por varios desarrolladores para escribir documentación en **Github**. Es mucho más sencillo que escribir HTML y con Gatsby puedes modificar el estilo de los components Markdown a tu antojo.
+
+Mejor aún. Con Gatsby, se puede hacer uso de **MDX** (Markdown + JSX), que es una herramienta para _renderizar_ componentes React dentro de Markdown. Es decir, ¡puedes realizar publicaciones técnicas mucho más interactivas!
+
+## 5. 👨🏻‍💻 Baja probabilidad de hackeo
+
+Salvo que agregues algo dinámico a tu sitio, o te realicen un ataque DDOS, un sitio Gatsby consiste en sólo páginas HTML. Nada más. Traduciendo para personas no técnicas: Gatsby es como un grupo de _landing pages_. Si no hay servidor ni base de datos, es casi imposible que alguien tome control de tu sitio.
+
+## 6. 🚚 Migración de hosting provider es mucho más sencilla
+
+Si tienes demasiados artículos en tu blog, probablemente tu base de datos tenga un considerable peso. Si quieres cambiar de servidor tienes que mover toda esa base de datos, junto a los archivos de WordPress más todos los plugins que sean necesarios. Incluso si esta _zippeado_, mover esa enorme cantidad de archivos puede tomar desde un día a un par.
+
+Con Gatsby, tu código debería estar en un control de versiones (comúnmente llamado GIT). Con eso, puedes utilizar el mismo código y generar HTML que puede ser servido en distintos proveedores de _hosting_. Un proceso de compilar y _renderizar_ los archivos HTML, de acuerdo al número de páginas que tengas, debería tomar menos de un par de horas o incluso algunos minutos.
+
+## 7. 🧱 Bloques de código
+
+Propio de Markdown. Creados para publicaciones sobre desarrollo, puedes tener bloques de código como el siguiente:
+
+```ruby
+puts "Hola desde el componente de código"
+```
+
+En WordPress también se puede, pero hay que modificar código PHP con CSS y ponerlo en sus respectivos archivos para que funcione bien. Y si quieres tener múltiples temas (colores), también puede resultar complicado de agregarlo.
+
+## 8. 🔄 Integración entre mi portafolio y mi blog
+
+Como te habrás dado cuenta, mi blog ahora es dependiente de mi portafolio. Esto quería desde el principio: primero, porque ahora puedo mostrar en mi portafolio los dos últimos posts de acuerdo al idioma en el que esté mi perfil, y por último, porque puedo compartir mis elementos UI entre mi portafolio y mi blog, ya que comparten el mismo código. Botones, títulos, fuente. Así navegar entre ambos sitios es más confortable visualmente.

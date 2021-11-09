@@ -1,0 +1,56 @@
+---
+title: Why I moved my blog from WordPress to Gatsby? (8 reasons as a developer)
+description: 8 reasons as developer
+date: 2021-11-09
+published: true
+imageCover: https://assets.taskalia.com/blog/wordpress-ipad.jpg
+imageAlt: Photo by Souvik Banerjee on Unsplash
+---
+
+# Why I moved my blog from WordPress to Gatsby? (8 reasons as a developer)
+
+For two years, I was using WordPress for showing development tutorials and telling about some job experiences (not only mine, from other sources as well).
+
+But using WordPress was becoming a little bit overwhelming for me. Yes, it has a friendly interface and it feels like writing on Word. What you see is what you get, they call it. But modifying something in WordPress could become a little bit complicated according to the task level. So, here are the main reasons why I’m moving to Gatsby.
+
+## 1. 💾 I don’t need a database
+
+Once you install WordPress, you’ll need to configure users. By default, it comes with a database handling page administration, posts and users. But, since I’m the only one writing for my blog, I don’t need such complex stuff. Gatsby, only with code, it provides page creation, and it uses this generation in a similar way to create _posts_.
+
+## 2. 💵 I don’t need to pay for a hosting
+
+Besides some _hostings_ providing a free tier for your WordPress setup. A common WordPress server is around $10 monthly. Not so much for a decent quantity of visits that I have by month. But if I can take advantage of a free tier as I avoid using any PHP + Nginx server, that’s another reason to choose Gatsby.
+
+## 3. 🖍 Flexibility for modifying the UI
+
+One of the advantages of WordPress is installing themes with one single click. But I wanted to create my styles and customize them using my own frameworks. I like to have control over the page elements that I can modify: such as buttons, lists, titles, etc. And make any updating without entering the server. With Gatsby, I can do it without a lot of code. Also, many WordPress themes add styles to plugins or components, even if you don’t use them, which increments the size of generated _CSS_ files. No, thank you.
+
+## 4. 📝 I prefer to use Markdown (MDX) rather than WYSIWYG
+
+Markdown has become my preferred tool for writing. Many developers use it for create documentation on **Github**. It’s way easier than HTML, and with Gatsby, you can modify the Markdown component styles however you want.
+
+Even better. With Gatsby, you can use **MDX** (Markdown + JSX), a tool for _render_ React components, inside of Markdown. You can create post publications quite interactive!
+
+## 5. 👨🏻‍💻 Low chance of getting hacked
+
+Unless you add something dynamic in your site, or if you receive an attack DDoS, a Gatsby site consist only in HTML pages. Nothing more. For the non-tech people: Gatsby is like a group of _landing pages_. If there is neither a server nor a database, it’s almost impossible that somebody could gain control of your site.
+
+## 6. 🚚 Changing of hosting provider is way easier
+
+If you have several articles in your blog, probably the database is large. If you want to change from a server, you must move all that database, along with the WordPress files and all the plugins installed. Even if those files are _zipped_, moving that amount of data could take a whole day, or maybe two.
+
+With Gatsby, your code should be stored in a Version Control System, commonly named Git. With that, you can use the same code and generate HTML files that can be served over many _hosting_ providers. Complete and generating the HTML files should take a couple of hours or even some minutes.
+
+## 7. 🧱 Code Blocks
+
+Exclusive of Markdown. You can have code blocks for development posts like the next one:
+
+```ruby
+puts "Hello from a code block"
+```
+
+You can do the same in WordPress, but you have to modify the PHP code and the styles in their respective files to make it work, which could be complicated. Even worse if you want to have different code themes (colors).
+
+## 8. 🔄 Almost same code between my portfolio and my blog
+
+As you will have noticed, my blog now is dependent on my portfolio. That’s what I wanted from the beginning: first, I can show my portfolio with the latest two posts that I wrote depending on the selected language. Last, because I can share some UI elements between my portfolio and my blog. Buttons, titles, font family, etc. So, browsing from my blog to my portfolio and vice versa is more eye comfortable.
