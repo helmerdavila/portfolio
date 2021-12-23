@@ -9,6 +9,10 @@ import { ThemeContext } from '../Layout';
 
 require('prismjs/components/prism-php');
 require('prismjs/components/prism-ruby');
+require('prismjs/components/prism-yaml');
+require('prismjs/components/prism-docker');
+require('prismjs/components/prism-bash');
+require('prismjs/components/prism-ignore');
 
 export default ({ children, className }: { children: unknown; className: string }): JSX.Element => {
   const context = useContext(ThemeContext);

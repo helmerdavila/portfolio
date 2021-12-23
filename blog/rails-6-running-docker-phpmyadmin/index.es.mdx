@@ -1,0 +1,117 @@
+---
+title: 'Rails 6: corriendo sobre Docker con PHPMyAdmin'
+description: Rails 6 + MySQL + PHPMyAdmin
+date: 2021-12-22
+published: true
+imageCover: https://assets.taskalia.com/blog/docker-rails-image.jpg
+---
+
+# Rails 6: corriendo sobre Docker con PHPMyAdmin
+
+Un día, estaba usando Windows. Desde la llegada de WSL , quería jugar un poco con una aplicación en Rails. Sólo por la diversión de practicar mis habilidades en Docker. ¿El único requerimiento para mí? Usar Alpine Linux, muy conocido por el pequeño tamaño de imagen que generan.
+
+Después de un par de horas de dolor y sufrimiento, lo conseguí. Mis contenedores Docker estaban trabajando como esperaba y estaba listo para trabajar. Aquí presento todos los archivos y soluciones que usé.
+
+## 🐳 Dockerfile
+
+Primero, creé el archivo `Dockerfile` para el contenedor Ruby. La ruta fue `.docker/Dockerfile`
+
+```docker
+FROM ruby:2.7.2-alpine
+RUN \
+    # Actualizar paquetes
+    apk update && apk upgrade && \
+    apk --no-cache add make gcc libc-dev && \
+    apk add --update --no-cache \
+    build-base curl-dev git libxslt-dev libxml2-dev ruby-rdoc mysql-dev \
+    yaml-dev zlib-dev nodejs yarn tzdata
+
+WORKDIR /app
+
+# Gemas requeridas
+RUN gem install nokogiri -- --use-system-libraries
+RUN gem install bundler
+
+COPY package.json yarn.lock ./
+RUN yarn install --check-files
+
+COPY Gemfile Gemfile.lock ./
+RUN bundle install
+
+COPY . .
+
+# Limpiar todo después de la instalación
+RUN rm -rf /var/cache/apk/*
+
+ENV PATH=./bin:$PATH
+
+EXPOSE 3000
+CMD ["rails", "console"]
+```
+
+## 📦 Docker compose
+
+Después de eso, podemos crear nuestro archivo `docker-compose.yml`. Para este caso, usaremos un combo Ruby + MySQL 8.0 + PHPMyAdmin. Probablemente te estés preguntando, ¿por qué PHPMyAdmin? Es porque no tengo otra herramienta UI SQL en mi computadora Linux y no quiero usar la línea de comandos por ahora.
+
+```yaml
+version: '3'
+services:
+  app:
+    container_name: rails_project_backend
+    command: sh -c "bundle install && yarn install --check-files && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    depends_on:
+      - db
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile
+    ports:
+      - "3000:3000"
+    restart: always
+    volumes:
+    - ".:/app"
+    - "node-modules:/app/node_modules"
+    environment:
+      RAILS_ENV: development
+      DATABASE_HOST: db
+      DATABASE_USER: rails_db_user
+      DATABASE_PASSWORD: rails_db_password
+	  DATABASE_NAME: rails_db
+  db:
+    container_name: rails_project_db
+    image: "mysql:8.0"
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: rails_db
+      MYSQL_USER: rails_db_user
+      MYSQL_PASSWORD: rails_db_password
+    volumes:
+      - './dbdocker:/var/lib/mysql'
+      - './dbdocker_init:/docker-entrypoint-initdb.d'
+    ports:
+      - "3306:3306"
+  phpmyadmin:
+    depends_on:
+      - db
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+      - '3500:80'
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      MYSQL_USER: root
+      MYSQL_ROOT_PASSWORD: password
+volumes:
+  node-modules:
+```
+
+En el container PHPMyAdmin necesitamos el password del usuario root, porque queremos ejecutar operaciones “de alto nivel” sobre nuestras bases de datos.
+
+Las carpetas extra `dbdocker` y `dbdocker_init` puedes agregarlas a tu proyecto si quieres ejecutar comandos en tu contenedor MySQL. Recuerda que una vez agregadas, necesitas ignorarlas desde Git, donde los archivos de la base de datos permanecerán. Es una buena práctica crear un archivo vacío `.gitkeep` o `.keep` dentro de la carpeta e ignorarlo. A continuación la regla que uso en mi `.gitignore`
+
+```ignore
+/dockerdb/*
+!/dockerdb/.gitkeep
+```
+
+> Recuerda que puedes usar un archivo .env y luego agregar `env_file: - .env` a tu archivo docker-compose (removiendo la sección _environment_ por contenedor, antes), si no quieres hacer commit de tus valores _env_ o si los cambias frecuentemente.
