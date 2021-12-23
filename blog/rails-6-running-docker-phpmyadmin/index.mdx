@@ -1,0 +1,121 @@
+---
+title: 'Rails 6: Running on Docker with PHPMyAdmin'
+description: Rails 6 + MySQL + PHPMyAdmin
+date: 2021-12-22
+published: true
+imageCover: https://assets.taskalia.com/blog/docker-rails-image.jpg
+---
+
+# Rails 6: Running on Docker with PHPMyAdmin
+
+One day, I was using my Windows computer. Since the arriving of WSL 2 I wanted to play around with a Rails application. Just for the fun of practicing my Docker skills. The only big requirement for me? Use the Alpine Linux image, well known for the small image size they generate.
+
+After a couple of hours of pain and suffering, I made it. My docker containers were working as expected and it was ready for work. Here, I present all the files and workarounds that I used.
+
+## 🐳 Dockerfile
+
+First. I created the `Dockerfile` for the Ruby container. The route was `.docker/Dockerfile`
+
+```docker
+FROM ruby:2.7.2-alpine
+RUN \
+    # update packages
+    apk update && apk upgrade && \
+    apk --no-cache add make gcc libc-dev && \
+    apk add --update --no-cache \
+    build-base curl-dev git libxslt-dev libxml2-dev ruby-rdoc mysql-dev \
+    yaml-dev zlib-dev nodejs yarn tzdata
+
+WORKDIR /app
+
+# Required gems
+RUN gem install nokogiri -- --use-system-libraries
+RUN gem install bundler
+
+COPY package.json yarn.lock ./
+RUN yarn install --check-files
+
+COPY Gemfile Gemfile.lock ./
+RUN bundle install
+
+COPY . .
+
+# clear after installation
+RUN rm -rf /var/cache/apk/*
+
+ENV PATH=./bin:$PATH
+
+EXPOSE 3000
+CMD ["rails", "console"]
+```
+
+Do you see that `tzdata` library? That was giving me errors when I tried bundle install. In short, I just wanted to install all my dependencies without any issues. Inside the container, the app will be located in the /app folder and it comes with the MySQL libraries for a DB integration.
+
+Plus, I added `nodejs` and `yarn` as Alpine Linux libraries, we will need them as tools for local development use, specially since Rails relies on Webpacker for frontend development.
+
+## 📦 Docker compose
+
+After that, we can create our `docker-compose.yml` file. For this case, we are using a Ruby + MySQL 8.0 + PHPMyAdmin combo. Probably you are wondering, why PHPMyAdmin? That’s because I don’t have any SQL UI tool in my Linux computer and I don’t want to use the command line right now.
+
+```yaml
+version: '3'
+services:
+  app:
+    container_name: rails_project_backend
+    command: sh -c "bundle install && yarn install --check-files && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    depends_on:
+      - db
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile
+    ports:
+      - "3000:3000"
+    restart: always
+    volumes:
+    - ".:/app"
+    - "node-modules:/app/node_modules"
+    environment:
+      RAILS_ENV: development
+      DATABASE_HOST: db
+      DATABASE_USER: rails_db_user
+      DATABASE_PASSWORD: rails_db_password
+	  DATABASE_NAME: rails_db
+  db:
+    container_name: rails_project_db
+    image: "mysql:8.0"
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: rails_db
+      MYSQL_USER: rails_db_user
+      MYSQL_PASSWORD: rails_db_password
+    volumes:
+      - './dbdocker:/var/lib/mysql'
+      - './dbdocker_init:/docker-entrypoint-initdb.d'
+    ports:
+      - "3306:3306"
+  phpmyadmin:
+    depends_on:
+      - db
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+      - '3500:80'
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      MYSQL_USER: root
+      MYSQL_ROOT_PASSWORD: password
+volumes:
+  node-modules:
+```
+
+In the PHPMyAdmin container we need the root password, because we want to execute “powerful” operations over our databases.
+
+The `dbdocker` and `dbdocker_init` are extra folders that you can add to your project if you want to execute extra commands into your MySQL container. Remember once you added it to ignore all the content of `dbdocker`, where the database files will remain. It’s a good practice to create an empty `.gitkeep` or `.keep` file in the folder and then ignoring it. Here is the rule that I’d use in my `.gitignore`
+
+```ignore
+/dockerdb/*
+!/dockerdb/.gitkeep
+```
+
+> Remember that you can use a .env file and then add `env_file: - .env` to your docker compose file (removing the environment section per container first), if you don’t want to commit your env values or if you change them often.
