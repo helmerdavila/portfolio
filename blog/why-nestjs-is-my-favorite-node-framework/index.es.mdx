@@ -1,0 +1,123 @@
+---
+title: '¿Por qué NestJS es uno de los mejores frameworks para Node?'
+description: Y por que lo usaría para mi siguiente proyecto
+date: 2022-02-02
+published: true
+imageCover: https://assets.taskalia.com/blog/nestjslogo.png
+---
+
+# ¿Por qué NestJS es uno de los mejores frameworks para Node?
+
+La comunidad Javascript es una de las más grandes de desarrollo en todo el mundo, no es de extrañarse entonces que sigue siendo uno de los lenguajes más usados cada año.
+
+Ya sea que estés desarrollando para Backend, tienes muchas opciones desde donde escoger. Si quieres hacer backend, la opción más popular por la cual van muchos desarrolladores es ExpressJS. Instalas un par de librerías en tu `package.json` y ya puedes comenzar la creación de tu API o vistas que retornen HTML desde el servidor.
+
+Entonces al leer el título te preguntarás: *¿Por qué prefiero NestJS, si hay otras muchas más opciones populares como Express o Hapi?*
+
+Acá te daré algunas razones por las cuales he trabajado en algunos proyectos en NestJS y volvería a usarlo.
+
+## Es NodeJS (Javascript)
+
+Todos sabemos las ventajas que ofrece NodeJS como framework para Backend, velocidad de ejecución y la curva de aprendizaje para las personas que vienen desde el Frontend.
+
+```bash
+# Instalando NestJS globalmente
+npm i -g @nestjs/cli
+# Creando un proyecto nuevo
+nest new project-name
+```
+
+## Recomienda, pero no obliga, un orden establecido para trabajar
+
+Y me recuerda mucho a Laravel (PHP).
+
+Me explico, la organización de carpetas se parece mucho a Angular, no te obliga a ordenar tu código como podrias ver en los tutoriales. Pero he descubierto que cierta manera de organizar los archivos es una combinación de cualquier framework MVC + Angular. Para cualquier persona que trabajo en otro framework Backend que no sea ExpressJS, se sentirá más cómodo haciendo la transición a Nest.
+
+```ts
+// Un controlador REST común en NestJS
+@Controller('users')
+export class UsersController {
+  constructor(private readonly usersService: UsersService) {}
+
+  @Post()
+  create(@Body() createUserDto: CreateUserDto) {
+    return this.usersService.create(createUserDto);
+  }
+
+  @Get()
+  findAll() {
+    return this.usersService.findAll();
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.usersService.findOne(+id);
+  }
+
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+    return this.usersService.update(+id, updateUserDto);
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.usersService.remove(+id);
+  }
+}
+```
+
+## Soporte para Typescript
+
+Desde 2020 los desarrolladores que usan Typescript van en aumento, creo que es por la dimensión de los proyectos actuales y la popularidad del frontend. Como hay muchos datos que conectar entre ambos lados del desarrollo: Backend y Frontend, es necesario promover ciertos estándares para que los nuevos integrantes de un equipo no estén confundidos de que tipo de variables o funciones se deben utilizar en todo el proyecto. Es allí donde Typescript será muy útil. Tampoco olvidar el soporte de autocompletado.
+
+Cuando NestJS usa Typescript, la facilidad de escribir código aumenta considerablemente, y así mismo se reducen los errores en los tipos de datos antes de compilación.
+
+```ts
+// Un modelo de la base de datos usando TypeORM con Typescript
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+
+@Entity()
+export class Photo {
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column({ length: 500 })
+  name: string;
+
+  @Column('text')
+  description: string;
+
+  @Column()
+  filename: string;
+
+  @Column('int')
+  views: number;
+
+  @Column()
+  isPublished: boolean;
+}
+```
+
+## Documentación
+
+Lo que más me encanta de un framework es la documentación y ejemplos que se presenten en su sitio web. Una mala documentación es una de las principales razones por la cual un desarrollador junior – mid no se sienta tan motivado a trabajar con un framework web y por lo tanto evite su uso. Creo que en este punto NestJS cumple con este requerimiento. Es una de las mejores documentaciones de framework backend que he visto junto a otros proyectos como Laravel.
+
+## Soporte GraphQL, OpenAPI, ORM’s, etc.
+
+Con una sección llena de “recetas” (_snippets_) ([https://docs.nestjs.com/recipes](https://docs.nestjs.com/recipes)) con configuraciones por defecto para la generación de un CRUD, recarga “en caliente”, TypeORM, Sequelize, Swagger, Prisma y muchas otras herramientas ([https://docs.nestjs.com/microservices](https://docs.nestjs.com/microservices)).
+
+_¿Necesitar usar GraphQL?_, instala unas cuantas librerías y con menos de 10 líneas de código ya agrego soporte para eso. *¿Necesitar una manera visual de exponer ciertos endpoints?* NestJS te tiene cubierto con OpenAPI. *¿En un proyecto prefieres Sequelize como ORM, pero en otro TypeORM porque quieres ver cuál va mejor con tu estilo?* Cambia fácilmente entre cualquiera de los ORM haciendo uso de las librerías correspondientes y realizando unas modificaciones en la configuración. Además, si ya has trabajado con ExpressJS, las configuraciones generales son pan comido.
+
+```ts
+// Agregando soporte para GraphQL en una sola línea
+// Un NPM install es requerido antes
+import { Module } from '@nestjs/common';
+import { GraphQLModule } from '@nestjs/graphql';
+
+@Module({
+  imports: [GraphQLModule.forRoot({})],
+})
+export class AppModule {}
+```
+
+Éstas creo que son las 5 principales razones por las cuales en cualquier nuevo proyecto que requiera Node para el Backend, yo usaría NestJS sin ninguna duda. Por supuesto hay más *features* que hacen sencillo el trabajo en el backend, como *schedulers*, *websockets*, etc. Todo eso te dejo que lo descubras en su [documentación](https://docs.nestjs.com/).
