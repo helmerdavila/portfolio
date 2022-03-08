@@ -60,21 +60,6 @@ exports.onCreateNode = async ({ node, actions, createNodeId, store, cache }) => 
 
     createNodeField({ node, name: `locale`, value: lang });
     createNodeField({ node, name: `isDefault`, value: isDefault });
-
-    if (node.frontmatter.imageCover !== null) {
-      let fileNode = await createRemoteFileNode({
-        url: node.frontmatter.imageCover,
-        parentNodeId: node.id,
-        createNode,
-        createNodeId,
-        cache,
-        store,
-      });
-      // if the file was created, attach the new node to the parent node
-      if (fileNode) {
-        node.imageCover___NODE = fileNode.id;
-      }
-    }
   }
 };
 

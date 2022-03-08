@@ -3,12 +3,13 @@ import classNames from 'classnames';
 import { ThemeContext } from '../Layout';
 import { IBlogPageQuery, IBlogPost } from '../../interfaces';
 import LocalizedLink from '../../components/LocalizedLink';
-import { GatsbyImage } from 'gatsby-plugin-image';
+import { GatsbyImage, getImage, ImageDataLike } from 'gatsby-plugin-image';
 
-const BlogPreview = (props: { data: IBlogPageQuery }): JSX.Element => {
+const BlogPreviewHome = (props: { data: IBlogPageQuery }): JSX.Element => {
   const context = useContext(ThemeContext);
   const textColor = { 'text-white': !context.isLightTheme, 'text-black': context.isLightTheme };
   const posts = props.data?.allMdx?.edges;
+  const postDefaultImage = props.data.homePostImage.childImageSharp.gatsbyImageData;
 
   return posts.length ? (
     <section
@@ -18,7 +19,7 @@ const BlogPreview = (props: { data: IBlogPageQuery }): JSX.Element => {
         <h2 className={classNames('text-5xl font-semibold text-center mb-4', textColor)}>Blog</h2>
         <div className="flex flex-col sm:flex-row">
           {posts?.map((post) => (
-            <PostCard key={post.node.parent.relativeDirectory} post={post.node} />
+            <PostCard key={post.node.parent.relativeDirectory} post={post.node} postDefaultImage={postDefaultImage} />
           ))}
         </div>
       </div>
@@ -26,10 +27,11 @@ const BlogPreview = (props: { data: IBlogPageQuery }): JSX.Element => {
   ) : null;
 };
 
-const PostCard = ({ post }: { post: IBlogPost }): JSX.Element => {
+const PostCard = ({ post, postDefaultImage }: { post: IBlogPost; postDefaultImage: ImageDataLike }): JSX.Element => {
   const context = useContext(ThemeContext);
   const textColor = { 'text-white': !context.isLightTheme, 'text-black': context.isLightTheme };
   const imageAlt = post.frontmatter?.imageAlt ?? 'Blog';
+  const image = getImage(post.frontmatter.image?.childImageSharp.gatsbyImageData ?? postDefaultImage);
 
   return (
     <LocalizedLink
@@ -44,7 +46,7 @@ const PostCard = ({ post }: { post: IBlogPost }): JSX.Element => {
       <GatsbyImage
         className="rounded-t-lg filter grayscale hover:grayscale-0 transition-all ease-in duration-500"
         imgClassName="rounded-t-lg"
-        image={post.imageCover?.childImageSharp.gatsbyImageData}
+        image={image}
         alt={imageAlt}
       />
       <h3 className={classNames('text-3xl font-semibold text-center p-4', textColor)}>{post.frontmatter?.title}</h3>
@@ -52,4 +54,4 @@ const PostCard = ({ post }: { post: IBlogPost }): JSX.Element => {
   );
 };
 
-export default BlogPreview;
+export default BlogPreviewHome;
