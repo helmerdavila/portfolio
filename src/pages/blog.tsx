@@ -12,7 +12,6 @@ const Blog = ({ data }: { data: IBlogPageQuery }): JSX.Element => {
   const context = useContext(ThemeContext);
   const themeStyles = { 'text-black': context.isLightTheme, 'text-white': !context.isLightTheme };
   const posts = data?.allMdx?.edges;
-  console.log(data);
 
   return (
     <LayoutBlog>

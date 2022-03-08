@@ -20,7 +20,6 @@ const Presentation = (props: { backgroundImage: IGatsbyFileImage }): JSX.Element
     web_applications,
     mobile_applications,
   } = useTranslations();
-  console.log(props);
   const image = getImage(props.backgroundImage.childImageSharp.gatsbyImageData);
   const bgImage = convertToBgImage(image);
 
