@@ -1,7 +1,6 @@
 const locales = require(`./config/i18n`);
 const { removeTrailingSlash, localizedSlug, findKey } = require('./src/utils/gatsby-node-helpers');
 const path = require('path');
-const { createRemoteFileNode } = require('gatsby-source-filesystem');
 
 exports.onCreatePage = ({ page, actions }) => {
   const { createPage, deletePage } = actions;
@@ -70,7 +69,10 @@ exports.createPages = async ({ graphql, actions }) => {
 
   const result = await graphql(`
     {
-      blog: allFile(filter: { sourceInstanceName: { eq: "blog" } }) {
+      blog: allFile(
+        filter: { sourceInstanceName: { eq: "blog" } }
+        sort: { fields: [childMdx___frontmatter___date], order: DESC }
+      ) {
         edges {
           node {
             relativeDirectory
