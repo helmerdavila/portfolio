@@ -1,5 +1,5 @@
-import { FileNode } from 'gatsby-plugin-image/dist/src/components/hooks';
 import { FileSystemNode } from 'gatsby-source-filesystem';
+import { ImageDataLike, IGatsbyImageData } from 'gatsby-plugin-image';
 
 export interface ISlide {
   id: number;
@@ -10,7 +10,7 @@ export interface ISlide {
   image: JSX.Element;
 }
 export interface IGatsbyFileImage extends FileSystemNode {
-  childImageSharp: { gatsbyImageData: any };
+  childImageSharp: { gatsbyImageData: ImageDataLike };
 }
 export interface IBlogPost {
   excerpt: string;
@@ -21,10 +21,9 @@ export interface IBlogPost {
     published: boolean;
     date: string;
     lang: string;
-    imageCover: string;
-    imageAlt: string;
+    imageAlt?: string;
+    image?: IGatsbyFileImage;
   };
-  imageCover?: IGatsbyFileImage;
   fields: {
     locale: string;
   };
@@ -36,5 +35,6 @@ export interface IBlogPageQuery {
   allMdx: {
     edges: { node: IBlogPost }[];
   };
-  backgroundImage: FileNode;
+  backgroundImage: IGatsbyFileImage;
+  homePostImage: IGatsbyFileImage;
 }

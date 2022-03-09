@@ -8,7 +8,7 @@ import SEO from './seo';
 import { MDXProvider } from '@mdx-js/react';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 import Code from '../components/Mdx/Code';
-import { GatsbyImage } from 'gatsby-plugin-image';
+import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 
 const MyH1 = (props: unknown) => {
   const context = useContext(ThemeContext);
@@ -82,8 +82,8 @@ const LayoutBlogPage = ({ data: { mdx } }: { data: { mdx: IBlogPost } }): JSX.El
     'bg-white shadow-sm': context.isLightTheme,
     'bg-gray-800 border-gray-800': !context.isLightTheme,
   };
-  const image = mdx?.frontmatter?.imageCover ?? '';
   const imageAlt = mdx?.frontmatter?.imageAlt ?? '';
+  const imageRendered = getImage(mdx.frontmatter.image?.childImageSharp.gatsbyImageData);
 
   return (
     <LayoutBlog>
@@ -91,11 +91,11 @@ const LayoutBlogPage = ({ data: { mdx } }: { data: { mdx: IBlogPost } }): JSX.El
         title={mdx?.frontmatter?.title}
         ogType="article"
         description={mdx?.frontmatter?.description || mdx?.excerpt}
-        image={image}
+        image={imageRendered.images.fallback.src}
       />
       <div className="container max-w-3xl py-5 mx-auto xl:max-w-6xl">
         <div className={classNames(pageBackground, 'border-2')}>
-          <GatsbyImage image={mdx.imageCover?.childImageSharp.gatsbyImageData} alt={imageAlt} />
+          <GatsbyImage image={imageRendered} alt={imageAlt} />
           <div className="p-12">
             <MDXProvider components={components}>
               <MDXRenderer>{mdx.body}</MDXRenderer>
@@ -113,15 +113,14 @@ export const query = graphql`
   query Post($locale: String!, $title: String!) {
     mdx(frontmatter: { title: { eq: $title } }, fields: { locale: { eq: $locale } }) {
       frontmatter {
-        imageCover
+        image {
+          childImageSharp {
+            gatsbyImageData(layout: FULL_WIDTH, placeholder: TRACED_SVG)
+          }
+        }
         imageAlt
         title
         description
-      }
-      imageCover {
-        childImageSharp {
-          gatsbyImageData(layout: FULL_WIDTH, placeholder: TRACED_SVG)
-        }
       }
       excerpt(pruneLength: 100)
       body

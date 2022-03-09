@@ -1,7 +1,6 @@
 const locales = require(`./config/i18n`);
 const { removeTrailingSlash, localizedSlug, findKey } = require('./src/utils/gatsby-node-helpers');
 const path = require('path');
-const { createRemoteFileNode } = require('gatsby-source-filesystem');
 
 exports.onCreatePage = ({ page, actions }) => {
   const { createPage, deletePage } = actions;
@@ -60,21 +59,6 @@ exports.onCreateNode = async ({ node, actions, createNodeId, store, cache }) => 
 
     createNodeField({ node, name: `locale`, value: lang });
     createNodeField({ node, name: `isDefault`, value: isDefault });
-
-    if (node.frontmatter.imageCover !== null) {
-      let fileNode = await createRemoteFileNode({
-        url: node.frontmatter.imageCover,
-        parentNodeId: node.id,
-        createNode,
-        createNodeId,
-        cache,
-        store,
-      });
-      // if the file was created, attach the new node to the parent node
-      if (fileNode) {
-        node.imageCover___NODE = fileNode.id;
-      }
-    }
   }
 };
 
@@ -85,7 +69,10 @@ exports.createPages = async ({ graphql, actions }) => {
 
   const result = await graphql(`
     {
-      blog: allFile(filter: { sourceInstanceName: { eq: "blog" } }) {
+      blog: allFile(
+        filter: { sourceInstanceName: { eq: "blog" } }
+        sort: { fields: [childMdx___frontmatter___date], order: DESC }
+      ) {
         edges {
           node {
             relativeDirectory

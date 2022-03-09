@@ -9,7 +9,7 @@ import MyBook from '../components/MyBook/MyBook';
 import AboutMe from '../components/AboutMe/AboutMe';
 import PersonalProjects from '../components/PersonalProjects/personalprojects';
 import Footer from '../components/Layouts/footer';
-import BlogPreview from '../components/Blog/blog';
+import BlogPreviewHome from '../components/Blog/BlogPreviewHome';
 import { graphql } from 'gatsby';
 import { IBlogPageQuery } from '../interfaces';
 
@@ -25,7 +25,7 @@ const IndexPage = ({ data }: { data: IBlogPageQuery }): JSX.Element => (
     <WhatIDo />
     <MyStack />
     <PersonalProjects />
-    <BlogPreview data={data} />
+    <BlogPreviewHome data={data} />
     <Projects />
     <MyBook />
     <FreeProjects />
@@ -45,13 +45,10 @@ export const query = graphql`
           frontmatter {
             title
             imageAlt
-            imageCover
-            date(formatString: $dateFormat)
-          }
-          imageCover {
-            childImageSharp {
-              gatsbyImageData(layout: FULL_WIDTH, placeholder: TRACED_SVG, aspectRatio: 1.7)
+            image {
+              ...ImageOnIndexPost
             }
+            date(formatString: $dateFormat)
           }
           fields {
             locale
@@ -68,6 +65,15 @@ export const query = graphql`
       childImageSharp {
         gatsbyImageData(layout: FULL_WIDTH, placeholder: BLURRED)
       }
+    }
+    homePostImage: file(relativePath: { eq: "macbook-homepost.jpg" }) {
+      ...ImageOnIndexPost
+    }
+  }
+
+  fragment ImageOnIndexPost on File {
+    childImageSharp {
+      gatsbyImageData(layout: FULL_WIDTH, placeholder: TRACED_SVG, aspectRatio: 1.7)
     }
   }
 `;

@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { graphql } from 'gatsby';
-import { GatsbyImage } from 'gatsby-plugin-image';
+import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import React, { useContext } from 'react';
 import { ThemeContext } from '../components/Layout';
 import LayoutBlog from '../components/LayoutBlog';
@@ -21,33 +21,33 @@ const Blog = ({ data }: { data: IBlogPageQuery }): JSX.Element => {
         description="My technical blog"
       />
       <div className="container max-w-3xl pb-3 mx-auto xl:max-w-6xl">
-        {posts.map((post) => (
-          <LocalizedLink
-            to={`/blog/${post.node.parent.relativeDirectory}`}
-            className={classNames(
-              { 'bg-white border-2 shadown-sm': context.isLightTheme, 'bg-gray-800': !context.isLightTheme },
-              'block mt-10 rounded-md first:mt-3',
-            )}
-            key={post.node.parent.relativeDirectory}
-          >
-            <GatsbyImage
-              image={post.node.imageCover?.childImageSharp.gatsbyImageData}
-              alt={post.node?.frontmatter?.imageAlt ?? ''}
-            />
-            <div className="p-6">
-              <h2 className={classNames(themeStyles, 'text-4xl font-bold')}>{post.node?.frontmatter?.title}</h2>
-              <h5 className={classNames(themeStyles, 'mb-2 text-xl')}>{post.node?.frontmatter?.description}</h5>
-              <p className={classNames(themeStyles, 'mt-2 text-lg')}>{post.node?.excerpt}</p>
-            </div>
-          </LocalizedLink>
-        ))}
+        {posts.map((post) => {
+          const imageRendered = getImage(post.node.frontmatter.image?.childImageSharp.gatsbyImageData);
+          return (
+            <LocalizedLink
+              to={`/blog/${post.node.parent.relativeDirectory}`}
+              className={classNames(
+                { 'bg-white border-2 shadown-sm': context.isLightTheme, 'bg-gray-800': !context.isLightTheme },
+                'block mt-10 rounded-md first:mt-3',
+              )}
+              key={post.node.parent.relativeDirectory}
+            >
+              <GatsbyImage image={imageRendered} alt={post.node?.frontmatter?.imageAlt ?? ''} />
+              <div className="p-6">
+                <h2 className={classNames(themeStyles, 'text-4xl font-bold')}>{post.node?.frontmatter?.title}</h2>
+                <h5 className={classNames(themeStyles, 'mb-2 text-xl')}>{post.node?.frontmatter?.description}</h5>
+                <p className={classNames(themeStyles, 'mt-2 text-lg')}>{post.node?.excerpt}</p>
+              </div>
+            </LocalizedLink>
+          );
+        })}
       </div>
     </LayoutBlog>
   );
 };
 
 export const query = graphql`
-  query blogposts($locale: String!, $dateFormat: String!) {
+  query allBlogPosts($locale: String!, $dateFormat: String!) {
     allMdx(filter: { fields: { locale: { eq: $locale } } }, sort: { fields: [frontmatter___date], order: DESC }) {
       edges {
         node {
@@ -55,16 +55,15 @@ export const query = graphql`
           frontmatter {
             title
             imageAlt
-            imageCover
+            image {
+              childImageSharp {
+                gatsbyImageData(layout: FULL_WIDTH, placeholder: TRACED_SVG)
+              }
+            }
             date(formatString: $dateFormat)
           }
           fields {
             locale
-          }
-          imageCover {
-            childImageSharp {
-              gatsbyImageData(layout: FULL_WIDTH, placeholder: TRACED_SVG)
-            }
           }
           parent {
             ... on File {

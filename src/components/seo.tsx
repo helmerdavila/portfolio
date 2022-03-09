@@ -71,9 +71,7 @@ function SEO({
           name: `twitter:description`,
           content: metaDescription,
         },
-        context.isLightTheme
-          ? { name: 'theme-color', content: 'white' }
-          : { name: 'theme-color', content: '#1f2937' },
+        context.isLightTheme ? { name: 'theme-color', content: 'white' } : { name: 'theme-color', content: '#1f2937' },
       ]
         .concat(
           keywords.length > 0
@@ -83,6 +81,8 @@ function SEO({
               }
             : [],
         )
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         .concat(meta)}
     />
   );

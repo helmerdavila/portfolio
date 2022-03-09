@@ -5,11 +5,11 @@ import classNames from 'classnames';
 import useTranslations from '../UseTranslations';
 import { ThemeContext } from '../Layout';
 import { getImage } from 'gatsby-plugin-image';
-import { FileNode } from 'gatsby-plugin-image/dist/src/components/hooks';
 import { convertToBgImage } from 'gbimage-bridge';
 import BackgroundImage from 'gatsby-background-image';
+import { IGatsbyFileImage } from '../../interfaces';
 
-const Presentation = (props: { backgroundImage: FileNode }): JSX.Element => {
+const Presentation = (props: { backgroundImage: IGatsbyFileImage }): JSX.Element => {
   const context = useContext(ThemeContext);
   const {
     hi_my_name_is,
@@ -20,8 +20,7 @@ const Presentation = (props: { backgroundImage: FileNode }): JSX.Element => {
     web_applications,
     mobile_applications,
   } = useTranslations();
-  console.log(props);
-  const image = getImage(props.backgroundImage);
+  const image = getImage(props.backgroundImage.childImageSharp.gatsbyImageData);
   const bgImage = convertToBgImage(image);
 
   return (
