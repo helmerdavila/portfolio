@@ -44,6 +44,7 @@ const apps: IApp[] = [
         layout="fullWidth"
         alt="Biteline"
         placeholder="tracedSVG"
+        quality={70}
       />
     ),
   },
@@ -59,6 +60,7 @@ const apps: IApp[] = [
         layout="fullWidth"
         alt="Biteline"
         placeholder="tracedSVG"
+        quality={70}
       />
     ),
   },
