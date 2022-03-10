@@ -35,7 +35,7 @@ const IndexPage = ({ data }: { data: IBlogPageQuery }): JSX.Element => (
 
 export const query = graphql`
   query blogpreview($locale: String!) {
-    allMdx(
+    posts: allMdx(
       filter: { fields: { locale: { eq: $locale } } }
       sort: { fields: [frontmatter___date], order: DESC }
       limit: 2

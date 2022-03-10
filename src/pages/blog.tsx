@@ -11,7 +11,7 @@ import { IBlogPageQuery } from '../interfaces';
 const Blog = ({ data }: { data: IBlogPageQuery }): JSX.Element => {
   const context = useContext(ThemeContext);
   const themeStyles = { 'text-black': context.isLightTheme, 'text-white': !context.isLightTheme };
-  const posts = data?.allMdx?.edges;
+  const posts = data?.posts?.edges;
 
   return (
     <LayoutBlog>
@@ -47,7 +47,10 @@ const Blog = ({ data }: { data: IBlogPageQuery }): JSX.Element => {
 
 export const query = graphql`
   query allBlogPosts($locale: String!) {
-    allMdx(filter: { fields: { locale: { eq: $locale } } }, sort: { fields: [frontmatter___date], order: DESC }) {
+    posts: allMdx(
+      filter: { fields: { locale: { eq: $locale } } }
+      sort: { fields: [frontmatter___date], order: DESC }
+    ) {
       edges {
         node {
           excerpt(pruneLength: 100)

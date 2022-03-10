@@ -8,7 +8,7 @@ import { GatsbyImage, getImage, ImageDataLike } from 'gatsby-plugin-image';
 const BlogPreviewHome = (props: { data: IBlogPageQuery }): JSX.Element => {
   const context = useContext(ThemeContext);
   const textColor = { 'text-white': !context.isLightTheme, 'text-black': context.isLightTheme };
-  const posts = props.data?.allMdx?.edges;
+  const posts = props.data?.posts?.edges;
   const postDefaultImage = props.data.homePostImage.childImageSharp.gatsbyImageData;
 
   return posts.length ? (
