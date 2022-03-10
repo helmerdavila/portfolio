@@ -13,7 +13,7 @@ const WhatIDoSection = (props: { icon: IconDefinition; title: string; content: s
   return (
     <div className="text-center px-4 py-4 w-full sm:w-1/2 md:w-1/2 xl:w-1/4">
       <div
-        className={classNames('py-8 px-6 rounded shadow-xl', {
+        className={classNames('py-8 px-6 rounded shadow-xl h-full', {
           'bg-white': context.isLightTheme,
           'bg-gray-800': !context.isLightTheme,
         })}

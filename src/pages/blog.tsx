@@ -11,7 +11,7 @@ import { IBlogPageQuery } from '../interfaces';
 const Blog = ({ data }: { data: IBlogPageQuery }): JSX.Element => {
   const context = useContext(ThemeContext);
   const themeStyles = { 'text-black': context.isLightTheme, 'text-white': !context.isLightTheme };
-  const posts = data?.allMdx?.edges;
+  const posts = data?.posts?.edges;
 
   return (
     <LayoutBlog>
@@ -35,8 +35,7 @@ const Blog = ({ data }: { data: IBlogPageQuery }): JSX.Element => {
               <GatsbyImage image={imageRendered} alt={post.node?.frontmatter?.imageAlt ?? ''} />
               <div className="p-6">
                 <h2 className={classNames(themeStyles, 'text-4xl font-bold')}>{post.node?.frontmatter?.title}</h2>
-                <h5 className={classNames(themeStyles, 'mb-2 text-xl')}>{post.node?.frontmatter?.description}</h5>
-                <p className={classNames(themeStyles, 'mt-2 text-lg')}>{post.node?.excerpt}</p>
+                <h5 className={classNames(themeStyles, 'mt-2 text-xl')}>{post.node?.frontmatter?.description}</h5>
               </div>
             </LocalizedLink>
           );
@@ -47,8 +46,11 @@ const Blog = ({ data }: { data: IBlogPageQuery }): JSX.Element => {
 };
 
 export const query = graphql`
-  query allBlogPosts($locale: String!, $dateFormat: String!) {
-    allMdx(filter: { fields: { locale: { eq: $locale } } }, sort: { fields: [frontmatter___date], order: DESC }) {
+  query allBlogPosts($locale: String!) {
+    posts: allMdx(
+      filter: { fields: { locale: { eq: $locale } } }
+      sort: { fields: [frontmatter___date], order: DESC }
+    ) {
       edges {
         node {
           excerpt(pruneLength: 100)
@@ -60,7 +62,8 @@ export const query = graphql`
                 gatsbyImageData(layout: FULL_WIDTH, placeholder: TRACED_SVG)
               }
             }
-            date(formatString: $dateFormat)
+            date
+            description
           }
           fields {
             locale

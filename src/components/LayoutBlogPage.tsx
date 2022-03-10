@@ -96,7 +96,7 @@ const LayoutBlogPage = ({ data: { mdx } }: { data: { mdx: IBlogPost } }): JSX.El
       <div className="container max-w-3xl py-5 mx-auto xl:max-w-6xl">
         <div className={classNames(pageBackground, 'border-2')}>
           <GatsbyImage image={imageRendered} alt={imageAlt} />
-          <div className="p-12">
+          <div className="p-12 blog-page">
             <MDXProvider components={components}>
               <MDXRenderer>{mdx.body}</MDXRenderer>
             </MDXProvider>

@@ -26,7 +26,7 @@ exports.onCreatePage = ({ page, actions }) => {
       context: {
         ...page.context,
         locale: lang,
-        dateFormat: locales[lang].dateFormat,
+        // dateFormat: locales[lang].dateFormat,
       },
     });
   });
@@ -69,10 +69,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
   const result = await graphql(`
     {
-      blog: allFile(
-        filter: { sourceInstanceName: { eq: "blog" } }
-        sort: { fields: [childMdx___frontmatter___date], order: DESC }
-      ) {
+      blog: allFile(filter: { sourceInstanceName: { eq: "blog" } }) {
         edges {
           node {
             relativeDirectory
@@ -83,6 +80,7 @@ exports.createPages = async ({ graphql, actions }) => {
               }
               frontmatter {
                 title
+                date
               }
             }
           }

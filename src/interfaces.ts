@@ -32,7 +32,7 @@ export interface IBlogPost {
   };
 }
 export interface IBlogPageQuery {
-  allMdx: {
+  posts: {
     edges: { node: IBlogPost }[];
   };
   backgroundImage: IGatsbyFileImage;

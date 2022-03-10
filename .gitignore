@@ -69,6 +69,7 @@ yarn-error.log
 .yarn-integrity
 
 .idea
+.vscode
 .wordpress-cache
 
 # Vim stuff
