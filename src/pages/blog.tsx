@@ -46,7 +46,7 @@ const Blog = ({ data }: { data: IBlogPageQuery }): JSX.Element => {
 };
 
 export const query = graphql`
-  query allBlogPosts($locale: String!, $dateFormat: String!) {
+  query allBlogPosts($locale: String!) {
     allMdx(filter: { fields: { locale: { eq: $locale } } }, sort: { fields: [frontmatter___date], order: DESC }) {
       edges {
         node {
@@ -59,7 +59,7 @@ export const query = graphql`
                 gatsbyImageData(layout: FULL_WIDTH, placeholder: TRACED_SVG)
               }
             }
-            date(formatString: $dateFormat)
+            date
             description
           }
           fields {

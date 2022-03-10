@@ -26,7 +26,7 @@ exports.onCreatePage = ({ page, actions }) => {
       context: {
         ...page.context,
         locale: lang,
-        dateFormat: locales[lang].dateFormat,
+        // dateFormat: locales[lang].dateFormat,
       },
     });
   });
