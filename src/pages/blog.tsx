@@ -35,8 +35,7 @@ const Blog = ({ data }: { data: IBlogPageQuery }): JSX.Element => {
               <GatsbyImage image={imageRendered} alt={post.node?.frontmatter?.imageAlt ?? ''} />
               <div className="p-6">
                 <h2 className={classNames(themeStyles, 'text-4xl font-bold')}>{post.node?.frontmatter?.title}</h2>
-                <h5 className={classNames(themeStyles, 'mb-2 text-xl')}>{post.node?.frontmatter?.description}</h5>
-                <p className={classNames(themeStyles, 'mt-2 text-lg')}>{post.node?.excerpt}</p>
+                <h5 className={classNames(themeStyles, 'mt-2 text-xl')}>{post.node?.frontmatter?.description}</h5>
               </div>
             </LocalizedLink>
           );
@@ -61,6 +60,7 @@ export const query = graphql`
               }
             }
             date(formatString: $dateFormat)
+            description
           }
           fields {
             locale

@@ -98,3 +98,11 @@ p {
 .slick-next:before {
   color: black !important;
 }
+
+blockquote > p {
+  @apply font-bold text-2xl !important;
+}
+
+.blog-page > p:first-of-type::first-letter {
+  @apply text-7xl font-bold float-left mr-3;
+}
