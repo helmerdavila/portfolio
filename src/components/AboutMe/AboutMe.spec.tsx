@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { cleanup, render } from '@testing-library/react';
 import { LocaleContext } from '../Layout';
 import AboutMe from './AboutMe';
 import { useStaticQuery } from 'gatsby';
@@ -36,6 +36,8 @@ beforeEach(() => {
     },
   });
 });
+
+afterEach(cleanup);
 
 const customRender = (children, { providerProps, ...renderOptions }) => {
   return render(<LocaleContext.Provider {...providerProps}>{children}</LocaleContext.Provider>, renderOptions);
