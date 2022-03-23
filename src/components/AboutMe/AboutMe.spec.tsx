@@ -46,32 +46,32 @@ it('renders without issues in english', () => {
 
   expect(queryByText(translations_en.about_me)).toBeInTheDocument();
   expect(queryByText(translations_en.about_me_description)).toBeInTheDocument();
-  expect(queryByText(translations_es.about_me)).toBeNull();
-  expect(queryByText(translations_es.about_me_description)).toBeNull();
-  expect(queryByText(translations_fr.about_me)).toBeNull();
-  expect(queryByText(translations_fr.about_me_description)).toBeNull();
+  expect(queryByText(translations_es.about_me)).not.toBeInTheDocument();
+  expect(queryByText(translations_es.about_me_description)).not.toBeInTheDocument();
+  expect(queryByText(translations_fr.about_me)).not.toBeInTheDocument();
+  expect(queryByText(translations_fr.about_me_description)).not.toBeInTheDocument();
 });
 
 it('renders without issues in spanish', () => {
   const providerProps = { value: { locale: 'es' } };
   const { queryByText } = customRender(<AboutMe />, { providerProps });
 
-  expect(queryByText(translations_en.about_me)).toBeNull();
-  expect(queryByText(translations_en.about_me_description)).toBeNull();
+  expect(queryByText(translations_en.about_me)).not.toBeInTheDocument();
+  expect(queryByText(translations_en.about_me_description)).not.toBeInTheDocument();
   expect(queryByText(translations_es.about_me)).toBeInTheDocument();
   expect(queryByText(translations_es.about_me_description)).toBeInTheDocument();
-  expect(queryByText(translations_fr.about_me)).toBeNull();
-  expect(queryByText(translations_fr.about_me_description)).toBeNull();
+  expect(queryByText(translations_fr.about_me)).not.toBeInTheDocument();
+  expect(queryByText(translations_fr.about_me_description)).not.toBeInTheDocument();
 });
 
 it('renders without issues in french', () => {
   const providerProps = { value: { locale: 'fr' } };
   const { queryByText } = customRender(<AboutMe />, { providerProps });
 
-  expect(queryByText(translations_en.about_me)).toBeNull();
-  expect(queryByText(translations_en.about_me_description)).toBeNull();
-  expect(queryByText(translations_es.about_me)).toBeNull();
-  expect(queryByText(translations_es.about_me_description)).toBeNull();
+  expect(queryByText(translations_en.about_me)).not.toBeInTheDocument();
+  expect(queryByText(translations_en.about_me_description)).not.toBeInTheDocument();
+  expect(queryByText(translations_es.about_me)).not.toBeInTheDocument();
+  expect(queryByText(translations_es.about_me_description)).not.toBeInTheDocument();
   expect(queryByText(translations_fr.about_me)).toBeInTheDocument();
   expect(queryByText(translations_fr.about_me_description)).toBeInTheDocument();
 });
