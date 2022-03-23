@@ -3,6 +3,9 @@ import { cleanup, render } from '@testing-library/react';
 import { LocaleContext } from '../Layout';
 import AboutMe from './AboutMe';
 import { useStaticQuery } from 'gatsby';
+import translations_en from '../../../config/translations/en.json';
+import translations_es from '../../../config/translations/es.json';
+import translations_fr from '../../../config/translations/fr.json';
 
 beforeEach(() => {
   (useStaticQuery as jest.Mock).mockReturnValueOnce({
@@ -11,25 +14,19 @@ beforeEach(() => {
         {
           node: {
             name: 'en',
-            translations: {
-              about_me: 'About me',
-            },
+            translations: translations_en,
           },
         },
         {
           node: {
             name: 'fr',
-            translations: {
-              about_me: 'À propos de moi',
-            },
+            translations: translations_fr,
           },
         },
         {
           node: {
             name: 'es',
-            translations: {
-              about_me: 'Acerca de mi',
-            },
+            translations: translations_es,
           },
         },
       ],
@@ -47,25 +44,34 @@ it('renders without issues in english', () => {
   const providerProps = { value: { locale: 'en' } };
   const { queryByText } = customRender(<AboutMe />, { providerProps });
 
-  expect(queryByText('About me')).toBeInTheDocument();
-  expect(queryByText('Acerca de mi')).toBeNull();
-  expect(queryByText('À propos de moi')).toBeNull();
+  expect(queryByText(translations_en.about_me)).toBeInTheDocument();
+  expect(queryByText(translations_en.about_me_description)).toBeInTheDocument();
+  expect(queryByText(translations_es.about_me)).toBeNull();
+  expect(queryByText(translations_es.about_me_description)).toBeNull();
+  expect(queryByText(translations_fr.about_me)).toBeNull();
+  expect(queryByText(translations_fr.about_me_description)).toBeNull();
 });
 
 it('renders without issues in spanish', () => {
   const providerProps = { value: { locale: 'es' } };
   const { queryByText } = customRender(<AboutMe />, { providerProps });
 
-  expect(queryByText('About me')).toBeNull();
-  expect(queryByText('Acerca de mi')).toBeInTheDocument();
-  expect(queryByText('À propos de moi')).toBeNull();
+  expect(queryByText(translations_en.about_me)).toBeNull();
+  expect(queryByText(translations_en.about_me_description)).toBeNull();
+  expect(queryByText(translations_es.about_me)).toBeInTheDocument();
+  expect(queryByText(translations_es.about_me_description)).toBeInTheDocument();
+  expect(queryByText(translations_fr.about_me)).toBeNull();
+  expect(queryByText(translations_fr.about_me_description)).toBeNull();
 });
 
 it('renders without issues in french', () => {
   const providerProps = { value: { locale: 'fr' } };
   const { queryByText } = customRender(<AboutMe />, { providerProps });
 
-  expect(queryByText('About me')).toBeNull();
-  expect(queryByText('Acerca de mi')).toBeNull();
-  expect(queryByText('À propos de moi')).toBeInTheDocument();
+  expect(queryByText(translations_en.about_me)).toBeNull();
+  expect(queryByText(translations_en.about_me_description)).toBeNull();
+  expect(queryByText(translations_es.about_me)).toBeNull();
+  expect(queryByText(translations_es.about_me_description)).toBeNull();
+  expect(queryByText(translations_fr.about_me)).toBeInTheDocument();
+  expect(queryByText(translations_fr.about_me_description)).toBeInTheDocument();
 });
