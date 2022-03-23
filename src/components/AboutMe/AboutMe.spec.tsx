@@ -1,22 +1,69 @@
-// import { render } from '@testing-library/react';
-// import { useStaticQuery } from 'gatsby';
-// import React from 'react';
-// import { Layout } from '../Layout';
-// import AboutMe from './AboutMe';
-// import en from '../../../config/translations/en.json';
+import React from 'react';
+import { render } from '@testing-library/react';
+import { LocaleContext } from '../Layout';
+import AboutMe from './AboutMe';
+import { useStaticQuery } from 'gatsby';
 
-// beforeEach(() => {
-//   (useStaticQuery as jest.Mock).mockResolvedValue(() => ({
-//     rawData: { edges: [{ item: { node: { name: 'sample', translations: en } } }] },
-//   }));
-// });
+beforeEach(() => {
+  (useStaticQuery as jest.Mock).mockReturnValueOnce({
+    rawData: {
+      edges: [
+        {
+          node: {
+            name: 'en',
+            translations: {
+              about_me: 'About me',
+            },
+          },
+        },
+        {
+          node: {
+            name: 'fr',
+            translations: {
+              about_me: 'À propos de moi',
+            },
+          },
+        },
+        {
+          node: {
+            name: 'es',
+            translations: {
+              about_me: 'Acerca de mi',
+            },
+          },
+        },
+      ],
+    },
+  });
+});
 
-// it('renders without problems', () => {
-//   render(
-//     <Layout pageContext={{ locale: 'en' }}>
-//       <AboutMe />
-//     </Layout>,
-//   );
+const customRender = (children, { providerProps, ...renderOptions }) => {
+  return render(<LocaleContext.Provider {...providerProps}>{children}</LocaleContext.Provider>, renderOptions);
+};
 
-//   expect(true).toBe(true);
-// });
+it('renders without issues in english', () => {
+  const providerProps = { value: { locale: 'en' } };
+  const { queryByText } = customRender(<AboutMe />, { providerProps });
+
+  expect(queryByText('About me')).toBeInTheDocument();
+  expect(queryByText('Acerca de mi')).toBeNull();
+  expect(queryByText('À propos de moi')).toBeNull();
+});
+
+it('renders without issues in spanish', () => {
+  const providerProps = { value: { locale: 'es' } };
+  const { queryByText } = customRender(<AboutMe />, { providerProps });
+
+  expect(queryByText('About me')).toBeNull();
+  expect(queryByText('Acerca de mi')).toBeInTheDocument();
+  expect(queryByText('À propos de moi')).toBeNull();
+});
+
+it('renders without issues in french', () => {
+  const providerProps = { value: { locale: 'fr' } };
+  const { queryByText } = customRender(<AboutMe />, { providerProps });
+
+  expect(queryByText('About me')).toBeNull();
+  expect(queryByText('Acerca de mi')).toBeNull();
+  expect(queryByText('À propos de moi')).toBeInTheDocument();
+});
