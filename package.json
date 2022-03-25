@@ -5,6 +5,7 @@
   "version": "1.0.0",
   "author": "Helmer Davila",
   "dependencies": {
+    "@faker-js/faker": "^6.0.0",
     "@fortawesome/fontawesome-svg-core": "1.2.35",
     "@fortawesome/free-brands-svg-icons": "5.15.3",
     "@fortawesome/free-solid-svg-icons": "5.15.3",
@@ -60,6 +61,7 @@
     "format": "prettier --write \"src/**/*.js\"",
     "lint": "eslint src/",
     "test": "npx jest",
+    "test:cov": "npx jest --coverage",
     "type-check": "tsc --noEmit"
   },
   "devDependencies": {
