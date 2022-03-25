@@ -1,11 +1,11 @@
 import React from 'react';
-import { cleanup, render } from '@testing-library/react';
-import { LocaleContext } from '../Layout';
+import { cleanup } from '@testing-library/react';
 import AboutMe from './AboutMe';
 import { useStaticQuery } from 'gatsby';
 import translations_en from '../../../config/translations/en.json';
 import translations_es from '../../../config/translations/es.json';
 import translations_fr from '../../../config/translations/fr.json';
+import { customRender } from '../../utils/testing';
 
 beforeEach(() => {
   (useStaticQuery as jest.Mock).mockReturnValueOnce({
@@ -35,10 +35,6 @@ beforeEach(() => {
 });
 
 afterEach(cleanup);
-
-const customRender = (children, { providerProps, ...renderOptions }) => {
-  return render(<LocaleContext.Provider {...providerProps}>{children}</LocaleContext.Provider>, renderOptions);
-};
 
 it('renders without issues in english', () => {
   const providerProps = { value: { locale: 'en' } };
