@@ -10,7 +10,7 @@ export interface ISlide {
   image: JSX.Element;
 }
 export interface IGatsbyFileImage extends FileSystemNode {
-  childImageSharp: { gatsbyImageData: ImageDataLike };
+  childImageSharp: { gatsbyImageData: IGatsbyImageData };
 }
 export interface IBlogPost {
   excerpt: string;

@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { ThemeContext } from '../Layout';
 import { IBlogPageQuery, IBlogPost } from '../../interfaces';
 import LocalizedLink from '../../components/LocalizedLink';
-import { GatsbyImage, getImage, ImageDataLike } from 'gatsby-plugin-image';
+import { GatsbyImage, getImage, IGatsbyImageData } from 'gatsby-plugin-image';
 
 const BlogPreviewHome = (props: { data: IBlogPageQuery }): JSX.Element => {
   const context = useContext(ThemeContext);
@@ -27,7 +27,13 @@ const BlogPreviewHome = (props: { data: IBlogPageQuery }): JSX.Element => {
   ) : null;
 };
 
-const PostCard = ({ post, postDefaultImage }: { post: IBlogPost; postDefaultImage: ImageDataLike }): JSX.Element => {
+export const PostCard = ({
+  post,
+  postDefaultImage,
+}: {
+  post: IBlogPost;
+  postDefaultImage: IGatsbyImageData;
+}): JSX.Element => {
   const context = useContext(ThemeContext);
   const textColor = { 'text-white': !context.isLightTheme, 'text-black': context.isLightTheme };
   const imageAlt = post.frontmatter?.imageAlt ?? 'Blog';
