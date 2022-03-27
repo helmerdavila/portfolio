@@ -34,6 +34,7 @@
     "gatsby-transformer-json": "4.9.0",
     "gatsby-transformer-sharp": "4.9.0",
     "gbimage-bridge": "^0.2.1",
+    "lint-staged": "12.3.7",
     "prism-react-renderer": "^1.3.1",
     "prism-themes": "^1.9.0",
     "prismjs": "^1.27.0",
@@ -59,12 +60,19 @@
     "build": "gatsby build",
     "develop": "cross-env GATSBY_GRAPHQL_IDE=playground gatsby develop",
     "start": "gatsby clean && npm run develop",
-    "format": "prettier --write \"src/**/*.js\"",
-    "lint": "eslint src/",
+    "lint": "eslint src/ --ext .tsx,.ts",
+    "lint:fix": "eslint src/ --ext .tsx,.ts --fix",
     "test": "npx jest",
     "test:cov": "npx jest --coverage",
     "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "**/*.{ts,tsx}": [
+      "npm run lint:fix",
+      "prettier --write"
+    ]
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.2",
@@ -87,13 +95,14 @@
     "eslint-plugin-jest-dom": "^4.0.1",
     "eslint-plugin-prettier": "3.4.0",
     "eslint-plugin-react": "7.24.0",
+    "husky": "^7.0.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^27.5.1",
     "prettier": "2.4.1",
     "react-test-renderer": "^17.0.2",
     "tailwindcss": "2.2.7",
     "ts-jest": "^27.1.3",
-    "typescript": "^4.4.3"
+    "typescript": "4.4.3"
   },
   "repository": {
     "type": "git",

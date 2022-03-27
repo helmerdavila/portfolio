@@ -1,5 +1,5 @@
 import { FileSystemNode } from 'gatsby-source-filesystem';
-import { ImageDataLike, IGatsbyImageData } from 'gatsby-plugin-image';
+import { IGatsbyImageData } from 'gatsby-plugin-image';
 
 export interface ISlide {
   id: number;
