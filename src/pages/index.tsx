@@ -20,7 +20,7 @@ const IndexPage = ({ data }: { data: IBlogPageQuery }): JSX.Element => (
       keywords={['helmer davila', 'fullstack', 'developer', 'react', 'vue', 'angular', 'react native']}
       description="My personal portfolio"
     />
-    <Presentation backgroundImage={data.backgroundImage} />
+    <Presentation backgroundImage={data.backgroundImage.childImageSharp.gatsbyImageData} />
     <AboutMe />
     <WhatIDo />
     <MyStack />
