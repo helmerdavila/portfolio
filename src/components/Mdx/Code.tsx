@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import Highlight, { defaultProps } from 'prism-react-renderer';
+import Highlight, { defaultProps, Language } from 'prism-react-renderer';
 import nightOwlNight from 'prism-react-renderer/themes/nightOwlLight';
 import nightOwl from 'prism-react-renderer/themes/nightOwl';
 import Prism from 'prism-react-renderer/prism';
@@ -14,9 +14,9 @@ require('prismjs/components/prism-docker');
 require('prismjs/components/prism-bash');
 require('prismjs/components/prism-ignore');
 
-export default ({ children, className }: { children: unknown; className: string }): JSX.Element => {
+const Code = ({ children, className }: { children: string; className: string }): JSX.Element => {
   const context = useContext(ThemeContext);
-  const language = className.replace(/language-/, '') || '';
+  const language = (className.replace(/language-/, '') || '') as Language;
 
   return (
     <Highlight
@@ -42,3 +42,5 @@ export default ({ children, className }: { children: unknown; className: string 
     </Highlight>
   );
 };
+
+export default Code;
