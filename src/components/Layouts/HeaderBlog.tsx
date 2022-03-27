@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import { faHSquare } from '@helmerdavila/fontawesomehelmer/pro-duotone-svg-icons';
-import DarkModeToggle from 'react-dark-mode-toggle';
+import { DarkModeToggle } from 'react-dark-mode-toggle-2';
 import { ThemeContext } from '../Layout';
 import { Link } from 'gatsby';
 import LocalizedLink from '../LocalizedLink';
@@ -52,7 +52,7 @@ const HeaderBlog = (): JSX.Element => {
             </Link>
           </li>
         </ul>
-        <DarkModeToggle size={50} onChange={context.toggleTheme} checked={!context.isLightTheme} />
+        <DarkModeToggle size={50} onChange={context.toggleTheme} isDarkMode={!context.isLightTheme} />
       </div>
     </nav>
   );

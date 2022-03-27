@@ -39,9 +39,10 @@
     "prismjs": "^1.27.0",
     "prop-types": "15.8.1",
     "react": "17.0.2",
-    "react-dark-mode-toggle": "0.2.0",
+    "react-dark-mode-toggle-2": "2.0.2",
     "react-dom": "17.0.2",
     "react-helmet": "6.1.0",
+    "react-lottie-player": "^1.4.1",
     "react-scroll": "1.8.6",
     "react-slick": "0.28.1",
     "react-typing-animation": "1.6.2",
@@ -62,6 +63,7 @@
     "lint": "eslint src/",
     "test": "npx jest",
     "test:cov": "npx jest --coverage",
+    "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand",
     "type-check": "tsc --noEmit"
   },
   "devDependencies": {

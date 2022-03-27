@@ -4,7 +4,7 @@ import { withScroll } from 'react-window-decorators';
 import classNames from 'classnames';
 import { animateScroll as scroll } from 'react-scroll';
 import { faDownload, faHSquare } from '@helmerdavila/fontawesomehelmer/pro-duotone-svg-icons';
-import DarkModeToggle from 'react-dark-mode-toggle';
+import { DarkModeToggle } from 'react-dark-mode-toggle-2';
 import useTranslations from '../UseTranslations';
 import { ThemeContext } from '../Layout';
 import { Link } from 'gatsby';
@@ -55,7 +55,7 @@ const Header = (props: { scrollPositionY: number }) => {
             </Link>
           </li>
         </ul>
-        <DarkModeToggle size={50} onChange={context.toggleTheme} checked={!context.isLightTheme} />
+        <DarkModeToggle size={50} onChange={context.toggleTheme} isDarkMode={!context.isLightTheme} />
         <a
           href={cv_link}
           target="_blank"
