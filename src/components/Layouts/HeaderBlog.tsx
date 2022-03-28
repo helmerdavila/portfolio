@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import { faHSquare } from '@helmerdavila/fontawesomehelmer/pro-duotone-svg-icons';
-import { DarkModeToggle } from 'react-dark-mode-toggle-2';
+import DarkModeToggle from 'react-dark-mode-toggle';
 import { ThemeContext } from '../Layout';
 import { Link } from 'gatsby';
 import LocalizedLink from '../LocalizedLink';

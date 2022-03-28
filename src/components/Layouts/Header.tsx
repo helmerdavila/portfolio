@@ -4,7 +4,7 @@ import { withScroll } from 'react-window-decorators';
 import classNames from 'classnames';
 import { animateScroll as scroll } from 'react-scroll';
 import { faDownload, faHSquare } from '@helmerdavila/fontawesomehelmer/pro-duotone-svg-icons';
-import { DarkModeToggle } from 'react-dark-mode-toggle-2';
+import DarkModeToggle from 'react-dark-mode-toggle';
 import useTranslations from '../UseTranslations';
 import { ThemeContext } from '../Layout';
 import { Link } from 'gatsby';
