@@ -27,7 +27,7 @@ const FreeProjects = (): JSX.Element => {
           src="../../images/roomie_mockup.png"
           className="filter grayscale hover:grayscale-0 transition-all ease-in duration-500"
           layout="fullWidth"
-          alt="Biteline"
+          alt="Roomie"
           placeholder="tracedSVG"
         />
       ),
@@ -45,7 +45,7 @@ const FreeProjects = (): JSX.Element => {
           src="../../images/battleship_mockup.png"
           className="filter grayscale hover:grayscale-0 transition-all ease-in duration-500"
           layout="fullWidth"
-          alt="Biteline"
+          alt="Battleship"
           placeholder="tracedSVG"
         />
       ),

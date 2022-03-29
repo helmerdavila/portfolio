@@ -4,7 +4,7 @@ import Presentation from '../components/Presentation/Presentation';
 import Projects from '../components/Projects/Projects';
 import WhatIDo from '../components/WhatIDo/whatido';
 import MyStack from '../components/MyStack/MyStack';
-import FreeProjects from '../components/FreeProjects/freeprojects';
+import FreeProjects from '../components/FreeProjects/FreeProjects';
 import MyBook from '../components/MyBook/MyBook';
 import AboutMe from '../components/AboutMe/AboutMe';
 import PersonalProjects from '../components/PersonalProjects/PersonalProjects';
