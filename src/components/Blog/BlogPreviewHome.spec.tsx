@@ -21,10 +21,6 @@ it('renders PostCard with image', () => {
     'data-src',
     defaultImage.childImageSharp.gatsbyImageData.images.fallback.src,
   );
-  expect(queryByRole('img')).toHaveAttribute(
-    'data-src',
-    post.frontmatter.image.childImageSharp.gatsbyImageData.images.fallback.src,
-  );
   expect(queryByAltText(post.frontmatter.imageAlt)).toBeInTheDocument();
 });
 
@@ -38,23 +34,15 @@ it('renders PostCard with no image, uses default', () => {
 
   expect(queryByRole('link')).toBeInTheDocument();
   expect(queryByRole('link')).toHaveAttribute('href', `/blog/${post.parent.relativeDirectory}`);
-  expect(queryByRole('img')).toHaveAttribute(
-    'data-src',
-    defaultImage.childImageSharp.gatsbyImageData.images.fallback.src,
-  );
   expect(queryByAltText('Blog')).toBeInTheDocument();
 });
 
 it('renders BlogPreviewHome', () => {
   const { queryAllByRole } = customRender(<BlogPreviewHome data={BlogPreviewHomeMock as IBlogPageQuery} />);
   const allLinks = queryAllByRole('link');
-  const allImages = queryAllByRole('img');
 
   for (const link of allLinks) {
     expect(link).toBeInTheDocument();
-  }
-  for (const image of allImages) {
-    expect(image).toBeInTheDocument();
   }
 });
 
@@ -65,8 +53,6 @@ it('renders BlogPreviewHome with no posts', () => {
   );
 
   const link = queryByRole('link');
-  const image = queryByRole('img');
 
   expect(link).not.toBeInTheDocument();
-  expect(image).not.toBeInTheDocument();
 });
