@@ -55,7 +55,7 @@ const Header = (props: { scrollPositionY: number }) => {
             </Link>
           </li>
         </ul>
-        <DarkModeToggle size={50} onChange={context.toggleTheme} isDarkMode={!context.isLightTheme} />
+        <DarkModeToggle size={50} onChange={context.toggleTheme} checked={!context.isLightTheme} />
         <a
           href={cv_link}
           target="_blank"

@@ -52,7 +52,7 @@ const HeaderBlog = (): JSX.Element => {
             </Link>
           </li>
         </ul>
-        <DarkModeToggle size={50} onChange={context.toggleTheme} isDarkMode={!context.isLightTheme} />
+        <DarkModeToggle size={50} onChange={context.toggleTheme} checked={!context.isLightTheme} />
       </div>
     </nav>
   );
