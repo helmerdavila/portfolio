@@ -5,7 +5,7 @@ import translations_es from '../../../config/translations/es.json';
 import translations_fr from '../../../config/translations/fr.json';
 import { customRender } from '../../utils/testing';
 import { useStaticQuery } from 'gatsby';
-import Presentation from './presentation';
+import Presentation from './Presentation';
 import { backgroundImage, loadTranslations } from '../../utils/mockresponses';
 
 beforeEach(() => {

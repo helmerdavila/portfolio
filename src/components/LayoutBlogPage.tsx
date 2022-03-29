@@ -4,7 +4,7 @@ import { graphql } from 'gatsby';
 import { ThemeContext } from './Layout';
 import classNames from 'classnames';
 import { IBlogPost } from '../interfaces';
-import SEO from './seo';
+import SEO from './Seo';
 import { MDXProvider } from '@mdx-js/react';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 import Code from '../components/Mdx/Code';
