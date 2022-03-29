@@ -6,33 +6,9 @@ import translations_en from '../../../config/translations/en.json';
 import translations_es from '../../../config/translations/es.json';
 import translations_fr from '../../../config/translations/fr.json';
 import { customRender } from '../../utils/testing';
+import { loadTranslations } from '../../utils/mockresponses';
 
-beforeEach(() => {
-  (useStaticQuery as jest.Mock).mockReturnValueOnce({
-    rawData: {
-      edges: [
-        {
-          node: {
-            name: 'en',
-            translations: translations_en,
-          },
-        },
-        {
-          node: {
-            name: 'fr',
-            translations: translations_fr,
-          },
-        },
-        {
-          node: {
-            name: 'es',
-            translations: translations_es,
-          },
-        },
-      ],
-    },
-  });
-});
+beforeEach(() => (useStaticQuery as jest.Mock).mockReturnValueOnce(loadTranslations));
 
 afterEach(cleanup);
 
