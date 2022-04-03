@@ -42,7 +42,7 @@ const apps: IApp[] = [
         className="filter grayscale hover:grayscale-0 transition-all ease-in duration-500"
         src="../../images/portfolio-httpixel.png"
         layout="fullWidth"
-        alt="Biteline"
+        alt="Httpixel"
         placeholder="tracedSVG"
         quality={70}
       />
@@ -68,9 +68,9 @@ const apps: IApp[] = [
 
 const PersonalProjects = (): JSX.Element => {
   const context = useContext(ThemeContext);
-  const { projects } = useTranslations();
+  const translations = useTranslations();
   const textColor = { 'text-white': !context.isLightTheme, 'text-black': context.isLightTheme };
-  const AppCards = apps.map((app) => <AppCard key={app.id} app={app} />);
+  const AppCards = apps.map((app) => <AppCard key={app.id} app={app} translations={translations} />);
 
   return (
     <section
@@ -78,16 +78,15 @@ const PersonalProjects = (): JSX.Element => {
       className={classNames('py-10', { 'bg-gray-200': context.isLightTheme, 'bg-gray-900': !context.isLightTheme })}
     >
       <div className="container mx-auto 2xl:max-w-7xl">
-        <h1 className={classNames('text-5xl text-center font-semibold mb-3', textColor)}>{projects}</h1>
+        <h1 className={classNames('text-5xl text-center font-semibold mb-3', textColor)}>{translations.projects}</h1>
         <Slider {...sliderSettings}>{AppCards}</Slider>
       </div>
     </section>
   );
 };
 
-const AppCard = (props: { app: IApp }) => {
+export const AppCard = (props: { app: IApp; translations: Record<string, string> }) => {
   const context = useContext(ThemeContext);
-  const t = useTranslations();
   const textColor = { 'text-white': !context.isLightTheme, 'text-black': context.isLightTheme };
 
   return (
@@ -95,7 +94,9 @@ const AppCard = (props: { app: IApp }) => {
       <div className="flex-1 p-10">{props.app.image}</div>
       <div className="flex-1 p-6">
         <h2 className={classNames('text-4xl font-semibold', textColor)}>{props.app.title}</h2>
-        <p className={classNames('block mb-3 leading-loose', textColor)}>{t[props.app.description_key]}</p>
+        <p className={classNames('block mb-3 leading-loose', textColor)}>
+          {props.translations[props.app.description_key]}
+        </p>
         <div className="flex">
           {props.app.apple ? <StoreButton title="AppStore" icon={faAppStore} link={props.app.apple} /> : null}
           {props.app.android ? <StoreButton title="Playstore" icon={faGooglePlay} link={props.app.android} /> : null}
@@ -105,13 +106,14 @@ const AppCard = (props: { app: IApp }) => {
   );
 };
 
-const StoreButton = (props: { title: string; icon: IconProp; link: string }) => {
+export const StoreButton = (props: { title: string; icon: IconProp; link: string }) => {
   const context = useContext(ThemeContext);
 
   return (
     <a
       href={props.link}
       target="_blank"
+      data-testid="store-button-target"
       rel="noopener noreferrer"
       className={classNames('inline-flex rounded-full px-5 py-3 items-center mr-2', {
         'bg-black text-white': context.isLightTheme,
