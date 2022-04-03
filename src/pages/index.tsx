@@ -2,7 +2,7 @@ import React from 'react';
 import SEO from '../components/Seo';
 import Presentation from '../components/Presentation/Presentation';
 import Projects from '../components/Projects/Projects';
-import WhatIDo from '../components/WhatIDo/whatido';
+import WhatIDo from '../components/WhatIDo/WhatIDo';
 import MyStack from '../components/MyStack/MyStack';
 import FreeProjects from '../components/FreeProjects/FreeProjects';
 import MyBook from '../components/MyBook/MyBook';
