@@ -4,13 +4,11 @@ import Code from './Code';
 
 it('renders edge cases: dark mode, no language', () => {
   const code = `sample`;
-  const { getByTestId, debug } = customRender(<Code className="">{code}</Code>, {
+  const { getByTestId } = customRender(<Code className="">{code}</Code>, {
     themeContextProps: { isLightTheme: false, toggleTheme: jest.fn() },
   });
 
   const preBlock = getByTestId('code-highlight');
-
-  debug();
 
   expect(preBlock).toBeInTheDocument();
 });
