@@ -5,6 +5,7 @@ import nightOwl from 'prism-react-renderer/themes/nightOwl';
 import Prism from 'prism-react-renderer/prism';
 import { ThemeContext } from '../Layout';
 
+/* istanbul ignore next */
 (typeof global !== 'undefined' ? global : window).Prism = Prism;
 
 require('prismjs/components/prism-php');

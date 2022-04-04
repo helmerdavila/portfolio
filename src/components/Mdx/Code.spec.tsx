@@ -2,19 +2,17 @@ import React from 'react';
 import { customRender } from '../../utils/testing';
 import Code from './Code';
 
-it('renders code without problems', () => {
-  const code = `
-   <?php
-
-   echo "This is code from PHP";
-  `;
-  const { getByTestId } = customRender(<Code className="language-php">{code}</Code>);
+it('renders edge cases: dark mode, no language', () => {
+  const code = `sample`;
+  const { getByTestId, debug } = customRender(<Code className="">{code}</Code>, {
+    themeContextProps: { isLightTheme: false, toggleTheme: jest.fn() },
+  });
 
   const preBlock = getByTestId('code-highlight');
 
+  debug();
+
   expect(preBlock).toBeInTheDocument();
-  expect(preBlock).toHaveClass('prism-code');
-  expect(preBlock).toHaveClass('language-php');
 });
 
 it('renders php code without problems', () => {
