@@ -4,15 +4,7 @@ import { graphql } from 'gatsby';
 import { useStaticQuery } from 'gatsby';
 import { ThemeContext } from './Layout';
 
-function SEO({
-  description,
-  lang,
-  meta,
-  keywords,
-  title,
-  image,
-  ogType,
-}: {
+interface Props {
   description: string;
   lang: string;
   meta: unknown[];
@@ -20,7 +12,9 @@ function SEO({
   title: string;
   image?: string;
   ogType?: string;
-}): JSX.Element {
+}
+
+const SEO = ({ description, lang, meta, keywords, title, image, ogType }: Props): JSX.Element => {
   const context = useContext(ThemeContext);
   const { site } = useStaticQuery(detailsQuery);
   const metaDescription = description || site.siteMetadata.description;
@@ -86,7 +80,7 @@ function SEO({
         .concat(meta)}
     />
   );
-}
+};
 
 SEO.defaultProps = {
   lang: `en`,
