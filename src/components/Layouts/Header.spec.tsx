@@ -21,7 +21,7 @@ it('renders without issues in english', () => {
 });
 
 it('renders without issues in spanish', () => {
-  const { queryByText } = customRender(<Header />, { providerProps: { value: { locale: 'es' } } });
+  const { queryByText } = customRender(<Header />, { localeContextProps: { locale: 'es' } });
 
   expect(queryByText(translations_en.download_cv)).not.toBeInTheDocument();
   expect(queryByText(translations_es.download_cv)).toBeInTheDocument();
@@ -29,7 +29,7 @@ it('renders without issues in spanish', () => {
 });
 
 it('renders without issues in french', () => {
-  const { queryByText } = customRender(<Header />, { providerProps: { value: { locale: 'fr' } } });
+  const { queryByText } = customRender(<Header />, { localeContextProps: { locale: 'fr' } });
 
   expect(queryByText(translations_en.download_cv)).not.toBeInTheDocument();
   expect(queryByText(translations_es.download_cv)).not.toBeInTheDocument();

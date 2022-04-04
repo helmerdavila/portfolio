@@ -29,8 +29,8 @@ it('renders without issues in english', () => {
 });
 
 it('renders without issues in spanish', () => {
-  const providerProps = { value: { locale: 'es' } };
-  const { queryByText } = customRender(<Projects />, { providerProps });
+  const localeContextProps = { locale: 'es' };
+  const { queryByText } = customRender(<Projects />, { localeContextProps });
 
   expect(queryByText(translations_en.mobile_and_web_projects)).not.toBeInTheDocument();
   expect(queryByText(translations_es.mobile_and_web_projects)).toBeInTheDocument();
@@ -38,8 +38,8 @@ it('renders without issues in spanish', () => {
 });
 
 it('renders without issues in french', () => {
-  const providerProps = { value: { locale: 'fr' } };
-  const { queryByText } = customRender(<Projects />, { providerProps });
+  const localeContextProps = { locale: 'fr' };
+  const { queryByText } = customRender(<Projects />, { localeContextProps });
 
   expect(queryByText(translations_en.mobile_and_web_projects)).not.toBeInTheDocument();
   expect(queryByText(translations_es.mobile_and_web_projects)).not.toBeInTheDocument();

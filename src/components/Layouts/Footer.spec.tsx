@@ -21,7 +21,7 @@ it('renders without issues in english', () => {
 });
 
 it('renders without issues in spanish', () => {
-  const { queryByText } = customRender(<Footer />, { providerProps: { value: { locale: 'es' } } });
+  const { queryByText } = customRender(<Footer />, { localeContextProps: { locale: 'es' } });
 
   expect(queryByText(translations_en.powered_by_gatsby)).not.toBeInTheDocument();
   expect(queryByText(translations_es.powered_by_gatsby)).toBeInTheDocument();
@@ -29,7 +29,7 @@ it('renders without issues in spanish', () => {
 });
 
 it('renders without issues in french', () => {
-  const { queryByText } = customRender(<Footer />, { providerProps: { value: { locale: 'fr' } } });
+  const { queryByText } = customRender(<Footer />, { localeContextProps: { locale: 'fr' } });
 
   expect(queryByText(translations_en.powered_by_gatsby)).not.toBeInTheDocument();
   expect(queryByText(translations_es.powered_by_gatsby)).not.toBeInTheDocument();

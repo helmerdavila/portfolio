@@ -15,12 +15,8 @@ beforeEach(() => {
 afterEach(cleanup);
 
 it('renders in english', () => {
-  const providerProps = { value: { locale: 'en' } };
   const { queryByText } = customRender(
     <Presentation backgroundImage={backgroundImage.backgroundImage.childImageSharp.gatsbyImageData} />,
-    {
-      providerProps,
-    },
   );
 
   expect(queryByText(translations_en.hi_my_name_is)).toBeInTheDocument();
@@ -44,11 +40,11 @@ it('renders in english', () => {
 });
 
 it('renders in spanish', () => {
-  const providerProps = { value: { locale: 'es' } };
+  const localeContextProps = { locale: 'es' };
   const { queryByText } = customRender(
     <Presentation backgroundImage={backgroundImage.backgroundImage.childImageSharp.gatsbyImageData} />,
     {
-      providerProps,
+      localeContextProps,
     },
   );
 
@@ -73,11 +69,11 @@ it('renders in spanish', () => {
 });
 
 it('renders in french', () => {
-  const providerProps = { value: { locale: 'fr' } };
+  const localeContextProps = { locale: 'fr' };
   const { queryByText } = customRender(
     <Presentation backgroundImage={backgroundImage.backgroundImage.childImageSharp.gatsbyImageData} />,
     {
-      providerProps,
+      localeContextProps,
     },
   );
 

@@ -55,8 +55,7 @@ it('renders AppCard with app links', () => {
 });
 
 it('renders without issues in english', () => {
-  const providerProps = { value: { locale: 'en' } };
-  const { queryByText } = customRender(<PersonalProjects />, { providerProps });
+  const { queryByText } = customRender(<PersonalProjects />);
 
   expect(queryByText(translations_en.projects)).toBeInTheDocument();
   expect(queryByText(translations_es.projects)).not.toBeInTheDocument();
@@ -64,8 +63,8 @@ it('renders without issues in english', () => {
 });
 
 it('renders without issues in spanish', () => {
-  const providerProps = { value: { locale: 'es' } };
-  const { queryByText } = customRender(<PersonalProjects />, { providerProps });
+  const localeContextProps = { locale: 'es' };
+  const { queryByText } = customRender(<PersonalProjects />, { localeContextProps });
 
   expect(queryByText(translations_en.projects)).not.toBeInTheDocument();
   expect(queryByText(translations_es.projects)).toBeInTheDocument();
@@ -73,8 +72,8 @@ it('renders without issues in spanish', () => {
 });
 
 it('renders without issues in french', () => {
-  const providerProps = { value: { locale: 'fr' } };
-  const { queryByText } = customRender(<PersonalProjects />, { providerProps });
+  const localeContextProps = { locale: 'fr' };
+  const { queryByText } = customRender(<PersonalProjects />, { localeContextProps });
 
   expect(queryByText(translations_en.projects)).not.toBeInTheDocument();
   expect(queryByText(translations_es.projects)).not.toBeInTheDocument();

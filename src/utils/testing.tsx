@@ -2,19 +2,31 @@ import React from 'react';
 import { LocaleContext, ThemeContext } from '../components/Layout';
 import { render, RenderResult } from '@testing-library/react';
 
-export const customRender = (children: unknown, optionalParams = null): RenderResult => {
-  const { providerProps, ...renderOptions } = optionalParams ?? { providerProps: { value: { locale: 'en' } } };
+interface ILocaleContextProps {
+  locale: string;
+}
+
+interface IThemeContextProps {
+  isLightTheme: boolean;
+  toggleTheme: () => void;
+}
+
+export const customRender = (
+  children: unknown,
+  optionalParams: Partial<{
+    localeContextProps: ILocaleContextProps;
+    themeContextProps: IThemeContextProps;
+  }> | null = null,
+): RenderResult => {
+  const defaultContexts = {
+    localeContextProps: { locale: 'en' },
+    themeContextProps: { isLightTheme: true, toggleTheme: jest.fn() },
+  };
+  const { localeContextProps, themeContextProps, ...renderOptions } = optionalParams ?? defaultContexts;
 
   return render(
-    <LocaleContext.Provider {...providerProps}>
-      <ThemeContext.Provider
-        value={{
-          isLightTheme: true,
-          toggleTheme: () => {
-            return 'demo';
-          },
-        }}
-      >
+    <LocaleContext.Provider value={localeContextProps ?? defaultContexts.localeContextProps}>
+      <ThemeContext.Provider value={themeContextProps ?? defaultContexts.themeContextProps}>
         {children}
       </ThemeContext.Provider>
     </LocaleContext.Provider>,

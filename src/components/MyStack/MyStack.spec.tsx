@@ -35,8 +35,8 @@ it('renders MyStack without issues in english', () => {
 });
 
 it('renders MyStack without issues in spanish', () => {
-  const providerProps = { value: { locale: 'es' } };
-  const { queryByText } = customRender(<MyStack />, { providerProps });
+  const localeContextProps = { locale: 'es' };
+  const { queryByText } = customRender(<MyStack />, { localeContextProps });
 
   expect(queryByText(translations_en.my_stack)).not.toBeInTheDocument();
   expect(queryByText(translations_es.my_stack)).toBeInTheDocument();
@@ -47,8 +47,8 @@ it('renders MyStack without issues in spanish', () => {
 });
 
 it('renders MyStack without issues in french', () => {
-  const providerProps = { value: { locale: 'fr' } };
-  const { queryByText } = customRender(<MyStack />, { providerProps });
+  const localeContextProps = { locale: 'fr' };
+  const { queryByText } = customRender(<MyStack />, { localeContextProps });
 
   expect(queryByText(translations_en.my_stack)).not.toBeInTheDocument();
   expect(queryByText(translations_es.my_stack)).not.toBeInTheDocument();

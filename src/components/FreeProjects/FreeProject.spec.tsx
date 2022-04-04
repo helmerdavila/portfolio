@@ -13,8 +13,8 @@ beforeEach(() => (useStaticQuery as jest.Mock).mockReturnValueOnce(loadTranslati
 afterEach(cleanup);
 
 it('renders without errors in english', () => {
-  const providerProps = { value: { locale: 'en' } };
-  const { queryByText, queryAllByText } = customRender(<FreeProjects />, { providerProps });
+  const localeContextProps = { locale: 'en' };
+  const { queryByText, queryAllByText } = customRender(<FreeProjects />, { localeContextProps });
 
   expect(queryAllByText('Frontend')).toHaveLength(2);
   expect(queryByText('Backend')).not.toBeInTheDocument();
@@ -24,8 +24,8 @@ it('renders without errors in english', () => {
 });
 
 it('renders without errors in spanish', () => {
-  const providerProps = { value: { locale: 'es' } };
-  const { queryByText, queryAllByText } = customRender(<FreeProjects />, { providerProps });
+  const localeContextProps = { locale: 'es' };
+  const { queryByText, queryAllByText } = customRender(<FreeProjects />, { localeContextProps });
 
   expect(queryAllByText('Frontend')).toHaveLength(2);
   expect(queryByText('Backend')).not.toBeInTheDocument();
@@ -35,8 +35,8 @@ it('renders without errors in spanish', () => {
 });
 
 it('renders without errors in french', () => {
-  const providerProps = { value: { locale: 'fr' } };
-  const { queryByText, queryAllByText } = customRender(<FreeProjects />, { providerProps });
+  const localeContextProps = { locale: 'fr' };
+  const { queryByText, queryAllByText } = customRender(<FreeProjects />, { localeContextProps });
 
   expect(queryAllByText('Frontend')).toHaveLength(2);
   expect(queryByText('Backend')).not.toBeInTheDocument();

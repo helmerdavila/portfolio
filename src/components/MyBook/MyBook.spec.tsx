@@ -10,8 +10,8 @@ import translations_fr from '../../../config/translations/fr.json';
 beforeEach(() => (useStaticQuery as jest.Mock).mockReturnValueOnce(loadTranslations));
 
 it('renders without issues in english', () => {
-  const providerProps = { value: { locale: 'en' } };
-  const { queryByText } = customRender(<MyBook />, { providerProps });
+  const localeContextProps = { locale: 'en' };
+  const { queryByText } = customRender(<MyBook />, { localeContextProps });
 
   expect(queryByText(translations_en.ctbook_description)).toBeInTheDocument();
   expect(queryByText(translations_en.ctbook_readsample)).toBeInTheDocument();
@@ -22,8 +22,8 @@ it('renders without issues in english', () => {
 });
 
 it('renders without issues in spanish', () => {
-  const providerProps = { value: { locale: 'es' } };
-  const { queryByText } = customRender(<MyBook />, { providerProps });
+  const localeContextProps = { locale: 'es' };
+  const { queryByText } = customRender(<MyBook />, { localeContextProps });
 
   expect(queryByText(translations_en.ctbook_description)).not.toBeInTheDocument();
   expect(queryByText(translations_en.ctbook_readsample)).not.toBeInTheDocument();
@@ -34,8 +34,8 @@ it('renders without issues in spanish', () => {
 });
 
 it('renders without issues in french', () => {
-  const providerProps = { value: { locale: 'fr' } };
-  const { queryByText } = customRender(<MyBook />, { providerProps });
+  const localeContextProps = { locale: 'fr' };
+  const { queryByText } = customRender(<MyBook />, { localeContextProps });
 
   expect(queryByText(translations_en.ctbook_description)).not.toBeInTheDocument();
   expect(queryByText(translations_en.ctbook_readsample)).not.toBeInTheDocument();
