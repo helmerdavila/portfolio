@@ -8,12 +8,97 @@ import { faCode, faExternalLinkAlt } from '@helmerdavila/fontawesomehelmer/pro-d
 import useTranslations from '../UseTranslations';
 import { ThemeContext } from '../Layout';
 import { StaticImage } from 'gatsby-plugin-image';
+import { v4 as uuidv4 } from 'uuid';
+
+export interface ISlide {
+  id: number;
+  name: string;
+  subtitle: string;
+  url: string;
+  codeUrl: string;
+  backend: string | null;
+  frontend: string | null;
+  image: JSX.Element;
+}
+
+export const Slide = ({ slide }: { slide: ISlide }) => {
+  const context = useContext(ThemeContext);
+
+  const lightLabelColor = {
+    'bg-gray-200 text-black': context.isLightTheme,
+    'bg-gray-700 text-white': !context.isLightTheme,
+  };
+  const darkLabelColor = {
+    'bg-black text-white': context.isLightTheme,
+    'bg-gray-400 text-black': !context.isLightTheme,
+  };
+  const textColor = { 'text-white': !context.isLightTheme, 'text-black': context.isLightTheme };
+  const borderColors = { 'border-gray-900': !context.isLightTheme, 'border-gray-400': context.isLightTheme };
+
+  const backend = slide.backend ? (
+    <div className="px-1 py-2">
+      <span className={classNames('text-sm p-1 rounded-l', lightLabelColor)}>Backend</span>
+      <span className={classNames('text-sm p-1 rounded-r', darkLabelColor)}>{slide.backend}</span>
+    </div>
+  ) : null;
+
+  const frontend = slide.frontend ? (
+    <div className="px-1 py-2">
+      <span className={classNames('text-sm p-1 rounded-l', lightLabelColor)}>Frontend</span>
+      <span className={classNames('text-sm p-1 rounded-r', darkLabelColor)}>{slide.frontend}</span>
+    </div>
+  ) : null;
+
+  return (
+    <div
+      className={classNames({
+        'bg-white': context.isLightTheme,
+        'bg-gray-800': !context.isLightTheme,
+      })}
+      key={slide.id}
+    >
+      <figure className="relative">
+        {slide.image}
+        <a
+          href={slide.url}
+          target="_blank"
+          className={classNames(
+            'absolute bottom-0 right-0 mb-3 mr-3 p-3 flex justify-center items-center rounded-full font-semibold w-16 h-16',
+            { 'bg-white text-black': context.isLightTheme, 'bg-gray-900 text-white': !context.isLightTheme },
+          )}
+          rel="noopener noreferrer"
+        >
+          <FontAwesomeIcon icon={faExternalLinkAlt} size="2x" fixedWidth />
+        </a>
+        <a
+          href={slide.codeUrl}
+          target="_blank"
+          className={classNames(
+            'absolute bottom-0 left-0 mb-3 ml-3 p-3 flex justify-center items-center rounded-full font-semibold w-16 h-16',
+            { 'bg-white text-black': context.isLightTheme, 'bg-gray-900 text-white': !context.isLightTheme },
+          )}
+          rel="noopener noreferrer"
+        >
+          <FontAwesomeIcon icon={faCode} size="2x" fixedWidth />
+        </a>
+      </figure>
+      <div className={classNames('flex flex-col justify-center border text-center h-48', borderColors)}>
+        <h3 className={classNames('text-3xl font-semibold', textColor)}>{slide.name}</h3>
+        <h4 className={classNames('text-xl', textColor)}>{slide.subtitle}</h4>
+        <div className="flex flex-wrap justify-center mt-3">
+          {backend}
+          {frontend}
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const FreeProjects = (): JSX.Element => {
   const context = useContext(ThemeContext);
   const { roomie_description, battleship_description, code_samples } = useTranslations();
 
-  const slides = [
+  const slides: ISlide[] = [
     {
       id: 1,
       name: 'Roomie',
@@ -84,76 +169,7 @@ const FreeProjects = (): JSX.Element => {
     ],
   };
 
-  const slidesMapped = slides.map((slide) => {
-    const lightLabelColor = {
-      'bg-gray-200 text-black': context.isLightTheme,
-      'bg-gray-700 text-white': !context.isLightTheme,
-    };
-    const darkLabelColor = {
-      'bg-black text-white': context.isLightTheme,
-      'bg-gray-400 text-black': !context.isLightTheme,
-    };
-    const textColor = { 'text-white': !context.isLightTheme, 'text-black': context.isLightTheme };
-    const borderColors = { 'border-gray-900': !context.isLightTheme, 'border-gray-400': context.isLightTheme };
-
-    const backend = slide.backend ? (
-      <div className="px-1 py-2">
-        <span className={classNames('text-sm p-1 rounded-l', lightLabelColor)}>Backend</span>
-        <span className={classNames('text-sm p-1 rounded-r', darkLabelColor)}>{slide.backend}</span>
-      </div>
-    ) : null;
-
-    const frontend = slide.frontend ? (
-      <div className="px-1 py-2">
-        <span className={classNames('text-sm p-1 rounded-l', lightLabelColor)}>Frontend</span>
-        <span className={classNames('text-sm p-1 rounded-r', darkLabelColor)}>{slide.frontend}</span>
-      </div>
-    ) : null;
-
-    return (
-      <div
-        className={classNames({
-          'bg-white': context.isLightTheme,
-          'bg-gray-800': !context.isLightTheme,
-        })}
-        key={slide.id}
-      >
-        <figure className="relative">
-          {slide.image}
-          <a
-            href={slide.url}
-            target="_blank"
-            className={classNames(
-              'absolute bottom-0 right-0 mb-3 mr-3 p-3 flex justify-center items-center rounded-full font-semibold w-16 h-16',
-              { 'bg-white text-black': context.isLightTheme, 'bg-gray-900 text-white': !context.isLightTheme },
-            )}
-            rel="noopener noreferrer"
-          >
-            <FontAwesomeIcon icon={faExternalLinkAlt} size="2x" fixedWidth />
-          </a>
-          <a
-            href={slide.codeUrl}
-            target="_blank"
-            className={classNames(
-              'absolute bottom-0 left-0 mb-3 ml-3 p-3 flex justify-center items-center rounded-full font-semibold w-16 h-16',
-              { 'bg-white text-black': context.isLightTheme, 'bg-gray-900 text-white': !context.isLightTheme },
-            )}
-            rel="noopener noreferrer"
-          >
-            <FontAwesomeIcon icon={faCode} size="2x" fixedWidth />
-          </a>
-        </figure>
-        <div className={classNames('flex flex-col justify-center border text-center h-48', borderColors)}>
-          <h3 className={classNames('text-3xl font-semibold', textColor)}>{slide.name}</h3>
-          <h4 className={classNames('text-xl', textColor)}>{slide.subtitle}</h4>
-          <div className="flex flex-wrap justify-center mt-3">
-            {backend}
-            {frontend}
-          </div>
-        </div>
-      </div>
-    );
-  });
+  const slidesMapped = slides.map((slide) => <Slide key={uuidv4()} slide={slide} />);
 
   return (
     <section className={classNames({ 'bg-gray-200': context.isLightTheme, 'bg-gray-900': !context.isLightTheme })}>
