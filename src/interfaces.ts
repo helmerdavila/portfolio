@@ -22,7 +22,7 @@ export interface IBlogPost {
     date: string;
     lang: string;
     imageAlt?: string;
-    image?: IGatsbyFileImage;
+    image?: Partial<IGatsbyFileImage>;
   };
   fields: {
     locale: string;
