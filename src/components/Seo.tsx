@@ -5,7 +5,8 @@ import { useStaticQuery } from 'gatsby';
 import { ThemeContext } from './Layout';
 
 interface Props {
-  description: string;
+  description?: string;
+  author?: string;
   lang: string;
   meta: unknown[];
   keywords: string[];
@@ -14,10 +15,12 @@ interface Props {
   ogType?: string;
 }
 
-const SEO = ({ description, lang, meta, keywords, title, image, ogType }: Props): JSX.Element => {
+const SEO = (props: Props): JSX.Element => {
+  const { lang, meta, keywords, title, image, ogType } = props;
   const context = useContext(ThemeContext);
   const { site } = useStaticQuery(detailsQuery);
-  const metaDescription = description || site.siteMetadata.description;
+  const metaDescription = props.description ?? site.siteMetadata.description;
+  const author = props.author ?? site.siteMetadata.author;
 
   return (
     <Helmet
@@ -51,7 +54,7 @@ const SEO = ({ description, lang, meta, keywords, title, image, ogType }: Props)
         },
         {
           name: `twitter:creator`,
-          content: site.siteMetadata.author ?? ``,
+          content: author,
         },
         {
           name: `twitter:image`,

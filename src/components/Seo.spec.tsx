@@ -7,13 +7,33 @@ import SEO from './Seo';
 
 beforeEach(() => (useStaticQuery as jest.Mock).mockReturnValueOnce(loadSiteData));
 
-it.skip('renders without issues', () => {
+it('renders without issues with description, title, author, keywords and light mode', () => {
   const title = faker.lorem.words();
   const description = faker.lorem.words();
-  customRender(<SEO description={description} title={title} />);
+  const author = faker.internet.userName();
+  const { queryAllByDisplayValue } = customRender(
+    <SEO description={description} title={title} author={author} keywords={['sample', 'text']} />,
+  );
 
-  // TODO: Pending of add assertions
-  // console.log(within(document.head).queryByText(title));
-  // expect(queryByText(title)).toBeInTheDocument();
-  // expect(queryByText(description)).toBeInTheDocument();
+  for (const element of queryAllByDisplayValue(title)) {
+    expect(element).toBeInTheDocument();
+  }
+  for (const element of queryAllByDisplayValue(description)) {
+    expect(element).toBeInTheDocument();
+  }
+});
+
+it('renders without description and author, dark mode', () => {
+  const title = faker.lorem.words();
+  const description = faker.lorem.words();
+  const { queryAllByDisplayValue } = customRender(<SEO title={title} />, {
+    themeContextProps: { isLightTheme: false, toggleTheme: jest.fn() },
+  });
+
+  for (const element of queryAllByDisplayValue(title)) {
+    expect(element).toBeInTheDocument();
+  }
+  for (const element of queryAllByDisplayValue(description)) {
+    expect(element).toBeInTheDocument();
+  }
 });
