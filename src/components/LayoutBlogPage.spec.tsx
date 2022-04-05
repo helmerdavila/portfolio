@@ -47,6 +47,33 @@ it('renders without issues', () => {
   );
 });
 
+it('renders without imageAlt and description', () => {
+  const data: { mdx: IBlogPost } = {
+    mdx: {
+      excerpt: faker.lorem.words(5),
+      body: faker.lorem.paragraphs(),
+      fields: { locale: 'en' },
+      parent: { relativeDirectory: '' },
+      frontmatter: {
+        title: faker.lorem.words(),
+        description: null,
+        published: true,
+        date: '',
+        lang: 'es',
+        image: backgroundImage.backgroundImage,
+        imageAlt: null,
+      },
+    },
+  };
+  const { queryByTestId } = customRender(<LayoutBlogPage data={data} />);
+
+  expect(queryByTestId('post-image')).toBeInTheDocument();
+  expect(queryByTestId('post-image')).toHaveAttribute(
+    'src',
+    data.mdx.frontmatter.image.childImageSharp.gatsbyImageData.images.fallback.src,
+  );
+});
+
 it('renders MyH1 without issues', () => {
   const text = faker.lorem.words(3);
   const { queryByText } = render(<MyH1>{text}</MyH1>);
