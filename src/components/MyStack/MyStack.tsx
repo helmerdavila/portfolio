@@ -15,13 +15,13 @@ import classNames from 'classnames';
 import useTranslations from '../UseTranslations';
 import { ThemeContext } from '../Layout';
 
-const MyStackSection = (props: { title: string; description: string; icons: IconDefinition[] }) => {
+export const MyStackSection = (props: { title: string; description: string; icons: IconDefinition[] }) => {
   const context = useContext(ThemeContext);
   const textColor = { 'text-white': !context.isLightTheme, 'text-black': context.isLightTheme };
 
   return (
     <div className="flex-1 flex flex-col items-center my-4">
-      <div className={classNames('icon-spacer mb-3', textColor)}>
+      <div className={classNames('icon-spacer mb-3', textColor)} data-testid="icon-spacer">
         {props.icons.map((icon) => (
           <FontAwesomeIcon key={uuidv4()} icon={icon} size="3x" />
         ))}

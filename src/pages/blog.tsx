@@ -5,7 +5,7 @@ import React, { useContext } from 'react';
 import { ThemeContext } from '../components/Layout';
 import LayoutBlog from '../components/LayoutBlog';
 import LocalizedLink from '../components/LocalizedLink';
-import SEO from '../components/seo';
+import SEO from '../components/Seo';
 import { IBlogPageQuery } from '../interfaces';
 
 const Blog = ({ data }: { data: IBlogPageQuery }): JSX.Element => {

@@ -1,5 +1,5 @@
 import { FileSystemNode } from 'gatsby-source-filesystem';
-import { ImageDataLike, IGatsbyImageData } from 'gatsby-plugin-image';
+import { IGatsbyImageData } from 'gatsby-plugin-image';
 
 export interface ISlide {
   id: number;
@@ -10,7 +10,7 @@ export interface ISlide {
   image: JSX.Element;
 }
 export interface IGatsbyFileImage extends FileSystemNode {
-  childImageSharp: { gatsbyImageData: ImageDataLike };
+  childImageSharp: { gatsbyImageData: IGatsbyImageData };
 }
 export interface IBlogPost {
   excerpt: string;
@@ -22,7 +22,7 @@ export interface IBlogPost {
     date: string;
     lang: string;
     imageAlt?: string;
-    image?: IGatsbyFileImage;
+    image?: Partial<IGatsbyFileImage>;
   };
   fields: {
     locale: string;

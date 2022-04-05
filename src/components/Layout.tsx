@@ -3,9 +3,7 @@ import React, { useState } from 'react';
 const LocaleContext = React.createContext(null);
 const ThemeContext = React.createContext<{ isLightTheme: boolean; toggleTheme: () => void }>({
   isLightTheme: true,
-  toggleTheme: () => {
-    return;
-  },
+  toggleTheme: null,
 });
 
 const ThemeContextProvider = ({ children }) => {
@@ -40,4 +38,3 @@ const Layout = ({
 );
 
 export { Layout, LocaleContext, ThemeContext };
-

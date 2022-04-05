@@ -4,12 +4,11 @@ import Typing from 'react-typing-animation';
 import classNames from 'classnames';
 import useTranslations from '../UseTranslations';
 import { ThemeContext } from '../Layout';
-import { getImage } from 'gatsby-plugin-image';
+import { getImage, IGatsbyImageData } from 'gatsby-plugin-image';
 import { convertToBgImage } from 'gbimage-bridge';
 import BackgroundImage from 'gatsby-background-image';
-import { IGatsbyFileImage } from '../../interfaces';
 
-const Presentation = (props: { backgroundImage: IGatsbyFileImage }): JSX.Element => {
+const Presentation = (props: { backgroundImage: IGatsbyImageData }): JSX.Element => {
   const context = useContext(ThemeContext);
   const {
     hi_my_name_is,
@@ -20,7 +19,7 @@ const Presentation = (props: { backgroundImage: IGatsbyFileImage }): JSX.Element
     web_applications,
     mobile_applications,
   } = useTranslations();
-  const image = getImage(props.backgroundImage.childImageSharp.gatsbyImageData);
+  const image = getImage(props.backgroundImage);
   const bgImage = convertToBgImage(image);
 
   return (

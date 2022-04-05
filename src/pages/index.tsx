@@ -1,14 +1,14 @@
 import React from 'react';
-import SEO from '../components/seo';
-import Presentation from '../components/Presentation/presentation';
-import Projects from '../components/Projects/projects';
-import WhatIDo from '../components/WhatIDo/whatido';
-import MyStack from '../components/MyStack/mystack';
-import FreeProjects from '../components/FreeProjects/freeprojects';
+import SEO from '../components/Seo';
+import Presentation from '../components/Presentation/Presentation';
+import Projects from '../components/Projects/Projects';
+import WhatIDo from '../components/WhatIDo/WhatIDo';
+import MyStack from '../components/MyStack/MyStack';
+import FreeProjects from '../components/FreeProjects/FreeProjects';
 import MyBook from '../components/MyBook/MyBook';
 import AboutMe from '../components/AboutMe/AboutMe';
-import PersonalProjects from '../components/PersonalProjects/personalprojects';
-import Footer from '../components/Layouts/footer';
+import PersonalProjects from '../components/PersonalProjects/PersonalProjects';
+import Footer from '../components/Layouts/Footer';
 import BlogPreviewHome from '../components/Blog/BlogPreviewHome';
 import { graphql } from 'gatsby';
 import { IBlogPageQuery } from '../interfaces';
@@ -20,7 +20,7 @@ const IndexPage = ({ data }: { data: IBlogPageQuery }): JSX.Element => (
       keywords={['helmer davila', 'fullstack', 'developer', 'react', 'vue', 'angular', 'react native']}
       description="My personal portfolio"
     />
-    <Presentation backgroundImage={data.backgroundImage} />
+    <Presentation backgroundImage={data.backgroundImage.childImageSharp.gatsbyImageData} />
     <AboutMe />
     <WhatIDo />
     <MyStack />

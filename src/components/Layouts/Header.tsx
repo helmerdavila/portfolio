@@ -9,7 +9,11 @@ import useTranslations from '../UseTranslations';
 import { ThemeContext } from '../Layout';
 import { Link } from 'gatsby';
 
-const Header = (props: { scrollPositionY: number }) => {
+interface Props {
+  scrollPositionY: number;
+}
+
+export const HeaderComponent = (props: Props) => {
   const context = useContext(ThemeContext);
   const navbarClass = classNames(
     'fixed flex flex-row w-screen h-16 px-5 md:px-8 justify-between z-20 transition duration-200 ease-in-out',
@@ -77,4 +81,4 @@ const Header = (props: { scrollPositionY: number }) => {
   );
 };
 
-export default withScroll(Header);
+export default withScroll(HeaderComponent);

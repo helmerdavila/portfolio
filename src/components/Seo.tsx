@@ -4,26 +4,23 @@ import { graphql } from 'gatsby';
 import { useStaticQuery } from 'gatsby';
 import { ThemeContext } from './Layout';
 
-function SEO({
-  description,
-  lang,
-  meta,
-  keywords,
-  title,
-  image,
-  ogType,
-}: {
-  description: string;
+interface Props {
+  description?: string;
+  author?: string;
   lang: string;
   meta: unknown[];
   keywords: string[];
   title: string;
   image?: string;
   ogType?: string;
-}): JSX.Element {
+}
+
+const SEO = (props: Props): JSX.Element => {
+  const { lang, meta, keywords, title, image, ogType } = props;
   const context = useContext(ThemeContext);
   const { site } = useStaticQuery(detailsQuery);
-  const metaDescription = description || site.siteMetadata.description;
+  const metaDescription = props.description ?? site.siteMetadata.description;
+  const author = props.author ?? site.siteMetadata.author;
 
   return (
     <Helmet
@@ -57,7 +54,7 @@ function SEO({
         },
         {
           name: `twitter:creator`,
-          content: site.siteMetadata.author ?? ``,
+          content: author,
         },
         {
           name: `twitter:image`,
@@ -86,7 +83,7 @@ function SEO({
         .concat(meta)}
     />
   );
-}
+};
 
 SEO.defaultProps = {
   lang: `en`,

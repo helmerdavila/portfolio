@@ -10,91 +10,93 @@ import useTranslations from '../UseTranslations';
 import { ThemeContext } from '../Layout';
 import { StaticImage } from 'gatsby-plugin-image';
 
+export const slidesNative: ISlide[] = [
+  {
+    id: 1,
+    name: 'Biteline',
+    url: 'https://biteline.net',
+    backend: 'NodeJS, ExpressJS',
+    frontend: 'Ionic',
+    image: (
+      <StaticImage
+        src="../../images/biteline_mobile.jpg"
+        layout="fullWidth"
+        alt="Biteline"
+        placeholder="tracedSVG"
+        className="filter grayscale hover:grayscale-0 transition-all ease-in duration-500"
+      />
+    ),
+  },
+  {
+    id: 2,
+    name: 'Fitnesspass (App)',
+    url: 'https://apps.apple.com/us/app/fitness-pass/id1442657269',
+    backend: 'NodeJS, ExpressJS',
+    frontend: 'React Native',
+    image: (
+      <StaticImage
+        src="../../images/fitnesspass_mobile.jpg"
+        layout="fullWidth"
+        alt="Biteline"
+        placeholder="tracedSVG"
+        className="filter grayscale hover:grayscale-0 transition-all ease-in duration-500"
+      />
+    ),
+  },
+];
+
+export const slidesDesktop: ISlide[] = [
+  {
+    id: 1,
+    name: 'Ambrea',
+    url: 'https://ambrea.helmerdavila.com/menu/#/dia/1/turno/dia',
+    backend: 'Laravel',
+    frontend: 'Vue, Vuex',
+    image: (
+      <StaticImage
+        src="../../images/ambrea_mockup.png"
+        layout="fullWidth"
+        alt="Biteline"
+        placeholder="tracedSVG"
+        className="filter grayscale hover:grayscale-0 transition-all ease-in duration-500"
+      />
+    ),
+  },
+  {
+    id: 2,
+    name: 'Bipolar',
+    url: 'https://bipolar.com.pe',
+    backend: 'Laravel',
+    frontend: 'React',
+    image: (
+      <StaticImage
+        src="../../images/bipolar_mockup.png"
+        layout="fullWidth"
+        alt="Biteline"
+        placeholder="tracedSVG"
+        className="filter grayscale hover:grayscale-0 transition-all ease-in duration-500"
+      />
+    ),
+  },
+  {
+    id: 3,
+    name: 'Fitnesspass',
+    url: 'https://fitnesspass.pe',
+    backend: 'Express',
+    frontend: 'React',
+    image: (
+      <StaticImage
+        src="../../images/fitnesspass_mockup.png"
+        layout="fullWidth"
+        alt="Biteline"
+        placeholder="tracedSVG"
+        className="filter grayscale hover:grayscale-0 transition-all ease-in duration-500"
+      />
+    ),
+  },
+];
+
 const Projects = (): JSX.Element => {
-  const slidesNative: ISlide[] = [
-    {
-      id: 1,
-      name: 'Biteline',
-      url: 'https://biteline.net',
-      backend: 'NodeJS, ExpressJS',
-      frontend: 'Ionic',
-      image: (
-        <StaticImage
-          src="../../images/biteline_mobile.jpg"
-          layout="fullWidth"
-          alt="Biteline"
-          placeholder="tracedSVG"
-          className="filter grayscale hover:grayscale-0 transition-all ease-in duration-500"
-        />
-      ),
-    },
-    {
-      id: 2,
-      name: 'Fitnesspass (App)',
-      url: 'https://apps.apple.com/us/app/fitness-pass/id1442657269',
-      backend: 'NodeJS, ExpressJS',
-      frontend: 'React Native',
-      image: (
-        <StaticImage
-          src="../../images/fitnesspass_mobile.jpg"
-          layout="fullWidth"
-          alt="Biteline"
-          placeholder="tracedSVG"
-          className="filter grayscale hover:grayscale-0 transition-all ease-in duration-500"
-        />
-      ),
-    },
-  ];
-  const slidesDesktop: ISlide[] = [
-    {
-      id: 1,
-      name: 'Ambrea',
-      url: 'https://ambrea.helmerdavila.com/menu/#/dia/1/turno/dia',
-      backend: 'Laravel',
-      frontend: 'Vue, Vuex',
-      image: (
-        <StaticImage
-          src="../../images/ambrea_mockup.png"
-          layout="fullWidth"
-          alt="Biteline"
-          placeholder="tracedSVG"
-          className="filter grayscale hover:grayscale-0 transition-all ease-in duration-500"
-        />
-      ),
-    },
-    {
-      id: 2,
-      name: 'Bipolar',
-      url: 'https://bipolar.com.pe',
-      backend: 'Laravel',
-      frontend: 'React',
-      image: (
-        <StaticImage
-          src="../../images/bipolar_mockup.png"
-          layout="fullWidth"
-          alt="Biteline"
-          placeholder="tracedSVG"
-          className="filter grayscale hover:grayscale-0 transition-all ease-in duration-500"
-        />
-      ),
-    },
-    {
-      id: 3,
-      name: 'Fitnesspass',
-      url: 'https://fitnesspass.pe',
-      backend: 'Express',
-      frontend: 'React',
-      image: (
-        <StaticImage
-          src="../../images/fitnesspass_mockup.png"
-          layout="fullWidth"
-          alt="Biteline"
-          placeholder="tracedSVG"
-          className="filter grayscale hover:grayscale-0 transition-all ease-in duration-500"
-        />
-      ),
-    },
-  ];
   const sliderDesktopSettings = {
     dots: true,
     infinite: true,

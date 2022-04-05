@@ -6,7 +6,7 @@ import { faBrowser, faCode, faMobile, faServer } from '@helmerdavila/fontawesome
 import useTranslations from '../UseTranslations';
 import { ThemeContext } from '../Layout';
 
-const WhatIDoSection = (props: { icon: IconDefinition; title: string; content: string }) => {
+export const WhatIDoSection = (props: { icon: IconDefinition; title: string; content: string }) => {
   const context = useContext(ThemeContext);
   const textColor = { 'text-white': !context.isLightTheme, 'text-black': context.isLightTheme };
 
