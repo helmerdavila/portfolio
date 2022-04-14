@@ -69,7 +69,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
   const result = await graphql(`
     {
-      blog: allFile(filter: { sourceInstanceName: { eq: "blog" } }) {
+      blog: allFile(filter: { sourceInstanceName: { eq: "blog" }, extension: { eq: "mdx" } }) {
         edges {
           node {
             relativeDirectory
