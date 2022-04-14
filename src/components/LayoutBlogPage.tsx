@@ -128,7 +128,7 @@ const LayoutBlogPage = ({ data: { mdx } }: { data: { mdx: IBlogPost } }): JSX.El
           <GatsbyImage image={imageRendered} alt={imageAlt} data-testid="post-image" />
           <div className="p-12 blog-page">
             <MDXProvider components={components}>
-              <MDXRenderer>{mdx.body}</MDXRenderer>
+              <MDXRenderer localImages={mdx.frontmatter.embeddedImagesLocal}>{mdx.body}</MDXRenderer>
             </MDXProvider>
           </div>
         </div>
@@ -144,6 +144,11 @@ export const query = graphql`
     mdx(frontmatter: { title: { eq: $title } }, fields: { locale: { eq: $locale } }) {
       frontmatter {
         image {
+          childImageSharp {
+            gatsbyImageData(layout: FULL_WIDTH, placeholder: TRACED_SVG)
+          }
+        }
+        embeddedImagesLocal {
           childImageSharp {
             gatsbyImageData(layout: FULL_WIDTH, placeholder: TRACED_SVG)
           }

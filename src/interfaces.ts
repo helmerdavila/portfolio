@@ -23,6 +23,7 @@ export interface IBlogPost {
     lang: string;
     imageAlt?: string;
     image?: Partial<IGatsbyFileImage>;
+    embeddedImagesLocal?: Partial<IGatsbyFileImage>[];
   };
   fields: {
     locale: string;
