@@ -41,6 +41,7 @@ const query = graphql`
             cv_link
             download_cv
             ecommerce_websites
+            edit_posts_on_github
             hi_my_name_is
             landing_pages
             mobile_and_web_projects
