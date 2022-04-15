@@ -649,6 +649,7 @@ type Query {
     allSiteFunction(filter: SiteFunctionFilterInput, limit: Int, skip: Int, sort: SiteFunctionSortInput): SiteFunctionConnection!
     allSitePage(filter: SitePageFilterInput, limit: Int, skip: Int, sort: SitePageSortInput): SitePageConnection!
     allSitePlugin(filter: SitePluginFilterInput, limit: Int, skip: Int, sort: SitePluginSortInput): SitePluginConnection!
+    allStaticImage(filter: StaticImageFilterInput, limit: Int, skip: Int, sort: StaticImageSortInput): StaticImageConnection!
     allTranslationsJson(filter: TranslationsJsonFilterInput, limit: Int, skip: Int, sort: TranslationsJsonSortInput): TranslationsJsonConnection!
     directory(absolutePath: StringQueryOperatorInput, accessTime: DateQueryOperatorInput, atime: DateQueryOperatorInput, atimeMs: FloatQueryOperatorInput, base: StringQueryOperatorInput, birthTime: DateQueryOperatorInput, birthtime: DateQueryOperatorInput, birthtimeMs: FloatQueryOperatorInput, changeTime: DateQueryOperatorInput, children: NodeFilterListInput, ctime: DateQueryOperatorInput, ctimeMs: FloatQueryOperatorInput, dev: IntQueryOperatorInput, dir: StringQueryOperatorInput, ext: StringQueryOperatorInput, extension: StringQueryOperatorInput, gid: IntQueryOperatorInput, id: StringQueryOperatorInput, ino: FloatQueryOperatorInput, internal: InternalFilterInput, mode: IntQueryOperatorInput, modifiedTime: DateQueryOperatorInput, mtime: DateQueryOperatorInput, mtimeMs: FloatQueryOperatorInput, name: StringQueryOperatorInput, nlink: IntQueryOperatorInput, parent: NodeFilterInput, prettySize: StringQueryOperatorInput, rdev: IntQueryOperatorInput, relativeDirectory: StringQueryOperatorInput, relativePath: StringQueryOperatorInput, root: StringQueryOperatorInput, size: IntQueryOperatorInput, sourceInstanceName: StringQueryOperatorInput, uid: IntQueryOperatorInput): Directory
     file(absolutePath: StringQueryOperatorInput, accessTime: DateQueryOperatorInput, atime: DateQueryOperatorInput, atimeMs: FloatQueryOperatorInput, base: StringQueryOperatorInput, birthTime: DateQueryOperatorInput, birthtime: DateQueryOperatorInput, birthtimeMs: FloatQueryOperatorInput, blksize: IntQueryOperatorInput, blocks: IntQueryOperatorInput, changeTime: DateQueryOperatorInput, childImageSharp: ImageSharpFilterInput, childMdx: MdxFilterInput, childTranslationsJson: TranslationsJsonFilterInput, children: NodeFilterListInput, childrenImageSharp: ImageSharpFilterListInput, childrenMdx: MdxFilterListInput, childrenTranslationsJson: TranslationsJsonFilterListInput, ctime: DateQueryOperatorInput, ctimeMs: FloatQueryOperatorInput, dev: IntQueryOperatorInput, dir: StringQueryOperatorInput, ext: StringQueryOperatorInput, extension: StringQueryOperatorInput, gid: IntQueryOperatorInput, id: StringQueryOperatorInput, ino: FloatQueryOperatorInput, internal: InternalFilterInput, mode: IntQueryOperatorInput, modifiedTime: DateQueryOperatorInput, mtime: DateQueryOperatorInput, mtimeMs: FloatQueryOperatorInput, name: StringQueryOperatorInput, nlink: IntQueryOperatorInput, parent: NodeFilterInput, prettySize: StringQueryOperatorInput, publicURL: StringQueryOperatorInput, rdev: IntQueryOperatorInput, relativeDirectory: StringQueryOperatorInput, relativePath: StringQueryOperatorInput, root: StringQueryOperatorInput, size: IntQueryOperatorInput, sourceInstanceName: StringQueryOperatorInput, uid: IntQueryOperatorInput): File
@@ -659,7 +660,8 @@ type Query {
     siteFunction(absoluteCompiledFilePath: StringQueryOperatorInput, children: NodeFilterListInput, functionRoute: StringQueryOperatorInput, id: StringQueryOperatorInput, internal: InternalFilterInput, matchPath: StringQueryOperatorInput, originalAbsoluteFilePath: StringQueryOperatorInput, originalRelativeFilePath: StringQueryOperatorInput, parent: NodeFilterInput, pluginName: StringQueryOperatorInput, relativeCompiledFilePath: StringQueryOperatorInput): SiteFunction
     sitePage(children: NodeFilterListInput, component: StringQueryOperatorInput, componentChunkName: StringQueryOperatorInput, id: StringQueryOperatorInput, internal: InternalFilterInput, internalComponentName: StringQueryOperatorInput, matchPath: StringQueryOperatorInput, pageContext: JSONQueryOperatorInput, parent: NodeFilterInput, path: StringQueryOperatorInput, pluginCreator: SitePluginFilterInput): SitePage
     sitePlugin(browserAPIs: StringQueryOperatorInput, children: NodeFilterListInput, id: StringQueryOperatorInput, internal: InternalFilterInput, name: StringQueryOperatorInput, nodeAPIs: StringQueryOperatorInput, packageJson: JSONQueryOperatorInput, parent: NodeFilterInput, pluginFilepath: StringQueryOperatorInput, pluginOptions: JSONQueryOperatorInput, resolve: StringQueryOperatorInput, ssrAPIs: StringQueryOperatorInput, version: StringQueryOperatorInput): SitePlugin
-    translationsJson(about_me: StringQueryOperatorInput, about_me_description: StringQueryOperatorInput, and_i_build: StringQueryOperatorInput, battleship_description: StringQueryOperatorInput, children: NodeFilterListInput, code_samples: StringQueryOperatorInput, ctbook_description: StringQueryOperatorInput, ctbook_readsample: StringQueryOperatorInput, cv_link: StringQueryOperatorInput, download_cv: StringQueryOperatorInput, ecommerce_websites: StringQueryOperatorInput, hi_my_name_is: StringQueryOperatorInput, id: StringQueryOperatorInput, internal: InternalFilterInput, landing_pages: StringQueryOperatorInput, mobile_and_web_projects: StringQueryOperatorInput, mobile_applications: StringQueryOperatorInput, my_stack: StringQueryOperatorInput, my_stack_backend: StringQueryOperatorInput, my_stack_frontend: StringQueryOperatorInput, my_stack_sysops: StringQueryOperatorInput, parent: NodeFilterInput, personal_projects_httpixel: StringQueryOperatorInput, personal_projects_pills: StringQueryOperatorInput, powered_by_gatsby: StringQueryOperatorInput, projects: StringQueryOperatorInput, roomie_description: StringQueryOperatorInput, software_engineer: StringQueryOperatorInput, web_applications: StringQueryOperatorInput, what_i_do: StringQueryOperatorInput, what_i_do_backend: StringQueryOperatorInput, what_i_do_frontend: StringQueryOperatorInput, what_i_do_mobile: StringQueryOperatorInput, what_i_do_sysops: StringQueryOperatorInput, who_am_i: StringQueryOperatorInput): TranslationsJson
+    staticImage(absolutePath: StringQueryOperatorInput, accessTime: DateQueryOperatorInput, atime: DateQueryOperatorInput, atimeMs: FloatQueryOperatorInput, base: StringQueryOperatorInput, birthTime: DateQueryOperatorInput, birthtime: DateQueryOperatorInput, birthtimeMs: FloatQueryOperatorInput, blksize: IntQueryOperatorInput, blocks: IntQueryOperatorInput, changeTime: DateQueryOperatorInput, children: NodeFilterListInput, ctime: DateQueryOperatorInput, ctimeMs: FloatQueryOperatorInput, dev: IntQueryOperatorInput, dir: StringQueryOperatorInput, ext: StringQueryOperatorInput, extension: StringQueryOperatorInput, id: StringQueryOperatorInput, ino: IntQueryOperatorInput, internal: InternalFilterInput, mode: IntQueryOperatorInput, modifiedTime: DateQueryOperatorInput, mtime: DateQueryOperatorInput, mtimeMs: FloatQueryOperatorInput, name: StringQueryOperatorInput, nlink: IntQueryOperatorInput, parent: NodeFilterInput, prettySize: StringQueryOperatorInput, rdev: IntQueryOperatorInput, relativeDirectory: StringQueryOperatorInput, relativePath: StringQueryOperatorInput, root: StringQueryOperatorInput, size: IntQueryOperatorInput, sourceInstanceName: StringQueryOperatorInput, uid: IntQueryOperatorInput): StaticImage
+    translationsJson(about_me: StringQueryOperatorInput, about_me_description: StringQueryOperatorInput, and_i_build: StringQueryOperatorInput, battleship_description: StringQueryOperatorInput, children: NodeFilterListInput, code_samples: StringQueryOperatorInput, ctbook_description: StringQueryOperatorInput, ctbook_readsample: StringQueryOperatorInput, cv_link: StringQueryOperatorInput, download_cv: StringQueryOperatorInput, ecommerce_websites: StringQueryOperatorInput, edit_posts_on_github: StringQueryOperatorInput, hi_my_name_is: StringQueryOperatorInput, id: StringQueryOperatorInput, internal: InternalFilterInput, landing_pages: StringQueryOperatorInput, mobile_and_web_projects: StringQueryOperatorInput, mobile_applications: StringQueryOperatorInput, my_stack: StringQueryOperatorInput, my_stack_backend: StringQueryOperatorInput, my_stack_frontend: StringQueryOperatorInput, my_stack_sysops: StringQueryOperatorInput, parent: NodeFilterInput, personal_projects_httpixel: StringQueryOperatorInput, personal_projects_pills: StringQueryOperatorInput, powered_by_gatsby: StringQueryOperatorInput, projects: StringQueryOperatorInput, roomie_description: StringQueryOperatorInput, software_engineer: StringQueryOperatorInput, web_applications: StringQueryOperatorInput, what_i_do: StringQueryOperatorInput, what_i_do_backend: StringQueryOperatorInput, what_i_do_frontend: StringQueryOperatorInput, what_i_do_mobile: StringQueryOperatorInput, what_i_do_sysops: StringQueryOperatorInput, who_am_i: StringQueryOperatorInput): TranslationsJson
 }
 
 type Site implements Node {
@@ -914,6 +916,149 @@ type SiteSiteMetadata {
     title: String
 }
 
+type StaticImage implements Node {
+    absolutePath: String
+    accessTime(
+        "Returns the difference between this date and the current time. Defaults to \"milliseconds\" but you can also pass in as the measurement \"years\", \"months\", \"weeks\", \"days\", \"hours\", \"minutes\", and \"seconds\"."
+        difference: String,
+        "Format the date using Moment.js' date tokens, e.g. `date(formatString: \"YYYY MMMM DD\")`. See https://momentjs.com/docs/#/displaying/format/ for documentation for different tokens."
+        formatString: String,
+        "Returns a string generated with Moment.js' `fromNow` function"
+        fromNow: Boolean,
+        "Configures the locale Moment.js will use to format the date."
+        locale: String
+    ): Date
+    atime(
+        "Returns the difference between this date and the current time. Defaults to \"milliseconds\" but you can also pass in as the measurement \"years\", \"months\", \"weeks\", \"days\", \"hours\", \"minutes\", and \"seconds\"."
+        difference: String,
+        "Format the date using Moment.js' date tokens, e.g. `date(formatString: \"YYYY MMMM DD\")`. See https://momentjs.com/docs/#/displaying/format/ for documentation for different tokens."
+        formatString: String,
+        "Returns a string generated with Moment.js' `fromNow` function"
+        fromNow: Boolean,
+        "Configures the locale Moment.js will use to format the date."
+        locale: String
+    ): Date
+    atimeMs: Float
+    base: String
+    birthTime(
+        "Returns the difference between this date and the current time. Defaults to \"milliseconds\" but you can also pass in as the measurement \"years\", \"months\", \"weeks\", \"days\", \"hours\", \"minutes\", and \"seconds\"."
+        difference: String,
+        "Format the date using Moment.js' date tokens, e.g. `date(formatString: \"YYYY MMMM DD\")`. See https://momentjs.com/docs/#/displaying/format/ for documentation for different tokens."
+        formatString: String,
+        "Returns a string generated with Moment.js' `fromNow` function"
+        fromNow: Boolean,
+        "Configures the locale Moment.js will use to format the date."
+        locale: String
+    ): Date
+    birthtime(
+        "Returns the difference between this date and the current time. Defaults to \"milliseconds\" but you can also pass in as the measurement \"years\", \"months\", \"weeks\", \"days\", \"hours\", \"minutes\", and \"seconds\"."
+        difference: String,
+        "Format the date using Moment.js' date tokens, e.g. `date(formatString: \"YYYY MMMM DD\")`. See https://momentjs.com/docs/#/displaying/format/ for documentation for different tokens."
+        formatString: String,
+        "Returns a string generated with Moment.js' `fromNow` function"
+        fromNow: Boolean,
+        "Configures the locale Moment.js will use to format the date."
+        locale: String
+    ): Date
+    birthtimeMs: Float
+    blksize: Int
+    blocks: Int
+    changeTime(
+        "Returns the difference between this date and the current time. Defaults to \"milliseconds\" but you can also pass in as the measurement \"years\", \"months\", \"weeks\", \"days\", \"hours\", \"minutes\", and \"seconds\"."
+        difference: String,
+        "Format the date using Moment.js' date tokens, e.g. `date(formatString: \"YYYY MMMM DD\")`. See https://momentjs.com/docs/#/displaying/format/ for documentation for different tokens."
+        formatString: String,
+        "Returns a string generated with Moment.js' `fromNow` function"
+        fromNow: Boolean,
+        "Configures the locale Moment.js will use to format the date."
+        locale: String
+    ): Date
+    children: [Node!]!
+    ctime(
+        "Returns the difference between this date and the current time. Defaults to \"milliseconds\" but you can also pass in as the measurement \"years\", \"months\", \"weeks\", \"days\", \"hours\", \"minutes\", and \"seconds\"."
+        difference: String,
+        "Format the date using Moment.js' date tokens, e.g. `date(formatString: \"YYYY MMMM DD\")`. See https://momentjs.com/docs/#/displaying/format/ for documentation for different tokens."
+        formatString: String,
+        "Returns a string generated with Moment.js' `fromNow` function"
+        fromNow: Boolean,
+        "Configures the locale Moment.js will use to format the date."
+        locale: String
+    ): Date
+    ctimeMs: Float
+    dev: Int
+    dir: String
+    ext: String
+    extension: String
+    id: ID!
+    ino: Int
+    internal: Internal!
+    mode: Int
+    modifiedTime(
+        "Returns the difference between this date and the current time. Defaults to \"milliseconds\" but you can also pass in as the measurement \"years\", \"months\", \"weeks\", \"days\", \"hours\", \"minutes\", and \"seconds\"."
+        difference: String,
+        "Format the date using Moment.js' date tokens, e.g. `date(formatString: \"YYYY MMMM DD\")`. See https://momentjs.com/docs/#/displaying/format/ for documentation for different tokens."
+        formatString: String,
+        "Returns a string generated with Moment.js' `fromNow` function"
+        fromNow: Boolean,
+        "Configures the locale Moment.js will use to format the date."
+        locale: String
+    ): Date
+    mtime(
+        "Returns the difference between this date and the current time. Defaults to \"milliseconds\" but you can also pass in as the measurement \"years\", \"months\", \"weeks\", \"days\", \"hours\", \"minutes\", and \"seconds\"."
+        difference: String,
+        "Format the date using Moment.js' date tokens, e.g. `date(formatString: \"YYYY MMMM DD\")`. See https://momentjs.com/docs/#/displaying/format/ for documentation for different tokens."
+        formatString: String,
+        "Returns a string generated with Moment.js' `fromNow` function"
+        fromNow: Boolean,
+        "Configures the locale Moment.js will use to format the date."
+        locale: String
+    ): Date
+    mtimeMs: Float
+    name: String
+    nlink: Int
+    parent: Node
+    prettySize: String
+    rdev: Int
+    relativeDirectory: String
+    relativePath: String
+    root: String
+    size: Int
+    sourceInstanceName: String
+    uid: Int
+}
+
+type StaticImageConnection {
+    distinct(field: StaticImageFieldsEnum!): [String!]!
+    edges: [StaticImageEdge!]!
+    group(field: StaticImageFieldsEnum!, limit: Int, skip: Int): [StaticImageGroupConnection!]!
+    max(field: StaticImageFieldsEnum!): Float
+    min(field: StaticImageFieldsEnum!): Float
+    nodes: [StaticImage!]!
+    pageInfo: PageInfo!
+    sum(field: StaticImageFieldsEnum!): Float
+    totalCount: Int!
+}
+
+type StaticImageEdge {
+    next: StaticImage
+    node: StaticImage!
+    previous: StaticImage
+}
+
+type StaticImageGroupConnection {
+    distinct(field: StaticImageFieldsEnum!): [String!]!
+    edges: [StaticImageEdge!]!
+    field: String!
+    fieldValue: String
+    group(field: StaticImageFieldsEnum!, limit: Int, skip: Int): [StaticImageGroupConnection!]!
+    max(field: StaticImageFieldsEnum!): Float
+    min(field: StaticImageFieldsEnum!): Float
+    nodes: [StaticImage!]!
+    pageInfo: PageInfo!
+    sum(field: StaticImageFieldsEnum!): Float
+    totalCount: Int!
+}
+
 type TranslationsJson implements Node {
     about_me: String
     about_me_description: String
@@ -926,6 +1071,7 @@ type TranslationsJson implements Node {
     cv_link: String
     download_cv: String
     ecommerce_websites: String
+    edit_posts_on_github: String
     hi_my_name_is: String
     id: ID!
     internal: Internal!
@@ -1352,6 +1498,7 @@ enum FileFieldsEnum {
     childTranslationsJson___cv_link
     childTranslationsJson___download_cv
     childTranslationsJson___ecommerce_websites
+    childTranslationsJson___edit_posts_on_github
     childTranslationsJson___hi_my_name_is
     childTranslationsJson___id
     childTranslationsJson___internal___content
@@ -1636,6 +1783,7 @@ enum FileFieldsEnum {
     childrenTranslationsJson___cv_link
     childrenTranslationsJson___download_cv
     childrenTranslationsJson___ecommerce_websites
+    childrenTranslationsJson___edit_posts_on_github
     childrenTranslationsJson___hi_my_name_is
     childrenTranslationsJson___id
     childrenTranslationsJson___internal___content
@@ -2071,6 +2219,7 @@ enum MdxFieldsEnum {
     frontmatter___embeddedImagesLocal___childTranslationsJson___cv_link
     frontmatter___embeddedImagesLocal___childTranslationsJson___download_cv
     frontmatter___embeddedImagesLocal___childTranslationsJson___ecommerce_websites
+    frontmatter___embeddedImagesLocal___childTranslationsJson___edit_posts_on_github
     frontmatter___embeddedImagesLocal___childTranslationsJson___hi_my_name_is
     frontmatter___embeddedImagesLocal___childTranslationsJson___id
     frontmatter___embeddedImagesLocal___childTranslationsJson___landing_pages
@@ -2123,6 +2272,7 @@ enum MdxFieldsEnum {
     frontmatter___embeddedImagesLocal___childrenTranslationsJson___cv_link
     frontmatter___embeddedImagesLocal___childrenTranslationsJson___download_cv
     frontmatter___embeddedImagesLocal___childrenTranslationsJson___ecommerce_websites
+    frontmatter___embeddedImagesLocal___childrenTranslationsJson___edit_posts_on_github
     frontmatter___embeddedImagesLocal___childrenTranslationsJson___hi_my_name_is
     frontmatter___embeddedImagesLocal___childrenTranslationsJson___id
     frontmatter___embeddedImagesLocal___childrenTranslationsJson___landing_pages
@@ -2220,6 +2370,7 @@ enum MdxFieldsEnum {
     frontmatter___image___childTranslationsJson___cv_link
     frontmatter___image___childTranslationsJson___download_cv
     frontmatter___image___childTranslationsJson___ecommerce_websites
+    frontmatter___image___childTranslationsJson___edit_posts_on_github
     frontmatter___image___childTranslationsJson___hi_my_name_is
     frontmatter___image___childTranslationsJson___id
     frontmatter___image___childTranslationsJson___landing_pages
@@ -2272,6 +2423,7 @@ enum MdxFieldsEnum {
     frontmatter___image___childrenTranslationsJson___cv_link
     frontmatter___image___childrenTranslationsJson___download_cv
     frontmatter___image___childrenTranslationsJson___ecommerce_websites
+    frontmatter___image___childrenTranslationsJson___edit_posts_on_github
     frontmatter___image___childrenTranslationsJson___hi_my_name_is
     frontmatter___image___childrenTranslationsJson___id
     frontmatter___image___childrenTranslationsJson___landing_pages
@@ -2934,6 +3086,127 @@ enum SortOrderEnum {
     DESC
 }
 
+enum StaticImageFieldsEnum {
+    absolutePath
+    accessTime
+    atime
+    atimeMs
+    base
+    birthTime
+    birthtime
+    birthtimeMs
+    blksize
+    blocks
+    changeTime
+    children
+    children___children
+    children___children___children
+    children___children___children___children
+    children___children___children___id
+    children___children___id
+    children___children___internal___content
+    children___children___internal___contentDigest
+    children___children___internal___description
+    children___children___internal___fieldOwners
+    children___children___internal___ignoreType
+    children___children___internal___mediaType
+    children___children___internal___owner
+    children___children___internal___type
+    children___children___parent___children
+    children___children___parent___id
+    children___id
+    children___internal___content
+    children___internal___contentDigest
+    children___internal___description
+    children___internal___fieldOwners
+    children___internal___ignoreType
+    children___internal___mediaType
+    children___internal___owner
+    children___internal___type
+    children___parent___children
+    children___parent___children___children
+    children___parent___children___id
+    children___parent___id
+    children___parent___internal___content
+    children___parent___internal___contentDigest
+    children___parent___internal___description
+    children___parent___internal___fieldOwners
+    children___parent___internal___ignoreType
+    children___parent___internal___mediaType
+    children___parent___internal___owner
+    children___parent___internal___type
+    children___parent___parent___children
+    children___parent___parent___id
+    ctime
+    ctimeMs
+    dev
+    dir
+    ext
+    extension
+    id
+    ino
+    internal___content
+    internal___contentDigest
+    internal___description
+    internal___fieldOwners
+    internal___ignoreType
+    internal___mediaType
+    internal___owner
+    internal___type
+    mode
+    modifiedTime
+    mtime
+    mtimeMs
+    name
+    nlink
+    parent___children
+    parent___children___children
+    parent___children___children___children
+    parent___children___children___id
+    parent___children___id
+    parent___children___internal___content
+    parent___children___internal___contentDigest
+    parent___children___internal___description
+    parent___children___internal___fieldOwners
+    parent___children___internal___ignoreType
+    parent___children___internal___mediaType
+    parent___children___internal___owner
+    parent___children___internal___type
+    parent___children___parent___children
+    parent___children___parent___id
+    parent___id
+    parent___internal___content
+    parent___internal___contentDigest
+    parent___internal___description
+    parent___internal___fieldOwners
+    parent___internal___ignoreType
+    parent___internal___mediaType
+    parent___internal___owner
+    parent___internal___type
+    parent___parent___children
+    parent___parent___children___children
+    parent___parent___children___id
+    parent___parent___id
+    parent___parent___internal___content
+    parent___parent___internal___contentDigest
+    parent___parent___internal___description
+    parent___parent___internal___fieldOwners
+    parent___parent___internal___ignoreType
+    parent___parent___internal___mediaType
+    parent___parent___internal___owner
+    parent___parent___internal___type
+    parent___parent___parent___children
+    parent___parent___parent___id
+    prettySize
+    rdev
+    relativeDirectory
+    relativePath
+    root
+    size
+    sourceInstanceName
+    uid
+}
+
 enum TranslationsJsonFieldsEnum {
     about_me
     about_me_description
@@ -2984,6 +3257,7 @@ enum TranslationsJsonFieldsEnum {
     cv_link
     download_cv
     ecommerce_websites
+    edit_posts_on_github
     hi_my_name_is
     id
     internal___content
@@ -3495,6 +3769,50 @@ input SiteSortInput {
     order: [SortOrderEnum] = [ASC]
 }
 
+input StaticImageFilterInput {
+    absolutePath: StringQueryOperatorInput
+    accessTime: DateQueryOperatorInput
+    atime: DateQueryOperatorInput
+    atimeMs: FloatQueryOperatorInput
+    base: StringQueryOperatorInput
+    birthTime: DateQueryOperatorInput
+    birthtime: DateQueryOperatorInput
+    birthtimeMs: FloatQueryOperatorInput
+    blksize: IntQueryOperatorInput
+    blocks: IntQueryOperatorInput
+    changeTime: DateQueryOperatorInput
+    children: NodeFilterListInput
+    ctime: DateQueryOperatorInput
+    ctimeMs: FloatQueryOperatorInput
+    dev: IntQueryOperatorInput
+    dir: StringQueryOperatorInput
+    ext: StringQueryOperatorInput
+    extension: StringQueryOperatorInput
+    id: StringQueryOperatorInput
+    ino: IntQueryOperatorInput
+    internal: InternalFilterInput
+    mode: IntQueryOperatorInput
+    modifiedTime: DateQueryOperatorInput
+    mtime: DateQueryOperatorInput
+    mtimeMs: FloatQueryOperatorInput
+    name: StringQueryOperatorInput
+    nlink: IntQueryOperatorInput
+    parent: NodeFilterInput
+    prettySize: StringQueryOperatorInput
+    rdev: IntQueryOperatorInput
+    relativeDirectory: StringQueryOperatorInput
+    relativePath: StringQueryOperatorInput
+    root: StringQueryOperatorInput
+    size: IntQueryOperatorInput
+    sourceInstanceName: StringQueryOperatorInput
+    uid: IntQueryOperatorInput
+}
+
+input StaticImageSortInput {
+    fields: [StaticImageFieldsEnum]
+    order: [SortOrderEnum] = [ASC]
+}
+
 input StringQueryOperatorInput {
     eq: String
     glob: String
@@ -3525,6 +3843,7 @@ input TranslationsJsonFilterInput {
     cv_link: StringQueryOperatorInput
     download_cv: StringQueryOperatorInput
     ecommerce_websites: StringQueryOperatorInput
+    edit_posts_on_github: StringQueryOperatorInput
     hi_my_name_is: StringQueryOperatorInput
     id: StringQueryOperatorInput
     internal: InternalFilterInput
