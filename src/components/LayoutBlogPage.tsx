@@ -9,6 +9,7 @@ import { MDXProvider } from '@mdx-js/react';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 import Code from '../components/Mdx/Code';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
+import useTranslations from './UseTranslations';
 
 export const MyH1 = ({ children, ...props }) => {
   const context = useContext(ThemeContext);
@@ -108,12 +109,15 @@ const components = {
 
 const LayoutBlogPage = ({ data: { mdx } }: { data: { mdx: IBlogPost } }): JSX.Element => {
   const context = useContext(ThemeContext);
+  const { edit_posts_on_github } = useTranslations();
   const pageBackground = {
     'bg-white shadow-sm': context.isLightTheme,
     'bg-gray-800 border-gray-800': !context.isLightTheme,
   };
+  const linkStyles = { 'text-black': context.isLightTheme, 'text-white': !context.isLightTheme };
   const imageAlt = mdx?.frontmatter?.imageAlt ?? '';
   const imageRendered = getImage(mdx.frontmatter.image?.childImageSharp.gatsbyImageData);
+  const pathFileForGithub = mdx.slug.endsWith('/') ? `${mdx.slug}index.mdx` : `${mdx.slug}.mdx`;
 
   return (
     <LayoutBlog>
@@ -130,6 +134,16 @@ const LayoutBlogPage = ({ data: { mdx } }: { data: { mdx: IBlogPost } }): JSX.El
             <MDXProvider components={components}>
               <MDXRenderer localImages={mdx.frontmatter.embeddedImagesLocal}>{mdx.body}</MDXRenderer>
             </MDXProvider>
+            <div className="flex justify-end mt-32">
+              <a
+                href={`https://github.com/helmerdavila/portfolio/edit/main/blog/${pathFileForGithub}`}
+                target="_blank"
+                className={classNames(linkStyles, 'font-bold hover:underline text-right')}
+                rel="noreferrer"
+              >
+                {edit_posts_on_github}
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -157,6 +171,7 @@ export const query = graphql`
         title
         description
       }
+      slug
       excerpt(pruneLength: 100)
       body
     }

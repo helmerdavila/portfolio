@@ -15,6 +15,7 @@ export interface IGatsbyFileImage extends FileSystemNode {
 export interface IBlogPost {
   excerpt: string;
   body: string;
+  slug: string;
   frontmatter: {
     title: string;
     description: string;
