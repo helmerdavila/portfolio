@@ -14,17 +14,18 @@ import LayoutBlogPage, {
   MyListItem,
   MyParagraph,
 } from './LayoutBlogPage';
-import { backgroundImage, loadSiteData } from '../utils/mockresponses';
+import { backgroundImage, loadSiteData, loadTranslations } from '../utils/mockresponses';
 import faker from '@faker-js/faker';
 import { render } from '@testing-library/react';
 
-beforeEach(() => (useStaticQuery as jest.Mock).mockReturnValueOnce(loadSiteData));
+beforeEach(() => (useStaticQuery as jest.Mock).mockReturnValue({ ...loadSiteData, ...loadTranslations }));
 
 it('renders without issues', () => {
   const data: { mdx: IBlogPost } = {
     mdx: {
       excerpt: faker.lorem.words(5),
       body: faker.lorem.paragraphs(),
+      slug: faker.lorem.slug(),
       fields: { locale: 'en' },
       parent: { relativeDirectory: '' },
       frontmatter: {
@@ -38,7 +39,7 @@ it('renders without issues', () => {
       },
     },
   };
-  const { queryByTestId } = customRender(<LayoutBlogPage data={data} />);
+  const { queryByTestId } = customRender(<LayoutBlogPage data={data} />, { localeContextProps: { locale: 'en' } });
 
   expect(queryByTestId('post-image')).toBeInTheDocument();
   expect(queryByTestId('post-image')).toHaveAttribute(
@@ -52,6 +53,7 @@ it('renders without imageAlt and description', () => {
     mdx: {
       excerpt: faker.lorem.words(5),
       body: faker.lorem.paragraphs(),
+      slug: faker.lorem.slug(),
       fields: { locale: 'en' },
       parent: { relativeDirectory: '' },
       frontmatter: {
@@ -65,7 +67,7 @@ it('renders without imageAlt and description', () => {
       },
     },
   };
-  const { queryByTestId } = customRender(<LayoutBlogPage data={data} />);
+  const { queryByTestId } = customRender(<LayoutBlogPage data={data} />, { localeContextProps: { locale: 'en' } });
 
   expect(queryByTestId('post-image')).toBeInTheDocument();
   expect(queryByTestId('post-image')).toHaveAttribute(
