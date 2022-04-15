@@ -67,9 +67,13 @@ exports.createPages = async ({ graphql, actions }) => {
 
   const postTemplate = require.resolve(`./src/components/LayoutBlogPage.tsx`);
 
+  // Adding sort here to generate the HTMl pages in descending order by date
   const result = await graphql(`
     {
-      blog: allFile(filter: { sourceInstanceName: { eq: "blog" }, extension: { eq: "mdx" } }) {
+      blog: allFile(
+        filter: { sourceInstanceName: { eq: "blog" }, extension: { eq: "mdx" } }
+        sort: { fields: [childMdx___frontmatter___date], order: DESC }
+      ) {
         edges {
           node {
             relativeDirectory
