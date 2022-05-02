@@ -24,7 +24,7 @@ export const MyH2 = ({ children, ...props }) => {
   const context = useContext(ThemeContext);
   const themeStyles = { 'text-black': context.isLightTheme, 'text-white': !context.isLightTheme };
   return (
-    <h2 className={classNames(themeStyles, 'mt-3 mb-2 text-4xl font-bold')} {...props}>
+    <h2 className={classNames(themeStyles, 'mt-7 mb-5 text-4xl font-bold')} {...props}>
       {children}
     </h2>
   );
