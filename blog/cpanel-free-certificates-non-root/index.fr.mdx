@@ -1,0 +1,94 @@
+---
+title: 'CPanel: Obtenez des certificats SSL gratuits (non-root)'
+description: On utilise le script acme
+date: 2022-05-01
+published: true
+image: ../../src/images/blog/keys.jpg
+embeddedImagesLocal:
+  - cpanel.png
+---
+
+import { GatsbyImage, getImage } from 'gatsby-plugin-image';
+
+# CPanel: Obtenez des certificats SSL gratuits (non-root)
+
+Depuis quelques hébergements partagés sont liés seulement d’une option d’acheter un certificat SSL, à l’aide d’un script, on peut générer des certificats SSL en suivant les instructions.
+
+## 📈 Allez au terminal dans ton CPanel ou SSH là
+
+<GatsbyImage image={getImage(props.localImages[0])} alt="CPanel" />
+
+## ⬇️ Obtiens le script [acme.sh](http://acme.sh/)
+
+```bash
+curl https://get.acme.sh | sh
+```
+
+## 🔃 Actualise le terminal
+
+Rentre dans le terminal ou simplement exécute
+
+```bash
+source ~/.bashrc
+```
+
+## ✉️ Registre ton courriel avec le certificat
+
+```bash
+acme.sh —-register-account —-accountemail youremail@yourdomain.com
+```
+
+## ⏰ Vérifie si le cronjob a été habilité par acme
+
+```bash
+crontab -l | grep acme.sh
+```
+
+La commande ci-dessus devrait montrer quelque chose comme:
+
+```bash
+10 0 * * * “/home/*YOUR_CPANEL_USER*/.acme.sh”/acme.sh —- cron —- home “/home/*YOUR_CPANEL_USER*/.acme.sh” > /dev/null
+```
+
+## 📦 Définis les variables dans le terminal
+
+```bash
+export DOMAIN=yourdomain.com
+# Presse enter puis écris
+export WWWDOMAIN=www.yourdomain.com
+# N'oublie pas presser enter encore
+```
+
+## 🔑 Teste si la génération de certificat fonctionne
+
+Avant de tester si la generation de certificat est autorisée. Tu as besoin du répertoire de domaine / sous-domaine dans ton CPanel. Exécute les commands suivants pour obtenir le répertoire.
+
+```bash
+export DOMAINPATH=$(uapi DomainInfo single_domain_data domain=$DOMAIN | grep documentroot| cut -d " " -f 6)
+```
+
+Le résultat sera stocké dans **DOMAINPATH**.
+
+Et puis, tu peux utiliser Acme pour générer un certificat **STAGING**.
+
+```bash
+acme.sh —-issue —-webroot ${DOMAINPATH} -d ${DOMAIN} -d ${WWWDOMAIN} —-staging
+```
+
+> N’oublie pas de seulement ajouter `-d $WWWDOMAIN`, si tu utilises un alias `www` pour ton domaine.
+
+Si tu as reçu des checks / messages verts. Félicitations! Maintenant tu peux générer de certificats dans CPanel.
+
+## 🍄 Générer un certificat SSL réel
+
+```bash
+acme.sh —-issue —-webroot ${DOMAINPATH} -d ${DOMAIN} -d ${WWWDOMAIN} —-force
+```
+
+## ➕ Ajoute ton certificat dans CPanel
+
+```bash
+acme.sh —-deploy —-deploy-hook cpanel_uapi —-domain ${DOMAIN} --domain ${WWWDOMAIN}
+```
+
+> Garde à l’esprit, tu devrais répéter chaque étape depuis “Définis les variables dans le terminal” et continuer par chaque domaine / sous-domaine lorsque les ajoutes.
