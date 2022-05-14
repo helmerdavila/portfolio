@@ -1,0 +1,75 @@
+---
+title: 'Mocking global variables in Python tests'
+description: I was trying to test some global variables with Python, specially for a script which contain global variables. And after trying and failing I think that I can show you the most simple version to do it.
+date: 2022-05-13
+published: true
+image: ../../src/images/blog/python-global-envs.jpg
+---
+
+# Mocking global variables in Python tests
+
+I was trying to test some global variables with Python, specially for a script which contain global variables. And after trying and failing I think that I can show you the most simple version to do it.
+
+## 🏃 The quick solution
+
+```python
+# demo_file.py
+ENVS = { 'real_value': True, 'another_real_value': False }
+
+# test_your_demo_file.py
+mocker.patch("demo_file.ENVS", new={'MOCKED_NONE': None, 'MOCKED_EMPTY': ''})
+```
+
+Then into your `demo_file` the ENVS variable would be mocked.
+
+## ✏️ Solution with description
+
+### 📔 Requirements
+
+- For simplicity of work. I’d recommend the following library: [https://pypi.org/project/pytest-mock/](https://pypi.org/project/pytest-mock/)
+
+### 🤔 What I was trying to do?
+
+First, let’s suppose that you have a file called `demo_file.py` with the following content (and where the global variable is located.
+
+```python
+# demo_file.py
+import os
+
+ENVS = { 'real_value': os.environ('REAL_VALUE'), 'another_real_value': os.environ('ANOTHER_REAL_VALUE') }
+
+def simple_method():
+		print(ENVS)
+		return 0
+```
+
+If you try to execute `simple_method` it will print the the dictionary with `real_value` and `another_real_value` there.
+
+Now we have the following test file.
+
+```python
+# test_my_envs.py
+from demo_file import simple_method
+
+def test_if_simple_method_is_working():
+		assert simple_method() == 0
+```
+
+I know the test seems simple, but it’s making sure that at least is returning a zero value after printing ENV’s values.
+
+### 👾 Mocking the variable
+
+But as you see we are calling to environment variables in the current computer, and if you write your tests waiting to have those into your CI/CD server, the tests are going to start failing. How we can avoid that and tell to our test server (or test pipeline) that we want specific fixed values?
+
+If you installed the package mentioned above, in the requirements section, it’s pretty easy to start mocking values. So, we only need to add a single line.
+
+```python
+# test_my_envs.py
+from demo_file import simple_method
+
+@mocker.patch("demo_file.ENVS", new={'MOCKED_REAL_VALUE': None, 'MOCKED_ANOTHER_REAL_VALUE': ''})
+def test_if_simple_method_is_working():
+		assert simple_method() == 0
+```
+
+And your tests won’t execute the real ENVS variable and, therefore, call to `os.environ`.
