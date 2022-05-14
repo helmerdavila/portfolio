@@ -1,0 +1,73 @@
+---
+title: 'Testing en Python: Hacer mock de una variable global'
+description: Estaba intentando probar algunas variables globales con Python, especialmente para un script el cual contiene variables globales. Y después de intentarlo y fallar, pienso que puedo mostrarte la versión más simple de hacerlo.
+date: 2022-05-13
+published: true
+image: ../../src/images/blog/python-global-envs.jpg
+---
+
+Estaba intentando probar algunas variables globales con Python, especialmente para un script el cual contiene variables globales. Y después de intentarlo y fallar, pienso que puedo mostrarte la versión más simple de hacerlo.
+
+## 🏃 La solución rápida
+
+```python
+# archivo_demo.py
+ENVS = { 'valor_real': True, 'otro_valor_real': False }
+
+# testando_tu_archivo_demo.py
+mocker.patch("archivo_demo.ENVS", new={'MOCKED_NONE': None, 'MOCKED_VACIO': ''})
+```
+
+Después en tu `archivo_demo` la variable ENVS estará como _mocked_.
+
+## ✏️ La solución detallada
+
+### 📔 Requerimientos
+
+- Para facilidad del trabajo. Recomiendo la siguiente librería: [https://pypi.org/project/pytest-mock/](https://pypi.org/project/pytest-mock/)
+
+### 🤔 ¿Qué estaba intentando hacer?
+
+Primero, supongamos que tengo un archivo llamado `archivo_demo.py` con el siguiente contenido (y donde la variable global está localizada).
+
+```python
+# archivo_demo.py
+import os
+
+ENVS = { 'valor_real': os.environ('VALOR_REAL'), 'otro_valor_real': os.environ('OTRO_VALOR_REAL') }
+
+def metodo_simple():
+		print(ENVS)
+		return 0
+```
+
+Si tratas de ejecutar `metodo_simple` va a mostrar el diccionario con `valor_real` y `otro_valor_real` allí.
+
+Ahora tenemos el siguiente archivo de test.
+
+```python
+# testeando_mis_envs.py
+from archivo_demo import metodo_simple
+
+def testear_si_metodo_simple_funciona():
+		assert metodo_simple() == 0
+```
+
+Ya sé que el test se ve simple, pero se asegura al menos de retornar un valor cero después de mostrar los valores ENVs.
+
+### 👾 Sobreescribiendo y simulando (Mocking) las variables
+
+Pero como puedes ver, estamos llamando las variables de entorno de la computadora que usemos, y si tu escribes tus tests, esperando tenerlas en el servidor CI/CD, entonces los tests comenzarán a fallar. ¿Cómo podemos evitar eso y decirle a nuestro servidor de testing (o _pipeline_ de testing) que queremos valores fijos?
+
+Si instalaste la librería mencionada arriba, en la sección de requerimientos, es muy fácil comenzar a _mockear_ valores. Así que sólo necesitamos agregar una sola línea.
+
+```python
+# testeando_mis_envs.py
+from archivo_demo import metodo_simple
+
+@mocker.patch("archivo_demo.ENVS", new={'VALOR_REAL_MOCKED': None, 'OTRO_VALOR_REAL_MOCKED': ''})
+def testear_si_metodo_simple_funciona():
+		assert metodo_simple() == 0
+```
+
+Y tus tests no ejecutarán la variable `ENVS`, y por lo tanto, tampoco llamarán a `os.environ`.
