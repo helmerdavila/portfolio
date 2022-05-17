@@ -1,9 +1,9 @@
 module.exports = {
   siteMetadata: {
     title: `Helmer Dávila`,
-    description: `Web and Web Developer.`,
+    description: `Web Developer.`,
     author: `@helmerdavila`,
-    siteUrl: `https://www.helmerdavila.com`,
+    siteUrl: `https://helmerdavila.com`,
   },
   plugins: [
     `gatsby-plugin-image`,
@@ -69,9 +69,16 @@ module.exports = {
     {
       resolve: 'gatsby-plugin-robots-txt',
       options: {
-        host: 'https://www.helmerdavila.com',
-        sitemap: 'https://www.helmerdavila.com/sitemap.xml',
+        host: 'https://helmerdavila.com',
+        sitemap: 'https://helmerdavila.com/sitemap.xml',
         policy: [{ userAgent: '*', allow: '/' }],
+      },
+    },
+    {
+      resolve: `gatsby-plugin-canonical-urls`,
+      options: {
+        siteUrl: `https://helmerdavila.com`,
+        stripQueryString: true,
       },
     },
   ],
