@@ -59,6 +59,8 @@
   "license": "MIT",
   "scripts": {
     "build": "gatsby build",
+    "prebuild": "npm run clean",
+    "clean": "gatsby clean",
     "develop": "cross-env GATSBY_GRAPHQL_IDE=playground gatsby develop",
     "start": "gatsby clean && npm run develop",
     "lint": "eslint src/ --ext .tsx,.ts",
