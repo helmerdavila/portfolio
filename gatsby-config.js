@@ -69,15 +69,15 @@ module.exports = {
     {
       resolve: 'gatsby-plugin-robots-txt',
       options: {
-        host: 'https://helmerdavila.com',
-        sitemap: 'https://helmerdavila.com/sitemap.xml',
+        host: 'https://www.helmerdavila.com',
+        sitemap: 'https://www.helmerdavila.com/sitemap.xml',
         policy: [{ userAgent: '*', allow: '/' }],
       },
     },
     {
       resolve: `gatsby-plugin-canonical-urls`,
       options: {
-        siteUrl: `https://helmerdavila.com`,
+        siteUrl: `https://www.helmerdavila.com`,
         stripQueryString: true,
       },
     },
