@@ -58,7 +58,7 @@
   ],
   "license": "MIT",
   "scripts": {
-    "build": "gatsby build",
+    "build": "gatsby build --verbose",
     "prebuild": "npm run clean",
     "clean": "gatsby clean",
     "develop": "cross-env GATSBY_GRAPHQL_IDE=playground gatsby develop",
