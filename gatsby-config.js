@@ -7,7 +7,6 @@ module.exports = {
   },
   plugins: [
     `gatsby-plugin-image`,
-    `gatsby-plugin-netlify`,
     `gatsby-plugin-postcss`,
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-sharp`,
@@ -60,10 +59,25 @@ module.exports = {
       },
     },
     {
-      resolve: `gatsby-plugin-google-fonts`,
+      /* Include plugin */
+      resolve: 'gatsby-omni-font-loader',
+      /* Plugin options */
       options: {
-        fonts: [`Quicksand\:500,700`],
-        display: `swap`,
+        /* Font loading mode */
+        mode: 'async',
+        /* Enable font loading listener to handle FOUT */
+        enableListener: true,
+        /* Preconnect URL-s. This example is for Google Fonts */
+        preconnect: ['https://fonts.gstatic.com'],
+        /* Web fonts. File link should point to font CSS file. */
+        web: [
+          {
+            /* Exact name of the font as defied in @font-face CSS rule */
+            name: 'Quicksand',
+            /* URL to the font CSS file with @font-face definition */
+            file: 'https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700',
+          },
+        ],
       },
     },
     {
