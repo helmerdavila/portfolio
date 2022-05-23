@@ -10,6 +10,9 @@ import { MDXRenderer } from 'gatsby-plugin-mdx';
 import Code from '../components/Mdx/Code';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import useTranslations from './UseTranslations';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons';
+import { faGlobe } from '@helmerdavila/fontawesomehelmer/pro-duotone-svg-icons';
 
 export const MyH1 = ({ children, ...props }) => {
   const context = useContext(ThemeContext);
@@ -109,12 +112,12 @@ const components = {
 
 const LayoutBlogPage = ({ data: { mdx } }: { data: { mdx: IBlogPost } }): JSX.Element => {
   const context = useContext(ThemeContext);
-  const { edit_posts_on_github } = useTranslations();
+  const { author, edit_posts_on_github, written_by } = useTranslations();
   const pageBackground = {
     'bg-white shadow-sm': context.isLightTheme,
     'bg-gray-800 border-gray-800': !context.isLightTheme,
   };
-  const linkStyles = { 'text-black': context.isLightTheme, 'text-white': !context.isLightTheme };
+  const textStyle = { 'text-black': context.isLightTheme, 'text-white': !context.isLightTheme };
   const imageAlt = mdx?.frontmatter?.imageAlt ?? '';
   const imageRendered = getImage(mdx.frontmatter.image?.childImageSharp.gatsbyImageData);
   const pathFileForGithub = mdx.slug.endsWith('/') ? `${mdx.slug}index.mdx` : `${mdx.slug}.mdx`;
@@ -138,10 +141,27 @@ const LayoutBlogPage = ({ data: { mdx } }: { data: { mdx: IBlogPost } }): JSX.El
               <a
                 href={`https://github.com/helmerdavila/portfolio/edit/main/blog/${pathFileForGithub}`}
                 target="_blank"
-                className={classNames(linkStyles, 'font-bold hover:underline text-right')}
+                className={classNames(textStyle, 'font-bold hover:underline text-right')}
                 rel="noreferrer"
               >
                 {edit_posts_on_github}
+              </a>
+            </div>
+          </div>
+        </div>
+        <div className={classNames(pageBackground, 'my-7 py-7 px-12 container max-w-3xl  mx-auto xl:max-w-6xl')}>
+          <h2 className={classNames(textStyle, 'text-4xl font-bold')}>{author}</h2>
+          <div className="flex justify-between mt-6">
+            <span className={classNames(textStyle, 'text-xl')}>{written_by} Helmer Davila</span>
+            <div className={classNames(textStyle, 'text-xl')}>
+              <a href="https://www.helmerdavila.com" className="mr-2">
+                <FontAwesomeIcon icon={faGlobe} />
+              </a>
+              <a href="https://www.linkedin.com/in/helmerdavila" className="mr-2">
+                <FontAwesomeIcon icon={faLinkedin} />
+              </a>
+              <a href="https://www.github.com/helmerdavila">
+                <FontAwesomeIcon icon={faGithub} />
               </a>
             </div>
           </div>
