@@ -21,6 +21,7 @@ const Blog = ({ data }: { data: IBlogPageQuery }): JSX.Element => {
         description="My technical blog"
       />
       <div className="container max-w-3xl pb-3 mx-auto xl:max-w-6xl">
+        <h1 className="text-6xl font-bold mt-10">Blog</h1>
         {posts.map((post) => {
           const imageRendered = getImage(post.node.frontmatter.image?.childImageSharp.gatsbyImageData);
           return (

@@ -61,7 +61,7 @@ export const query = graphql`
         }
       }
     }
-    backgroundImage: file(relativePath: { eq: "mac-development.jpg" }) {
+    backgroundImage: file(relativePath: { eq: "background.jpg" }) {
       childImageSharp {
         gatsbyImageData(layout: FULL_WIDTH, placeholder: BLURRED)
       }

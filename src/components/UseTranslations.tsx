@@ -31,6 +31,7 @@ const query = graphql`
         node {
           name
           translations: childTranslationsJson {
+            author
             about_me
             about_me_description
             and_i_build
@@ -63,6 +64,7 @@ const query = graphql`
             what_i_do_mobile
             what_i_do_sysops
             who_am_i
+            written_by
           }
         }
       }

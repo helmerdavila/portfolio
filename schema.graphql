@@ -599,7 +599,6 @@ type MdxFrontmatter {
     image: File
     imageAlt: String
     imageCover: String
-    lang: String
     published: Boolean
     title: String!
 }
@@ -661,7 +660,7 @@ type Query {
     sitePage(children: NodeFilterListInput, component: StringQueryOperatorInput, componentChunkName: StringQueryOperatorInput, id: StringQueryOperatorInput, internal: InternalFilterInput, internalComponentName: StringQueryOperatorInput, matchPath: StringQueryOperatorInput, pageContext: JSONQueryOperatorInput, parent: NodeFilterInput, path: StringQueryOperatorInput, pluginCreator: SitePluginFilterInput): SitePage
     sitePlugin(browserAPIs: StringQueryOperatorInput, children: NodeFilterListInput, id: StringQueryOperatorInput, internal: InternalFilterInput, name: StringQueryOperatorInput, nodeAPIs: StringQueryOperatorInput, packageJson: JSONQueryOperatorInput, parent: NodeFilterInput, pluginFilepath: StringQueryOperatorInput, pluginOptions: JSONQueryOperatorInput, resolve: StringQueryOperatorInput, ssrAPIs: StringQueryOperatorInput, version: StringQueryOperatorInput): SitePlugin
     staticImage(absolutePath: StringQueryOperatorInput, accessTime: DateQueryOperatorInput, atime: DateQueryOperatorInput, atimeMs: FloatQueryOperatorInput, base: StringQueryOperatorInput, birthTime: DateQueryOperatorInput, birthtime: DateQueryOperatorInput, birthtimeMs: FloatQueryOperatorInput, blksize: IntQueryOperatorInput, blocks: IntQueryOperatorInput, changeTime: DateQueryOperatorInput, children: NodeFilterListInput, ctime: DateQueryOperatorInput, ctimeMs: FloatQueryOperatorInput, dev: IntQueryOperatorInput, dir: StringQueryOperatorInput, ext: StringQueryOperatorInput, extension: StringQueryOperatorInput, id: StringQueryOperatorInput, ino: IntQueryOperatorInput, internal: InternalFilterInput, mode: IntQueryOperatorInput, modifiedTime: DateQueryOperatorInput, mtime: DateQueryOperatorInput, mtimeMs: FloatQueryOperatorInput, name: StringQueryOperatorInput, nlink: IntQueryOperatorInput, parent: NodeFilterInput, prettySize: StringQueryOperatorInput, rdev: IntQueryOperatorInput, relativeDirectory: StringQueryOperatorInput, relativePath: StringQueryOperatorInput, root: StringQueryOperatorInput, size: IntQueryOperatorInput, sourceInstanceName: StringQueryOperatorInput, uid: IntQueryOperatorInput): StaticImage
-    translationsJson(about_me: StringQueryOperatorInput, about_me_description: StringQueryOperatorInput, and_i_build: StringQueryOperatorInput, battleship_description: StringQueryOperatorInput, children: NodeFilterListInput, code_samples: StringQueryOperatorInput, ctbook_description: StringQueryOperatorInput, ctbook_readsample: StringQueryOperatorInput, cv_link: StringQueryOperatorInput, download_cv: StringQueryOperatorInput, ecommerce_websites: StringQueryOperatorInput, edit_posts_on_github: StringQueryOperatorInput, hi_my_name_is: StringQueryOperatorInput, id: StringQueryOperatorInput, internal: InternalFilterInput, landing_pages: StringQueryOperatorInput, mobile_and_web_projects: StringQueryOperatorInput, mobile_applications: StringQueryOperatorInput, my_stack: StringQueryOperatorInput, my_stack_backend: StringQueryOperatorInput, my_stack_frontend: StringQueryOperatorInput, my_stack_sysops: StringQueryOperatorInput, parent: NodeFilterInput, personal_projects_httpixel: StringQueryOperatorInput, personal_projects_pills: StringQueryOperatorInput, powered_by_gatsby: StringQueryOperatorInput, projects: StringQueryOperatorInput, roomie_description: StringQueryOperatorInput, software_engineer: StringQueryOperatorInput, web_applications: StringQueryOperatorInput, what_i_do: StringQueryOperatorInput, what_i_do_backend: StringQueryOperatorInput, what_i_do_frontend: StringQueryOperatorInput, what_i_do_mobile: StringQueryOperatorInput, what_i_do_sysops: StringQueryOperatorInput, who_am_i: StringQueryOperatorInput): TranslationsJson
+    translationsJson(about_me: StringQueryOperatorInput, about_me_description: StringQueryOperatorInput, and_i_build: StringQueryOperatorInput, author: StringQueryOperatorInput, battleship_description: StringQueryOperatorInput, children: NodeFilterListInput, code_samples: StringQueryOperatorInput, ctbook_description: StringQueryOperatorInput, ctbook_readsample: StringQueryOperatorInput, cv_link: StringQueryOperatorInput, download_cv: StringQueryOperatorInput, ecommerce_websites: StringQueryOperatorInput, edit_posts_on_github: StringQueryOperatorInput, hi_my_name_is: StringQueryOperatorInput, id: StringQueryOperatorInput, internal: InternalFilterInput, landing_pages: StringQueryOperatorInput, mobile_and_web_projects: StringQueryOperatorInput, mobile_applications: StringQueryOperatorInput, my_stack: StringQueryOperatorInput, my_stack_backend: StringQueryOperatorInput, my_stack_frontend: StringQueryOperatorInput, my_stack_sysops: StringQueryOperatorInput, parent: NodeFilterInput, personal_projects_httpixel: StringQueryOperatorInput, personal_projects_pills: StringQueryOperatorInput, powered_by_gatsby: StringQueryOperatorInput, projects: StringQueryOperatorInput, roomie_description: StringQueryOperatorInput, software_engineer: StringQueryOperatorInput, web_applications: StringQueryOperatorInput, what_i_do: StringQueryOperatorInput, what_i_do_backend: StringQueryOperatorInput, what_i_do_frontend: StringQueryOperatorInput, what_i_do_mobile: StringQueryOperatorInput, what_i_do_sysops: StringQueryOperatorInput, who_am_i: StringQueryOperatorInput, written_by: StringQueryOperatorInput): TranslationsJson
 }
 
 type Site implements Node {
@@ -1063,6 +1062,7 @@ type TranslationsJson implements Node {
     about_me: String
     about_me_description: String
     and_i_build: String
+    author: String
     battleship_description: String
     children: [Node!]!
     code_samples: String
@@ -1096,6 +1096,7 @@ type TranslationsJson implements Node {
     what_i_do_mobile: String
     what_i_do_sysops: String
     who_am_i: String
+    written_by: String
 }
 
 type TranslationsJsonConnection {
@@ -1435,7 +1436,6 @@ enum FileFieldsEnum {
     childMdx___frontmatter___image___size
     childMdx___frontmatter___image___sourceInstanceName
     childMdx___frontmatter___image___uid
-    childMdx___frontmatter___lang
     childMdx___frontmatter___published
     childMdx___frontmatter___title
     childMdx___headings @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
@@ -1476,6 +1476,7 @@ enum FileFieldsEnum {
     childTranslationsJson___about_me
     childTranslationsJson___about_me_description
     childTranslationsJson___and_i_build
+    childTranslationsJson___author
     childTranslationsJson___battleship_description
     childTranslationsJson___children
     childTranslationsJson___children___children
@@ -1543,6 +1544,7 @@ enum FileFieldsEnum {
     childTranslationsJson___what_i_do_mobile
     childTranslationsJson___what_i_do_sysops
     childTranslationsJson___who_am_i
+    childTranslationsJson___written_by
     children
     childrenImageSharp
     childrenImageSharp___children
@@ -1719,7 +1721,6 @@ enum FileFieldsEnum {
     childrenMdx___frontmatter___image___size
     childrenMdx___frontmatter___image___sourceInstanceName
     childrenMdx___frontmatter___image___uid
-    childrenMdx___frontmatter___lang
     childrenMdx___frontmatter___published
     childrenMdx___frontmatter___title
     childrenMdx___headings @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
@@ -1761,6 +1762,7 @@ enum FileFieldsEnum {
     childrenTranslationsJson___about_me
     childrenTranslationsJson___about_me_description
     childrenTranslationsJson___and_i_build
+    childrenTranslationsJson___author
     childrenTranslationsJson___battleship_description
     childrenTranslationsJson___children
     childrenTranslationsJson___children___children
@@ -1828,6 +1830,7 @@ enum FileFieldsEnum {
     childrenTranslationsJson___what_i_do_mobile
     childrenTranslationsJson___what_i_do_sysops
     childrenTranslationsJson___who_am_i
+    childrenTranslationsJson___written_by
     children___children
     children___children___children
     children___children___children___children
@@ -2211,6 +2214,7 @@ enum MdxFieldsEnum {
     frontmatter___embeddedImagesLocal___childTranslationsJson___about_me
     frontmatter___embeddedImagesLocal___childTranslationsJson___about_me_description
     frontmatter___embeddedImagesLocal___childTranslationsJson___and_i_build
+    frontmatter___embeddedImagesLocal___childTranslationsJson___author
     frontmatter___embeddedImagesLocal___childTranslationsJson___battleship_description
     frontmatter___embeddedImagesLocal___childTranslationsJson___children
     frontmatter___embeddedImagesLocal___childTranslationsJson___code_samples
@@ -2242,6 +2246,7 @@ enum MdxFieldsEnum {
     frontmatter___embeddedImagesLocal___childTranslationsJson___what_i_do_mobile
     frontmatter___embeddedImagesLocal___childTranslationsJson___what_i_do_sysops
     frontmatter___embeddedImagesLocal___childTranslationsJson___who_am_i
+    frontmatter___embeddedImagesLocal___childTranslationsJson___written_by
     frontmatter___embeddedImagesLocal___children
     frontmatter___embeddedImagesLocal___childrenImageSharp
     frontmatter___embeddedImagesLocal___childrenImageSharp___children
@@ -2264,6 +2269,7 @@ enum MdxFieldsEnum {
     frontmatter___embeddedImagesLocal___childrenTranslationsJson___about_me
     frontmatter___embeddedImagesLocal___childrenTranslationsJson___about_me_description
     frontmatter___embeddedImagesLocal___childrenTranslationsJson___and_i_build
+    frontmatter___embeddedImagesLocal___childrenTranslationsJson___author
     frontmatter___embeddedImagesLocal___childrenTranslationsJson___battleship_description
     frontmatter___embeddedImagesLocal___childrenTranslationsJson___children
     frontmatter___embeddedImagesLocal___childrenTranslationsJson___code_samples
@@ -2295,6 +2301,7 @@ enum MdxFieldsEnum {
     frontmatter___embeddedImagesLocal___childrenTranslationsJson___what_i_do_mobile
     frontmatter___embeddedImagesLocal___childrenTranslationsJson___what_i_do_sysops
     frontmatter___embeddedImagesLocal___childrenTranslationsJson___who_am_i
+    frontmatter___embeddedImagesLocal___childrenTranslationsJson___written_by
     frontmatter___embeddedImagesLocal___children___children
     frontmatter___embeddedImagesLocal___children___id
     frontmatter___embeddedImagesLocal___ctime
@@ -2362,6 +2369,7 @@ enum MdxFieldsEnum {
     frontmatter___image___childTranslationsJson___about_me
     frontmatter___image___childTranslationsJson___about_me_description
     frontmatter___image___childTranslationsJson___and_i_build
+    frontmatter___image___childTranslationsJson___author
     frontmatter___image___childTranslationsJson___battleship_description
     frontmatter___image___childTranslationsJson___children
     frontmatter___image___childTranslationsJson___code_samples
@@ -2393,6 +2401,7 @@ enum MdxFieldsEnum {
     frontmatter___image___childTranslationsJson___what_i_do_mobile
     frontmatter___image___childTranslationsJson___what_i_do_sysops
     frontmatter___image___childTranslationsJson___who_am_i
+    frontmatter___image___childTranslationsJson___written_by
     frontmatter___image___children
     frontmatter___image___childrenImageSharp
     frontmatter___image___childrenImageSharp___children
@@ -2415,6 +2424,7 @@ enum MdxFieldsEnum {
     frontmatter___image___childrenTranslationsJson___about_me
     frontmatter___image___childrenTranslationsJson___about_me_description
     frontmatter___image___childrenTranslationsJson___and_i_build
+    frontmatter___image___childrenTranslationsJson___author
     frontmatter___image___childrenTranslationsJson___battleship_description
     frontmatter___image___childrenTranslationsJson___children
     frontmatter___image___childrenTranslationsJson___code_samples
@@ -2446,6 +2456,7 @@ enum MdxFieldsEnum {
     frontmatter___image___childrenTranslationsJson___what_i_do_mobile
     frontmatter___image___childrenTranslationsJson___what_i_do_sysops
     frontmatter___image___childrenTranslationsJson___who_am_i
+    frontmatter___image___childrenTranslationsJson___written_by
     frontmatter___image___children___children
     frontmatter___image___children___id
     frontmatter___image___ctime
@@ -2482,7 +2493,6 @@ enum MdxFieldsEnum {
     frontmatter___image___size
     frontmatter___image___sourceInstanceName
     frontmatter___image___uid
-    frontmatter___lang
     frontmatter___published
     frontmatter___title
     headings @deprecated(reason: "Sorting on fields that need arguments to resolve is deprecated.")
@@ -3211,6 +3221,7 @@ enum TranslationsJsonFieldsEnum {
     about_me
     about_me_description
     and_i_build
+    author
     battleship_description
     children
     children___children
@@ -3326,6 +3337,7 @@ enum TranslationsJsonFieldsEnum {
     what_i_do_mobile
     what_i_do_sysops
     who_am_i
+    written_by
 }
 
 "A date string, such as 2007-12-03, compliant with the ISO 8601 standard for representation of dates and times using the Gregorian calendar."
@@ -3617,7 +3629,6 @@ input MdxFrontmatterFilterInput {
     image: FileFilterInput
     imageAlt: StringQueryOperatorInput
     imageCover: StringQueryOperatorInput
-    lang: StringQueryOperatorInput
     published: BooleanQueryOperatorInput
     title: StringQueryOperatorInput
 }
@@ -3835,6 +3846,7 @@ input TranslationsJsonFilterInput {
     about_me: StringQueryOperatorInput
     about_me_description: StringQueryOperatorInput
     and_i_build: StringQueryOperatorInput
+    author: StringQueryOperatorInput
     battleship_description: StringQueryOperatorInput
     children: NodeFilterListInput
     code_samples: StringQueryOperatorInput
@@ -3868,6 +3880,7 @@ input TranslationsJsonFilterInput {
     what_i_do_mobile: StringQueryOperatorInput
     what_i_do_sysops: StringQueryOperatorInput
     who_am_i: StringQueryOperatorInput
+    written_by: StringQueryOperatorInput
 }
 
 input TranslationsJsonFilterListInput {
