@@ -45,7 +45,7 @@ export const MyList = ({ children, ...props }) => {
   const context = useContext(ThemeContext);
   const themeStyles = { 'text-black': context.isLightTheme, 'text-white': !context.isLightTheme };
   return (
-    <ul className={classNames(themeStyles, 'block my-5 text-xl')} {...props}>
+    <ul className={classNames(themeStyles, 'list-disc pl-6 block my-5 text-xl')} {...props}>
       {children}
     </ul>
   );
@@ -54,7 +54,7 @@ export const MyListItem = ({ children, ...props }) => {
   const context = useContext(ThemeContext);
   const themeStyles = { 'text-black': context.isLightTheme, 'text-white': !context.isLightTheme };
   return (
-    <li className={classNames(themeStyles, 'block py-2 text-xl')} {...props}>
+    <li className={classNames(themeStyles, 'py-2 text-xl')} {...props}>
       {children}
     </li>
   );

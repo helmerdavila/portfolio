@@ -1,0 +1,69 @@
+---
+title: 'How to solve Laravel Dusk 500 session error'
+description: An issue between Laravel Dusk and your browser version
+date: 2022-06-10
+published: true
+image: ../../src/images/blog/dusk.jpg
+imageAlt: Photo by joe ting on Unsplash
+---
+
+# How to solve Laravel Dusk 500 session error
+
+## 🤔 How this happened?
+
+I was trying to test a new e2e testing framework different from Cypress. Since I come from a Laravel PHP experience. Laravel Dusk seemed like an easy tool to install. I followed the page instructions to setup but then I discovered one bug that it’s commonly happening among Laravel developers.
+
+Basically, when the Laravel Dusk Browser version is different to the current OS Browser version, it’s where that issue starts throwing. Even worse, if you’re using Chromium rather than Chrome, there is a slight chance that you’ll get it often.
+
+So, here are the steps that I followed to avoid that issue.
+
+## 👟 The fastest way
+
+- If you’re working in your local environment: Install Google Chrome and use `php artisan dusk:chrome-driver <number>`
+- If you’re running into your testing / CI - CD server, you must need to install Google Chrome rather than using Chromium.
+
+## 🔨 The solution
+
+First, probably you’ll see the following error happening
+
+```bash
+Tests\Browser\ExampleTest::testBasicExample
+Facebook\WebDriver\Exception\WebDriverCurlException: Curl error thrown for http POST to /session/d0eec334e467fffaf17d330d553bdbcc/url with params
+```
+
+Then, what you should do is:
+
+- Have Google Chrome installed (latest version or at least a _not-so-old_ one)
+- Uninstall another similar browser, like Chromium.
+- Use Laravel Dusk command to install the right driver version for
+
+### ❓ But, what if I’m using a CI/CD pipeline
+
+The issue happened to me at Github Actions. So, here are the lines of code that helped me solving that issue. They’re running over Ubuntu, but I’d bet that in any other service will be similar. The steps are: Download Google Chrome binary and install it.
+
+```yaml
+- name: Download full chrome
+  run: wget -O $HOME/chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+- name: Install full chrome
+  run: sudo apt install $HOME/chrome.deb
+```
+
+### ⚙️ The Laravel Dusk command
+
+Now you installed Laravel Dusk, we can use the following command:
+
+```bash
+php artisan dusk:chrome-driver <number_of_chrome_version>
+```
+
+What does it do? Well, it will install the chrome driver for Laravel Dusk to make possible the connection and executing the browser functions between your tests and the browser. So, there are two options for that `<number>` . You can replace it if you know the Google Chrome version that you’re using, or, you can pass the `--detect` flag. And Laravel will try to detect what Chrome version are you using and install that driver. Here a couple of examples.
+
+```bash
+# If you're using Google Chrome 99, you can install directly that specific version
+php artisan dusk:chrome-driver 99
+
+# Detect Chrome version from your OS
+php artisan dusk:chrome-driver --detect
+```
+
+All of those are the steps which helped me a couple of times to solve the issue. If I find another one, I’ll update this post.
