@@ -1,6 +1,6 @@
 ---
 title: 'How to solve Laravel Dusk 500 session error'
-description: English layout. Mac, Windows and Linux
+description: An issue between Laravel Dusk and your browser version
 date: 2022-06-10
 published: true
 image: ../../src/images/blog/dusk.jpg
@@ -9,11 +9,6 @@ imageAlt: Photo by joe ting on Unsplash
 
 # How to solve Laravel Dusk 500 session error
 
-## 👟 The fastest way
-
-- If you’re working in your local environment: Install Google Chrome and use `php artisan dusk:chrome-driver <number>`
-- If you’re running into your testing / CI - CD server, you must need to install Google Chrome rather than using Chromium.
-
 ## 🤔 How this happened?
 
 I was trying to test a new e2e testing framework different from Cypress. Since I come from a Laravel PHP experience. Laravel Dusk seemed like an easy tool to install. I followed the page instructions to setup but then I discovered one bug that it’s commonly happening among Laravel developers.
@@ -21,6 +16,11 @@ I was trying to test a new e2e testing framework different from Cypress. Since I
 Basically, when the Laravel Dusk Browser version is different to the current OS Browser version, it’s where that issue starts throwing. Even worse, if you’re using Chromium rather than Chrome, there is a slight chance that you’ll get it often.
 
 So, here are the steps that I followed to avoid that issue.
+
+## 👟 The fastest way
+
+- If you’re working in your local environment: Install Google Chrome and use `php artisan dusk:chrome-driver <number>`
+- If you’re running into your testing / CI - CD server, you must need to install Google Chrome rather than using Chromium.
 
 ## 🔨 The solution
 
