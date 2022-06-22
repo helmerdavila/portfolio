@@ -1,0 +1,39 @@
+---
+title: 'Comment exécuter un VM macOS et Docker ensembles sur macOS dans Parallels'
+description: 'macOS VM et Docker dans Parallels'
+date: 2022-06-21
+published: true
+image: ../../src/images/blog/macbook.jpg
+imageAlt: Photo by Dmitry Chernyshov
+embeddedImagesLocal:
+  - macos-with-docker-1.png
+  - macos-with-docker-2.png
+---
+
+import { GatsbyImage, getImage } from 'gatsby-plugin-image';
+
+# Comment exécuter un VM macOS et Docker ensembles sur macOS dans Parallels
+
+J’ai veux exécuter macOS sur macOS. Aussi, j’avais besoin d’exécuter Docker sur le macOS virtuel. D’habitude, je suis un utilisateur de Mac, et j’aime travailler sur Parallels. Donc, comment est-ce que je peux le faire?
+
+> Ces étapes ont été exécutées dans un Mac avec un processeur Intel i9 séries 10, je ne peux pas confirmer si ça fonctionne sur M1.
+
+> La VM (_virtual machine_) devrait être éteinte avant la mise à jour de la configuration.
+
+> J’utilise Parallels en anglais. Si c’est différent pour toi, clique sur les mêmes options que tu vois sur les captures d’écran.
+
+## 🔀 Étapes
+
+<GatsbyImage image={getImage(props.localImages[0])} alt="Etape 1" />
+
+En fait, elles sont très simples. Va à `VM configuration` → `Hardware` → `Boot order` → `Advanced settings` → `Boot flags` . Et ajoute le texte suivant:
+
+```text
+kernel.nvmx.enable=1
+```
+
+<GatsbyImage image={getImage(props.localImages[1])} alt="Etape 2" />
+
+Clique sur OK.
+
+Assure-toi d'incrémenter suffisamment de RAM à ton VM de macOS, car il consomme trop.
