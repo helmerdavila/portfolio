@@ -1,0 +1,39 @@
+---
+title: 'Cómo correr una VM macOS y Docker juntos sobre macOS usando Parallels'
+description: 'macOS VM y Docker corriendo en Parallels'
+date: 2022-06-21
+published: true
+image: ../../src/images/blog/macbook.jpg
+imageAlt: Photo by Dmitry Chernyshov
+embeddedImagesLocal:
+  - macos-with-docker-1.png
+  - macos-with-docker-2.png
+---
+
+import { GatsbyImage, getImage } from 'gatsby-plugin-image';
+
+# Cómo correr una VM macOS y Docker juntos sobre macOS usando Parallels
+
+Quería ejecutar macOS dentro de macOS. Además, necesitaba correr Docker dentro de la Máquina Virtual (Virtual machine - VM en inglés, MV en español) en macOS. Mayormente, soy usuario Mac y por lo tanto, prefiero utilizar Parallels, para ejecutar mis MV’s.
+
+> Estos pasos fueron ejecutados en un procesador Intel i9 series 10, no puedo confirmar si funcionarán en un M1.
+
+> Recuerda, la MV necesita estar apagada antes de actualizar cualquier configuración.
+
+> Uso la versión en inglés de Parallels. Si no corresponde a la tuya, presiona o escoge las mismas opciones que en las capturas de pantalla
+
+## 🔀 Pasos
+
+<GatsbyImage image={getImage(props.localImages[0])} alt="Paso 1" />
+
+En realidad, son muy simples. Debes ir a `VM configuration` -> `Hardware` -> `Boot order` -> `Advanced settings` -> `Boot flags` . Agrega el siguiente texto
+
+```text
+kernel.nvmx.enable=1
+```
+
+<GatsbyImage image={getImage(props.localImages[1])} alt="Paso 2" />
+
+Después presiona OK.
+
+Asegúrate de asignar suficiente RAM para tu MV de macOS, porque consume demasiada.
