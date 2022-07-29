@@ -29,8 +29,8 @@
   "what_i_do": "Qué hago",
   "what_i_do_backend": "Programé requerimientos y restricciones para distintos negocios, usé frameworks backend con opciones de escalabilidad así como el desarrollo de nuevas características.",
   "what_i_do_frontend": "Usé lenguajes como HTML(5), CSS(3) y JavaScript para crear UI sencillas y similar al diseño brindado en proyectos diferentes. Construí sitios desde cero, con o sin frameworks.",
-  "what_i_do_mobile": "Usé librerías como React Native & Ionic para crear pantallas y una navegación similar a la nativa. He realizado lanzamientos en ambas plataformas (Play Store and App Store).",
-  "what_i_do_sysops": "Desplegué nuevas versiones con \"pipelines\", construyendo entornos de pruebas y de producción. Usé herramientas para hacer un log correcto, comprobando cuando y donde el código falló.",
+  "what_i_do_mobile": "Usé librerías como React Native & Ionic para crear pantallas y una navegación similar a la nativa. He realizado lanzamientos en ambas plataformas (Play Store y App Store).",
+  "what_i_do_sysops": "Desplegué nuevas versiones con \"pipelines\", construyendo entornos de pruebas y de producción. Usé herramientas para hacer un log correcto, comprobando cuándo y dónde el código falló.",
   "who_am_i": "Quién soy",
   "written_by": "Escrito por"
 }
