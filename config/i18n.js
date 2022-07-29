@@ -8,8 +8,6 @@ module.exports = {
     dateFormat: `DD/MM/YYYY`,
     siteLanguage: `en`,
     ogLanguage: `en_US`,
-    defaultTitle: `Using i18n with Gatsby`,
-    defaultDescription: `Gatsby example site using MDX and dependency-free i18n`,
   },
   es: {
     default: false,
@@ -18,8 +16,6 @@ module.exports = {
     dateFormat: `DD/MM/YYYY`,
     siteLanguage: `es`,
     ogLanguage: `es-ES`,
-    defaultTitle: `i18n mit Gatsby nutzen`,
-    defaultDescription: `Gatsby Beispielseite, die MDX und i18n (frei von dependencies) nutzt`,
   },
   fr: {
     default: false,
@@ -28,7 +24,13 @@ module.exports = {
     dateFormat: `DD/MM/YYYY`,
     siteLanguage: `fr`,
     ogLanguage: `fr-FR`,
-    defaultTitle: `i18n mit Gatsby nutzen`,
-    defaultDescription: `Gatsby Beispielseite, die MDX und i18n (frei von dependencies) nutzt`,
+  },
+  pt: {
+    default: false,
+    path: `pt`,
+    locale: `pt-BR`,
+    dateFormat: `DD/MM/YYYY`,
+    siteLanguage: `pt`,
+    ogLanguage: `pt-BR`,
   },
 };
