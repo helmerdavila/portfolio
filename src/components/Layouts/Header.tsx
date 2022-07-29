@@ -58,6 +58,11 @@ export const HeaderComponent = (props: Props) => {
               FR
             </Link>
           </li>
+          <li key="pt">
+            <Link to="/pt" className={stylesLink}>
+              PT
+            </Link>
+          </li>
         </ul>
         <DarkModeToggle size={50} onChange={context.toggleTheme} checked={!context.isLightTheme} />
         <a

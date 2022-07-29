@@ -51,6 +51,11 @@ const HeaderBlog = (): JSX.Element => {
               FR
             </Link>
           </li>
+          <li key="pt">
+            <Link to="/pt/blog" className={stylesLink}>
+              PT
+            </Link>
+          </li>
         </ul>
         <DarkModeToggle size={50} onChange={context.toggleTheme} checked={!context.isLightTheme} />
       </div>

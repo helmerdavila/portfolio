@@ -1,0 +1,43 @@
+---
+title: '[Adonis JS] Usando a função de Laravel mix'
+description: Uma função frequentemente usada em projetos de Laravel
+date: 2019-04-04
+published: true
+image: ../../src/images/blog/adonis.jpeg
+imageAlt: Photo by Jack Delulio on Unsplash
+---
+
+# [Adonis JS] Usando a função de Laravel Mix
+
+Eu venho de um fundo de Laravel, então, quando comecei a desenvolver um projeto em Adonis JS, estava perdendo a ferramenta de frontend mais útil: **Laravel Mix**
+
+O que eu perdi foi a função `mix`, com esta função, você pode usar uma versão hash de seus recursos JS ou CSS, porque, você sabe, se você está sempre servindo recursos do servidor com o mesmo nome de arquivo, o navegador servirá à versão antiga que Ele armazenou, isso pode aumentar a velocidade do seu site, mas você precisará sempre servir a última versão. Para evitar isso, os desenvolvedores podem adicionar um hash ou criar uma função do zero, mas se o Laravel tem a função, por que não usar a mesma lógica em Adonis JS?
+
+O objetivo é criar uma função global para as visualizações. Podemos adicioná-lo em `start/hooks.js.`
+
+```js
+const { hooks } = require('@adonisjs/ignitor');
+const manifest = require('../public/mix-manifest');
+
+hooks.after.providersBooted(() => {
+  const View = use('View');
+
+  // Creating the mix function in edge views
+  View.global('mix', function (asset) {
+    if (!manifest[`/${asset}`]) {
+      return '404-asset-not-found';
+    }
+
+    return manifest[`/${asset}`];
+  });
+});
+```
+
+Em seguida, reinicie o servidor Adonisjs e você pode usá-lo em suas visualizações de duas maneiras diferentes, usando funções Adonisjs ou HTML.
+
+```html
+{{ css(mix('css/your-styles.css')) }}
+
+<!-- ou -->
+<link href="{{ mix('css/your-styles.css') }}" rel="stylesheet">
+```

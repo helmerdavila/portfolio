@@ -3,7 +3,7 @@ title: '[Adonis JS] Using Laravel Mix function'
 description: A function often used in many Laravel projects
 date: 2019-04-04
 published: true
-image: ../../src/images/blog/adonis.png
+image: ../../src/images/blog/adonis.jpeg
 imageAlt: Photo by Jack Delulio on Unsplash
 ---
 
@@ -36,9 +36,9 @@ hooks.after.providersBooted(() => {
 
 Then, restart your AdonisJS server and you can use it in your views in two different ways, using AdonisJS functions or Html.
 
-```jsx
+```html
 {{ css(mix('css/your-styles.css')) }}
 
-# Or
+<!-- or -->
 <link href="{{ mix('css/your-styles.css') }}" rel="stylesheet">
 ```
