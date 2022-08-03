@@ -1,0 +1,112 @@
+---
+title: 'Gatsby: colorizar código usando react-prism-renderer'
+description: Para diferentes lenguajes de programación
+date: 2022-08-03
+published: true
+image: ../../src/images/blog/code-block-green.jpg
+---
+
+# Gatsby - colorizar código usando react-prism-renderer
+
+Escribo tutoriales de programación para distintos lenguajes.
+
+Como yo uso Gatsby, para tener código colorido utilizo `react-prism-renderer`. Es un buen plugin para hacerlo. Por defecto, viene con una gran variedad de lenguajes de programación activados. Este es el componente que uso para mostrar mis snippets de código en mi blog.
+
+Pero cuando estaba escribiendo unos bloques de código, vi que algunos lenguajes no estaban colorizados por defecto. ¿Qué estaba pasando?
+
+## 🧱 Mi componente para colorear el código
+
+Tras el telón. React prism renderer utiliza PrismJS, y podemos utilizarlo para nuestro beneficio. Necesitamos importar el lenguaje que necesitemos para agregarle soporte.
+
+Aquí está el código. Con este _snippet,_ podemos crear un componente React en Gatsby. Pon atención a las líneas con `require`.
+
+```tsx
+import React, { useContext } from 'react';
+import Highlight, { defaultProps, Language } from 'prism-react-renderer';
+// Cargando los temas para Prism
+import nightOwlNight from 'prism-react-renderer/themes/nightOwlLight';
+import nightOwl from 'prism-react-renderer/themes/nightOwl';
+import Prism from 'prism-react-renderer/prism';
+// Un archivo personal con temas claro / oscuro para mi blog, puedes remover esto y sus referencias
+import { ThemeContext } from '../Layout';
+
+// Acá importamos los lenguajes que necesitamos
+require('prismjs/components/prism-php');
+require('prismjs/components/prism-ruby');
+require('prismjs/components/prism-yaml');
+require('prismjs/components/prism-docker');
+require('prismjs/components/prism-bash');
+require('prismjs/components/prism-ignore');
+
+interface Props {
+  children?: string;
+  className: string;
+}
+
+const Code = ({ children, className }: Props): JSX.Element => {
+  const context = useContext(ThemeContext);
+  const language = (className.replace(/language-/, '') || '') as Language;
+
+  return (
+    <Highlight
+      {...defaultProps}
+      theme={context.isLightTheme ? nightOwlNight : nightOwl}
+      code={children}
+      language={language}
+    >
+      {({ className, style, tokens, getLineProps, getTokenProps }) => (
+        <pre className={`${className} overflow-x-auto`} data-testid="code-highlight" style={{ ...style }}>
+          {tokens.map((line, index) => {
+            const lineProps = getLineProps({ line, key: index });
+            return (
+              <div key={index} {...lineProps}>
+                {line.map((token, key) => (
+                  <span key={key} {...getTokenProps({ token, key })} />
+                ))}
+              </div>
+            );
+          })}
+        </pre>
+      )}
+    </Highlight>
+  );
+};
+
+export default Code;
+```
+
+Entonces, si estás usando MDX o algo similar para crear tus páginas. Puedes usar el componente de la siguiente manera.
+
+```tsx
+import { MDXProvider } from '@mdx-js/react';
+import { MDXRenderer } from 'gatsby-plugin-mdx';
+import Code from '../components/Mdx/Code'; // El componente que creamos antes
+
+const MyCode = (props: { children: string; className: string }) => <Code {...props} />;
+
+<MDXProvider components={{ code: MyCode }}>
+  <MDXRenderer>{mdx.body}</MDXRenderer>
+</MDXProvider>;
+```
+
+Ahora todas tus etiquetas HTML `<code>` tendrán el código con color.
+
+## 🎙 Explicando el código
+
+El componente `<Highlight/>` es usado por React Prism Renderer para añadir color a la síntaxis del código, como puedes ver en el ejemplo arriba.
+
+Algunos lenguajes tendrán que ser agregados explícitamente. Esto está hecho a propósito para cargar sólo lo necesario. Recomiendo visitar tu carpeta `/node_modules/prismjs/components/` para más información.
+
+```tsx
+// Aquí es donde importamos los lenguajes que necesitamos
+require('prismjs/components/prism-php');
+require('prismjs/components/prism-ruby');
+require('prismjs/components/prism-yaml');
+require('prismjs/components/prism-docker');
+require('prismjs/components/prism-bash');
+require('prismjs/components/prism-ignore');
+```
+
+> Enlace original de la respuesta donde se agregan más lenguajes: [_aquí_](https://github.com/FormidableLabs/prism-react-renderer/issues/53) . Este tutorial es una extensión a esa respuesta.
+
+> El código de este ejemplo puede estar desactualizado cuando lo leas. Siempre echa un vistazo a la última versión [_aquí_](https://github.com/helmerdavila/portfolio/blob/main/src/components/Mdx/Code.tsx)

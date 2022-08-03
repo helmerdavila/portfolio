@@ -1,0 +1,109 @@
+---
+title: 'Gatsby: Colorier la syntaxe avec react-prism-renderer'
+description: Pour les différents langages de programmation
+date: 2022-08-03
+published: true
+image: ../../src/images/blog/code-block-green.jpg
+---
+
+J’écris des tutoriels pour des langages de programmation différentes.
+
+Comme j’utilise Gatsby, pour montrer de code coloré, on peut employer `react-prism-renderer` . C’est un bon plugiciel pour le faire. Par défaut, il vient avec une grande variété de _coding languages_ actifs. C’est mon composant pour enseigner mes \*snippets **\***de code dans mon blogue.
+
+Mais quand j’écrivais des blocs de code, certains n’étaient pas colorés. Qu’est-ce qui est passé?
+
+## 🧱 Mon composant pour colorer le code
+
+React prism renderer utilise PrismJS, et on peut le profiter. On doit importer le langage qu’on a besoin de colorer.
+
+Ceci le code. Avec ce snippet, on peut créer un composant React dans Gatsby. Faire attention des lignes avec `require`.
+
+```tsx
+import React, { useContext } from 'react';
+import Highlight, { defaultProps, Language } from 'prism-react-renderer';
+// Ajouter des thèmes pour Prism
+import nightOwlNight from 'prism-react-renderer/themes/nightOwlLight';
+import nightOwl from 'prism-react-renderer/themes/nightOwl';
+import Prism from 'prism-react-renderer/prism';
+// Un fichier personnel pour valider le mode clair ou obscur dans mon blogue, tu peux le supprimer
+import { ThemeContext } from '../Layout';
+
+// On va importer les langages dont on a besoin
+require('prismjs/components/prism-php');
+require('prismjs/components/prism-ruby');
+require('prismjs/components/prism-yaml');
+require('prismjs/components/prism-docker');
+require('prismjs/components/prism-bash');
+require('prismjs/components/prism-ignore');
+
+interface Props {
+  children?: string;
+  className: string;
+}
+
+const Code = ({ children, className }: Props): JSX.Element => {
+  const context = useContext(ThemeContext);
+  const language = (className.replace(/language-/, '') || '') as Language;
+
+  return (
+    <Highlight
+      {...defaultProps}
+      theme={context.isLightTheme ? nightOwlNight : nightOwl}
+      code={children}
+      language={language}
+    >
+      {({ className, style, tokens, getLineProps, getTokenProps }) => (
+        <pre className={`${className} overflow-x-auto`} data-testid="code-highlight" style={{ ...style }}>
+          {tokens.map((line, index) => {
+            const lineProps = getLineProps({ line, key: index });
+            return (
+              <div key={index} {...lineProps}>
+                {line.map((token, key) => (
+                  <span key={key} {...getTokenProps({ token, key })} />
+                ))}
+              </div>
+            );
+          })}
+        </pre>
+      )}
+    </Highlight>
+  );
+};
+
+export default Code;
+```
+
+Donc, si tu utilises MDX ou similaires pour créer tes pages. Tu peux écrire le composant comme suit.
+
+```tsx
+import { MDXProvider } from '@mdx-js/react';
+import { MDXRenderer } from 'gatsby-plugin-mdx';
+import Code from '../components/Mdx/Code'; // Le composant qu'on a crée
+
+const MyCode = (props: { children: string; className: string }) => <Code {...props} />;
+
+<MDXProvider components={{ code: MyCode }}>
+  <MDXRenderer>{mdx.body}</MDXRenderer>
+</MDXProvider>;
+```
+
+Et puis, toutes tes balises HTML `<code>` auront son code coloré
+
+## 🎙 Qu’est-ce que ce code fait?
+
+Le composant `<Highlight/>` est utilisé par React Prism Renderer pour ajouter de la couleur à la syntaxe du code.
+
+Certains langages devront être ajoutées explicitement. Je recommande de vérifier le dossier `/node_modules/prismjs/components/` pour plus d’information.
+
+```tsx
+require('prismjs/components/prism-php');
+require('prismjs/components/prism-ruby');
+require('prismjs/components/prism-yaml');
+require('prismjs/components/prism-docker');
+require('prismjs/components/prism-bash');
+require('prismjs/components/prism-ignore');
+```
+
+> Le lien originel dont j’ai pris la solution: [_ici_](https://github.com/FormidableLabs/prism-react-renderer/issues/53) . Ce tutoriel élargit cette réponse.
+
+> Le code d’exemple pour être obsolète dans le futur. Jette un coup d’œil à mon composant [_ici_](https://github.com/helmerdavila/portfolio/blob/main/src/components/Mdx/Code.tsx).
