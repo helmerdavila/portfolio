@@ -1,0 +1,74 @@
+---
+title: 'Laravel and Mockery: Testing chained methods'
+description: Using the power of Mockery
+date: 2022-08-10
+published: true
+image: ../../src/images/blog/chains.jpg
+---
+
+# Laravel and Mockery: Testing chained methods
+
+## 🤔 How this happened
+
+I was trying to play with PHPUnit and Laravel. And I had this need of test Laravel Facades. Those were using a chained method.
+
+```php
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+
+class ChainController extends Controller
+{
+    public function index(Request $request)
+    {
+        Storage::disk('local')->put('/images/content', $request->file('demo'));
+
+        return response()->json(['success' => true]);
+    }
+}
+```
+
+So, after this, my tests were failing, because it says that it can execute `put` on `null` . That meant for some reason, `disk` was returning `null`, which I know it wasn’t true.
+
+## 🔨 Solution
+
+After some researching. I found in the Mockery documentation (and this is what Laravel is using), that you need to specify to Mockery sometimes what’s returning your mocked function. In the next line if I don’t specify the return, it will be `null` by default. And will cause next assertions to fail.
+
+```php
+Storage::disk('s3')->delete('/images/content/demo.png');
+```
+
+The solution to this comes from a simple method from Mockery `andReturnSelf` . Notice that this depend in your class implementation, but mayority of chained methods would return the class by itself. Otherwise, you can use `andReturn` and write the object, string, array or data structure that the Mock will return.
+
+For this specific case, I needed `andReturnSelf` . Let’s see how the final result works. To test it, my `ChainController` is connected to the `POST /chain` method.
+
+```php
+<?php
+
+namespace Tests\Feature;
+
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
+use Tests\TestCase;
+
+class ChainControllerTest extends TestCase
+{
+    public function test_using_facades()
+    {
+        Storage::fake('local');
+
+        Storage::shouldReceive('disk')->once()->with('local')->andReturnSelf();
+        Storage::shouldReceive('put')->once()->withSomeOfArgs('/images/content');
+
+        $response = $this->post('/chain', ['demo' => UploadedFile::fake()->image('hello.jpeg')]);
+        $response->assertStatus(200);
+    }
+}
+```
+
+## 🔗 Links
+
+You can see a working example [here](https://github.com/helmerdavila/blog-tutorials-laravel/blob/1.0.1/tests/Feature/ChainControllerTest.php)
