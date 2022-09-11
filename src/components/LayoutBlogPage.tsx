@@ -14,61 +14,37 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import { faGlobe } from '@helmerdavila/fontawesomehelmer/pro-duotone-svg-icons';
 
-export const MyH1 = ({ children, ...props }) => {
+export const MyH1 = (props) => {
   const context = useContext(ThemeContext);
   const themeStyles = { 'text-black': context.isLightTheme, 'text-white': !context.isLightTheme };
-  return (
-    <h1 className={classNames(themeStyles, 'mb-6 text-5xl font-bold leading-normal')} {...props}>
-      {children}
-    </h1>
-  );
+  return <h1 className={classNames(themeStyles, 'mb-6 text-5xl font-bold leading-normal')} {...props} />;
 };
-export const MyH2 = ({ children, ...props }) => {
+export const MyH2 = (props) => {
   const context = useContext(ThemeContext);
   const themeStyles = { 'text-black': context.isLightTheme, 'text-white': !context.isLightTheme };
-  return (
-    <h2 className={classNames(themeStyles, 'mt-7 mb-5 text-4xl font-bold')} {...props}>
-      {children}
-    </h2>
-  );
+  return <h2 className={classNames(themeStyles, 'mt-7 mb-5 text-4xl font-bold')} {...props} />;
 };
-export const MyH3 = ({ children, ...props }) => {
+export const MyH3 = (props) => {
   const context = useContext(ThemeContext);
   const themeStyles = { 'text-black': context.isLightTheme, 'text-white': !context.isLightTheme };
-  return (
-    <h3 className={classNames(themeStyles, 'mt-3 mb-2 text-3xl font-bold')} {...props}>
-      {children}
-    </h3>
-  );
+  return <h3 className={classNames(themeStyles, 'mt-3 mb-2 text-3xl font-bold')} {...props} />;
 };
-export const MyList = ({ children, ...props }) => {
+export const MyList = (props) => {
   const context = useContext(ThemeContext);
   const themeStyles = { 'text-black': context.isLightTheme, 'text-white': !context.isLightTheme };
-  return (
-    <ul className={classNames(themeStyles, 'list-disc pl-6 block my-5 text-xl')} {...props}>
-      {children}
-    </ul>
-  );
+  return <ul className={classNames(themeStyles, 'list-disc pl-6 block my-5 text-xl')} {...props} />;
 };
-export const MyListItem = ({ children, ...props }) => {
+export const MyListItem = (props) => {
   const context = useContext(ThemeContext);
   const themeStyles = { 'text-black': context.isLightTheme, 'text-white': !context.isLightTheme };
-  return (
-    <li className={classNames(themeStyles, 'py-2 text-xl')} {...props}>
-      {children}
-    </li>
-  );
+  return <li className={classNames(themeStyles, 'py-2 text-xl')} {...props} />;
 };
-export const MyParagraph = ({ children, ...props }) => {
+export const MyParagraph = (props) => {
   const context = useContext(ThemeContext);
   const themeStyles = { 'text-black': context.isLightTheme, 'text-white': !context.isLightTheme };
-  return (
-    <p className={classNames(themeStyles, 'my-6 text-xl')} {...props}>
-      {children}
-    </p>
-  );
+  return <p className={classNames(themeStyles, 'my-6 text-xl')} {...props} />;
 };
-export const MyBlockquote = ({ children, ...props }) => {
+export const MyBlockquote = (props) => {
   const context = useContext(ThemeContext);
   return (
     <blockquote
@@ -77,25 +53,19 @@ export const MyBlockquote = ({ children, ...props }) => {
         'border-b-4 border-t-4 text-center py-4 my-8',
       )}
       {...props}
-    >
-      {children}
-    </blockquote>
+    />
   );
 };
-export const MyInlineCode = ({ children, ...props }) => {
+export const MyInlineCode = (props) => {
   const context = useContext(ThemeContext);
   const themeStyles = {
     'text-blue-600 bg-gray-100': context.isLightTheme,
     'text-gray-300 bg-blue-800': !context.isLightTheme,
   };
-  return (
-    <code className={classNames(themeStyles, 'rounded text-base px-1')} {...props}>
-      {children}
-    </code>
-  );
+  return <code className={classNames(themeStyles, 'rounded text-base px-1')} {...props} />;
 };
 export const MyCode = (props: { children: string; className: string }) => <Code {...props} />;
-export const MyImage = (props: unknown) => <img className="shadow-lg rounded" {...props} />;
+export const MyImage = (props: Record<string, unknown>) => <img className="shadow-lg rounded" {...props} />;
 
 const components = {
   h1: MyH1,
@@ -110,7 +80,7 @@ const components = {
   img: MyImage,
 };
 
-const LayoutBlogPage = ({ data: { mdx } }: { data: { mdx: IBlogPost } }): JSX.Element => {
+const LayoutBlogPage = ({ data: { mdx } }: { data: { mdx: IBlogPost }; children: unknown }): JSX.Element => {
   const context = useContext(ThemeContext);
   const { author, edit_posts_on_github, written_by } = useTranslations();
   const pageBackground = {
@@ -120,7 +90,9 @@ const LayoutBlogPage = ({ data: { mdx } }: { data: { mdx: IBlogPost } }): JSX.El
   const textStyle = { 'text-black': context.isLightTheme, 'text-white': !context.isLightTheme };
   const imageAlt = mdx?.frontmatter?.imageAlt ?? '';
   const imageRendered = getImage(mdx.frontmatter.image?.childImageSharp.gatsbyImageData);
-  const pathFileForGithub = mdx.slug.endsWith('/') ? `${mdx.slug}index.mdx` : `${mdx.slug}.mdx`;
+  const pathFileForGithub = mdx.fields.isDefault
+    ? `${mdx.fields.slug}/index.mdx`
+    : `${mdx.fields.slug}/index.${mdx.fields.locale}.mdx`;
 
   return (
     <LayoutBlog>
@@ -176,7 +148,15 @@ export default LayoutBlogPage;
 export const query = graphql`
   query Post($locale: String!, $title: String!) {
     mdx(frontmatter: { title: { eq: $title } }, fields: { locale: { eq: $locale } }) {
+      fields {
+        slug
+        locale
+        isDefault
+      }
       frontmatter {
+        imageAlt
+        title
+        description
         image {
           childImageSharp {
             gatsbyImageData(layout: FULL_WIDTH, placeholder: TRACED_SVG)
@@ -187,11 +167,7 @@ export const query = graphql`
             gatsbyImageData(layout: FULL_WIDTH, placeholder: TRACED_SVG)
           }
         }
-        imageAlt
-        title
-        description
       }
-      slug
       excerpt(pruneLength: 100)
       body
     }
