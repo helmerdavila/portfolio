@@ -43,10 +43,7 @@ export interface IBlogPageQuery {
 }
 
 export interface IQueryAllMdxFiles {
-  allFile: {
-    nodes: {
-      relativeDirectory: string;
-      childMdx: Partial<IBlogPost>;
-    }[];
+  allMdx: {
+    nodes: IBlogPost[];
   };
 }

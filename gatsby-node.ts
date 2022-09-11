@@ -77,52 +77,50 @@ export const createPages: GatsbyNode['createPages'] = async ({ graphql, actions 
   const { createPage } = actions;
 
   // Adding sort here to generate the HTMl pages in descending order by date
-  const result = await graphql<IQueryAllMdxFiles>(`
-    {
-      allFile(
-        filter: { sourceInstanceName: { eq: "blog" }, extension: { eq: "mdx" } }
-        sort: { fields: [childMdx___frontmatter___date], order: DESC }
-      ) {
-        nodes {
-          relativeDirectory
-          childMdx {
+  const result = await graphql<IQueryAllMdxFiles>(
+    `
+      {
+        allMdx(sort: { fields: [frontmatter___date], order: DESC }) {
+          nodes {
             frontmatter {
               title
               date
             }
             fields {
               locale
+              slug
               isDefault
+            }
+            parent {
+              ... on File {
+                relativeDirectory
+              }
             }
           }
         }
       }
-    }
-  `);
+    `,
+  );
 
   if (result.errors) {
     console.error(result.errors);
     return;
   }
 
-  const postList = result.data?.allFile?.nodes ?? [];
+  const postList = result.data?.allMdx?.nodes ?? [];
 
   const postTemplate = path.resolve(`./src/components/LayoutBlogPage.tsx`);
 
   postList.forEach((post) => {
     // All files for a blogpost are stored in a folder
     // relativeDirectory is the name of the folder
-    const slug = post.relativeDirectory;
+    const slug = post.parent.relativeDirectory;
 
-    if (!post.childMdx) {
-      return;
-    }
-
-    const title = post.childMdx.frontmatter?.title;
+    const title = post.frontmatter?.title;
 
     // Use the fields created in exports.onCreateNode
-    const locale = post.childMdx.fields.locale;
-    const isDefault = post.childMdx.fields.isDefault;
+    const locale = post.fields.locale;
+    const isDefault = post.fields.isDefault;
 
     createPage({
       path: localizedSlug({ isDefault, locale, slug }),
