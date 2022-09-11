@@ -8,7 +8,7 @@ import BlogPreviewHomeMock, { POSTS } from './BlogPreview.mock';
 afterEach(cleanup);
 
 it('renders PostCard with image', () => {
-  const post: IBlogPost = BlogPreviewHomeMock.posts.edges[POSTS.POST_WITH_IMAGE].node as IBlogPost;
+  const post: IBlogPost = BlogPreviewHomeMock.allMdx.nodes[POSTS.POST_WITH_IMAGE] as IBlogPost;
   const defaultImage = BlogPreviewHomeMock.homePostImage as IGatsbyFileImage;
 
   const { queryByAltText, queryByRole } = customRender(
@@ -25,7 +25,7 @@ it('renders PostCard with image', () => {
 });
 
 it('renders PostCard with no image, uses default', () => {
-  const post: IBlogPost = BlogPreviewHomeMock.posts.edges[POSTS.POST_WITHOUT_IMAGE].node as IBlogPost;
+  const post: IBlogPost = BlogPreviewHomeMock.allMdx.nodes[POSTS.POST_WITHOUT_IMAGE] as IBlogPost;
   const defaultImage = BlogPreviewHomeMock.homePostImage as IGatsbyFileImage;
 
   const { queryByAltText, queryByRole } = customRender(
@@ -49,7 +49,7 @@ it('renders BlogPreviewHome', () => {
 it('renders BlogPreviewHome with no posts', () => {
   const defaultImage = BlogPreviewHomeMock.homePostImage as IGatsbyFileImage;
   const { queryByRole } = customRender(
-    <BlogPreviewHome data={{ posts: { edges: [] }, backgroundImage: null, homePostImage: defaultImage }} />,
+    <BlogPreviewHome data={{ allMdx: { nodes: [] }, backgroundImage: null, homePostImage: defaultImage }} />,
   );
 
   const link = queryByRole('link');
