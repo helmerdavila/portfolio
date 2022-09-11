@@ -35,8 +35,8 @@ export interface IBlogPost {
   body: string;
 }
 export interface IBlogPageQuery {
-  posts: {
-    edges: { node: IBlogPost }[];
+  allMdx: {
+    nodes: IBlogPost[];
   };
   backgroundImage: IGatsbyFileImage;
   homePostImage: IGatsbyFileImage;

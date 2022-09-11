@@ -8,7 +8,7 @@ import { GatsbyImage, getImage, IGatsbyImageData } from 'gatsby-plugin-image';
 const BlogPreviewHome = (props: { data: IBlogPageQuery }): JSX.Element => {
   const context = useContext(ThemeContext);
   const textColor = { 'text-white': !context.isLightTheme, 'text-black': context.isLightTheme };
-  const posts = props.data?.posts?.edges;
+  const posts = props.data?.allMdx?.nodes;
   const postDefaultImage = props.data.homePostImage.childImageSharp.gatsbyImageData;
 
   return posts.length ? (
@@ -19,7 +19,7 @@ const BlogPreviewHome = (props: { data: IBlogPageQuery }): JSX.Element => {
         <h2 className={classNames('text-5xl font-semibold text-center mb-4', textColor)}>Blog</h2>
         <div className="flex flex-col sm:flex-row">
           {posts?.map((post) => (
-            <PostCard key={post.node.parent.relativeDirectory} post={post.node} postDefaultImage={postDefaultImage} />
+            <PostCard key={post.parent.relativeDirectory} post={post} postDefaultImage={postDefaultImage} />
           ))}
         </div>
       </div>
