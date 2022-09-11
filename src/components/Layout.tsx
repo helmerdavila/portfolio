@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
+import { ILayout } from '../interfaces';
 
 const LocaleContext = React.createContext(null);
 const ThemeContext = React.createContext<{ isLightTheme: boolean; toggleTheme: () => void }>({
   isLightTheme: true,
-  toggleTheme: null,
+  toggleTheme: () => null,
 });
 
-const ThemeContextProvider = ({ children }) => {
-  const windowGlobal = typeof window !== 'undefined' && window;
+const ThemeContextProvider = ({ children }: { children: unknown }): JSX.Element => {
+  const windowGlobal = typeof window !== 'undefined' && (window as WindowLocalStorage);
+  if (!windowGlobal) {
+    return <div />;
+  }
   let themeValueInMemory =
     (windowGlobal?.localStorage?.getItem('helmer_portfolio_is_light') as unknown as boolean) ?? true;
   themeValueInMemory = typeof themeValueInMemory === 'string' ? JSON.parse(themeValueInMemory) : themeValueInMemory;
@@ -25,13 +29,7 @@ const ThemeContextProvider = ({ children }) => {
 // This e.g. enables the LocalizedLink to function correctly
 // As this component wraps every page (due to the wrapPageElement API) we can be sure to have
 // the locale available everywhere!
-const Layout = ({
-  children,
-  pageContext: { locale },
-}: {
-  children: unknown;
-  pageContext?: { locale: string };
-}): JSX.Element => (
+const Layout = ({ children, pageContext: { locale } }: ILayout): JSX.Element => (
   <LocaleContext.Provider value={{ locale }}>
     <ThemeContextProvider>{children}</ThemeContextProvider>
   </LocaleContext.Provider>
