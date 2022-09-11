@@ -1,0 +1,76 @@
+---
+title: 'Laravel Facades y Mockery: Creando tests de métodos encadenados'
+description: Usando el poder de Mockery
+date: 2022-09-11
+published: true
+image: ../../src/images/blog/chains.jpg
+---
+
+# Laravel Facades y Mockery: Creando tests de métodos encadenados
+
+## 🤔 ¿Cómo sucedió?
+
+Estaba intentando probar Laravel con PHPUnit. Y necesitaba probar los Facades de Laravel, y sobretodo, era un método encadenado.
+
+```php
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+
+class ChainController extends Controller
+{
+    public function index(Request $request)
+    {
+        Storage::disk('local')->put('/imagenes/contenido', $request->file('demo'));
+
+        return response()->json(['exito' => true]);
+    }
+}
+```
+
+Después de esto, mis tests estaban fallando, debido a que no podía ejecutar `put` en `null`. Eso significaba, por algún motivo, que `disk` estaba retornando `null`, lo cual no era verdad.
+
+## 🔨 Solución
+
+Después de una búsqueda. Encontré en la documentación de Mockery, usado por Laravel para hacer los mocks. En la siguiente línea si no especificas el retorno, devolverá `null` por defecto. Y causará que los _assertions_ fallen.
+
+```php
+<?php
+
+Storage::disk('s3')->delete('/imagenes/contenido/demo.png');
+```
+
+La solución para esto viene desde un simple método de Mockery `andReturnSelf` . Nota que esto depende de la implementación de la clase, pero la mayoría de métodos encadenados retornarán la clase donde fueron implementados. Del mismo modo, puedes usar `andReturn` y escribir el objeto, cadena, arreglo o estructura de datos que el Mock retornará.
+
+Para este caso específico, necesitaba `andReturnSelf` . Veamos como el resultado final funciona. Para probarlo, mi `ChainController` está conectado a la ruta `POST /chain` .
+
+```php
+<?php
+
+namespace Tests\Feature;
+
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
+use Tests\TestCase;
+
+class ChainControllerTest extends TestCase
+{
+    public function test_using_facades()
+    {
+        Storage::fake('local');
+
+        Storage::shouldReceive('disk')->once()->with('local')->andReturnSelf();
+        Storage::shouldReceive('put')->once()->withSomeOfArgs('/imagenes/contenido');
+
+        $response = $this->post('/chain', ['demo' => UploadedFile::fake()->image('hello.jpeg')]);
+        $response->assertStatus(200);
+    }
+}
+```
+
+## 🔗 Enlaces
+
+Puedes ver un ejemplo funcionando, [click aquí](https://github.com/helmerdavila/blog-tutorials-laravel/blob/1.0.1/tests/Feature/ChainControllerTest.php).

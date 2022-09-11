@@ -1,16 +1,16 @@
 ---
-title: 'Laravel and Mockery: Testing chained methods'
+title: 'Laravel Facades and Mockery, testing chained methods'
 description: Using the power of Mockery
-date: 2022-08-10
+date: 2022-09-11
 published: true
 image: ../../src/images/blog/chains.jpg
 ---
 
-# Laravel and Mockery: Testing chained methods
+# Laravel Facades and Mockery, testing chained methods
 
 ## 🤔 How this happened
 
-I was trying to play with PHPUnit and Laravel. And I had this need of test Laravel Facades. Those were using a chained method.
+I was trying to play with PHPUnit and Laravel. And I had this need to test Laravel Facades. Those were using a chained method.
 
 ```php
 <?php
@@ -31,19 +31,21 @@ class ChainController extends Controller
 }
 ```
 
-So, after this, my tests were failing, because it says that it can execute `put` on `null` . That meant for some reason, `disk` was returning `null`, which I know it wasn’t true.
+So, after this, my tests failed because it says that it can execute put on null . That meant, for some reason, the disk method was returning null, which I know wasn’t true.
 
 ## 🔨 Solution
 
-After some researching. I found in the Mockery documentation (and this is what Laravel is using), that you need to specify to Mockery sometimes what’s returning your mocked function. In the next line if I don’t specify the return, it will be `null` by default. And will cause next assertions to fail.
+After some research. I found in the Mockery documentation (wich is what Laravel is using), that you need to specify to Mockery what’s returning your mocked function. In the following line, if I don’t set the return, it will be null by default. And will cause next assertions to fail.
 
 ```php
+<?php
+
 Storage::disk('s3')->delete('/images/content/demo.png');
 ```
 
-The solution to this comes from a simple method from Mockery `andReturnSelf` . Notice that this depend in your class implementation, but mayority of chained methods would return the class by itself. Otherwise, you can use `andReturn` and write the object, string, array or data structure that the Mock will return.
+The solution to this comes from a simple method from Mockery `andReturnSelf` . Notice this depends on your class implementation, but the majority of chained methods would return the class by itself. Otherwise, you can use `andReturn` and write the object, string, array or data structure that the Mock will return.
 
-For this specific case, I needed `andReturnSelf` . Let’s see how the final result works. To test it, my `ChainController` is connected to the `POST /chain` method.
+For this specific case, I needed `andReturnSelf` . Let’s see how the final result works. To test it, my `ChainController` is connected to the `POST /chain` route.
 
 ```php
 <?php
@@ -71,4 +73,4 @@ class ChainControllerTest extends TestCase
 
 ## 🔗 Links
 
-You can see a working example [here](https://github.com/helmerdavila/blog-tutorials-laravel/blob/1.0.1/tests/Feature/ChainControllerTest.php)
+You can see a working example, [click here](https://github.com/helmerdavila/blog-tutorials-laravel/blob/1.0.1/tests/Feature/ChainControllerTest.php)
