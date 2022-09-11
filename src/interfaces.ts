@@ -14,8 +14,11 @@ export interface IGatsbyFileImage extends FileSystemNode {
 }
 export interface IBlogPost {
   excerpt: string;
-  body: string;
-  slug: string;
+  fields: {
+    slug: string;
+    locale: string;
+    isDefault: boolean;
+  };
   frontmatter: {
     title: string;
     description: string;
@@ -26,12 +29,10 @@ export interface IBlogPost {
     image?: Partial<IGatsbyFileImage>;
     embeddedImagesLocal?: Partial<IGatsbyFileImage>[];
   };
-  fields: {
-    locale: string;
-  };
   parent: {
     relativeDirectory: string;
   };
+  body: string;
 }
 export interface IBlogPageQuery {
   posts: {
@@ -39,4 +40,13 @@ export interface IBlogPageQuery {
   };
   backgroundImage: IGatsbyFileImage;
   homePostImage: IGatsbyFileImage;
+}
+
+export interface IQueryAllMdxFiles {
+  allFile: {
+    nodes: {
+      relativeDirectory: string;
+      childMdx: Partial<IBlogPost>;
+    }[];
+  };
 }

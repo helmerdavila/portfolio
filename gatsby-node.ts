@@ -1,8 +1,11 @@
-const locales = require(`./config/i18n`);
-const { removeTrailingSlash, localizedSlug, findKey } = require('./src/utils/gatsby-node-helpers');
-const path = require('path');
+import locales from './config/i18n';
+import { removeTrailingSlash, findKey, localizedSlug } from './src/utils/gatsby-node-helpers';
+import path from 'path';
+import type { GatsbyNode } from 'gatsby';
+import { FileSystemNode } from 'gatsby-source-filesystem';
+import { IQueryAllMdxFiles } from './src/interfaces';
 
-exports.onCreatePage = ({ page, actions }) => {
+export const onCreatePage: GatsbyNode['onCreatePage'] = ({ page, actions }) => {
   const { createPage, deletePage } = actions;
 
   // First delete the incoming page that was automatically created by Gatsby
@@ -35,57 +38,61 @@ exports.onCreatePage = ({ page, actions }) => {
 // As you don't want to manually add the correct language to the frontmatter of each file
 // a new node is created automatically with the filename
 // It's necessary to do that -- otherwise you couldn't filter by language
-exports.onCreateNode = async ({ node, actions, createNodeId, store, cache }) => {
-  const { createNodeField, createNode } = actions;
+export const onCreateNode: GatsbyNode['onCreateNode'] = async ({ node, actions, getNode }) => {
+  const { createNodeField } = actions;
 
   // Check for "Mdx" type so that other files (e.g. images) are exluded
   if (node.internal.type === `Mdx`) {
+    const parentNode = getNode(<string>node.parent) as FileSystemNode;
     // Use path.basename
     // https://nodejs.org/api/path.html#path_path_basename_path_ext
-    const name = path.basename(node.fileAbsolutePath, `.mdx`);
+    // const name = path.basename(<string>node.internal.contentFilePath, `.mdx`);
+    const name = path.basename(node.fileAbsolutePath as string, `.mdx`);
 
     // Check if post.name is "index" -- because that's the file for default language
     // (In this case "en")
     const isDefault = name === `index`;
 
     // Find the key that has "default: true" set (in this case it returns "en")
-    const defaultKey = findKey(locales, (o) => o.default === true);
+    const defaultKey = findKey(locales, (nodeAttribute) => nodeAttribute.default === true);
 
     // Files are defined with "name-with-dashes.lang.mdx"
     // name returns "name-with-dashes.lang"
     // So grab the lang from that string
     // If it's the default language, pass the locale for that
-    const lang = isDefault ? defaultKey : name.split(`.`)[1];
+    const locale: string = isDefault ? defaultKey : name.split(`.`)[1];
 
-    createNodeField({ node, name: `locale`, value: lang });
+    const slug = parentNode.relativeDirectory ?? '';
+
+    const localizedSlugResult = localizedSlug({ isDefault, locale, slug });
+
+    createNodeField({ node, name: `localizedSlug`, value: localizedSlugResult });
+    createNodeField({ node, name: `slug`, value: slug });
+    createNodeField({ node, name: `locale`, value: locale });
     createNodeField({ node, name: `isDefault`, value: isDefault });
   }
 };
 
-exports.createPages = async ({ graphql, actions }) => {
+export const createPages: GatsbyNode['createPages'] = async ({ graphql, actions }) => {
   const { createPage } = actions;
 
-  const postTemplate = require.resolve(`./src/components/LayoutBlogPage.tsx`);
-
   // Adding sort here to generate the HTMl pages in descending order by date
-  const result = await graphql(`
+  const result = await graphql<IQueryAllMdxFiles>(`
     {
-      blog: allFile(
+      allFile(
         filter: { sourceInstanceName: { eq: "blog" }, extension: { eq: "mdx" } }
         sort: { fields: [childMdx___frontmatter___date], order: DESC }
       ) {
-        edges {
-          node {
-            relativeDirectory
-            childMdx {
-              fields {
-                locale
-                isDefault
-              }
-              frontmatter {
-                title
-                date
-              }
+        nodes {
+          relativeDirectory
+          childMdx {
+            frontmatter {
+              title
+              date
+            }
+            fields {
+              locale
+              isDefault
             }
           }
         }
@@ -98,14 +105,20 @@ exports.createPages = async ({ graphql, actions }) => {
     return;
   }
 
-  const postList = result.data.blog.edges;
+  const postList = result.data?.allFile?.nodes ?? [];
 
-  postList.forEach(({ node: post }) => {
+  const postTemplate = path.resolve(`./src/components/LayoutBlogPage.tsx`);
+
+  postList.forEach((post) => {
     // All files for a blogpost are stored in a folder
     // relativeDirectory is the name of the folder
     const slug = post.relativeDirectory;
 
-    const title = post.childMdx.frontmatter.title;
+    if (!post.childMdx) {
+      return;
+    }
+
+    const title = post.childMdx.frontmatter?.title;
 
     // Use the fields created in exports.onCreateNode
     const locale = post.childMdx.fields.locale;
@@ -113,6 +126,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
     createPage({
       path: localizedSlug({ isDefault, locale, slug }),
+      // component: `${postTemplate}?__contentFilePath=${post.childMdx.internal.contentFilePath}`,
       component: postTemplate,
       context: {
         // Pass both the "title" and "locale" to find a unique file

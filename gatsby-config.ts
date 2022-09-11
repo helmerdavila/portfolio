@@ -1,4 +1,6 @@
-module.exports = {
+import { GatsbyConfig } from 'gatsby';
+
+const config: GatsbyConfig = {
   siteMetadata: {
     title: `Helmer Dávila`,
     description: `Web Developer.`,
@@ -48,9 +50,6 @@ module.exports = {
     },
     {
       resolve: 'gatsby-plugin-mdx',
-      options: {
-        extensions: ['.mdx', '.md', '.markdown'],
-      },
     },
     {
       resolve: 'gatsby-plugin-google-analytics',
@@ -97,3 +96,5 @@ module.exports = {
     },
   ],
 };
+
+export default config;
