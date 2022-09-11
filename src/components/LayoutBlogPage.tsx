@@ -80,7 +80,7 @@ const components = {
   img: MyImage,
 };
 
-const LayoutBlogPage = ({ data: { mdx } }: { data: { mdx: IBlogPost }; children: unknown }): JSX.Element => {
+const LayoutBlogPage = ({ data: { mdx } }: { data: { mdx: IBlogPost }; children?: unknown }): JSX.Element => {
   const context = useContext(ThemeContext);
   const { author, edit_posts_on_github, written_by } = useTranslations();
   const pageBackground = {

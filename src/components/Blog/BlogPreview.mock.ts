@@ -1,4 +1,4 @@
-import faker from '@faker-js/faker';
+import { faker } from '@faker-js/faker';
 
 export enum POSTS {
   POST_WITH_IMAGE,

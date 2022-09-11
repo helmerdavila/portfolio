@@ -2,7 +2,7 @@ import React from 'react';
 import { customRender } from '../../utils/testing';
 import PersonalProjects, { AppCard, StoreButton } from './PersonalProjects';
 import { faReact } from '@fortawesome/free-brands-svg-icons';
-import faker from '@faker-js/faker';
+import { faker } from '@faker-js/faker';
 import { useStaticQuery } from 'gatsby';
 import { loadTranslations } from '../../utils/mockresponses';
 import translations_en from '../../../config/translations/en.json';

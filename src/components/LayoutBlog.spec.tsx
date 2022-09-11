@@ -1,5 +1,5 @@
 import React from 'react';
-import faker from '@faker-js/faker';
+import { faker } from '@faker-js/faker';
 import { customRender } from '../utils/testing';
 import LayoutBlog from './LayoutBlog';
 

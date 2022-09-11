@@ -1,5 +1,5 @@
 import React from 'react';
-import faker from '@faker-js/faker';
+import { faker } from '@faker-js/faker';
 import { useStaticQuery } from 'gatsby';
 import { loadSiteData } from '../utils/mockresponses';
 import { customRender } from '../utils/testing';

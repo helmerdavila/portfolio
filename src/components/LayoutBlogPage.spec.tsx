@@ -15,7 +15,7 @@ import LayoutBlogPage, {
   MyParagraph,
 } from './LayoutBlogPage';
 import { backgroundImage, loadSiteData, loadTranslations } from '../utils/mockresponses';
-import faker from '@faker-js/faker';
+import { faker } from '@faker-js/faker';
 import { render } from '@testing-library/react';
 
 beforeEach(() => (useStaticQuery as jest.Mock).mockReturnValue({ ...loadSiteData, ...loadTranslations }));
@@ -25,8 +25,7 @@ it('renders without issues', () => {
     mdx: {
       excerpt: faker.lorem.words(5),
       body: faker.lorem.paragraphs(),
-      slug: faker.lorem.slug(),
-      fields: { locale: 'en' },
+      fields: { locale: 'en', isDefault: true, slug: faker.lorem.slug() },
       parent: { relativeDirectory: '' },
       frontmatter: {
         title: faker.lorem.words(),
@@ -53,8 +52,7 @@ it('renders without imageAlt and description', () => {
     mdx: {
       excerpt: faker.lorem.words(5),
       body: faker.lorem.paragraphs(),
-      slug: faker.lorem.slug(),
-      fields: { locale: 'en' },
+      fields: { locale: 'en', isDefault: true, slug: faker.lorem.slug() },
       parent: { relativeDirectory: '' },
       frontmatter: {
         title: faker.lorem.words(),

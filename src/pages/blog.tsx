@@ -11,7 +11,7 @@ import { IBlogPageQuery } from '../interfaces';
 const Blog = ({ data }: { data: IBlogPageQuery }): JSX.Element => {
   const context = useContext(ThemeContext);
   const themeStyles = { 'text-black': context.isLightTheme, 'text-white': !context.isLightTheme };
-  const posts = data?.posts?.edges;
+  const posts = data?.allMdx?.nodes;
 
   return (
     <LayoutBlog>
@@ -23,20 +23,20 @@ const Blog = ({ data }: { data: IBlogPageQuery }): JSX.Element => {
       <div className="container max-w-3xl pb-3 mx-auto xl:max-w-6xl">
         <h1 className="text-6xl font-bold mt-10">Blog</h1>
         {posts.map((post) => {
-          const imageRendered = getImage(post.node.frontmatter.image?.childImageSharp.gatsbyImageData);
+          const imageRendered = getImage(post.frontmatter.image?.childImageSharp.gatsbyImageData);
           return (
             <LocalizedLink
-              to={`/blog/${post.node.parent.relativeDirectory}`}
+              to={`/blog/${post.parent.relativeDirectory}`}
               className={classNames(
                 { 'bg-white border-2 shadown-sm': context.isLightTheme, 'bg-gray-800': !context.isLightTheme },
                 'block mt-10 rounded-md first:mt-3',
               )}
-              key={post.node.parent.relativeDirectory}
+              key={post.parent.relativeDirectory}
             >
-              <GatsbyImage image={imageRendered} alt={post.node?.frontmatter?.imageAlt ?? ''} />
+              <GatsbyImage image={imageRendered} alt={post?.frontmatter?.imageAlt ?? ''} />
               <div className="p-6">
-                <h2 className={classNames(themeStyles, 'text-4xl font-bold')}>{post.node?.frontmatter?.title}</h2>
-                <h5 className={classNames(themeStyles, 'mt-2 text-xl')}>{post.node?.frontmatter?.description}</h5>
+                <h2 className={classNames(themeStyles, 'text-4xl font-bold')}>{post?.frontmatter?.title}</h2>
+                <h5 className={classNames(themeStyles, 'mt-2 text-xl')}>{post?.frontmatter?.description}</h5>
               </div>
             </LocalizedLink>
           );
@@ -47,32 +47,27 @@ const Blog = ({ data }: { data: IBlogPageQuery }): JSX.Element => {
 };
 
 export const query = graphql`
-  query allBlogPosts($locale: String!) {
-    posts: allMdx(
-      filter: { fields: { locale: { eq: $locale } } }
-      sort: { fields: [frontmatter___date], order: DESC }
-    ) {
-      edges {
-        node {
-          excerpt(pruneLength: 100)
-          frontmatter {
-            title
-            imageAlt
-            image {
-              childImageSharp {
-                gatsbyImageData(layout: FULL_WIDTH, placeholder: TRACED_SVG)
-              }
+  query ($locale: String!) {
+    allMdx(filter: { fields: { locale: { eq: $locale } } }, sort: { fields: [frontmatter___date], order: DESC }) {
+      nodes {
+        excerpt(pruneLength: 100)
+        frontmatter {
+          title
+          imageAlt
+          image {
+            childImageSharp {
+              gatsbyImageData(layout: FULL_WIDTH, placeholder: TRACED_SVG)
             }
-            date
-            description
           }
-          fields {
-            locale
-          }
-          parent {
-            ... on File {
-              relativeDirectory
-            }
+          date
+          description
+        }
+        fields {
+          locale
+        }
+        parent {
+          ... on File {
+            relativeDirectory
           }
         }
       }
