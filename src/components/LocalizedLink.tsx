@@ -8,7 +8,7 @@ const LocalizedLink = ({ to, ...props }: { to: string; [x: string]: unknown }): 
   const { locale } = useContext(LocaleContext);
 
   const isIndex = to === `/`;
-  const ifNotDefaultUrl = `/${locales[locale].path}${isIndex ? `` : `/${to}`}`;
+  const ifNotDefaultUrl = `/${locales[locale].path}${isIndex ? `` : `${to}`}`;
 
   // If it's the default language, don't do anything
   // If it's another language, add the "path"
