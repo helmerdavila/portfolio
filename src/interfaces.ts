@@ -14,6 +14,7 @@ export interface ISlide {
 export interface IGatsbyFileImage extends FileSystemNode {
   childImageSharp: { gatsbyImageData: IGatsbyImageData };
 }
+
 export interface IBlogPost {
   excerpt: string;
   fields: {
@@ -30,6 +31,9 @@ export interface IBlogPost {
     imageAlt?: string;
     image?: Partial<IGatsbyFileImage>;
     embeddedImagesLocal?: Partial<IGatsbyFileImage>[];
+  };
+  internal: {
+    contentFilePath: string;
   };
   parent: {
     relativeDirectory: string;

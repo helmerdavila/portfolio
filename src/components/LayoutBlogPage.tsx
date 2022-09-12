@@ -3,11 +3,9 @@ import LayoutBlog from './LayoutBlog';
 import { graphql } from 'gatsby';
 import { ThemeContext } from './Layout';
 import classNames from 'classnames';
-import { IBlogPost } from '../interfaces';
 import SEO from './Seo';
 import { MDXProvider } from '@mdx-js/react';
-import { MDXRenderer } from 'gatsby-plugin-mdx';
-import Code from '../components/Mdx/Code';
+import Code from './Mdx/Code';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import useTranslations from './UseTranslations';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -62,10 +60,10 @@ export const MyInlineCode = (props) => {
     'text-blue-600 bg-gray-100': context.isLightTheme,
     'text-gray-300 bg-blue-800': !context.isLightTheme,
   };
-  return <code className={classNames(themeStyles, 'rounded text-base px-1')} {...props} />;
+  return <span className={classNames(themeStyles, 'rounded text-base px-1 font-mono')} {...props} />;
 };
-export const MyCode = (props: { children: string; className: string }) => <Code {...props} />;
-export const MyImage = (props: Record<string, unknown>) => <img className="shadow-lg rounded" {...props} />;
+export const MyPre = (props) => <Code {...props.children.props} />;
+export const MyImage = (props) => <img className="shadow-lg rounded" {...props} />;
 
 const components = {
   h1: MyH1,
@@ -75,12 +73,12 @@ const components = {
   li: MyListItem,
   p: MyParagraph,
   blockquote: MyBlockquote,
-  inlineCode: MyInlineCode,
-  code: MyCode,
+  pre: MyPre,
+  code: MyInlineCode,
   img: MyImage,
 };
 
-const LayoutBlogPage = ({ data: { mdx } }: { data: { mdx: IBlogPost }; children?: unknown }): JSX.Element => {
+const LayoutBlogPage = ({ data: { mdx }, children }) => {
   const context = useContext(ThemeContext);
   const { author, edit_posts_on_github, written_by } = useTranslations();
   const pageBackground = {
@@ -106,9 +104,7 @@ const LayoutBlogPage = ({ data: { mdx } }: { data: { mdx: IBlogPost }; children?
         <div className={classNames(pageBackground, 'border-2')}>
           <GatsbyImage image={imageRendered} alt={imageAlt} data-testid="post-image" />
           <div className="p-12 blog-page">
-            <MDXProvider components={components}>
-              <MDXRenderer localImages={mdx.frontmatter.embeddedImagesLocal}>{mdx.body}</MDXRenderer>
-            </MDXProvider>
+            <MDXProvider components={components}>{children}</MDXProvider>
             <div className="flex justify-end mt-32">
               <a
                 href={`https://github.com/helmerdavila/portfolio/edit/main/blog/${pathFileForGithub}`}
@@ -146,7 +142,7 @@ const LayoutBlogPage = ({ data: { mdx } }: { data: { mdx: IBlogPost }; children?
 export default LayoutBlogPage;
 
 export const query = graphql`
-  query Post($locale: String!, $title: String!) {
+  query ($locale: String!, $title: String!) {
     mdx(frontmatter: { title: { eq: $title } }, fields: { locale: { eq: $locale } }) {
       fields {
         slug
@@ -169,7 +165,6 @@ export const query = graphql`
         }
       }
       excerpt(pruneLength: 100)
-      body
     }
   }
 `;

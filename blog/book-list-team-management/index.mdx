@@ -13,7 +13,7 @@ embeddedImagesLocal:
   - make-bookstrapers.png
 ---
 
-import { GatsbyImage, getImage } from 'gatsby-plugin-image';
+import { GatsbyPostImage } from '../../src/components/GatsbyPostImage';
 
 # Book list - Tech team management
 
@@ -23,28 +23,25 @@ import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 
 ## 📚 Millennials & Management: The Essential Guide to Making it Work at Work – Lee Caraher
 
-<GatsbyImage image={getImage(props.localImages[0])} alt="Millenials Management" />
+<GatsbyPostImage data={props.data} index={0} alt="Millenials Management" />
 
 Whether we like it or not, the generation with the greatest labor force of the past decade continues in 2020. If you are from a generation before the Millennials, you will learn how to deal with them, how to motivate and retain them in your company, and if you are a Millenial (Like me), it will be useful to understand previous generations and what they expect from you. An excellent book that I recommend regardless of the job position you have.
 
 ## 📚 Technical Leadership – Giuliana Carullo
 
-<GatsbyImage image={getImage(props.localImages[1])} alt="Technical leadership" />
+<GatsbyPostImage data={props.data} index={1} alt="Technical leadership" />
 
 Did you get promoted from programmer to technical leader? Are you responsible for a new project and are assigned programmers in your charge? Are you already in that position from one moment to another? Do you feel that you do not know how to organize or listen as it is due to your technical team? This book helps you solve several questions when you have the technical leadership in your hands and your job goes from creating code to trying to build relationships with your coworkers.
 
 ## 📚 Habits that ruin your technical Team – Marcus Blankenship
 
-<GatsbyImage image={getImage(props.localImages[2])} alt="Habits that ruin your technical Team – Marcus Blankenship" />
+<GatsbyPostImage data={props.data} index={2} alt="Habits that ruin your technical Team – Marcus Blankenship" />
 
 In the same style as the previous book, this short but entertaining book is made for both entrepreneurs and technical leaders, listing the things you should **NOT** do if you are in charge of a technical team. Highly recommended, you can finish it in less than 4 hours.
 
 ## 📚 Team Geek - A Software developer guide to working well with others
 
-<GatsbyImage
-  image={getImage(props.localImages[3])}
-  alt="Team Geek - A Software developer guide to working well with others"
-/>
+<GatsbyPostImage data={props.data} index={3} alt="Team Geek - A Software developer guide to working well with others" />
 
 Two Google Workers give you the best piece of advices if you work in a software development team. Providing you with the do and don’t of everyday work. You could be the most experienced person in the team, but if you lack of the human side of them, a project can’t be led or finished appropriately finished. An often recommended guide to all developers, even if you’re starting your career.
 
@@ -52,6 +49,6 @@ Two Google Workers give you the best piece of advices if you work in a software 
 
 ## 📚 Make: Bootstrapper’s Handbook – Pieter Levels
 
-<GatsbyImage image={getImage(props.localImages[4])} alt="Make: Bootstrapper’s Handbook – Pieter Levels" />
+<GatsbyPostImage data={props.data} index={4} alt="Make: Bootstrapper’s Handbook – Pieter Levels" />
 
 This book tells us why you don’t need a startup to create a profitable product. With the help of automation, marketing, time and essential finances you can create different projects and generate enough profitability to never need external investment funds. I recommend it as much for entrepreneurs and developers.

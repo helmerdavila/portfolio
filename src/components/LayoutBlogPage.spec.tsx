@@ -1,10 +1,9 @@
 import React from 'react';
 import { useStaticQuery } from 'gatsby';
-import { IBlogPost } from '../interfaces';
 import { customRender } from '../utils/testing';
 import LayoutBlogPage, {
   MyBlockquote,
-  MyCode,
+  MyPre,
   MyH1,
   MyH2,
   MyH3,
@@ -21,7 +20,7 @@ import { render } from '@testing-library/react';
 beforeEach(() => (useStaticQuery as jest.Mock).mockReturnValue({ ...loadSiteData, ...loadTranslations }));
 
 it('renders without issues', () => {
-  const data: { mdx: IBlogPost } = {
+  const data = {
     mdx: {
       excerpt: faker.lorem.words(5),
       body: faker.lorem.paragraphs(),
@@ -36,9 +35,19 @@ it('renders without issues', () => {
         image: backgroundImage.backgroundImage,
         imageAlt: faker.lorem.word(),
       },
+      internal: {
+        contentFilePath: '',
+      },
     },
   };
-  const { queryByTestId } = customRender(<LayoutBlogPage data={data} />, { localeContextProps: { locale: 'en' } });
+  const { queryByTestId } = customRender(
+    <LayoutBlogPage data={data}>
+      <span>sample</span>
+    </LayoutBlogPage>,
+    {
+      localeContextProps: { locale: 'en' },
+    },
+  );
 
   expect(queryByTestId('post-image')).toBeInTheDocument();
   expect(queryByTestId('post-image')).toHaveAttribute(
@@ -48,7 +57,7 @@ it('renders without issues', () => {
 });
 
 it('renders without imageAlt and description', () => {
-  const data: { mdx: IBlogPost } = {
+  const data = {
     mdx: {
       excerpt: faker.lorem.words(5),
       body: faker.lorem.paragraphs(),
@@ -63,9 +72,17 @@ it('renders without imageAlt and description', () => {
         image: backgroundImage.backgroundImage,
         imageAlt: null,
       },
+      internal: {
+        contentFilePath: '',
+      },
     },
   };
-  const { queryByTestId } = customRender(<LayoutBlogPage data={data} />, { localeContextProps: { locale: 'en' } });
+  const { queryByTestId } = customRender(
+    <LayoutBlogPage data={data}>
+      <span>Sample</span>
+    </LayoutBlogPage>,
+    { localeContextProps: { locale: 'en' } },
+  );
 
   expect(queryByTestId('post-image')).toBeInTheDocument();
   expect(queryByTestId('post-image')).toHaveAttribute(
@@ -130,9 +147,13 @@ it('renders MyInlineCode without issues', () => {
   expect(queryByText(text)).toBeInTheDocument();
 });
 
-it('renders MyCode without issues', () => {
-  const text = faker.lorem.words(3);
-  const { queryByText } = render(<MyCode className="demo">{text}</MyCode>);
+it('renders MyPre without issues', () => {
+  const text = 'This is simple code';
+  const { queryByText } = render(
+    <MyPre className="demo">
+      <code>{text}</code>
+    </MyPre>,
+  );
 
   expect(queryByText(text)).toBeInTheDocument();
 });

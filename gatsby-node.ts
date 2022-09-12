@@ -46,12 +46,11 @@ export const onCreateNode: GatsbyNode['onCreateNode'] = async ({ node, actions, 
     const parentNode = getNode(<string>node.parent) as FileSystemNode;
     // Use path.basename
     // https://nodejs.org/api/path.html#path_path_basename_path_ext
-    // const name = path.basename(<string>node.internal.contentFilePath, `.mdx`);
-    const name = path.basename(node.fileAbsolutePath as string, `.mdx`);
+    const name = path.basename(<string>node.internal.contentFilePath);
 
     // Check if post.name is "index" -- because that's the file for default language
     // (In this case "en")
-    const isDefault = name === `index`;
+    const isDefault = name === `index.mdx`;
 
     // Find the key that has "default: true" set (in this case it returns "en")
     const defaultKey = findKey(locales, (nodeAttribute) => nodeAttribute.default === true);
@@ -91,6 +90,9 @@ export const createPages: GatsbyNode['createPages'] = async ({ graphql, actions 
               slug
               isDefault
             }
+            internal {
+              contentFilePath
+            }
             parent {
               ... on File {
                 relativeDirectory
@@ -124,8 +126,8 @@ export const createPages: GatsbyNode['createPages'] = async ({ graphql, actions 
 
     createPage({
       path: localizedSlug({ isDefault, locale, slug }),
-      // component: `${postTemplate}?__contentFilePath=${post.childMdx.internal.contentFilePath}`,
-      component: postTemplate,
+      component: `${postTemplate}?__contentFilePath=${post.internal.contentFilePath}`,
+      // component: postTemplate,
       context: {
         // Pass both the "title" and "locale" to find a unique file
         // Only the title would not have been sufficient as articles could have the same title

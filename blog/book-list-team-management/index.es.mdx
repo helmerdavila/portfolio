@@ -13,7 +13,7 @@ embeddedImagesLocal:
   - make-bookstrapers.png
 ---
 
-import { GatsbyImage, getImage } from 'gatsby-plugin-image';
+import { GatsbyPostImage } from '../../src/components/GatsbyPostImage';
 
 # Libros para administración de equipos de desarrolladores y desarrolladoras
 
@@ -25,30 +25,27 @@ import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 
 ## 📚 Millenials en la oficina – Lee Caraher (español disponible)
 
-<GatsbyImage image={getImage(props.localImages[0])} alt="Millenials en la oficina" />
+<GatsbyPostImage data={props.data} index={0} alt="Millenials en la oficina" />
 
 Nos guste o no, los millenials son la generación con mayor fuerza laborar desde 2010. Si eres de una generación anterior a los Millenials aprenderás cómo tratar con ellos, cómo motivarlos y retenerlos en tu empresa. Si eres un Millenial *(como yo)*
 ,te será útil para comprender a las generaciones anteriores y que es lo que esperan de ti. Lectura que recomiendo independientemente de la generación que pertenezcas.
 
 ## 📚 Technical Leadership – Giuliana Carullo (sólo inglés)
 
-<GatsbyImage image={getImage(props.localImages[1])} alt="Technical leadership" />
+<GatsbyPostImage data={props.data} index={1} alt="Technical leadership" />
 
 ¿Te ascendieron de programador a líder técnico? ¿Estás a cargo de un nuevo proyecto y te asignan programadores a tu cargo? ¿Ya estás en ese puesto y de un momento a otro sientes que no sabes cómo organizar o escuchar a tu equipo tecnológico? Este libro te ayuda resolviendo varias interrogantes cuando ahora tienes el liderazgo técnico en tus manos y tu trabajo se convierte de crear código a tratar de crear relaciones con tus compañeros de trabajo.
 
 ## 📚 Habits that ruin your technical team – Marcus Blankenship (sólo inglés)
 
-<GatsbyImage image={getImage(props.localImages[2])} alt="Habits that ruin your technical Team – Marcus Blankenship" />
+<GatsbyPostImage data={props.data} index={2} alt="Habits that ruin your technical Team – Marcus Blankenship" />
 
 Del mismo estilo que el libro anterior, este corto pero entretenido libro está hecho tanto para emprendedores como líderes técnicos, haciendo un listado de las cosas que **NO**
 deberías hacer si tienes a cargo un equipo. Muy recomendado, se puede acabar de leer en menos de 4 horas.
 
 ## 📚 Team Geek - A software developer guide to working well with others (sólo inglés)
 
-<GatsbyImage
-  image={getImage(props.localImages[3])}
-  alt="Team Geek - A Software developer guide to working well with others"
-/>
+<GatsbyPostImage data={props.data} index={3} alt="Team Geek - A Software developer guide to working well with others" />
 
 Dos trabajadores de Google te dan los mejores consejos si trabajas para un equipo de desarrollo. Puedes ser la personas con más experiencia en el equipo. Pero si tienes una falta de trato humano hacia él, el proyecto podría tener problemas. Lectura obligada para todos los desarrolladores o desarrolladoras, incluso si recién están empezando en su carrera.
 
@@ -56,6 +53,6 @@ Dos trabajadores de Google te dan los mejores consejos si trabajas para un equip
 
 ## 📚 Make: Bootstrapper’s Handbook – Pieter Levels (sólo inglés)
 
-<GatsbyImage image={getImage(props.localImages[4])} alt="Make: Bootstrapper’s Handbook – Pieter Levels" />
+<GatsbyPostImage data={props.data} index={4} alt="Make: Bootstrapper’s Handbook – Pieter Levels" />
 
 Este libro nos explica por qué NO necesitas tener una startup para crear un producto rentable. Con la ayuda de automatizaciones, marketing, tiempo y finanzas básicas puedes realizar distintos proyectos y generar una rentabilidad suficiente evitando inversión externa. Recomendado para emprendedores y desarrolladores.

@@ -10,13 +10,13 @@ embeddedImagesLocal:
 
 # CPanel: Obtener certificados SSL gratis (no root)
 
-import { GatsbyImage, getImage } from 'gatsby-plugin-image';
+import { GatsbyPostImage } from '../../src/components/GatsbyPostImage';
 
 Ya que algunos proveedores de almacenamiento compartido (hosting) te atan a venderte un certificado SSL. Con la ayuda del script `acme.sh`, puedes obtener certificados SSL gratis siguiendo estas instrucciones:
 
 ## 📈 Ve a la terminal en tu CPanel o conéctate con SSH
 
-<GatsbyImage image={getImage(props.localImages[0])} alt="CPanel" />
+<GatsbyPostImage data={props.data} index={0} alt="CPanel" />
 
 ## ⬇️ Descarga el script [acme.sh](http://acme.sh/)
 

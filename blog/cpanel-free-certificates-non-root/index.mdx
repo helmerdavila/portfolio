@@ -8,7 +8,7 @@ embeddedImagesLocal:
   - cpanel.png
 ---
 
-import { GatsbyImage, getImage } from 'gatsby-plugin-image';
+import { GatsbyPostImage } from '../../src/components/GatsbyPostImage';
 
 # CPanel SSL: Issue free certificates in a non-root server
 
@@ -16,7 +16,7 @@ Since some shared hosting providers are tied to an option to buy a SSL certifica
 
 ## 📈 Go to the Terminal into your CPanel or SSH there
 
-<GatsbyImage image={getImage(props.localImages[0])} alt="CPanel" />
+<GatsbyPostImage data={props.data} index={0} alt="CPanel" />
 
 ## ⬇️ Get the [acme.sh](http://acme.sh/) script
 

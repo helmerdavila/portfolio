@@ -763,8 +763,19 @@ type ImageSharpResize {
   originalName: String
 }
 
+type Mdx implements Node {
+  excerpt(pruneLength: Int = 140): String
+  tableOfContents(maxDepth: Int): JSON
+  body: String
+  frontmatter: MdxFrontmatter
+  id: ID!
+  parent: Node
+  children: [Node!]!
+  internal: Internal!
+}
+
 type MdxFrontmatter {
-  title: String!
+  title: String
   description: String
   date(
     # Format the date using Moment.js' date tokens, e.g. `date(formatString: "YYYY MMMM DD")`. See https://momentjs.com/docs/#/displaying/format/ for documentation for different tokens.
@@ -784,53 +795,6 @@ type MdxFrontmatter {
   imageAlt: String
   embeddedImagesLocal: [File]
   imageCover: String
-}
-
-type MdxHeadingMdx {
-  value: String
-  depth: Int
-}
-
-enum HeadingsMdx {
-  h1
-  h2
-  h3
-  h4
-  h5
-  h6
-}
-
-type MdxWordCount {
-  paragraphs: Int
-  sentences: Int
-  words: Int
-}
-
-type Mdx implements Node {
-  rawBody: String!
-  fileAbsolutePath: String!
-  frontmatter: MdxFrontmatter
-  slug: String
-  body: String!
-  excerpt(pruneLength: Int = 140, truncate: Boolean = false): String!
-  headings(depth: HeadingsMdx): [MdxHeadingMdx]
-  html: String
-  mdxAST: JSON
-  tableOfContents(maxDepth: Int): JSON
-  timeToRead: Int
-  wordCount: MdxWordCount
-  fields: MdxFields
-  id: ID!
-  parent: Node
-  children: [Node!]!
-  internal: Internal!
-}
-
-type MdxFields {
-  localizedSlug: String
-  slug: String
-  locale: String
-  isDefault: Boolean
 }
 
 type TranslationsJson implements Node {
@@ -1081,19 +1045,10 @@ type Query {
     limit: Int
   ): ImageSharpConnection!
   mdx(
-    rawBody: StringQueryOperatorInput
-    fileAbsolutePath: StringQueryOperatorInput
-    frontmatter: MdxFrontmatterFilterInput
-    slug: StringQueryOperatorInput
-    body: StringQueryOperatorInput
     excerpt: StringQueryOperatorInput
-    headings: MdxHeadingMdxFilterListInput
-    html: StringQueryOperatorInput
-    mdxAST: JSONQueryOperatorInput
     tableOfContents: JSONQueryOperatorInput
-    timeToRead: IntQueryOperatorInput
-    wordCount: MdxWordCountFilterInput
-    fields: MdxFieldsFilterInput
+    body: StringQueryOperatorInput
+    frontmatter: MdxFrontmatterFilterInput
     id: StringQueryOperatorInput
     parent: NodeFilterInput
     children: NodeFilterListInput
@@ -1296,23 +1251,23 @@ input MdxFilterListInput {
 }
 
 input MdxFilterInput {
-  rawBody: StringQueryOperatorInput
-  fileAbsolutePath: StringQueryOperatorInput
-  frontmatter: MdxFrontmatterFilterInput
-  slug: StringQueryOperatorInput
-  body: StringQueryOperatorInput
   excerpt: StringQueryOperatorInput
-  headings: MdxHeadingMdxFilterListInput
-  html: StringQueryOperatorInput
-  mdxAST: JSONQueryOperatorInput
   tableOfContents: JSONQueryOperatorInput
-  timeToRead: IntQueryOperatorInput
-  wordCount: MdxWordCountFilterInput
-  fields: MdxFieldsFilterInput
+  body: StringQueryOperatorInput
+  frontmatter: MdxFrontmatterFilterInput
   id: StringQueryOperatorInput
   parent: NodeFilterInput
   children: NodeFilterListInput
   internal: InternalFilterInput
+}
+
+input JSONQueryOperatorInput {
+  eq: JSON
+  ne: JSON
+  in: [JSON]
+  nin: [JSON]
+  regex: JSON
+  glob: JSON
 }
 
 input MdxFrontmatterFilterInput {
@@ -1420,37 +1375,6 @@ input TranslationsJsonFilterInput {
 
 input FileFilterListInput {
   elemMatch: FileFilterInput
-}
-
-input MdxHeadingMdxFilterListInput {
-  elemMatch: MdxHeadingMdxFilterInput
-}
-
-input MdxHeadingMdxFilterInput {
-  value: StringQueryOperatorInput
-  depth: IntQueryOperatorInput
-}
-
-input JSONQueryOperatorInput {
-  eq: JSON
-  ne: JSON
-  in: [JSON]
-  nin: [JSON]
-  regex: JSON
-  glob: JSON
-}
-
-input MdxWordCountFilterInput {
-  paragraphs: IntQueryOperatorInput
-  sentences: IntQueryOperatorInput
-  words: IntQueryOperatorInput
-}
-
-input MdxFieldsFilterInput {
-  localizedSlug: StringQueryOperatorInput
-  slug: StringQueryOperatorInput
-  locale: StringQueryOperatorInput
-  isDefault: BooleanQueryOperatorInput
 }
 
 type FileConnection {
@@ -1838,8 +1762,15 @@ enum FileFieldsEnum {
   childImageSharp___internal___type
   childImageSharp___internal___contentFilePath
   childrenMdx
-  childrenMdx___rawBody
-  childrenMdx___fileAbsolutePath
+  childrenMdx___excerpt
+    @deprecated(
+      reason: "Sorting on fields that need arguments to resolve is deprecated."
+    )
+  childrenMdx___tableOfContents
+    @deprecated(
+      reason: "Sorting on fields that need arguments to resolve is deprecated."
+    )
+  childrenMdx___body
   childrenMdx___frontmatter___title
   childrenMdx___frontmatter___description
   childrenMdx___frontmatter___date
@@ -1925,38 +1856,6 @@ enum FileFieldsEnum {
   childrenMdx___frontmatter___embeddedImagesLocal___id
   childrenMdx___frontmatter___embeddedImagesLocal___children
   childrenMdx___frontmatter___imageCover
-  childrenMdx___slug
-  childrenMdx___body
-  childrenMdx___excerpt
-    @deprecated(
-      reason: "Sorting on fields that need arguments to resolve is deprecated."
-    )
-  childrenMdx___headings
-    @deprecated(
-      reason: "Sorting on fields that need arguments to resolve is deprecated."
-    )
-  childrenMdx___headings___value
-    @deprecated(
-      reason: "Sorting on fields that need arguments to resolve is deprecated."
-    )
-  childrenMdx___headings___depth
-    @deprecated(
-      reason: "Sorting on fields that need arguments to resolve is deprecated."
-    )
-  childrenMdx___html
-  childrenMdx___mdxAST
-  childrenMdx___tableOfContents
-    @deprecated(
-      reason: "Sorting on fields that need arguments to resolve is deprecated."
-    )
-  childrenMdx___timeToRead
-  childrenMdx___wordCount___paragraphs
-  childrenMdx___wordCount___sentences
-  childrenMdx___wordCount___words
-  childrenMdx___fields___localizedSlug
-  childrenMdx___fields___slug
-  childrenMdx___fields___locale
-  childrenMdx___fields___isDefault
   childrenMdx___id
   childrenMdx___parent___id
   childrenMdx___parent___parent___id
@@ -1998,8 +1897,15 @@ enum FileFieldsEnum {
   childrenMdx___internal___owner
   childrenMdx___internal___type
   childrenMdx___internal___contentFilePath
-  childMdx___rawBody
-  childMdx___fileAbsolutePath
+  childMdx___excerpt
+    @deprecated(
+      reason: "Sorting on fields that need arguments to resolve is deprecated."
+    )
+  childMdx___tableOfContents
+    @deprecated(
+      reason: "Sorting on fields that need arguments to resolve is deprecated."
+    )
+  childMdx___body
   childMdx___frontmatter___title
   childMdx___frontmatter___description
   childMdx___frontmatter___date
@@ -2085,38 +1991,6 @@ enum FileFieldsEnum {
   childMdx___frontmatter___embeddedImagesLocal___id
   childMdx___frontmatter___embeddedImagesLocal___children
   childMdx___frontmatter___imageCover
-  childMdx___slug
-  childMdx___body
-  childMdx___excerpt
-    @deprecated(
-      reason: "Sorting on fields that need arguments to resolve is deprecated."
-    )
-  childMdx___headings
-    @deprecated(
-      reason: "Sorting on fields that need arguments to resolve is deprecated."
-    )
-  childMdx___headings___value
-    @deprecated(
-      reason: "Sorting on fields that need arguments to resolve is deprecated."
-    )
-  childMdx___headings___depth
-    @deprecated(
-      reason: "Sorting on fields that need arguments to resolve is deprecated."
-    )
-  childMdx___html
-  childMdx___mdxAST
-  childMdx___tableOfContents
-    @deprecated(
-      reason: "Sorting on fields that need arguments to resolve is deprecated."
-    )
-  childMdx___timeToRead
-  childMdx___wordCount___paragraphs
-  childMdx___wordCount___sentences
-  childMdx___wordCount___words
-  childMdx___fields___localizedSlug
-  childMdx___fields___slug
-  childMdx___fields___locale
-  childMdx___fields___isDefault
   childMdx___id
   childMdx___parent___id
   childMdx___parent___parent___id
@@ -3774,8 +3648,15 @@ type MdxEdge {
 }
 
 enum MdxFieldsEnum {
-  rawBody
-  fileAbsolutePath
+  excerpt
+    @deprecated(
+      reason: "Sorting on fields that need arguments to resolve is deprecated."
+    )
+  tableOfContents
+    @deprecated(
+      reason: "Sorting on fields that need arguments to resolve is deprecated."
+    )
+  body
   frontmatter___title
   frontmatter___description
   frontmatter___date
@@ -3828,46 +3709,26 @@ enum MdxFieldsEnum {
   frontmatter___image___childImageSharp___id
   frontmatter___image___childImageSharp___children
   frontmatter___image___childrenMdx
-  frontmatter___image___childrenMdx___rawBody
-  frontmatter___image___childrenMdx___fileAbsolutePath
-  frontmatter___image___childrenMdx___slug
-  frontmatter___image___childrenMdx___body
   frontmatter___image___childrenMdx___excerpt
     @deprecated(
       reason: "Sorting on fields that need arguments to resolve is deprecated."
     )
-  frontmatter___image___childrenMdx___headings
-    @deprecated(
-      reason: "Sorting on fields that need arguments to resolve is deprecated."
-    )
-  frontmatter___image___childrenMdx___html
-  frontmatter___image___childrenMdx___mdxAST
   frontmatter___image___childrenMdx___tableOfContents
     @deprecated(
       reason: "Sorting on fields that need arguments to resolve is deprecated."
     )
-  frontmatter___image___childrenMdx___timeToRead
+  frontmatter___image___childrenMdx___body
   frontmatter___image___childrenMdx___id
   frontmatter___image___childrenMdx___children
-  frontmatter___image___childMdx___rawBody
-  frontmatter___image___childMdx___fileAbsolutePath
-  frontmatter___image___childMdx___slug
-  frontmatter___image___childMdx___body
   frontmatter___image___childMdx___excerpt
     @deprecated(
       reason: "Sorting on fields that need arguments to resolve is deprecated."
     )
-  frontmatter___image___childMdx___headings
-    @deprecated(
-      reason: "Sorting on fields that need arguments to resolve is deprecated."
-    )
-  frontmatter___image___childMdx___html
-  frontmatter___image___childMdx___mdxAST
   frontmatter___image___childMdx___tableOfContents
     @deprecated(
       reason: "Sorting on fields that need arguments to resolve is deprecated."
     )
-  frontmatter___image___childMdx___timeToRead
+  frontmatter___image___childMdx___body
   frontmatter___image___childMdx___id
   frontmatter___image___childMdx___children
   frontmatter___image___childrenTranslationsJson
@@ -4008,46 +3869,26 @@ enum MdxFieldsEnum {
   frontmatter___embeddedImagesLocal___childImageSharp___id
   frontmatter___embeddedImagesLocal___childImageSharp___children
   frontmatter___embeddedImagesLocal___childrenMdx
-  frontmatter___embeddedImagesLocal___childrenMdx___rawBody
-  frontmatter___embeddedImagesLocal___childrenMdx___fileAbsolutePath
-  frontmatter___embeddedImagesLocal___childrenMdx___slug
-  frontmatter___embeddedImagesLocal___childrenMdx___body
   frontmatter___embeddedImagesLocal___childrenMdx___excerpt
     @deprecated(
       reason: "Sorting on fields that need arguments to resolve is deprecated."
     )
-  frontmatter___embeddedImagesLocal___childrenMdx___headings
-    @deprecated(
-      reason: "Sorting on fields that need arguments to resolve is deprecated."
-    )
-  frontmatter___embeddedImagesLocal___childrenMdx___html
-  frontmatter___embeddedImagesLocal___childrenMdx___mdxAST
   frontmatter___embeddedImagesLocal___childrenMdx___tableOfContents
     @deprecated(
       reason: "Sorting on fields that need arguments to resolve is deprecated."
     )
-  frontmatter___embeddedImagesLocal___childrenMdx___timeToRead
+  frontmatter___embeddedImagesLocal___childrenMdx___body
   frontmatter___embeddedImagesLocal___childrenMdx___id
   frontmatter___embeddedImagesLocal___childrenMdx___children
-  frontmatter___embeddedImagesLocal___childMdx___rawBody
-  frontmatter___embeddedImagesLocal___childMdx___fileAbsolutePath
-  frontmatter___embeddedImagesLocal___childMdx___slug
-  frontmatter___embeddedImagesLocal___childMdx___body
   frontmatter___embeddedImagesLocal___childMdx___excerpt
     @deprecated(
       reason: "Sorting on fields that need arguments to resolve is deprecated."
     )
-  frontmatter___embeddedImagesLocal___childMdx___headings
-    @deprecated(
-      reason: "Sorting on fields that need arguments to resolve is deprecated."
-    )
-  frontmatter___embeddedImagesLocal___childMdx___html
-  frontmatter___embeddedImagesLocal___childMdx___mdxAST
   frontmatter___embeddedImagesLocal___childMdx___tableOfContents
     @deprecated(
       reason: "Sorting on fields that need arguments to resolve is deprecated."
     )
-  frontmatter___embeddedImagesLocal___childMdx___timeToRead
+  frontmatter___embeddedImagesLocal___childMdx___body
   frontmatter___embeddedImagesLocal___childMdx___id
   frontmatter___embeddedImagesLocal___childMdx___children
   frontmatter___embeddedImagesLocal___childrenTranslationsJson
@@ -4139,38 +3980,6 @@ enum MdxFieldsEnum {
   frontmatter___embeddedImagesLocal___internal___type
   frontmatter___embeddedImagesLocal___internal___contentFilePath
   frontmatter___imageCover
-  slug
-  body
-  excerpt
-    @deprecated(
-      reason: "Sorting on fields that need arguments to resolve is deprecated."
-    )
-  headings
-    @deprecated(
-      reason: "Sorting on fields that need arguments to resolve is deprecated."
-    )
-  headings___value
-    @deprecated(
-      reason: "Sorting on fields that need arguments to resolve is deprecated."
-    )
-  headings___depth
-    @deprecated(
-      reason: "Sorting on fields that need arguments to resolve is deprecated."
-    )
-  html
-  mdxAST
-  tableOfContents
-    @deprecated(
-      reason: "Sorting on fields that need arguments to resolve is deprecated."
-    )
-  timeToRead
-  wordCount___paragraphs
-  wordCount___sentences
-  wordCount___words
-  fields___localizedSlug
-  fields___slug
-  fields___locale
-  fields___isDefault
   id
   parent___id
   parent___parent___id

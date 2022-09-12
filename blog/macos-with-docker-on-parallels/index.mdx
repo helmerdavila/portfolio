@@ -10,7 +10,7 @@ embeddedImagesLocal:
   - macos-with-docker-2.png
 ---
 
-import { GatsbyImage, getImage } from 'gatsby-plugin-image';
+import { GatsbyPostImage } from '../../src/components/GatsbyPostImage';
 
 # How to run a macOS VM and Docker together on macOS native using Parallels
 
@@ -22,7 +22,7 @@ I wanted to run macOS inside macOS. But the goal of that task, was running docke
 
 ## 🔀 Steps
 
-<GatsbyImage image={getImage(props.localImages[0])} alt="Step 1" />
+<GatsbyPostImage data={props.data} index={0} alt="Step 1" />
 
 They’re pretty simple so far. Go to `VM configuration` -> `Hardware` -> `Boot Order` -> `Advanced Settings` -> `Boot Flags` . Write the following text.
 
@@ -30,7 +30,7 @@ They’re pretty simple so far. Go to `VM configuration` -> `Hardware` -> `Boot 
 kernel.nvmx.enable=1
 ```
 
-<GatsbyImage image={getImage(props.localImages[1])} alt="Step 2" />
+<GatsbyPostImage data={props.data} index={1} alt="Step 2" />
 
 Then, press OK.
 
