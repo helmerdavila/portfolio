@@ -1,10 +1,9 @@
 import React, { useContext } from 'react';
 import LayoutBlog from './LayoutBlog';
-import { graphql } from 'gatsby';
+import { graphql, PageProps } from 'gatsby';
 import { ThemeContext } from './Layout';
 import classNames from 'classnames';
 import { IBlogPost } from '../interfaces';
-import SEO from './Seo';
 import { MDXProvider } from '@mdx-js/react';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 import Code from './Mdx/Code';
@@ -80,6 +79,33 @@ const components = {
   img: MyImage,
 };
 
+export const Head = ({ data }: PageProps<Queries.LayoutBlogPageQuery>) => {
+  const imageRendered = getImage(data.mdx.frontmatter.image.childImageSharp.gatsbyImageData);
+  const imageUrl = imageRendered.images.fallback.src;
+  const title = data.mdx.frontmatter.title;
+  const description = data.mdx.frontmatter.description;
+
+  return (
+    <>
+      <title>{title}</title>
+      <meta name="description" content={description} />
+      {/* {data.mdx.fields.isDefault ? (
+        <link rel="canonical" href={data.site.siteMetadata.siteUrl} />
+      ) : (
+        <link rel="alternate" href={data.site.siteMetadata.siteUrl} />
+      )} */}
+      <meta name="og:type" content="article" />
+      <meta name="og:description" content={description} />
+      <meta name="og:image" content={imageUrl} />
+      <meta name="og:locale" content={data.mdx.fields.locale} />
+      <meta name="twitter:title" content={title} />
+      <meta name="twitter:card" content="summary" />
+      <meta name="twitter:image" content={imageUrl} />
+      <meta name="twitter:description" content={description} />
+    </>
+  );
+};
+
 const LayoutBlogPage = ({ data: { mdx } }: { data: { mdx: IBlogPost }; children?: unknown }): JSX.Element => {
   const context = useContext(ThemeContext);
   const { author, edit_posts_on_github, written_by } = useTranslations();
@@ -96,12 +122,6 @@ const LayoutBlogPage = ({ data: { mdx } }: { data: { mdx: IBlogPost }; children?
 
   return (
     <LayoutBlog>
-      <SEO
-        title={mdx?.frontmatter?.title}
-        ogType="article"
-        description={mdx?.frontmatter?.description || mdx?.excerpt}
-        image={imageRendered?.images?.fallback?.src ?? ''}
-      />
       <div className="container max-w-3xl py-5 mx-auto xl:max-w-6xl">
         <div className={classNames(pageBackground, 'border-2')}>
           <GatsbyImage image={imageRendered} alt={imageAlt} data-testid="post-image" />
@@ -146,7 +166,7 @@ const LayoutBlogPage = ({ data: { mdx } }: { data: { mdx: IBlogPost }; children?
 export default LayoutBlogPage;
 
 export const query = graphql`
-  query ($locale: String!, $title: String!) {
+  query LayoutBlogPage($locale: String!, $title: String!) {
     mdx(frontmatter: { title: { eq: $title } }, fields: { locale: { eq: $locale } }) {
       fields {
         slug
@@ -170,6 +190,11 @@ export const query = graphql`
       }
       excerpt(pruneLength: 100)
       body
+    }
+    site {
+      siteMetadata {
+        siteUrl
+      }
     }
   }
 `;
