@@ -3,7 +3,6 @@ import { useStaticQuery, graphql } from 'gatsby';
 import { LocaleContext } from './Layout';
 
 const useTranslations = (): Record<string, string> => {
-  // Grab the locale (passed through context) from the Context Provider
   const { locale } = useContext(LocaleContext);
   // Query the JSON files in <rootDir>/i18n/translations
   const { rawData } = useStaticQuery(query);
