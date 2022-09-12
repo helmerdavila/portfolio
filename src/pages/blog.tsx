@@ -1,8 +1,8 @@
 import classNames from 'classnames';
-import { graphql, PageProps, Link } from 'gatsby';
+import { graphql, PageProps } from 'gatsby';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import React, { useContext } from 'react';
-import { LocaleContext, ThemeContext } from '../components/Layout';
+import { ThemeContext } from '../components/Layout';
 import LayoutBlog from '../components/LayoutBlog';
 import LocalizedLink from '../components/LocalizedLink';
 import SEO from '../components/Seo';
@@ -25,7 +25,7 @@ const Blog = ({ data }: PageProps<Queries.BlogQuery>): JSX.Element => {
           const imageRendered = getImage(post.frontmatter.image?.childImageSharp.gatsbyImageData);
           return (
             <LocalizedLink
-              to={post.fields.slug}
+              to={`blog/${post.fields.slug}`}
               className={classNames(
                 { 'bg-white border-2 shadown-sm': context.isLightTheme, 'bg-gray-800': !context.isLightTheme },
                 'block mt-10 rounded-md first:mt-3',

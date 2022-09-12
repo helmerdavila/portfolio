@@ -81,7 +81,7 @@ const components = {
 
 export const Head = ({ data }: PageProps<Queries.LayoutBlogPageQuery>) => {
   const imageRendered = getImage(data.mdx.frontmatter.image.childImageSharp.gatsbyImageData);
-  const imageUrl = imageRendered.images.fallback.src;
+  const imageUrl = `${data.site.siteMetadata.siteUrl}${imageRendered.images.fallback.src}`;
   const title = data.mdx.frontmatter.title;
   const description = data.mdx.frontmatter.description;
 
