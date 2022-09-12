@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 import { ILayout } from '../interfaces';
 
 const LocaleContext = React.createContext(null);
@@ -7,7 +7,7 @@ const ThemeContext = React.createContext<{ isLightTheme: boolean; toggleTheme: (
   toggleTheme: () => null,
 });
 
-const ThemeContextProvider = ({ children }: { children: unknown }): JSX.Element => {
+const ThemeContextProvider = ({ children }: { children: ReactNode }): JSX.Element => {
   const windowGlobal = typeof window !== 'undefined' && (window as WindowLocalStorage);
   if (!windowGlobal) {
     return <div />;

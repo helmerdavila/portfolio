@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBook } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
 import useTranslations from '../UseTranslations';
 import { ThemeContext } from '../Layout';
 import { StaticImage } from 'gatsby-plugin-image';
+import { faBook } from '@helmerdavila/fontawesomehelmer/pro-duotone-svg-icons';
 
 const MyBook = (): JSX.Element => {
   const context = useContext(ThemeContext);

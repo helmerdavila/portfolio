@@ -1,6 +1,6 @@
 import { FileSystemNode } from 'gatsby-source-filesystem';
 import { IGatsbyImageData } from 'gatsby-plugin-image';
-import { ReactElement } from 'react';
+import { ReactNode } from 'react';
 import { PageProps } from 'gatsby';
 
 export interface ISlide {
@@ -55,5 +55,5 @@ export interface IQueryAllMdxFiles {
 }
 
 export interface ILayout extends Omit<Partial<PageProps<unknown, { locale: string }>>, 'children'> {
-  children?: ReactElement;
+  children?: ReactNode;
 }

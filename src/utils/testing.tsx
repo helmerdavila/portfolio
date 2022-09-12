@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { LocaleContext, ThemeContext } from '../components/Layout';
 import { render, RenderOptions, RenderResult } from '@testing-library/react';
 
@@ -12,7 +12,7 @@ interface IThemeContextProps {
 }
 
 export const customRender = (
-  children: unknown,
+  children: ReactNode,
   optionalParams:
     | (Partial<{
         localeContextProps: ILocaleContextProps;
