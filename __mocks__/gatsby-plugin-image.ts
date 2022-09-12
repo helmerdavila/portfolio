@@ -1,6 +1,6 @@
 import React from 'react';
 import { IGatsbyImageData } from 'gatsby-plugin-image';
-import faker from '@faker-js/faker';
+import { faker } from '@faker-js/faker';
 
 const mockImage = ({ imgClassName, ...props }) => React.createElement('img', { ...props, className: imgClassName });
 
