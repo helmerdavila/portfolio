@@ -24,7 +24,7 @@ interface Props {
 const Code = ({ children, className }: Props): JSX.Element => {
   const context = useContext(ThemeContext);
   const language = (className?.replace(/language-/, '') || '') as Language;
-  const styleLineNumbers = classNames(context.isLightTheme ? 'text-slate-300' : 'text-slate-400', 'select-none w-8');
+  const styleLineNumbers = classNames(context.isLightTheme ? 'text-slate-300' : 'text-slate-400', 'select-none pr-3');
 
   return (
     <Highlight
@@ -42,13 +42,11 @@ const Code = ({ children, className }: Props): JSX.Element => {
           {tokens.map((line, index) => {
             const lineProps = getLineProps({ line, key: index });
             return (
-              <div key={index} {...lineProps} className="flex">
-                <span className={styleLineNumbers}>{index + 1}</span>
-                <div className="inline-block">
-                  {line.map((token, key) => (
-                    <span key={key} {...getTokenProps({ token, key })} />
-                  ))}
-                </div>
+              <div key={index} {...lineProps} className="flex flex-row">
+                <div className={styleLineNumbers}>{index + 1}</div>
+                {line.map((token, key) => (
+                  <span key={key} {...getTokenProps({ token, key })} />
+                ))}
               </div>
             );
           })}

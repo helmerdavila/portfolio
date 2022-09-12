@@ -6,7 +6,7 @@ const useTranslations = (): Record<string, string> => {
   // Grab the locale (passed through context) from the Context Provider
   const { locale } = useContext(LocaleContext);
   // Query the JSON files in <rootDir>/i18n/translations
-  const { rawData } = useStaticQuery(query);
+  const { rawData } = useStaticQuery<Queries.UseTranslationsQuery>(query);
 
   // Simplify the response from GraphQL
   const simplified = rawData.edges.map((item) => {
@@ -25,7 +25,7 @@ const useTranslations = (): Record<string, string> => {
 export default useTranslations;
 
 const query = graphql`
-  query useTranslations {
+  query UseTranslations {
     rawData: allFile(filter: { sourceInstanceName: { eq: "translations" } }) {
       edges {
         node {
