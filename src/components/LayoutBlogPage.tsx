@@ -88,20 +88,23 @@ export const Head = ({ data }: PageProps<Queries.LayoutBlogPageQuery>) => {
   return (
     <>
       <title>{title}</title>
+      <meta name="author" content={data.site.siteMetadata.author} />
       <meta name="description" content={description} />
-      {/* {data.mdx.fields.isDefault ? (
-        <link rel="canonical" href={data.site.siteMetadata.siteUrl} />
-      ) : (
-        <link rel="alternate" href={data.site.siteMetadata.siteUrl} />
-      )} */}
-      <meta name="og:type" content="article" />
+      <meta name="publish_date" property="og:publish_date" content={data.mdx.frontmatter.date} />
+      <meta name="title" property="og:title" content={title} />
+      <meta name="image" property="og:image" content={imageUrl} />
+      <meta property="og:type" content="article" />
       <meta name="og:description" content={description} />
-      <meta name="og:image" content={imageUrl} />
       <meta name="og:locale" content={data.mdx.fields.locale} />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:card" content="summary" />
       <meta name="twitter:image" content={imageUrl} />
       <meta name="twitter:description" content={description} />
+      {/* {data.mdx.fields.isDefault ? (
+        <link rel="canonical" href={data.site.siteMetadata.siteUrl} />
+      ) : (
+        <link rel="alternate" href={data.site.siteMetadata.siteUrl} />
+      )} */}
     </>
   );
 };
@@ -177,6 +180,7 @@ export const query = graphql`
         imageAlt
         title
         description
+        date
         image {
           childImageSharp {
             gatsbyImageData(layout: FULL_WIDTH, placeholder: TRACED_SVG)
@@ -194,6 +198,7 @@ export const query = graphql`
     site {
       siteMetadata {
         siteUrl
+        author
       }
     }
   }

@@ -4464,6 +4464,35 @@ declare namespace Queries {
     readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null;
   };
 
+  type IndexQueryVariables = Exact<{
+    locale: Scalars['String'];
+  }>;
+
+  type IndexQuery = {
+    readonly allMdx: {
+      readonly nodes: ReadonlyArray<{
+        readonly frontmatter: {
+          readonly title: string;
+          readonly imageAlt: string | null;
+          readonly date: string | null;
+          readonly image: {
+            readonly childImageSharp: {
+              readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData;
+            } | null;
+          } | null;
+        } | null;
+        readonly fields: { readonly locale: string | null; readonly slug: string | null } | null;
+        readonly parent: { readonly relativeDirectory: string } | {} | null;
+      }>;
+    };
+    readonly backgroundImage: {
+      readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null;
+    } | null;
+    readonly homePostImage: {
+      readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null;
+    } | null;
+  };
+
   type LayoutBlogPageQueryVariables = Exact<{
     locale: Scalars['String'];
     title: Scalars['String'];
@@ -4482,6 +4511,7 @@ declare namespace Queries {
         readonly imageAlt: string | null;
         readonly title: string;
         readonly description: string | null;
+        readonly date: string | null;
         readonly image: {
           readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null;
         } | null;
@@ -4490,7 +4520,9 @@ declare namespace Queries {
         } | null> | null;
       } | null;
     } | null;
-    readonly site: { readonly siteMetadata: { readonly siteUrl: string | null } | null } | null;
+    readonly site: {
+      readonly siteMetadata: { readonly siteUrl: string | null; readonly author: string | null } | null;
+    } | null;
   };
 
   type UseTranslationsQueryVariables = Exact<{ [key: string]: never }>;
