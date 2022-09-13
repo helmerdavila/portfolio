@@ -16,7 +16,7 @@ it('renders PostCard with image', () => {
   );
 
   expect(queryByRole('link')).toBeInTheDocument();
-  expect(queryByRole('link')).toHaveAttribute('href', `/blog/${post.parent.relativeDirectory}`);
+  expect(queryByRole('link')).toHaveAttribute('href', `blog/${post.fields.slug}`);
   expect(queryByRole('img')).not.toHaveAttribute(
     'data-src',
     defaultImage.childImageSharp.gatsbyImageData.images.fallback.src,
@@ -33,7 +33,7 @@ it('renders PostCard with no image, uses default', () => {
   );
 
   expect(queryByRole('link')).toBeInTheDocument();
-  expect(queryByRole('link')).toHaveAttribute('href', `/blog/${post.parent.relativeDirectory}`);
+  expect(queryByRole('link')).toHaveAttribute('href', `blog/${post.fields.slug}`);
   expect(queryByAltText('Blog')).toBeInTheDocument();
 });
 
