@@ -4573,9 +4573,9 @@ declare namespace Queries {
     };
   };
 
-  type Unnamed_1_QueryVariables = Exact<{ [key: string]: never }>;
+  type CreatePagesQueryVariables = Exact<{ [key: string]: never }>;
 
-  type Unnamed_1_Query = {
+  type CreatePagesQuery = {
     readonly allMdx: {
       readonly nodes: ReadonlyArray<{
         readonly frontmatter: { readonly title: string; readonly date: string | null } | null;
