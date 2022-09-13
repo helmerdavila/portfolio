@@ -16,6 +16,6 @@
     "strict": false,
     "target": "esnext"
   },
-  "include": ["./jest-setup.ts", "./src", "./gatsby-node.ts", "./gatsby-config.ts"],
+  "include": ["./jest-setup.ts", "./src/**/*", "./gatsby-node.ts", "./gatsby-config.ts"],
   "exclude": ["node_modules", "public", ".cache"]
 }

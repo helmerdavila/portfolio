@@ -41,6 +41,7 @@ export default {
         },
         fields: {
           locale: 'en',
+          slug: faker.lorem.slug(),
         },
         parent: {
           relativeDirectory: faker.lorem.slug(),

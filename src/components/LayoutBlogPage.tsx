@@ -1,13 +1,12 @@
 import React, { useContext } from 'react';
 import LayoutBlog from './LayoutBlog';
-import { graphql } from 'gatsby';
+import { graphql, PageProps } from 'gatsby';
 import { ThemeContext } from './Layout';
 import classNames from 'classnames';
 import { IBlogPost } from '../interfaces';
-import SEO from './Seo';
 import { MDXProvider } from '@mdx-js/react';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
-import Code from '../components/Mdx/Code';
+import Code from './Mdx/Code';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import useTranslations from './UseTranslations';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -62,9 +61,9 @@ export const MyInlineCode = (props) => {
     'text-blue-600 bg-gray-100': context.isLightTheme,
     'text-gray-300 bg-blue-800': !context.isLightTheme,
   };
-  return <code className={classNames(themeStyles, 'rounded text-base px-1')} {...props} />;
+  return <span className={classNames(themeStyles, 'rounded text-base px-1 font-mono')} {...props} />;
 };
-export const MyCode = (props: { children: string; className: string }) => <Code {...props} />;
+export const MyPre = (props) => <Code {...props.children.props} />;
 export const MyImage = (props: Record<string, unknown>) => <img className="shadow-lg rounded" {...props} />;
 
 const components = {
@@ -75,9 +74,39 @@ const components = {
   li: MyListItem,
   p: MyParagraph,
   blockquote: MyBlockquote,
-  inlineCode: MyInlineCode,
-  code: MyCode,
+  pre: MyPre,
+  code: MyInlineCode,
   img: MyImage,
+};
+
+export const Head = ({ data }: PageProps<Queries.LayoutBlogPageQuery>) => {
+  const imageRendered = getImage(data.mdx.frontmatter.image.childImageSharp.gatsbyImageData);
+  const imageUrl = `${data.site.siteMetadata.siteUrl}${imageRendered.images.fallback.src}`;
+  const title = data.mdx.frontmatter.title;
+  const description = data.mdx.frontmatter.description;
+
+  return (
+    <>
+      <title>{title}</title>
+      <meta name="author" content={data.site.siteMetadata.author} />
+      <meta name="description" content={description} />
+      <meta name="publish_date" property="og:publish_date" content={data.mdx.frontmatter.date} />
+      <meta name="title" property="og:title" content={title} />
+      <meta name="image" property="og:image" content={imageUrl} />
+      <meta property="og:type" content="article" />
+      <meta name="og:description" content={description} />
+      <meta name="og:locale" content={data.mdx.fields.locale} />
+      <meta name="twitter:title" content={title} />
+      <meta name="twitter:card" content="summary" />
+      <meta name="twitter:image" content={imageUrl} />
+      <meta name="twitter:description" content={description} />
+      {/* {data.mdx.fields.isDefault ? (
+        <link rel="canonical" href={data.site.siteMetadata.siteUrl} />
+      ) : (
+        <link rel="alternate" href={data.site.siteMetadata.siteUrl} />
+      )} */}
+    </>
+  );
 };
 
 const LayoutBlogPage = ({ data: { mdx } }: { data: { mdx: IBlogPost }; children?: unknown }): JSX.Element => {
@@ -96,12 +125,6 @@ const LayoutBlogPage = ({ data: { mdx } }: { data: { mdx: IBlogPost }; children?
 
   return (
     <LayoutBlog>
-      <SEO
-        title={mdx?.frontmatter?.title}
-        ogType="article"
-        description={mdx?.frontmatter?.description || mdx?.excerpt}
-        image={imageRendered?.images?.fallback?.src ?? ''}
-      />
       <div className="container max-w-3xl py-5 mx-auto xl:max-w-6xl">
         <div className={classNames(pageBackground, 'border-2')}>
           <GatsbyImage image={imageRendered} alt={imageAlt} data-testid="post-image" />
@@ -146,7 +169,7 @@ const LayoutBlogPage = ({ data: { mdx } }: { data: { mdx: IBlogPost }; children?
 export default LayoutBlogPage;
 
 export const query = graphql`
-  query Post($locale: String!, $title: String!) {
+  query LayoutBlogPage($locale: String!, $title: String!) {
     mdx(frontmatter: { title: { eq: $title } }, fields: { locale: { eq: $locale } }) {
       fields {
         slug
@@ -157,6 +180,7 @@ export const query = graphql`
         imageAlt
         title
         description
+        date
         image {
           childImageSharp {
             gatsbyImageData(layout: FULL_WIDTH, placeholder: TRACED_SVG)
@@ -170,6 +194,12 @@ export const query = graphql`
       }
       excerpt(pruneLength: 100)
       body
+    }
+    site {
+      siteMetadata {
+        siteUrl
+        author
+      }
     }
   }
 `;

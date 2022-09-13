@@ -34,7 +34,7 @@ const IndexPage = ({ data }: { data: IBlogPageQuery }): JSX.Element => (
 );
 
 export const query = graphql`
-  query ($locale: String!) {
+  query Index($locale: String!) {
     allMdx(
       filter: { fields: { locale: { eq: $locale } } }
       sort: { fields: [frontmatter___date], order: DESC }
@@ -51,6 +51,7 @@ export const query = graphql`
         }
         fields {
           locale
+          slug
         }
         parent {
           ... on File {

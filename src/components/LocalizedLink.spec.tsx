@@ -17,8 +17,8 @@ it('renders spanish url without issue', () => {
 });
 
 it('renders french bigger url without issue', () => {
-  const randomUrl = '/demo';
+  const randomUrl = 'demo';
   const { queryByRole } = customRender(<LocalizedLink to={randomUrl} />, { localeContextProps: { locale: 'fr' } });
 
-  expect(queryByRole('link')).toHaveAttribute('href', `/fr${randomUrl}`);
+  expect(queryByRole('link')).toHaveAttribute('href', `/fr/${randomUrl}`);
 });

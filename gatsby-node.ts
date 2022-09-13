@@ -79,7 +79,7 @@ export const createPages: GatsbyNode['createPages'] = async ({ graphql, actions 
   // Adding sort here to generate the HTMl pages in descending order by date
   const result = await graphql<IQueryAllMdxFiles>(
     `
-      {
+      query CreatePages {
         allMdx(sort: { fields: [frontmatter___date], order: DESC }) {
           nodes {
             frontmatter {

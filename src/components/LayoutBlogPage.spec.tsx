@@ -4,7 +4,7 @@ import { IBlogPost } from '../interfaces';
 import { customRender } from '../utils/testing';
 import LayoutBlogPage, {
   MyBlockquote,
-  MyCode,
+  MyPre,
   MyH1,
   MyH2,
   MyH3,
@@ -131,8 +131,12 @@ it('renders MyInlineCode without issues', () => {
 });
 
 it('renders MyCode without issues', () => {
-  const text = faker.lorem.words(3);
-  const { queryByText } = render(<MyCode className="demo">{text}</MyCode>);
+  const text = 'This is simple code';
+  const { queryByText } = render(
+    <MyPre className="demo">
+      <code>{text}</code>
+    </MyPre>,
+  );
 
   expect(queryByText(text)).toBeInTheDocument();
 });

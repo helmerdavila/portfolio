@@ -45,7 +45,7 @@ export const PostCard = ({
         'bg-gray-200': context.isLightTheme,
         'bg-gray-700': !context.isLightTheme,
       })}
-      to={`/blog/${post.parent.relativeDirectory}`}
+      to={`blog/${post.fields.slug}`}
       target="_blank"
       rel="noopener noreferrer"
     >
