@@ -10,10 +10,9 @@ import AboutMe from '../components/AboutMe/AboutMe';
 import PersonalProjects from '../components/PersonalProjects/PersonalProjects';
 import Footer from '../components/Layouts/Footer';
 import BlogPreviewHome from '../components/Blog/BlogPreviewHome';
-import { graphql } from 'gatsby';
-import { IBlogPageQuery } from '../interfaces';
+import { graphql, PageProps } from 'gatsby';
 
-const IndexPage = ({ data }: { data: IBlogPageQuery }): JSX.Element => (
+const IndexPage = ({ data }: PageProps<Queries.IndexQuery>): JSX.Element => (
   <>
     <SEO
       title="Fullstack Web Developer"
