@@ -12,8 +12,9 @@ import LayoutBlogPage, {
   MyList,
   MyListItem,
   MyParagraph,
+  HeadSeo,
 } from './LayoutBlogPage';
-import { backgroundImage, loadSiteData, loadTranslations } from '../utils/mockresponses';
+import { backgroundImage, layoutBlogPostImage, loadSiteData, loadTranslations } from '../utils/mockresponses';
 import { faker } from '@faker-js/faker';
 import { render } from '@testing-library/react';
 
@@ -156,4 +157,29 @@ it('renders MyImage without issues', () => {
   const { queryByRole } = render(<MyImage />);
 
   expect(queryByRole('img')).toBeInTheDocument();
+});
+
+it('renders Head component without issues', () => {
+  const postTitle = faker.lorem.words();
+  const props: DeepPartial<PageProps<Queries.LayoutBlogPageQuery>> = {
+    data: {
+      site: { siteMetadata: { author: '', siteUrl: '' } },
+      mdx: {
+        excerpt: faker.lorem.words(5),
+        body: faker.lorem.paragraphs(),
+        fields: { locale: 'en', isDefault: true, slug: faker.lorem.slug() },
+        frontmatter: {
+          title: postTitle,
+          description: faker.lorem.words(5),
+          date: '',
+          image: layoutBlogPostImage.mdx.frontmatter.image,
+          imageAlt: faker.lorem.word(),
+          embeddedImagesLocal: [],
+        },
+      },
+    },
+  };
+  const { queryByText } = render(<HeadSeo {...props}>{undefined}</HeadSeo>);
+
+  expect(queryByText(postTitle)).toBeInTheDocument();
 });

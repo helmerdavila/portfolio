@@ -65,3 +65,35 @@ export const backgroundImage: { backgroundImage: Queries.IndexQuery['backgroundI
     },
   },
 };
+
+export const layoutBlogPostImage: DeepPartial<Queries.LayoutBlogPageQuery> = {
+  mdx: {
+    frontmatter: {
+      image: {
+        childImageSharp: {
+          gatsbyImageData: {
+            layout: 'fullWidth',
+            images: {
+              fallback: {
+                src: '/static/f611ddce893dac0e4c6806e9494ff65b/a764f/mac-development.jpg',
+                srcSet:
+                  '/static/f611ddce893dac0e4c6806e9494ff65b/37bba/mac-development.jpg 750w,\n/static/f611ddce893dac0e4c6806e9494ff65b/61c72/mac-development.jpg 1080w,\n/static/f611ddce893dac0e4c6806e9494ff65b/d61e8/mac-development.jpg 1366w,\n/static/f611ddce893dac0e4c6806e9494ff65b/a764f/mac-development.jpg 1920w',
+                sizes: '100vw',
+              },
+              sources: [
+                {
+                  srcSet:
+                    '/static/f611ddce893dac0e4c6806e9494ff65b/a66aa/mac-development.webp 750w,\n/static/f611ddce893dac0e4c6806e9494ff65b/65dd5/mac-development.webp 1080w,\n/static/f611ddce893dac0e4c6806e9494ff65b/4fad6/mac-development.webp 1366w,\n/static/f611ddce893dac0e4c6806e9494ff65b/c512e/mac-development.webp 1920w',
+                  type: 'image/webp',
+                  sizes: '100vw',
+                },
+              ],
+            },
+            width: 1,
+            height: 0.5625,
+          },
+        },
+      },
+    },
+  },
+};

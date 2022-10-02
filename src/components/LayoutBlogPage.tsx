@@ -63,7 +63,7 @@ export const MyInlineCode = (props) => {
   return <span className={classNames(themeStyles, 'rounded text-base px-1 font-mono')} {...props} />;
 };
 export const MyPre = (props) => <Code {...props.children.props} />;
-export const MyImage = (props: Record<string, unknown>) => <img className="shadow-lg rounded" {...props} />;
+export const MyImage = (props: Record<string, unknown>) => <img className="shadow-lg rounded" alt="" {...props} />;
 
 const components = {
   h1: MyH1,
@@ -78,10 +78,11 @@ const components = {
   img: MyImage,
 };
 
-export const Head = ({ data }: PageProps<Queries.LayoutBlogPageQuery>) => {
+export const HeadSeo = ({ data }: DeepPartial<PageProps<Queries.LayoutBlogPageQuery>>) => {
   const imageRendered = getImage(data.mdx.frontmatter.image.childImageSharp.gatsbyImageData);
-  const imageUrl = `${data.site.siteMetadata.siteUrl}${imageRendered.images.fallback.src}`;
-  const title = data.mdx.frontmatter.title;
+  const imageAsSrc = imageRendered?.images?.fallback?.src ?? '/randomPathForTesting';
+  const imageUrl = `${data.site.siteMetadata.siteUrl}${imageAsSrc}`;
+  const title = data.mdx.frontmatter.title ?? 'Demo title';
   const description = data.mdx.frontmatter.description;
 
   return (
