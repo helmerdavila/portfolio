@@ -51,6 +51,7 @@ export const query = graphql`
         fields {
           locale
           slug
+          isDefault
         }
         parent {
           ... on File {

@@ -77,7 +77,8 @@ export const createPages: GatsbyNode['createPages'] = async ({ graphql, actions 
   const { createPage } = actions;
 
   // Adding sort here to generate the HTMl pages in descending order by date
-  const result = await graphql<IQueryAllMdxFiles>(
+  // Almost same type that Index Page Query
+  const result = await graphql<Queries.IndexQuery>(
     `
       query CreatePages {
         allMdx(sort: { fields: [frontmatter___date], order: DESC }) {
@@ -114,7 +115,7 @@ export const createPages: GatsbyNode['createPages'] = async ({ graphql, actions 
   postList.forEach((post) => {
     // All files for a blogpost are stored in a folder
     // relativeDirectory is the name of the folder
-    const slug = post.parent.relativeDirectory;
+    const slug = (post.parent as { relativeDirectory: string }).relativeDirectory;
 
     const title = post.frontmatter?.title;
 
@@ -127,9 +128,6 @@ export const createPages: GatsbyNode['createPages'] = async ({ graphql, actions 
       // component: `${postTemplate}?__contentFilePath=${post.childMdx.internal.contentFilePath}`,
       component: postTemplate,
       context: {
-        // Pass both the "title" and "locale" to find a unique file
-        // Only the title would not have been sufficient as articles could have the same title
-        // in different languages, e.g. because an english phrase is also common in german
         locale,
         title,
       },

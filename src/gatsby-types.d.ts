@@ -4481,7 +4481,11 @@ declare namespace Queries {
             } | null;
           } | null;
         } | null;
-        readonly fields: { readonly locale: string | null; readonly slug: string | null } | null;
+        readonly fields: {
+          readonly locale: string | null;
+          readonly slug: string | null;
+          readonly isDefault: boolean | null;
+        } | null;
         readonly parent: { readonly relativeDirectory: string } | {} | null;
       }>;
     };

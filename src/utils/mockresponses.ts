@@ -1,7 +1,6 @@
 import translations_en from '../../config/translations/en.json';
 import translations_fr from '../../config/translations/fr.json';
 import translations_es from '../../config/translations/es.json';
-import { IGatsbyFileImage } from '../interfaces';
 import { faker } from '@faker-js/faker';
 
 export const loadSiteData = {
@@ -39,7 +38,7 @@ export const loadTranslations = {
   },
 };
 
-export const backgroundImage: { backgroundImage: Partial<IGatsbyFileImage> } = {
+export const backgroundImage: { backgroundImage: Queries.IndexQuery['backgroundImage'] } = {
   backgroundImage: {
     childImageSharp: {
       gatsbyImageData: {
