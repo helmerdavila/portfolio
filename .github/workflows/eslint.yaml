@@ -28,6 +28,7 @@ jobs:
       - name: Running typescript check
         run: npm run ts:check
   coverage:
+    needs: [install_npm_and_ci]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
