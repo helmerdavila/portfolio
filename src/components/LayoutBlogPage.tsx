@@ -76,6 +76,8 @@ const components = {
   pre: MyPre,
   code: MyInlineCode,
   img: MyImage,
+  //  Deprecated in v2, it will use code
+  inlineCode: MyInlineCode,
 };
 
 export const HeadSeo = ({ data }: DeepPartial<PageProps<Queries.LayoutBlogPageQuery>>) => {
