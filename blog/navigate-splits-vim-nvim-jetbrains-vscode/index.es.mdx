@@ -1,0 +1,71 @@
+---
+title: 'Vim, Jetbrains o modo Vim para Vscode: Mejorar movimiento entre paneles'
+description: Utilizando atajos de teclado
+date: 2022-10-02
+image: ../../src/images/blog/vim_split.jpg
+imageAlt: Photo by Tim Mossholder on Unsplash
+published: true
+---
+
+# Vim, Jetbrains o modo Vim para Vscode: Mejorar movimiento entre paneles
+
+## 🤔 Por qué quería evitar el atajo por defecto
+
+Me acostumbré al *workflow* de Vim desde hace ya un año. Y ya que soy un usuario frecuente de los paneles y el listado de archivos. Quería implementar una mejor manera de hacerlo. Recordemos que VIM (o cualquier otro editor en el que esté implementado), trae los atajos por defecto para hacerlo.
+
+`^` + `w` + ( `h`  ó `j` ó `k` ó `l`) = Te mueves entre paneles
+
+Usuarios de Windows y Linux deben reemplazar `^` con `Ctrl`
+
+¿Pero qué pasa si queremos no usar esa `w` ? Ya que nos movemos en un archivo con `hjkl`. ¿No sería mejor agregar `Ctrl`  o `^` y la tecla de la dirección hacia donde nos queremos mover? Frecuentemente me muevo entre splits de Vim, Neovim, Jetbrains y Vscode. Así que quería un solo flujo. A continuación cómo lo conseguí.
+
+## 🛠 Solución para Vim & Neovim
+
+Ya que comparto algunas configuraciones entre Vim y Neovim. La manera más sencilla fue:
+
+```vim
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
+```
+
+## 🛠 Solución para Vscode
+
+Debe ser editado desde el archivo `settings.json` en Vscode. Funciona si estás utilizando el paquete [Vim](https://marketplace.visualstudio.com/items?itemName=vscodevim.vim) .
+
+```jsonp
+"vim.normalModeKeyBindings": [
+    {
+      "before": ["<C-k>"],
+      "commands": ["workbench.action.navigateUp"]
+    },
+    {
+      "before": ["<C-j>"],
+      "commands": ["workbench.action.navigateDown"]
+    },
+    {
+      "before": ["<C-h>"],
+      "commands": ["workbench.action.navigateLeft"]
+    },
+    {
+      "before": ["<C-l>"],
+      "commands": ["workbench.action.navigateRight"]
+    }
+  ],
+```
+
+## 🛠 Solución para Jetbrains
+
+Recuerda instalar [Ideavim](https://plugins.jetbrains.com/plugin/164-ideavim). Sólo tienes que agregar lo siguiente a tu `~/.ideavimrc`
+
+```vim
+:map <C-j> <C-W>j
+:map <C-k> <C-W>k
+:map <C-h> <C-W>h
+:map <C-l> <C-W>l
+```
+
+## ▶️ Probándolo
+
+Para hacerlo funcionar, asegúrate de reiniciar cualquiera de tus editores. Ahora debería ser mucho más fácil moverse entre splits.
