@@ -4,7 +4,7 @@ import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import React, { useContext } from 'react';
 import { ThemeContext } from '../components/Layout';
 import LayoutBlog from '../components/LayoutBlog';
-import LocalizedLink from '../components/LocalizedLink';
+import LocalizedLink, { LocalizedBlogLink } from '../components/LocalizedLink';
 import SEO from '../components/Seo';
 
 const Blog = ({ data }: PageProps<Queries.BlogQuery>): JSX.Element => {
@@ -24,8 +24,8 @@ const Blog = ({ data }: PageProps<Queries.BlogQuery>): JSX.Element => {
         {posts.map((post) => {
           const imageRendered = getImage(post.frontmatter.image?.childImageSharp.gatsbyImageData);
           return (
-            <LocalizedLink
-              to={`blog/${post.fields.slug}`}
+            <LocalizedBlogLink
+              to={post.fields.slug}
               className={classNames(
                 { 'bg-white border-2 shadown-sm': context.isLightTheme, 'bg-gray-800': !context.isLightTheme },
                 'block mt-10 rounded-md first:mt-3',
@@ -37,7 +37,7 @@ const Blog = ({ data }: PageProps<Queries.BlogQuery>): JSX.Element => {
                 <h2 className={classNames(themeStyles, 'text-4xl font-bold')}>{post?.frontmatter?.title}</h2>
                 <h5 className={classNames(themeStyles, 'mt-2 text-xl')}>{post?.frontmatter?.description}</h5>
               </div>
-            </LocalizedLink>
+            </LocalizedBlogLink>
           );
         })}
       </div>

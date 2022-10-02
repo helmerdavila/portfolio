@@ -19,4 +19,12 @@ const LocalizedLink = ({ to, ...props }: { to: string; [x: string]: unknown }): 
   return <Link {...props} to={path} />;
 };
 
+export const LocalizedBlogLink = ({ to, ...props }: { to: string; [x: string]: unknown }): JSX.Element => {
+  const { locale } = useContext(LocaleContext);
+
+  const url = locale === 'en' ? `/blog/${to}` : `/${locales[locale].path}/blog/${to}`;
+
+  return <Link {...props} to={url} />;
+};
+
 export default LocalizedLink;
