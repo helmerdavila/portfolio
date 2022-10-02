@@ -4,7 +4,7 @@ import { ILayout } from '../interfaces';
 const LocaleContext = React.createContext(null);
 const ThemeContext = React.createContext<{ isLightTheme: boolean; toggleTheme: () => void }>({
   isLightTheme: true,
-  toggleTheme: () => null,
+  toggleTheme: null,
 });
 
 const ThemeContextProvider = ({ children }: { children: unknown }): JSX.Element => {
