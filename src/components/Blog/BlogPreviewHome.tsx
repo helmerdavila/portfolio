@@ -1,15 +1,15 @@
 import React, { useContext } from 'react';
 import classNames from 'classnames';
 import { ThemeContext } from '../Layout';
-import { IBlogPageQuery, IBlogPost } from '../../interfaces';
 import LocalizedLink from '../../components/LocalizedLink';
 import { GatsbyImage, getImage, IGatsbyImageData } from 'gatsby-plugin-image';
+import type { BlogPostType } from '../../interfaces';
 
-const BlogPreviewHome = (props: { data: IBlogPageQuery }): JSX.Element => {
+const BlogPreviewHome = ({ data }: { data: Queries.IndexQuery }): JSX.Element => {
   const context = useContext(ThemeContext);
   const textColor = { 'text-white': !context.isLightTheme, 'text-black': context.isLightTheme };
-  const posts = props.data?.allMdx?.nodes;
-  const postDefaultImage = props.data.homePostImage.childImageSharp.gatsbyImageData;
+  const posts = data.allMdx.nodes;
+  const postDefaultImage = data.homePostImage.childImageSharp.gatsbyImageData;
 
   return posts.length ? (
     <section
@@ -18,9 +18,15 @@ const BlogPreviewHome = (props: { data: IBlogPageQuery }): JSX.Element => {
       <div className="container mx-auto 2xl:max-w-7xl">
         <h2 className={classNames('text-5xl font-semibold text-center mb-4', textColor)}>Blog</h2>
         <div className="flex flex-col sm:flex-row">
-          {posts?.map((post) => (
-            <PostCard key={post.parent.relativeDirectory} post={post} postDefaultImage={postDefaultImage} />
-          ))}
+          {posts?.map((post) =>
+            Object.keys(post.parent).length > 0 ? (
+              <PostCard
+                key={(post.parent as { relativeDirectory: string }).relativeDirectory}
+                post={post}
+                postDefaultImage={postDefaultImage}
+              />
+            ) : null,
+          )}
         </div>
       </div>
     </section>
@@ -31,12 +37,12 @@ export const PostCard = ({
   post,
   postDefaultImage,
 }: {
-  post: IBlogPost;
+  post: BlogPostType;
   postDefaultImage: IGatsbyImageData;
 }): JSX.Element => {
   const context = useContext(ThemeContext);
   const textColor = { 'text-white': !context.isLightTheme, 'text-black': context.isLightTheme };
-  const imageAlt = post.frontmatter?.imageAlt ?? 'Blog';
+  const imageAlt = post.frontmatter.imageAlt ?? 'Blog';
   const image = getImage(post.frontmatter.image?.childImageSharp.gatsbyImageData ?? postDefaultImage);
 
   return (
@@ -55,7 +61,7 @@ export const PostCard = ({
         image={image}
         alt={imageAlt}
       />
-      <h3 className={classNames('text-3xl font-semibold text-center p-4', textColor)}>{post.frontmatter?.title}</h3>
+      <h3 className={classNames('text-3xl font-semibold text-center p-4', textColor)}>{post.frontmatter.title}</h3>
     </LocalizedLink>
   );
 };

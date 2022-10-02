@@ -14,41 +14,15 @@ export interface ISlide {
 export interface IGatsbyFileImage extends FileSystemNode {
   childImageSharp: { gatsbyImageData: IGatsbyImageData };
 }
-export interface IBlogPost {
-  excerpt: string;
-  fields: {
-    slug: string;
-    locale: string;
-    isDefault: boolean;
-  };
-  frontmatter: {
-    title: string;
-    description: string;
-    published: boolean;
-    date: string;
-    lang: string;
-    imageAlt?: string;
-    image?: Partial<IGatsbyFileImage>;
-    embeddedImagesLocal?: Partial<IGatsbyFileImage>[];
-  };
-  parent: {
-    relativeDirectory: string;
-  };
-  body: string;
-}
-export interface IBlogPageQuery {
-  allMdx: {
-    nodes: IBlogPost[];
-  };
-  backgroundImage: IGatsbyFileImage;
-  homePostImage: IGatsbyFileImage;
-}
 
 export interface IQueryAllMdxFiles {
   allMdx: {
-    nodes: IBlogPost[];
+    nodes: BlogPostType[];
   };
 }
+
+export type BlogPostNodesTypes = Queries.IndexQuery['allMdx']['nodes'];
+export type BlogPostType = BlogPostNodesTypes[number];
 
 export interface ILayout extends Omit<Partial<PageProps<unknown, { locale: string }>>, 'children'> {
   children?: ReactElement;

@@ -3,7 +3,6 @@ import LayoutBlog from './LayoutBlog';
 import { graphql, PageProps } from 'gatsby';
 import { ThemeContext } from './Layout';
 import classNames from 'classnames';
-import { IBlogPost } from '../interfaces';
 import { MDXProvider } from '@mdx-js/react';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 import Code from './Mdx/Code';
@@ -64,7 +63,7 @@ export const MyInlineCode = (props) => {
   return <span className={classNames(themeStyles, 'rounded text-base px-1 font-mono')} {...props} />;
 };
 export const MyPre = (props) => <Code {...props.children.props} />;
-export const MyImage = (props: Record<string, unknown>) => <img className="shadow-lg rounded" {...props} />;
+export const MyImage = (props: Record<string, unknown>) => <img className="shadow-lg rounded" alt="" {...props} />;
 
 const components = {
   h1: MyH1,
@@ -77,12 +76,15 @@ const components = {
   pre: MyPre,
   code: MyInlineCode,
   img: MyImage,
+  //  Deprecated in v2, it will use code
+  inlineCode: MyInlineCode,
 };
 
-export const Head = ({ data }: PageProps<Queries.LayoutBlogPageQuery>) => {
+export const HeadSeo = ({ data }: DeepPartial<PageProps<Queries.LayoutBlogPageQuery>>) => {
   const imageRendered = getImage(data.mdx.frontmatter.image.childImageSharp.gatsbyImageData);
-  const imageUrl = `${data.site.siteMetadata.siteUrl}${imageRendered.images.fallback.src}`;
-  const title = data.mdx.frontmatter.title;
+  const imageAsSrc = imageRendered?.images?.fallback?.src ?? '/randomPathForTesting';
+  const imageUrl = `${data.site.siteMetadata.siteUrl}${imageAsSrc}`;
+  const title = data.mdx.frontmatter.title ?? 'Demo title';
   const description = data.mdx.frontmatter.description;
 
   return (
@@ -109,7 +111,7 @@ export const Head = ({ data }: PageProps<Queries.LayoutBlogPageQuery>) => {
   );
 };
 
-const LayoutBlogPage = ({ data: { mdx } }: { data: { mdx: IBlogPost }; children?: unknown }): JSX.Element => {
+const LayoutBlogPage = ({ data: { mdx } }: PageProps<Queries.LayoutBlogPageQuery>): JSX.Element => {
   const context = useContext(ThemeContext);
   const { author, edit_posts_on_github, written_by } = useTranslations();
   const pageBackground = {
@@ -117,8 +119,8 @@ const LayoutBlogPage = ({ data: { mdx } }: { data: { mdx: IBlogPost }; children?
     'bg-gray-800 border-gray-800': !context.isLightTheme,
   };
   const textStyle = { 'text-black': context.isLightTheme, 'text-white': !context.isLightTheme };
-  const imageAlt = mdx?.frontmatter?.imageAlt ?? '';
-  const imageRendered = getImage(mdx.frontmatter.image?.childImageSharp.gatsbyImageData);
+  const imageAlt = mdx.frontmatter.imageAlt ?? '';
+  const imageRendered = getImage(mdx.frontmatter.image.childImageSharp.gatsbyImageData);
   const pathFileForGithub = mdx.fields.isDefault
     ? `${mdx.fields.slug}/index.mdx`
     : `${mdx.fields.slug}/index.${mdx.fields.locale}.mdx`;

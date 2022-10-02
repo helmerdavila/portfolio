@@ -3,17 +3,23 @@ on:
     branches:
       - main
 jobs:
-  tests:
+  coverage:
     runs-on: ubuntu-latest
     env:
       FONTAWESOME_GITHUB_NPM_TOKEN: ${{ secrets.FONTAWESOME_GITHUB_NPM_TOKEN }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
           cache: npm
       - name: Installing dependencies
         run: npm ci
-      - name: Running Jest tests
-        run: npm run test
+      - uses: ArtiomTr/jest-coverage-report-action@v2
+        id: coverage
+        with:
+          skip-step: install
+          output: report-markdown
+      - uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          message: ${{ steps.coverage.outputs.report }}

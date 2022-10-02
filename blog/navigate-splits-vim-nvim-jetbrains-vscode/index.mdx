@@ -1,0 +1,71 @@
+---
+title: 'Vim, Jetbrains or Vscode Vim Mode: Improve navigation between splits'
+description: Using a better shortcuts
+date: 2022-10-02
+image: ../../src/images/blog/vim_split.jpg
+imageAlt: Photo by Tim Mossholder on Unsplash
+published: true
+---
+
+# Vim, Jetbrains or Vscode Vim Mode: A better shortcut to navigate between splits
+
+## 🤔 Why I wanted to avoid using the default shortcut
+
+I got used to the VIM workflow since 1 year ago. And since I’m a heavy user between panes and the file tree. I wanted to implement a better way to do it. Let’s remember that VIM (or any editor with a mode based on it), brings default shortcuts to accomplish that.
+
+`^` + `w` + ( `h`  or `j` or `k` or `l`) = Move between panels
+
+Windows and Linux users replace the `^` with `Ctrl` .
+
+But what if we just skip that `w` ? Since we move between lines with `hjkl` . Wouldn’t it be easier to add `Ctrl` or `^` and the direction key to move between panes? I often move between splits in VIM, Neovim, Jetbrains and Vscode. So I wanted to have a unified flow. Here is how I accomplished it.
+
+## 🛠 Vim & Neovim solution
+
+I put next content in `~/.vimrc` or my `~/.config/nvim/init.vim` file.
+
+```vim
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
+```
+
+## 🛠 Vscode solution
+
+It must be edited in the `settings.json` file from Vscode. This works if you’re using the [Vim](https://marketplace.visualstudio.com/items?itemName=vscodevim.vim) package.
+
+```jsonp
+"vim.normalModeKeyBindings": [
+    {
+      "before": ["<C-k>"],
+      "commands": ["workbench.action.navigateUp"]
+    },
+    {
+      "before": ["<C-j>"],
+      "commands": ["workbench.action.navigateDown"]
+    },
+    {
+      "before": ["<C-h>"],
+      "commands": ["workbench.action.navigateLeft"]
+    },
+    {
+      "before": ["<C-l>"],
+      "commands": ["workbench.action.navigateRight"]
+    }
+  ],
+```
+
+## 🛠 Jetbrains solution
+
+Remember to install [Ideavim](https://plugins.jetbrains.com/plugin/164-ideavim). This will look any config into your `~/.ideavimrc`
+
+```vim
+:map <C-j> <C-W>j
+:map <C-k> <C-W>k
+:map <C-h> <C-W>h
+:map <C-l> <C-W>l
+```
+
+## ▶️ Testing it
+
+To make it work, restart any of your editors. Now you should be able to move quickly between panes.

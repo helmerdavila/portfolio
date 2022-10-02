@@ -112,4 +112,4 @@ export default {
       },
     },
   },
-};
+} as unknown as Queries.IndexQuery;

@@ -2,13 +2,13 @@ import React from 'react';
 import { cleanup } from '@testing-library/react';
 import BlogPreviewHome, { PostCard } from './BlogPreviewHome';
 import { customRender } from '../../utils/testing';
-import { IBlogPageQuery, IBlogPost, IGatsbyFileImage } from '../../interfaces';
+import type { BlogPostType, IGatsbyFileImage } from '../../interfaces';
 import BlogPreviewHomeMock, { POSTS } from './BlogPreview.mock';
 
 afterEach(cleanup);
 
 it('renders PostCard with image', () => {
-  const post: IBlogPost = BlogPreviewHomeMock.allMdx.nodes[POSTS.POST_WITH_IMAGE] as IBlogPost;
+  const post: BlogPostType = BlogPreviewHomeMock.allMdx.nodes[POSTS.POST_WITH_IMAGE];
   const defaultImage = BlogPreviewHomeMock.homePostImage as IGatsbyFileImage;
 
   const { queryByAltText, queryByRole } = customRender(
@@ -25,7 +25,7 @@ it('renders PostCard with image', () => {
 });
 
 it('renders PostCard with no image, uses default', () => {
-  const post: IBlogPost = BlogPreviewHomeMock.allMdx.nodes[POSTS.POST_WITHOUT_IMAGE] as IBlogPost;
+  const post: BlogPostType = BlogPreviewHomeMock.allMdx.nodes[POSTS.POST_WITHOUT_IMAGE];
   const defaultImage = BlogPreviewHomeMock.homePostImage as IGatsbyFileImage;
 
   const { queryByAltText, queryByRole } = customRender(
@@ -38,7 +38,7 @@ it('renders PostCard with no image, uses default', () => {
 });
 
 it('renders BlogPreviewHome', () => {
-  const { queryAllByRole } = customRender(<BlogPreviewHome data={BlogPreviewHomeMock as IBlogPageQuery} />);
+  const { queryAllByRole } = customRender(<BlogPreviewHome data={BlogPreviewHomeMock} />);
   const allLinks = queryAllByRole('link');
 
   for (const link of allLinks) {
