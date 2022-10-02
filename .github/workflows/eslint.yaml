@@ -16,6 +16,6 @@ jobs:
       - name: Installing dependencies
         run: npm ci
       - name: Running typescript check
-        run: npm run lint
-      - name: Running eslint
         run: npm run ts:check
+      - name: Running eslint
+        run: npm run lint
