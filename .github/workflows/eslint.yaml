@@ -19,23 +19,13 @@ jobs:
     needs: [install_npm_and_ci]
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
       - name: Running eslint
         run: npm run lint
   tscheck:
     needs: [install_npm_and_ci]
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
       - name: Running typescript check
         run: npm run ts:check
-  coverage:
-    needs: [install_npm_and_ci]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: ArtiomTr/jest-coverage-report-action@v2
-        id: coverage
-        with:
-          output: report-markdown
-      - uses: marocchino/sticky-pull-request-comment@v2
-        with:
-          message: ${{ steps.coverage.outputs.report }}
