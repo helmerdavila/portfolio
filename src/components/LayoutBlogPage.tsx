@@ -80,7 +80,8 @@ const components = {
   inlineCode: MyInlineCode,
 };
 
-export const HeadSeo = ({ data }: DeepPartial<PageProps<Queries.LayoutBlogPageQuery>>) => {
+// Don't change the Head name here. Used by Gatsby
+export const Head = ({ data }: DeepPartial<PageProps<Queries.LayoutBlogPageQuery>>) => {
   const imageRendered = getImage(data.mdx.frontmatter.image.childImageSharp.gatsbyImageData);
   const imageAsSrc = imageRendered?.images?.fallback?.src ?? '/randomPathForTesting';
   const imageUrl = `${data.site.siteMetadata.siteUrl}${imageAsSrc}`;
