@@ -12,7 +12,7 @@ import LayoutBlogPage, {
   MyList,
   MyListItem,
   MyParagraph,
-  HeadSeo,
+  Head,
 } from './LayoutBlogPage';
 import { backgroundImage, layoutBlogPostImage, loadSiteData, loadTranslations } from '../utils/mockresponses';
 import { faker } from '@faker-js/faker';
@@ -179,7 +179,7 @@ it('renders Head component without issues', () => {
       },
     },
   };
-  const { queryByText } = render(<HeadSeo {...props}>{undefined}</HeadSeo>);
+  const { queryByText } = render(<Head {...props}>{undefined}</Head>);
 
   expect(queryByText(postTitle)).toBeInTheDocument();
 });
