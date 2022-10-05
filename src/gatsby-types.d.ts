@@ -650,7 +650,6 @@ declare namespace Queries {
     | 'childMdx.fields.locale'
     | 'childMdx.fields.localizedSlug'
     | 'childMdx.fields.slug'
-    | 'childMdx.fileAbsolutePath'
     | 'childMdx.frontmatter.date'
     | 'childMdx.frontmatter.description'
     | 'childMdx.frontmatter.embeddedImagesLocal'
@@ -736,10 +735,6 @@ declare namespace Queries {
     | 'childMdx.frontmatter.image.uid'
     | 'childMdx.frontmatter.published'
     | 'childMdx.frontmatter.title'
-    | 'childMdx.headings'
-    | 'childMdx.headings.depth'
-    | 'childMdx.headings.value'
-    | 'childMdx.html'
     | 'childMdx.id'
     | 'childMdx.internal.content'
     | 'childMdx.internal.contentDigest'
@@ -750,7 +745,6 @@ declare namespace Queries {
     | 'childMdx.internal.mediaType'
     | 'childMdx.internal.owner'
     | 'childMdx.internal.type'
-    | 'childMdx.mdxAST'
     | 'childMdx.parent.children'
     | 'childMdx.parent.children.children'
     | 'childMdx.parent.children.id'
@@ -766,13 +760,7 @@ declare namespace Queries {
     | 'childMdx.parent.internal.type'
     | 'childMdx.parent.parent.children'
     | 'childMdx.parent.parent.id'
-    | 'childMdx.rawBody'
-    | 'childMdx.slug'
     | 'childMdx.tableOfContents'
-    | 'childMdx.timeToRead'
-    | 'childMdx.wordCount.paragraphs'
-    | 'childMdx.wordCount.sentences'
-    | 'childMdx.wordCount.words'
     | 'childTranslationsJson.about_me'
     | 'childTranslationsJson.about_me_description'
     | 'childTranslationsJson.and_i_build'
@@ -946,7 +934,6 @@ declare namespace Queries {
     | 'childrenMdx.fields.locale'
     | 'childrenMdx.fields.localizedSlug'
     | 'childrenMdx.fields.slug'
-    | 'childrenMdx.fileAbsolutePath'
     | 'childrenMdx.frontmatter.date'
     | 'childrenMdx.frontmatter.description'
     | 'childrenMdx.frontmatter.embeddedImagesLocal'
@@ -1032,10 +1019,6 @@ declare namespace Queries {
     | 'childrenMdx.frontmatter.image.uid'
     | 'childrenMdx.frontmatter.published'
     | 'childrenMdx.frontmatter.title'
-    | 'childrenMdx.headings'
-    | 'childrenMdx.headings.depth'
-    | 'childrenMdx.headings.value'
-    | 'childrenMdx.html'
     | 'childrenMdx.id'
     | 'childrenMdx.internal.content'
     | 'childrenMdx.internal.contentDigest'
@@ -1046,7 +1029,6 @@ declare namespace Queries {
     | 'childrenMdx.internal.mediaType'
     | 'childrenMdx.internal.owner'
     | 'childrenMdx.internal.type'
-    | 'childrenMdx.mdxAST'
     | 'childrenMdx.parent.children'
     | 'childrenMdx.parent.children.children'
     | 'childrenMdx.parent.children.id'
@@ -1062,13 +1044,7 @@ declare namespace Queries {
     | 'childrenMdx.parent.internal.type'
     | 'childrenMdx.parent.parent.children'
     | 'childrenMdx.parent.parent.id'
-    | 'childrenMdx.rawBody'
-    | 'childrenMdx.slug'
     | 'childrenMdx.tableOfContents'
-    | 'childrenMdx.timeToRead'
-    | 'childrenMdx.wordCount.paragraphs'
-    | 'childrenMdx.wordCount.sentences'
-    | 'childrenMdx.wordCount.words'
     | 'childrenTranslationsJson'
     | 'childrenTranslationsJson.about_me'
     | 'childrenTranslationsJson.about_me_description'
@@ -1376,8 +1352,6 @@ declare namespace Queries {
   type GatsbyImageLayout = 'constrained' | 'fixed' | 'fullWidth';
 
   type GatsbyImagePlaceholder = 'blurred' | 'dominantColor' | 'none' | 'tracedSVG';
-
-  type HeadingsMdx = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 
   type ImageCropFocus = 17 | 0 | 2 | 16 | 1 | 5 | 8 | 3 | 6 | 7 | 4;
 
@@ -1850,32 +1824,19 @@ declare namespace Queries {
   };
 
   type Mdx = Node & {
-    readonly body: Scalars['String'];
+    readonly body: Maybe<Scalars['String']>;
     readonly children: ReadonlyArray<Node>;
-    readonly excerpt: Scalars['String'];
+    readonly excerpt: Maybe<Scalars['String']>;
     readonly fields: Maybe<MdxFields>;
-    readonly fileAbsolutePath: Scalars['String'];
     readonly frontmatter: Maybe<MdxFrontmatter>;
-    readonly headings: Maybe<ReadonlyArray<Maybe<MdxHeadingMdx>>>;
-    readonly html: Maybe<Scalars['String']>;
     readonly id: Scalars['ID'];
     readonly internal: Internal;
-    readonly mdxAST: Maybe<Scalars['JSON']>;
     readonly parent: Maybe<Node>;
-    readonly rawBody: Scalars['String'];
-    readonly slug: Maybe<Scalars['String']>;
     readonly tableOfContents: Maybe<Scalars['JSON']>;
-    readonly timeToRead: Maybe<Scalars['Int']>;
-    readonly wordCount: Maybe<MdxWordCount>;
   };
 
   type Mdx_excerptArgs = {
     pruneLength?: InputMaybe<Scalars['Int']>;
-    truncate?: InputMaybe<Scalars['Boolean']>;
-  };
-
-  type Mdx_headingsArgs = {
-    depth: InputMaybe<HeadingsMdx>;
   };
 
   type Mdx_tableOfContentsArgs = {
@@ -1978,7 +1939,6 @@ declare namespace Queries {
     | 'fields.locale'
     | 'fields.localizedSlug'
     | 'fields.slug'
-    | 'fileAbsolutePath'
     | 'frontmatter.date'
     | 'frontmatter.description'
     | 'frontmatter.embeddedImagesLocal'
@@ -1999,15 +1959,8 @@ declare namespace Queries {
     | 'frontmatter.embeddedImagesLocal.childMdx.body'
     | 'frontmatter.embeddedImagesLocal.childMdx.children'
     | 'frontmatter.embeddedImagesLocal.childMdx.excerpt'
-    | 'frontmatter.embeddedImagesLocal.childMdx.fileAbsolutePath'
-    | 'frontmatter.embeddedImagesLocal.childMdx.headings'
-    | 'frontmatter.embeddedImagesLocal.childMdx.html'
     | 'frontmatter.embeddedImagesLocal.childMdx.id'
-    | 'frontmatter.embeddedImagesLocal.childMdx.mdxAST'
-    | 'frontmatter.embeddedImagesLocal.childMdx.rawBody'
-    | 'frontmatter.embeddedImagesLocal.childMdx.slug'
     | 'frontmatter.embeddedImagesLocal.childMdx.tableOfContents'
-    | 'frontmatter.embeddedImagesLocal.childMdx.timeToRead'
     | 'frontmatter.embeddedImagesLocal.childTranslationsJson.about_me'
     | 'frontmatter.embeddedImagesLocal.childTranslationsJson.about_me_description'
     | 'frontmatter.embeddedImagesLocal.childTranslationsJson.and_i_build'
@@ -2053,15 +2006,8 @@ declare namespace Queries {
     | 'frontmatter.embeddedImagesLocal.childrenMdx.body'
     | 'frontmatter.embeddedImagesLocal.childrenMdx.children'
     | 'frontmatter.embeddedImagesLocal.childrenMdx.excerpt'
-    | 'frontmatter.embeddedImagesLocal.childrenMdx.fileAbsolutePath'
-    | 'frontmatter.embeddedImagesLocal.childrenMdx.headings'
-    | 'frontmatter.embeddedImagesLocal.childrenMdx.html'
     | 'frontmatter.embeddedImagesLocal.childrenMdx.id'
-    | 'frontmatter.embeddedImagesLocal.childrenMdx.mdxAST'
-    | 'frontmatter.embeddedImagesLocal.childrenMdx.rawBody'
-    | 'frontmatter.embeddedImagesLocal.childrenMdx.slug'
     | 'frontmatter.embeddedImagesLocal.childrenMdx.tableOfContents'
-    | 'frontmatter.embeddedImagesLocal.childrenMdx.timeToRead'
     | 'frontmatter.embeddedImagesLocal.childrenTranslationsJson'
     | 'frontmatter.embeddedImagesLocal.childrenTranslationsJson.about_me'
     | 'frontmatter.embeddedImagesLocal.childrenTranslationsJson.about_me_description'
@@ -2155,15 +2101,8 @@ declare namespace Queries {
     | 'frontmatter.image.childMdx.body'
     | 'frontmatter.image.childMdx.children'
     | 'frontmatter.image.childMdx.excerpt'
-    | 'frontmatter.image.childMdx.fileAbsolutePath'
-    | 'frontmatter.image.childMdx.headings'
-    | 'frontmatter.image.childMdx.html'
     | 'frontmatter.image.childMdx.id'
-    | 'frontmatter.image.childMdx.mdxAST'
-    | 'frontmatter.image.childMdx.rawBody'
-    | 'frontmatter.image.childMdx.slug'
     | 'frontmatter.image.childMdx.tableOfContents'
-    | 'frontmatter.image.childMdx.timeToRead'
     | 'frontmatter.image.childTranslationsJson.about_me'
     | 'frontmatter.image.childTranslationsJson.about_me_description'
     | 'frontmatter.image.childTranslationsJson.and_i_build'
@@ -2209,15 +2148,8 @@ declare namespace Queries {
     | 'frontmatter.image.childrenMdx.body'
     | 'frontmatter.image.childrenMdx.children'
     | 'frontmatter.image.childrenMdx.excerpt'
-    | 'frontmatter.image.childrenMdx.fileAbsolutePath'
-    | 'frontmatter.image.childrenMdx.headings'
-    | 'frontmatter.image.childrenMdx.html'
     | 'frontmatter.image.childrenMdx.id'
-    | 'frontmatter.image.childrenMdx.mdxAST'
-    | 'frontmatter.image.childrenMdx.rawBody'
-    | 'frontmatter.image.childrenMdx.slug'
     | 'frontmatter.image.childrenMdx.tableOfContents'
-    | 'frontmatter.image.childrenMdx.timeToRead'
     | 'frontmatter.image.childrenTranslationsJson'
     | 'frontmatter.image.childrenTranslationsJson.about_me'
     | 'frontmatter.image.childrenTranslationsJson.about_me_description'
@@ -2294,10 +2226,6 @@ declare namespace Queries {
     | 'frontmatter.image.uid'
     | 'frontmatter.published'
     | 'frontmatter.title'
-    | 'headings'
-    | 'headings.depth'
-    | 'headings.value'
-    | 'html'
     | 'id'
     | 'internal.content'
     | 'internal.contentDigest'
@@ -2308,7 +2236,6 @@ declare namespace Queries {
     | 'internal.mediaType'
     | 'internal.owner'
     | 'internal.type'
-    | 'mdxAST'
     | 'parent.children'
     | 'parent.children.children'
     | 'parent.children.children.children'
@@ -2350,13 +2277,7 @@ declare namespace Queries {
     | 'parent.parent.internal.type'
     | 'parent.parent.parent.children'
     | 'parent.parent.parent.id'
-    | 'rawBody'
-    | 'slug'
-    | 'tableOfContents'
-    | 'timeToRead'
-    | 'wordCount.paragraphs'
-    | 'wordCount.sentences'
-    | 'wordCount.words';
+    | 'tableOfContents';
 
   type MdxFieldsFilterInput = {
     readonly isDefault: InputMaybe<BooleanQueryOperatorInput>;
@@ -2370,19 +2291,11 @@ declare namespace Queries {
     readonly children: InputMaybe<NodeFilterListInput>;
     readonly excerpt: InputMaybe<StringQueryOperatorInput>;
     readonly fields: InputMaybe<MdxFieldsFilterInput>;
-    readonly fileAbsolutePath: InputMaybe<StringQueryOperatorInput>;
     readonly frontmatter: InputMaybe<MdxFrontmatterFilterInput>;
-    readonly headings: InputMaybe<MdxHeadingMdxFilterListInput>;
-    readonly html: InputMaybe<StringQueryOperatorInput>;
     readonly id: InputMaybe<StringQueryOperatorInput>;
     readonly internal: InputMaybe<InternalFilterInput>;
-    readonly mdxAST: InputMaybe<JSONQueryOperatorInput>;
     readonly parent: InputMaybe<NodeFilterInput>;
-    readonly rawBody: InputMaybe<StringQueryOperatorInput>;
-    readonly slug: InputMaybe<StringQueryOperatorInput>;
     readonly tableOfContents: InputMaybe<JSONQueryOperatorInput>;
-    readonly timeToRead: InputMaybe<IntQueryOperatorInput>;
-    readonly wordCount: InputMaybe<MdxWordCountFilterInput>;
   };
 
   type MdxFilterListInput = {
@@ -2397,7 +2310,7 @@ declare namespace Queries {
     readonly imageAlt: Maybe<Scalars['String']>;
     readonly imageCover: Maybe<Scalars['String']>;
     readonly published: Maybe<Scalars['Boolean']>;
-    readonly title: Scalars['String'];
+    readonly title: Maybe<Scalars['String']>;
   };
 
   type MdxFrontmatter_dateArgs = {
@@ -2454,35 +2367,9 @@ declare namespace Queries {
     field: MdxFieldsEnum;
   };
 
-  type MdxHeadingMdx = {
-    readonly depth: Maybe<Scalars['Int']>;
-    readonly value: Maybe<Scalars['String']>;
-  };
-
-  type MdxHeadingMdxFilterInput = {
-    readonly depth: InputMaybe<IntQueryOperatorInput>;
-    readonly value: InputMaybe<StringQueryOperatorInput>;
-  };
-
-  type MdxHeadingMdxFilterListInput = {
-    readonly elemMatch: InputMaybe<MdxHeadingMdxFilterInput>;
-  };
-
   type MdxSortInput = {
     readonly fields: InputMaybe<ReadonlyArray<InputMaybe<MdxFieldsEnum>>>;
     readonly order: InputMaybe<ReadonlyArray<InputMaybe<SortOrderEnum>>>;
-  };
-
-  type MdxWordCount = {
-    readonly paragraphs: Maybe<Scalars['Int']>;
-    readonly sentences: Maybe<Scalars['Int']>;
-    readonly words: Maybe<Scalars['Int']>;
-  };
-
-  type MdxWordCountFilterInput = {
-    readonly paragraphs: InputMaybe<IntQueryOperatorInput>;
-    readonly sentences: InputMaybe<IntQueryOperatorInput>;
-    readonly words: InputMaybe<IntQueryOperatorInput>;
   };
 
   /** Node Interface */
@@ -2543,7 +2430,6 @@ declare namespace Queries {
     readonly allSiteFunction: SiteFunctionConnection;
     readonly allSitePage: SitePageConnection;
     readonly allSitePlugin: SitePluginConnection;
-    readonly allStaticImage: StaticImageConnection;
     readonly allTranslationsJson: TranslationsJsonConnection;
     readonly directory: Maybe<Directory>;
     readonly file: Maybe<File>;
@@ -2554,7 +2440,6 @@ declare namespace Queries {
     readonly siteFunction: Maybe<SiteFunction>;
     readonly sitePage: Maybe<SitePage>;
     readonly sitePlugin: Maybe<SitePlugin>;
-    readonly staticImage: Maybe<StaticImage>;
     readonly translationsJson: Maybe<TranslationsJson>;
   };
 
@@ -2619,13 +2504,6 @@ declare namespace Queries {
     limit: InputMaybe<Scalars['Int']>;
     skip: InputMaybe<Scalars['Int']>;
     sort: InputMaybe<SitePluginSortInput>;
-  };
-
-  type Query_allStaticImageArgs = {
-    filter: InputMaybe<StaticImageFilterInput>;
-    limit: InputMaybe<Scalars['Int']>;
-    skip: InputMaybe<Scalars['Int']>;
-    sort: InputMaybe<StaticImageSortInput>;
   };
 
   type Query_allTranslationsJsonArgs = {
@@ -2737,19 +2615,11 @@ declare namespace Queries {
     children: InputMaybe<NodeFilterListInput>;
     excerpt: InputMaybe<StringQueryOperatorInput>;
     fields: InputMaybe<MdxFieldsFilterInput>;
-    fileAbsolutePath: InputMaybe<StringQueryOperatorInput>;
     frontmatter: InputMaybe<MdxFrontmatterFilterInput>;
-    headings: InputMaybe<MdxHeadingMdxFilterListInput>;
-    html: InputMaybe<StringQueryOperatorInput>;
     id: InputMaybe<StringQueryOperatorInput>;
     internal: InputMaybe<InternalFilterInput>;
-    mdxAST: InputMaybe<JSONQueryOperatorInput>;
     parent: InputMaybe<NodeFilterInput>;
-    rawBody: InputMaybe<StringQueryOperatorInput>;
-    slug: InputMaybe<StringQueryOperatorInput>;
     tableOfContents: InputMaybe<JSONQueryOperatorInput>;
-    timeToRead: InputMaybe<IntQueryOperatorInput>;
-    wordCount: InputMaybe<MdxWordCountFilterInput>;
   };
 
   type Query_siteArgs = {
@@ -2818,45 +2688,6 @@ declare namespace Queries {
     resolve: InputMaybe<StringQueryOperatorInput>;
     ssrAPIs: InputMaybe<StringQueryOperatorInput>;
     version: InputMaybe<StringQueryOperatorInput>;
-  };
-
-  type Query_staticImageArgs = {
-    absolutePath: InputMaybe<StringQueryOperatorInput>;
-    accessTime: InputMaybe<DateQueryOperatorInput>;
-    atime: InputMaybe<DateQueryOperatorInput>;
-    atimeMs: InputMaybe<FloatQueryOperatorInput>;
-    base: InputMaybe<StringQueryOperatorInput>;
-    birthTime: InputMaybe<DateQueryOperatorInput>;
-    birthtime: InputMaybe<DateQueryOperatorInput>;
-    birthtimeMs: InputMaybe<FloatQueryOperatorInput>;
-    blksize: InputMaybe<IntQueryOperatorInput>;
-    blocks: InputMaybe<IntQueryOperatorInput>;
-    changeTime: InputMaybe<DateQueryOperatorInput>;
-    children: InputMaybe<NodeFilterListInput>;
-    ctime: InputMaybe<DateQueryOperatorInput>;
-    ctimeMs: InputMaybe<FloatQueryOperatorInput>;
-    dev: InputMaybe<IntQueryOperatorInput>;
-    dir: InputMaybe<StringQueryOperatorInput>;
-    ext: InputMaybe<StringQueryOperatorInput>;
-    extension: InputMaybe<StringQueryOperatorInput>;
-    id: InputMaybe<StringQueryOperatorInput>;
-    ino: InputMaybe<IntQueryOperatorInput>;
-    internal: InputMaybe<InternalFilterInput>;
-    mode: InputMaybe<IntQueryOperatorInput>;
-    modifiedTime: InputMaybe<DateQueryOperatorInput>;
-    mtime: InputMaybe<DateQueryOperatorInput>;
-    mtimeMs: InputMaybe<FloatQueryOperatorInput>;
-    name: InputMaybe<StringQueryOperatorInput>;
-    nlink: InputMaybe<IntQueryOperatorInput>;
-    parent: InputMaybe<NodeFilterInput>;
-    prettySize: InputMaybe<StringQueryOperatorInput>;
-    rdev: InputMaybe<IntQueryOperatorInput>;
-    relativeDirectory: InputMaybe<StringQueryOperatorInput>;
-    relativePath: InputMaybe<StringQueryOperatorInput>;
-    root: InputMaybe<StringQueryOperatorInput>;
-    size: InputMaybe<IntQueryOperatorInput>;
-    sourceInstanceName: InputMaybe<StringQueryOperatorInput>;
-    uid: InputMaybe<IntQueryOperatorInput>;
   };
 
   type Query_translationsJsonArgs = {
@@ -4042,348 +3873,6 @@ declare namespace Queries {
 
   type SortOrderEnum = 'ASC' | 'DESC';
 
-  type StaticImage = Node & {
-    readonly absolutePath: Maybe<Scalars['String']>;
-    readonly accessTime: Maybe<Scalars['Date']>;
-    readonly atime: Maybe<Scalars['Date']>;
-    readonly atimeMs: Maybe<Scalars['Float']>;
-    readonly base: Maybe<Scalars['String']>;
-    readonly birthTime: Maybe<Scalars['Date']>;
-    readonly birthtime: Maybe<Scalars['Date']>;
-    readonly birthtimeMs: Maybe<Scalars['Float']>;
-    readonly blksize: Maybe<Scalars['Int']>;
-    readonly blocks: Maybe<Scalars['Int']>;
-    readonly changeTime: Maybe<Scalars['Date']>;
-    readonly children: ReadonlyArray<Node>;
-    readonly ctime: Maybe<Scalars['Date']>;
-    readonly ctimeMs: Maybe<Scalars['Float']>;
-    readonly dev: Maybe<Scalars['Int']>;
-    readonly dir: Maybe<Scalars['String']>;
-    readonly ext: Maybe<Scalars['String']>;
-    readonly extension: Maybe<Scalars['String']>;
-    readonly id: Scalars['ID'];
-    readonly ino: Maybe<Scalars['Int']>;
-    readonly internal: Internal;
-    readonly mode: Maybe<Scalars['Int']>;
-    readonly modifiedTime: Maybe<Scalars['Date']>;
-    readonly mtime: Maybe<Scalars['Date']>;
-    readonly mtimeMs: Maybe<Scalars['Float']>;
-    readonly name: Maybe<Scalars['String']>;
-    readonly nlink: Maybe<Scalars['Int']>;
-    readonly parent: Maybe<Node>;
-    readonly prettySize: Maybe<Scalars['String']>;
-    readonly rdev: Maybe<Scalars['Int']>;
-    readonly relativeDirectory: Maybe<Scalars['String']>;
-    readonly relativePath: Maybe<Scalars['String']>;
-    readonly root: Maybe<Scalars['String']>;
-    readonly size: Maybe<Scalars['Int']>;
-    readonly sourceInstanceName: Maybe<Scalars['String']>;
-    readonly uid: Maybe<Scalars['Int']>;
-  };
-
-  type StaticImage_accessTimeArgs = {
-    difference: InputMaybe<Scalars['String']>;
-    formatString: InputMaybe<Scalars['String']>;
-    fromNow: InputMaybe<Scalars['Boolean']>;
-    locale: InputMaybe<Scalars['String']>;
-  };
-
-  type StaticImage_atimeArgs = {
-    difference: InputMaybe<Scalars['String']>;
-    formatString: InputMaybe<Scalars['String']>;
-    fromNow: InputMaybe<Scalars['Boolean']>;
-    locale: InputMaybe<Scalars['String']>;
-  };
-
-  type StaticImage_birthTimeArgs = {
-    difference: InputMaybe<Scalars['String']>;
-    formatString: InputMaybe<Scalars['String']>;
-    fromNow: InputMaybe<Scalars['Boolean']>;
-    locale: InputMaybe<Scalars['String']>;
-  };
-
-  type StaticImage_birthtimeArgs = {
-    difference: InputMaybe<Scalars['String']>;
-    formatString: InputMaybe<Scalars['String']>;
-    fromNow: InputMaybe<Scalars['Boolean']>;
-    locale: InputMaybe<Scalars['String']>;
-  };
-
-  type StaticImage_changeTimeArgs = {
-    difference: InputMaybe<Scalars['String']>;
-    formatString: InputMaybe<Scalars['String']>;
-    fromNow: InputMaybe<Scalars['Boolean']>;
-    locale: InputMaybe<Scalars['String']>;
-  };
-
-  type StaticImage_ctimeArgs = {
-    difference: InputMaybe<Scalars['String']>;
-    formatString: InputMaybe<Scalars['String']>;
-    fromNow: InputMaybe<Scalars['Boolean']>;
-    locale: InputMaybe<Scalars['String']>;
-  };
-
-  type StaticImage_modifiedTimeArgs = {
-    difference: InputMaybe<Scalars['String']>;
-    formatString: InputMaybe<Scalars['String']>;
-    fromNow: InputMaybe<Scalars['Boolean']>;
-    locale: InputMaybe<Scalars['String']>;
-  };
-
-  type StaticImage_mtimeArgs = {
-    difference: InputMaybe<Scalars['String']>;
-    formatString: InputMaybe<Scalars['String']>;
-    fromNow: InputMaybe<Scalars['Boolean']>;
-    locale: InputMaybe<Scalars['String']>;
-  };
-
-  type StaticImageConnection = {
-    readonly distinct: ReadonlyArray<Scalars['String']>;
-    readonly edges: ReadonlyArray<StaticImageEdge>;
-    readonly group: ReadonlyArray<StaticImageGroupConnection>;
-    readonly max: Maybe<Scalars['Float']>;
-    readonly min: Maybe<Scalars['Float']>;
-    readonly nodes: ReadonlyArray<StaticImage>;
-    readonly pageInfo: PageInfo;
-    readonly sum: Maybe<Scalars['Float']>;
-    readonly totalCount: Scalars['Int'];
-  };
-
-  type StaticImageConnection_distinctArgs = {
-    field: StaticImageFieldsEnum;
-  };
-
-  type StaticImageConnection_groupArgs = {
-    field: StaticImageFieldsEnum;
-    limit: InputMaybe<Scalars['Int']>;
-    skip: InputMaybe<Scalars['Int']>;
-  };
-
-  type StaticImageConnection_maxArgs = {
-    field: StaticImageFieldsEnum;
-  };
-
-  type StaticImageConnection_minArgs = {
-    field: StaticImageFieldsEnum;
-  };
-
-  type StaticImageConnection_sumArgs = {
-    field: StaticImageFieldsEnum;
-  };
-
-  type StaticImageEdge = {
-    readonly next: Maybe<StaticImage>;
-    readonly node: StaticImage;
-    readonly previous: Maybe<StaticImage>;
-  };
-
-  type StaticImageFieldsEnum =
-    | 'absolutePath'
-    | 'accessTime'
-    | 'atime'
-    | 'atimeMs'
-    | 'base'
-    | 'birthTime'
-    | 'birthtime'
-    | 'birthtimeMs'
-    | 'blksize'
-    | 'blocks'
-    | 'changeTime'
-    | 'children'
-    | 'children.children'
-    | 'children.children.children'
-    | 'children.children.children.children'
-    | 'children.children.children.id'
-    | 'children.children.id'
-    | 'children.children.internal.content'
-    | 'children.children.internal.contentDigest'
-    | 'children.children.internal.contentFilePath'
-    | 'children.children.internal.description'
-    | 'children.children.internal.fieldOwners'
-    | 'children.children.internal.ignoreType'
-    | 'children.children.internal.mediaType'
-    | 'children.children.internal.owner'
-    | 'children.children.internal.type'
-    | 'children.children.parent.children'
-    | 'children.children.parent.id'
-    | 'children.id'
-    | 'children.internal.content'
-    | 'children.internal.contentDigest'
-    | 'children.internal.contentFilePath'
-    | 'children.internal.description'
-    | 'children.internal.fieldOwners'
-    | 'children.internal.ignoreType'
-    | 'children.internal.mediaType'
-    | 'children.internal.owner'
-    | 'children.internal.type'
-    | 'children.parent.children'
-    | 'children.parent.children.children'
-    | 'children.parent.children.id'
-    | 'children.parent.id'
-    | 'children.parent.internal.content'
-    | 'children.parent.internal.contentDigest'
-    | 'children.parent.internal.contentFilePath'
-    | 'children.parent.internal.description'
-    | 'children.parent.internal.fieldOwners'
-    | 'children.parent.internal.ignoreType'
-    | 'children.parent.internal.mediaType'
-    | 'children.parent.internal.owner'
-    | 'children.parent.internal.type'
-    | 'children.parent.parent.children'
-    | 'children.parent.parent.id'
-    | 'ctime'
-    | 'ctimeMs'
-    | 'dev'
-    | 'dir'
-    | 'ext'
-    | 'extension'
-    | 'id'
-    | 'ino'
-    | 'internal.content'
-    | 'internal.contentDigest'
-    | 'internal.contentFilePath'
-    | 'internal.description'
-    | 'internal.fieldOwners'
-    | 'internal.ignoreType'
-    | 'internal.mediaType'
-    | 'internal.owner'
-    | 'internal.type'
-    | 'mode'
-    | 'modifiedTime'
-    | 'mtime'
-    | 'mtimeMs'
-    | 'name'
-    | 'nlink'
-    | 'parent.children'
-    | 'parent.children.children'
-    | 'parent.children.children.children'
-    | 'parent.children.children.id'
-    | 'parent.children.id'
-    | 'parent.children.internal.content'
-    | 'parent.children.internal.contentDigest'
-    | 'parent.children.internal.contentFilePath'
-    | 'parent.children.internal.description'
-    | 'parent.children.internal.fieldOwners'
-    | 'parent.children.internal.ignoreType'
-    | 'parent.children.internal.mediaType'
-    | 'parent.children.internal.owner'
-    | 'parent.children.internal.type'
-    | 'parent.children.parent.children'
-    | 'parent.children.parent.id'
-    | 'parent.id'
-    | 'parent.internal.content'
-    | 'parent.internal.contentDigest'
-    | 'parent.internal.contentFilePath'
-    | 'parent.internal.description'
-    | 'parent.internal.fieldOwners'
-    | 'parent.internal.ignoreType'
-    | 'parent.internal.mediaType'
-    | 'parent.internal.owner'
-    | 'parent.internal.type'
-    | 'parent.parent.children'
-    | 'parent.parent.children.children'
-    | 'parent.parent.children.id'
-    | 'parent.parent.id'
-    | 'parent.parent.internal.content'
-    | 'parent.parent.internal.contentDigest'
-    | 'parent.parent.internal.contentFilePath'
-    | 'parent.parent.internal.description'
-    | 'parent.parent.internal.fieldOwners'
-    | 'parent.parent.internal.ignoreType'
-    | 'parent.parent.internal.mediaType'
-    | 'parent.parent.internal.owner'
-    | 'parent.parent.internal.type'
-    | 'parent.parent.parent.children'
-    | 'parent.parent.parent.id'
-    | 'prettySize'
-    | 'rdev'
-    | 'relativeDirectory'
-    | 'relativePath'
-    | 'root'
-    | 'size'
-    | 'sourceInstanceName'
-    | 'uid';
-
-  type StaticImageFilterInput = {
-    readonly absolutePath: InputMaybe<StringQueryOperatorInput>;
-    readonly accessTime: InputMaybe<DateQueryOperatorInput>;
-    readonly atime: InputMaybe<DateQueryOperatorInput>;
-    readonly atimeMs: InputMaybe<FloatQueryOperatorInput>;
-    readonly base: InputMaybe<StringQueryOperatorInput>;
-    readonly birthTime: InputMaybe<DateQueryOperatorInput>;
-    readonly birthtime: InputMaybe<DateQueryOperatorInput>;
-    readonly birthtimeMs: InputMaybe<FloatQueryOperatorInput>;
-    readonly blksize: InputMaybe<IntQueryOperatorInput>;
-    readonly blocks: InputMaybe<IntQueryOperatorInput>;
-    readonly changeTime: InputMaybe<DateQueryOperatorInput>;
-    readonly children: InputMaybe<NodeFilterListInput>;
-    readonly ctime: InputMaybe<DateQueryOperatorInput>;
-    readonly ctimeMs: InputMaybe<FloatQueryOperatorInput>;
-    readonly dev: InputMaybe<IntQueryOperatorInput>;
-    readonly dir: InputMaybe<StringQueryOperatorInput>;
-    readonly ext: InputMaybe<StringQueryOperatorInput>;
-    readonly extension: InputMaybe<StringQueryOperatorInput>;
-    readonly id: InputMaybe<StringQueryOperatorInput>;
-    readonly ino: InputMaybe<IntQueryOperatorInput>;
-    readonly internal: InputMaybe<InternalFilterInput>;
-    readonly mode: InputMaybe<IntQueryOperatorInput>;
-    readonly modifiedTime: InputMaybe<DateQueryOperatorInput>;
-    readonly mtime: InputMaybe<DateQueryOperatorInput>;
-    readonly mtimeMs: InputMaybe<FloatQueryOperatorInput>;
-    readonly name: InputMaybe<StringQueryOperatorInput>;
-    readonly nlink: InputMaybe<IntQueryOperatorInput>;
-    readonly parent: InputMaybe<NodeFilterInput>;
-    readonly prettySize: InputMaybe<StringQueryOperatorInput>;
-    readonly rdev: InputMaybe<IntQueryOperatorInput>;
-    readonly relativeDirectory: InputMaybe<StringQueryOperatorInput>;
-    readonly relativePath: InputMaybe<StringQueryOperatorInput>;
-    readonly root: InputMaybe<StringQueryOperatorInput>;
-    readonly size: InputMaybe<IntQueryOperatorInput>;
-    readonly sourceInstanceName: InputMaybe<StringQueryOperatorInput>;
-    readonly uid: InputMaybe<IntQueryOperatorInput>;
-  };
-
-  type StaticImageGroupConnection = {
-    readonly distinct: ReadonlyArray<Scalars['String']>;
-    readonly edges: ReadonlyArray<StaticImageEdge>;
-    readonly field: Scalars['String'];
-    readonly fieldValue: Maybe<Scalars['String']>;
-    readonly group: ReadonlyArray<StaticImageGroupConnection>;
-    readonly max: Maybe<Scalars['Float']>;
-    readonly min: Maybe<Scalars['Float']>;
-    readonly nodes: ReadonlyArray<StaticImage>;
-    readonly pageInfo: PageInfo;
-    readonly sum: Maybe<Scalars['Float']>;
-    readonly totalCount: Scalars['Int'];
-  };
-
-  type StaticImageGroupConnection_distinctArgs = {
-    field: StaticImageFieldsEnum;
-  };
-
-  type StaticImageGroupConnection_groupArgs = {
-    field: StaticImageFieldsEnum;
-    limit: InputMaybe<Scalars['Int']>;
-    skip: InputMaybe<Scalars['Int']>;
-  };
-
-  type StaticImageGroupConnection_maxArgs = {
-    field: StaticImageFieldsEnum;
-  };
-
-  type StaticImageGroupConnection_minArgs = {
-    field: StaticImageFieldsEnum;
-  };
-
-  type StaticImageGroupConnection_sumArgs = {
-    field: StaticImageFieldsEnum;
-  };
-
-  type StaticImageSortInput = {
-    readonly fields: InputMaybe<ReadonlyArray<InputMaybe<StaticImageFieldsEnum>>>;
-    readonly order: InputMaybe<ReadonlyArray<InputMaybe<SortOrderEnum>>>;
-  };
-
   type StringQueryOperatorInput = {
     readonly eq: InputMaybe<Scalars['String']>;
     readonly glob: InputMaybe<Scalars['String']>;
@@ -4710,9 +4199,9 @@ declare namespace Queries {
     readonly allMdx: {
       readonly nodes: ReadonlyArray<{
         readonly id: string;
-        readonly excerpt: string;
+        readonly excerpt: string | null;
         readonly frontmatter: {
-          readonly title: string;
+          readonly title: string | null;
           readonly imageAlt: string | null;
           readonly date: string | null;
           readonly description: string | null;
@@ -4862,7 +4351,7 @@ declare namespace Queries {
     readonly allMdx: {
       readonly nodes: ReadonlyArray<{
         readonly frontmatter: {
-          readonly title: string;
+          readonly title: string | null;
           readonly imageAlt: string | null;
           readonly date: string | null;
           readonly image: {
@@ -4871,6 +4360,7 @@ declare namespace Queries {
             } | null;
           } | null;
         } | null;
+        readonly internal: { readonly contentFilePath: string | null };
         readonly fields: {
           readonly locale: string | null;
           readonly slug: string | null;
@@ -4894,8 +4384,7 @@ declare namespace Queries {
 
   type LayoutBlogPageQuery = {
     readonly mdx: {
-      readonly excerpt: string;
-      readonly body: string;
+      readonly excerpt: string | null;
       readonly fields: {
         readonly slug: string | null;
         readonly locale: string | null;
@@ -4903,7 +4392,7 @@ declare namespace Queries {
       } | null;
       readonly frontmatter: {
         readonly imageAlt: string | null;
-        readonly title: string;
+        readonly title: string | null;
         readonly description: string | null;
         readonly date: string | null;
         readonly image: {
@@ -4972,7 +4461,8 @@ declare namespace Queries {
   type CreatePagesQuery = {
     readonly allMdx: {
       readonly nodes: ReadonlyArray<{
-        readonly frontmatter: { readonly title: string; readonly date: string | null } | null;
+        readonly frontmatter: { readonly title: string | null; readonly date: string | null } | null;
+        readonly internal: { readonly contentFilePath: string | null };
         readonly fields: {
           readonly locale: string | null;
           readonly slug: string | null;

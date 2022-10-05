@@ -48,6 +48,9 @@ export const query = graphql`
           }
           date
         }
+        internal {
+          contentFilePath
+        }
         fields {
           locale
           slug

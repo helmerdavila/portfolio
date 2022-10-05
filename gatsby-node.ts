@@ -47,7 +47,7 @@ export const onCreateNode: GatsbyNode['onCreateNode'] = async ({ node, actions, 
     // Use path.basename
     // https://nodejs.org/api/path.html#path_path_basename_path_ext
     // const name = path.basename(<string>node.internal.contentFilePath, `.mdx`);
-    const name = path.basename(node.fileAbsolutePath as string, `.mdx`);
+    const name = path.basename(node.internal.contentFilePath, `.mdx`);
 
     // Check if post.name is "index" -- because that's the file for default language
     // (In this case "en")
@@ -87,6 +87,9 @@ export const createPages: GatsbyNode['createPages'] = async ({ graphql, actions 
               title
               date
             }
+            internal {
+              contentFilePath
+            }
             fields {
               locale
               slug
@@ -116,6 +119,7 @@ export const createPages: GatsbyNode['createPages'] = async ({ graphql, actions 
     // All files for a blogpost are stored in a folder
     // relativeDirectory is the name of the folder
     const slug = (post.parent as { relativeDirectory: string }).relativeDirectory;
+    const mdxPath = post.internal.contentFilePath;
 
     const title = post.frontmatter?.title;
 
@@ -125,8 +129,8 @@ export const createPages: GatsbyNode['createPages'] = async ({ graphql, actions 
 
     createPage({
       path: localizedSlug({ isDefault, locale, slug }),
-      // component: `${postTemplate}?__contentFilePath=${post.childMdx.internal.contentFilePath}`,
-      component: postTemplate,
+      component: `${postTemplate}?__contentFilePath=${slug}`,
+      // component: postTemplate,
       context: {
         locale,
         title,

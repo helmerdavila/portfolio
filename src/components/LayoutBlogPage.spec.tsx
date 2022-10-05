@@ -26,7 +26,6 @@ it('renders without issues', () => {
       site: { siteMetadata: { author: '', siteUrl: '' } },
       mdx: {
         excerpt: faker.lorem.words(5),
-        body: faker.lorem.paragraphs(),
         fields: { locale: 'en', isDefault: true, slug: faker.lorem.slug() },
         frontmatter: {
           title: faker.lorem.words(),
@@ -59,7 +58,6 @@ it('renders without imageAlt and description', () => {
       site: { siteMetadata: { author: '', siteUrl: '' } },
       mdx: {
         excerpt: faker.lorem.words(5),
-        body: faker.lorem.paragraphs(),
         fields: { locale: 'en', isDefault: true, slug: faker.lorem.slug() },
         frontmatter: {
           title: faker.lorem.words(),
@@ -166,7 +164,6 @@ it('renders Head component without issues', () => {
       site: { siteMetadata: { author: '', siteUrl: '' } },
       mdx: {
         excerpt: faker.lorem.words(5),
-        body: faker.lorem.paragraphs(),
         fields: { locale: 'en', isDefault: true, slug: faker.lorem.slug() },
         frontmatter: {
           title: postTitle,

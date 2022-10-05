@@ -4,7 +4,6 @@ import { graphql, PageProps } from 'gatsby';
 import { ThemeContext } from './Layout';
 import classNames from 'classnames';
 import { MDXProvider } from '@mdx-js/react';
-import { MDXRenderer } from 'gatsby-plugin-mdx';
 import Code from './Mdx/Code';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import useTranslations from './UseTranslations';
@@ -112,7 +111,7 @@ export const Head = ({ data }: DeepPartial<PageProps<Queries.LayoutBlogPageQuery
   );
 };
 
-const LayoutBlogPage = ({ data: { mdx } }: PageProps<Queries.LayoutBlogPageQuery>): JSX.Element => {
+const LayoutBlogPage = ({ data: { mdx }, children }: PageProps<Queries.LayoutBlogPageQuery>): JSX.Element => {
   const context = useContext(ThemeContext);
   const { author, edit_posts_on_github, written_by } = useTranslations();
   const pageBackground = {
@@ -132,9 +131,7 @@ const LayoutBlogPage = ({ data: { mdx } }: PageProps<Queries.LayoutBlogPageQuery
         <div className={classNames(pageBackground, 'border-2')}>
           <GatsbyImage image={imageRendered} alt={imageAlt} data-testid="post-image" />
           <div className="p-12 blog-page">
-            <MDXProvider components={components}>
-              <MDXRenderer localImages={mdx.frontmatter.embeddedImagesLocal}>{mdx.body}</MDXRenderer>
-            </MDXProvider>
+            <MDXProvider components={components}>{children}</MDXProvider>
             <div className="flex justify-end mt-32">
               <a
                 href={`https://github.com/helmerdavila/portfolio/edit/main/blog/${pathFileForGithub}`}
@@ -196,7 +193,6 @@ export const query = graphql`
         }
       }
       excerpt(pruneLength: 100)
-      body
     }
     site {
       siteMetadata {
