@@ -54,6 +54,7 @@ export const PostCard = ({
       to={post.fields.translatedPostUrl}
       target="_blank"
       rel="noopener noreferrer"
+      data-testid="postcard-link"
     >
       <GatsbyImage
         className="rounded-t-lg filter grayscale hover:grayscale-0 transition-all ease-in duration-500"

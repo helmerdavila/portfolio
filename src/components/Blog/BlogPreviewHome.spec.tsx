@@ -16,7 +16,7 @@ it('renders PostCard with image', () => {
   );
 
   expect(queryByRole('link')).toBeInTheDocument();
-  expect(queryByRole('link')).toHaveAttribute('href', `blog/${post.fields.slug}`);
+  expect(queryByRole('link')).toHaveAttribute('href', post.fields.translatedPostUrl);
   expect(queryByRole('img')).not.toHaveAttribute(
     'data-src',
     defaultImage.childImageSharp.gatsbyImageData.images.fallback.src,
@@ -28,12 +28,12 @@ it('renders PostCard with no image, uses default', () => {
   const post: BlogPostType = BlogPreviewHomeMock.allMdx.nodes[POSTS.POST_WITHOUT_IMAGE];
   const defaultImage = BlogPreviewHomeMock.homePostImage as IGatsbyFileImage;
 
-  const { queryByAltText, queryByRole } = customRender(
+  const { queryByAltText, queryByTestId } = customRender(
     <PostCard post={post} postDefaultImage={defaultImage.childImageSharp.gatsbyImageData} />,
   );
 
-  expect(queryByRole('link')).toBeInTheDocument();
-  expect(queryByRole('link')).toHaveAttribute('href', `blog/${post.fields.slug}`);
+  expect(queryByTestId('postcard-link')).toBeInTheDocument();
+  expect(queryByTestId('postcard-link')).toHaveAttribute('href', post.fields.translatedPostUrl);
   expect(queryByAltText('Blog')).toBeInTheDocument();
 });
 

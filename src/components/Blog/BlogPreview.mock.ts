@@ -42,6 +42,7 @@ export default {
         fields: {
           locale: 'en',
           slug: faker.lorem.slug(),
+          translatedPostUrl: faker.lorem.slug(),
         },
         parent: {
           relativeDirectory: faker.lorem.slug(),
@@ -55,6 +56,7 @@ export default {
         },
         fields: {
           locale: 'en',
+          translatedPostUrl: faker.lorem.slug(),
         },
         parent: {
           relativeDirectory: faker.lorem.slug(),
