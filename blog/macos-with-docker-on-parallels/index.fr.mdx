@@ -5,12 +5,7 @@ date: 2022-06-21
 published: true
 image: ../../src/images/blog/macbook.jpg
 imageAlt: Photo by Dmitry Chernyshov
-embeddedImagesLocal:
-  - macos-with-docker-1.png
-  - macos-with-docker-2.png
 ---
-
-import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 
 # Comment exécuter un VM macOS et Docker ensembles sur macOS dans Parallels
 
@@ -24,7 +19,7 @@ J’ai veux exécuter macOS sur macOS. Aussi, j’avais besoin d’exécuter Doc
 
 ## 🔀 Étapes
 
-<GatsbyImage image={getImage(props.localImages[0])} alt="Etape 1" />
+![Etape 1](./macos-with-docker-1.png)
 
 En fait, elles sont très simples. Va à `VM configuration` → `Hardware` → `Boot order` → `Advanced settings` → `Boot flags` . Et ajoute le texte suivant:
 
@@ -32,7 +27,7 @@ En fait, elles sont très simples. Va à `VM configuration` → `Hardware` → `
 kernel.nvmx.enable=1
 ```
 
-<GatsbyImage image={getImage(props.localImages[1])} alt="Etape 2" />
+![Etape 2](./macos-with-docker-2.png)
 
 Clique sur OK.
 
