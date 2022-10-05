@@ -14,16 +14,22 @@ import { components, HeadForMeta } from './LayoutBlogPage.setup';
 // Don't change the Head name here. Used by Gatsby
 export const Head = (props) => <HeadForMeta {...props} />;
 
-const LayoutBlogPage = ({ data: { mdx }, children }) => {
+/** @param {PageProps<Queries.LayoutBlogPageQuery>} props */
+const LayoutBlogPage = (props) => {
   const context = useContext(ThemeContext);
+  const { data, children } = props;
   const { author, edit_posts_on_github, written_by } = useTranslations();
   const pageBackground = {
     'bg-white shadow-sm': context.isLightTheme,
     'bg-gray-800 border-gray-800': !context.isLightTheme,
   };
+  const { mdx } = data;
   const textStyle = { 'text-black': context.isLightTheme, 'text-white': !context.isLightTheme };
-  const imageAlt = mdx.frontmatter.imageAlt ?? '';
-  const imageRendered = getImage(mdx.frontmatter.image.childImageSharp.gatsbyImageData);
+  const imageAlt = mdx.frontmatter?.imageAlt ?? 'Photo by Unsplash';
+  const imageSource =
+    mdx.frontmatter.image?.childImageSharp?.gatsbyImageData ??
+    data.defaultBlogPostImage?.childImageSharp?.gatsbyImageData;
+  const imageRendered = getImage(imageSource) ?? null;
   const pathFileForGithub = mdx.fields.isDefault
     ? `${mdx.fields.slug}/index.mdx`
     : `${mdx.fields.slug}/index.${mdx.fields.locale}.mdx`;
@@ -32,7 +38,7 @@ const LayoutBlogPage = ({ data: { mdx }, children }) => {
     <LayoutBlog>
       <div className="container max-w-3xl py-5 mx-auto xl:max-w-6xl">
         <div className={classNames(pageBackground, 'border-2')}>
-          <GatsbyImage image={imageRendered} alt={imageAlt} data-testid="post-image" />
+          {imageRendered ? <GatsbyImage image={imageRendered} alt={imageAlt} data-testid="post-image" /> : null}
           <div className="p-12 blog-page">
             <MDXProvider components={components}>{children}</MDXProvider>
             <div className="flex justify-end mt-32">
@@ -72,25 +78,21 @@ const LayoutBlogPage = ({ data: { mdx }, children }) => {
 export default LayoutBlogPage;
 
 export const query = graphql`
-  query LayoutBlogPage($locale: String!, $title: String!) {
-    mdx(frontmatter: { title: { eq: $title } }, fields: { locale: { eq: $locale } }) {
+  query LayoutBlogPage($id: String!) {
+    mdx(id: { eq: $id }) {
       fields {
         slug
         locale
         isDefault
+        translatedPostUrl
       }
       frontmatter {
         imageAlt
         title
         description
         date
-        embeddedImagesLocal {
-          absolutePath
-        }
         image {
-          childImageSharp {
-            gatsbyImageData(layout: FULL_WIDTH, placeholder: TRACED_SVG)
-          }
+          ...ImageForBlogPage
         }
       }
       excerpt(pruneLength: 100)
@@ -100,6 +102,15 @@ export const query = graphql`
         siteUrl
         author
       }
+    }
+    defaultBlogPostImage: file(relativePath: { eq: "macbook-homepost.jpg" }) {
+      ...ImageForBlogPage
+    }
+  }
+
+  fragment ImageForBlogPage on File {
+    childImageSharp {
+      gatsbyImageData(layout: FULL_WIDTH, placeholder: TRACED_SVG, aspectRatio: 1.7)
     }
   }
 `;

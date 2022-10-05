@@ -17,6 +17,7 @@ const config: GatsbyConfig = {
     `gatsby-plugin-typescript`,
     `gatsby-transformer-json`,
     `gatsby-transformer-sharp`,
+    `gatsby-plugin-gatsby-cloud`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -51,6 +52,17 @@ const config: GatsbyConfig = {
     },
     {
       resolve: 'gatsby-plugin-mdx',
+      options: {
+        gatsbyRemarkPlugins: [
+          {
+            resolve: `gatsby-remark-images`,
+            options: {
+              tracedSVG: true,
+              maxWidth: 800,
+            },
+          },
+        ],
+      },
     },
     {
       resolve: 'gatsby-plugin-google-analytics',

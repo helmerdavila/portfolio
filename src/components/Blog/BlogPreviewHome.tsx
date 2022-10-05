@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import classNames from 'classnames';
 import { ThemeContext } from '../Layout';
-import LocalizedLink from '../../components/LocalizedLink';
 import { GatsbyImage, getImage, IGatsbyImageData } from 'gatsby-plugin-image';
 import type { BlogPostType } from '../../interfaces';
+import { Link } from 'gatsby';
 
 const BlogPreviewHome = ({ data }: { data: Queries.IndexQuery }): JSX.Element => {
   const context = useContext(ThemeContext);
@@ -46,12 +46,12 @@ export const PostCard = ({
   const image = getImage(post.frontmatter.image?.childImageSharp.gatsbyImageData ?? postDefaultImage);
 
   return (
-    <LocalizedLink
+    <Link
       className={classNames('flex-1 sm:w-1/2 m-5 shadow-xl rounded-lg bg-gray-200', {
         'bg-gray-200': context.isLightTheme,
         'bg-gray-700': !context.isLightTheme,
       })}
-      to={`blog/${post.fields.slug}`}
+      to={post.fields.translatedPostUrl}
       target="_blank"
       rel="noopener noreferrer"
     >
@@ -62,7 +62,7 @@ export const PostCard = ({
         alt={imageAlt}
       />
       <h3 className={classNames('text-3xl font-semibold text-center p-4', textColor)}>{post.frontmatter.title}</h3>
-    </LocalizedLink>
+    </Link>
   );
 };
 

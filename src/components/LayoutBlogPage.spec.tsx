@@ -26,16 +26,16 @@ it('renders without issues', () => {
       site: { siteMetadata: { author: '', siteUrl: '' } },
       mdx: {
         excerpt: faker.lorem.words(5),
-        fields: { locale: 'en', isDefault: true, slug: faker.lorem.slug() },
+        fields: { locale: 'en', isDefault: true, slug: faker.lorem.slug(), translatedPostUrl: faker.lorem.slug() },
         frontmatter: {
           title: faker.lorem.words(),
           description: faker.lorem.words(5),
           date: '',
           image: backgroundImage.backgroundImage,
           imageAlt: faker.lorem.word(),
-          embeddedImagesLocal: [],
         },
       },
+      defaultBlogPostImage: backgroundImage.backgroundImage,
     },
   };
   const { queryByTestId } = customRender(
@@ -58,16 +58,16 @@ it('renders without imageAlt and description', () => {
       site: { siteMetadata: { author: '', siteUrl: '' } },
       mdx: {
         excerpt: faker.lorem.words(5),
-        fields: { locale: 'en', isDefault: true, slug: faker.lorem.slug() },
+        fields: { locale: 'en', isDefault: true, slug: faker.lorem.slug(), translatedPostUrl: faker.lorem.slug() },
         frontmatter: {
           title: faker.lorem.words(),
           description: null,
           date: '',
           image: backgroundImage.backgroundImage,
           imageAlt: null,
-          embeddedImagesLocal: [],
         },
       },
+      defaultBlogPostImage: backgroundImage.backgroundImage,
     },
   };
   const { queryByTestId } = customRender(
@@ -171,7 +171,6 @@ it('renders Head component without issues', () => {
           date: '',
           image: layoutBlogPostImage.mdx.frontmatter.image,
           imageAlt: faker.lorem.word(),
-          embeddedImagesLocal: [],
         },
       },
     },

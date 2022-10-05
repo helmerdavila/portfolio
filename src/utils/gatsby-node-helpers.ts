@@ -1,8 +1,11 @@
-// Use a little helper function to remove trailing slashes from paths
+import slugify from '@sindresorhus/slugify';
+
 export const removeTrailingSlash = (path) => (path === `/` ? path : path.replace(/\/$/, ``));
 
 export const localizedSlug = ({ isDefault, locale, slug }: { isDefault: boolean; locale: string; slug: string }) =>
-  isDefault ? `blog/${slug}` : `/${locale}/blog/${slug}`;
+  isDefault ? `/blog/${slug}` : `/${locale}/blog/${slug}`;
+
+export const translatedPostUrl = (postTitle: string, locale: string) => `/blog/${locale}/${slugify(postTitle)}`;
 
 // From lodash:
 // https://github.com/lodash/lodash/blob/750067f42d3aa5f927604ece2c6df0ff2b2e9d72/findKey.js

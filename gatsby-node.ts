@@ -1,5 +1,5 @@
 import locales from './config/i18n';
-import { findKey, localizedSlug, removeTrailingSlash } from './src/utils/gatsby-node-helpers';
+import { findKey, localizedSlug, removeTrailingSlash, translatedPostUrl } from './src/utils/gatsby-node-helpers';
 import path from 'path';
 import type { GatsbyNode } from 'gatsby';
 import { FileSystemNode } from 'gatsby-source-filesystem';
@@ -9,6 +9,16 @@ export const onCreatePage: GatsbyNode['onCreatePage'] = ({ page, actions }) => {
 
   // First delete the incoming page that was automatically created by Gatsby
   // So everything in src/pages/
+  if (
+    page.path.startsWith('/blog/en') ||
+    page.path.startsWith('/blog/es') ||
+    page.path.startsWith('/blog/fr') ||
+    page.path.startsWith('/blog/pt')
+  ) {
+    return;
+  }
+  console.log(page.path);
+
   deletePage(page);
 
   // Grab the keys ('en' & 'de') of locales and map over them
@@ -69,11 +79,16 @@ export const onCreateNode: GatsbyNode['onCreateNode'] = async ({ node, actions, 
     createNodeField({ node, name: `slug`, value: slug });
     createNodeField({ node, name: `locale`, value: locale });
     createNodeField({ node, name: `isDefault`, value: isDefault });
+    createNodeField({
+      node,
+      name: `translatedPostUrl`,
+      value: translatedPostUrl((node.frontmatter as { title: string }).title, locale),
+    });
   }
 };
 
 export const createPages: GatsbyNode['createPages'] = async ({ graphql, actions }) => {
-  const { createPage } = actions;
+  const { createPage, createRedirect } = actions;
 
   // Adding sort here to generate the HTMl pages in descending order by date
   // Almost same type that Index Page Query
@@ -82,6 +97,7 @@ export const createPages: GatsbyNode['createPages'] = async ({ graphql, actions 
       query CreatePages {
         allMdx(sort: { fields: [frontmatter___date], order: DESC }) {
           nodes {
+            id
             frontmatter {
               title
               date
@@ -93,6 +109,7 @@ export const createPages: GatsbyNode['createPages'] = async ({ graphql, actions 
               locale
               slug
               isDefault
+              translatedPostUrl
             }
             parent {
               ... on File {
@@ -120,20 +137,23 @@ export const createPages: GatsbyNode['createPages'] = async ({ graphql, actions 
     const slug = (post.parent as { relativeDirectory: string }).relativeDirectory;
     const mdxPath = post.internal.contentFilePath;
 
-    const title = post.frontmatter?.title;
-
     // Use the fields created in exports.onCreateNode
     const locale = post.fields.locale;
     const isDefault = post.fields.isDefault;
 
+    const oldPath = localizedSlug({ isDefault, locale, slug });
+    const newPath = translatedPostUrl(post.frontmatter.title, locale);
+
     const contentForCreatePage = {
-      path: localizedSlug({ isDefault, locale, slug }),
+      path: newPath,
       component: `${postTemplate}?__contentFilePath=${mdxPath}`,
-      context: {
-        locale,
-        title,
-      },
+      context: { id: post.id, locale },
     };
+    createRedirect({
+      fromPath: oldPath,
+      toPath: newPath,
+      isPermanent: true,
+    });
 
     createPage(contentForCreatePage);
   });

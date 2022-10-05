@@ -33,7 +33,7 @@ export const MyListItem = (props) => {
 export const MyParagraph = (props) => {
   const context = useContext(ThemeContext);
   const themeStyles = { 'text-black': context.isLightTheme, 'text-white': !context.isLightTheme };
-  return <p className={classNames(themeStyles, 'my-6 text-xl')} {...props} />;
+  return <div className={classNames(themeStyles, 'paragraph my-6 text-xl')} {...props} />;
 };
 export const MyBlockquote = (props) => {
   const context = useContext(ThemeContext);
@@ -75,23 +75,23 @@ export const components = {
 
 // Don't change the Head name here. Used by Gatsby
 export const HeadForMeta = ({ data }: DeepPartial<PageProps<Queries.LayoutBlogPageQuery>>): JSX.Element => {
-  const imageRendered = getImage(data.mdx.frontmatter.image.childImageSharp.gatsbyImageData);
+  const imageRendered = getImage(data.mdx?.frontmatter?.image?.childImageSharp?.gatsbyImageData) ?? null;
   const imageAsSrc = imageRendered?.images?.fallback?.src ?? '/randomPathForTesting';
   const imageUrl = `${data.site.siteMetadata.siteUrl}${imageAsSrc}`;
-  const title = data.mdx.frontmatter.title ?? 'Demo title';
-  const description = data.mdx.frontmatter.description;
+  const title = data.mdx?.frontmatter?.title ?? 'Demo title';
+  const description = data.mdx?.frontmatter?.description ?? '';
 
   return (
     <>
       <title>{title}</title>
       <meta name="author" content={data.site.siteMetadata.author} />
       <meta name="description" content={description} />
-      <meta name="publish_date" property="og:publish_date" content={data.mdx.frontmatter.date} />
+      <meta name="publish_date" property="og:publish_date" content={data.mdx?.frontmatter?.date ?? ''} />
       <meta name="title" property="og:title" content={title} />
       <meta name="image" property="og:image" content={imageUrl} />
       <meta property="og:type" content="article" />
       <meta name="og:description" content={description} />
-      <meta name="og:locale" content={data.mdx.fields.locale} />
+      <meta name="og:locale" content={data.mdx?.fields?.locale ?? 'en'} />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:card" content="summary" />
       <meta name="twitter:image" content={imageUrl} />

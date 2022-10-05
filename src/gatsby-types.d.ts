@@ -650,6 +650,7 @@ declare namespace Queries {
     | 'childMdx.fields.locale'
     | 'childMdx.fields.localizedSlug'
     | 'childMdx.fields.slug'
+    | 'childMdx.fields.translatedPostUrl'
     | 'childMdx.frontmatter.date'
     | 'childMdx.frontmatter.description'
     | 'childMdx.frontmatter.embeddedImagesLocal'
@@ -934,6 +935,7 @@ declare namespace Queries {
     | 'childrenMdx.fields.locale'
     | 'childrenMdx.fields.localizedSlug'
     | 'childrenMdx.fields.slug'
+    | 'childrenMdx.fields.translatedPostUrl'
     | 'childrenMdx.frontmatter.date'
     | 'childrenMdx.frontmatter.description'
     | 'childrenMdx.frontmatter.embeddedImagesLocal'
@@ -1888,6 +1890,7 @@ declare namespace Queries {
     readonly locale: Maybe<Scalars['String']>;
     readonly localizedSlug: Maybe<Scalars['String']>;
     readonly slug: Maybe<Scalars['String']>;
+    readonly translatedPostUrl: Maybe<Scalars['String']>;
   };
 
   type MdxFieldsEnum =
@@ -1939,6 +1942,7 @@ declare namespace Queries {
     | 'fields.locale'
     | 'fields.localizedSlug'
     | 'fields.slug'
+    | 'fields.translatedPostUrl'
     | 'frontmatter.date'
     | 'frontmatter.description'
     | 'frontmatter.embeddedImagesLocal'
@@ -2284,6 +2288,7 @@ declare namespace Queries {
     readonly locale: InputMaybe<StringQueryOperatorInput>;
     readonly localizedSlug: InputMaybe<StringQueryOperatorInput>;
     readonly slug: InputMaybe<StringQueryOperatorInput>;
+    readonly translatedPostUrl: InputMaybe<StringQueryOperatorInput>;
   };
 
   type MdxFilterInput = {
@@ -4606,6 +4611,7 @@ declare namespace Queries {
           readonly localizedSlug: string | null;
           readonly isDefault: boolean | null;
           readonly slug: string | null;
+          readonly translatedPostUrl: string | null;
         } | null;
       }>;
     };
@@ -4729,6 +4735,10 @@ declare namespace Queries {
 
   type GatsbyImageSharpFluidLimitPresentationSizeFragment = { readonly maxHeight: number; readonly maxWidth: number };
 
+  type ImageForBlogPageFragment = {
+    readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null;
+  };
+
   type ImageOnIndexPostFragment = {
     readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null;
   };
@@ -4740,6 +4750,7 @@ declare namespace Queries {
   type IndexQuery = {
     readonly allMdx: {
       readonly nodes: ReadonlyArray<{
+        readonly id: string;
         readonly frontmatter: {
           readonly title: string | null;
           readonly imageAlt: string | null;
@@ -4755,6 +4766,7 @@ declare namespace Queries {
           readonly locale: string | null;
           readonly slug: string | null;
           readonly isDefault: boolean | null;
+          readonly translatedPostUrl: string | null;
         } | null;
         readonly parent: { readonly relativeDirectory: string } | {} | null;
       }>;
@@ -4768,8 +4780,7 @@ declare namespace Queries {
   };
 
   type LayoutBlogPageQueryVariables = Exact<{
-    locale: Scalars['String'];
-    title: Scalars['String'];
+    id: Scalars['String'];
   }>;
 
   type LayoutBlogPageQuery = {
@@ -4779,13 +4790,13 @@ declare namespace Queries {
         readonly slug: string | null;
         readonly locale: string | null;
         readonly isDefault: boolean | null;
+        readonly translatedPostUrl: string | null;
       } | null;
       readonly frontmatter: {
         readonly imageAlt: string | null;
         readonly title: string | null;
         readonly description: string | null;
         readonly date: string | null;
-        readonly embeddedImagesLocal: ReadonlyArray<{ readonly absolutePath: string } | null> | null;
         readonly image: {
           readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null;
         } | null;
@@ -4793,6 +4804,9 @@ declare namespace Queries {
     } | null;
     readonly site: {
       readonly siteMetadata: { readonly siteUrl: string | null; readonly author: string | null } | null;
+    } | null;
+    readonly defaultBlogPostImage: {
+      readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null;
     } | null;
   };
 
@@ -4849,12 +4863,14 @@ declare namespace Queries {
   type CreatePagesQuery = {
     readonly allMdx: {
       readonly nodes: ReadonlyArray<{
+        readonly id: string;
         readonly frontmatter: { readonly title: string | null; readonly date: string | null } | null;
         readonly internal: { readonly contentFilePath: string | null };
         readonly fields: {
           readonly locale: string | null;
           readonly slug: string | null;
           readonly isDefault: boolean | null;
+          readonly translatedPostUrl: string | null;
         } | null;
         readonly parent: { readonly relativeDirectory: string } | {} | null;
       }>;

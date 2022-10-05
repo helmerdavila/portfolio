@@ -104,6 +104,14 @@ blockquote > p {
   @apply font-bold text-2xl !important;
 }
 
-.blog-page > p:first-of-type::first-letter {
+.paragraph {
+  @apply block;
+  font-family: var(--main-family-font);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.6s ease, color 1s ease;
+}
+
+.blog-page > .paragraph:first-of-type::first-letter {
   @apply text-7xl font-bold float-left mr-3;
 }
