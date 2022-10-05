@@ -1,9 +1,8 @@
 import locales from './config/i18n';
-import { removeTrailingSlash, findKey, localizedSlug } from './src/utils/gatsby-node-helpers';
+import { findKey, localizedSlug, removeTrailingSlash } from './src/utils/gatsby-node-helpers';
 import path from 'path';
 import type { GatsbyNode } from 'gatsby';
 import { FileSystemNode } from 'gatsby-source-filesystem';
-import { IQueryAllMdxFiles } from './src/interfaces';
 
 export const onCreatePage: GatsbyNode['onCreatePage'] = ({ page, actions }) => {
   const { createPage, deletePage } = actions;
@@ -113,7 +112,7 @@ export const createPages: GatsbyNode['createPages'] = async ({ graphql, actions 
 
   const postList = result.data?.allMdx?.nodes ?? [];
 
-  const postTemplate = path.resolve(`./src/components/LayoutBlogPage.tsx`);
+  const postTemplate = path.resolve(`./src/components/LayoutBlogPage.jsx`);
 
   postList.forEach((post) => {
     // All files for a blogpost are stored in a folder
@@ -127,14 +126,15 @@ export const createPages: GatsbyNode['createPages'] = async ({ graphql, actions 
     const locale = post.fields.locale;
     const isDefault = post.fields.isDefault;
 
-    createPage({
+    const contentForCreatePage = {
       path: localizedSlug({ isDefault, locale, slug }),
-      component: `${postTemplate}?__contentFilePath=${slug}`,
-      // component: postTemplate,
+      component: `${postTemplate}?__contentFilePath=${mdxPath}`,
       context: {
         locale,
         title,
       },
-    });
+    };
+
+    createPage(contentForCreatePage);
   });
 };

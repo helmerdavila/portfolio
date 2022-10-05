@@ -4,7 +4,7 @@ import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import React, { useContext } from 'react';
 import { ThemeContext } from '../components/Layout';
 import LayoutBlog from '../components/LayoutBlog';
-import LocalizedLink, { LocalizedBlogLink } from '../components/LocalizedLink';
+import { LocalizedBlogLink } from '../components/LocalizedLink';
 import SEO from '../components/Seo';
 
 const Blog = ({ data }: PageProps<Queries.BlogQuery>): JSX.Element => {

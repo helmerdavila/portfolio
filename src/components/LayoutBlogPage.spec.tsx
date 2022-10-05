@@ -1,7 +1,7 @@
 import React from 'react';
 import { PageProps, useStaticQuery } from 'gatsby';
 import { customRender } from '../utils/testing';
-import LayoutBlogPage, {
+import {
   MyBlockquote,
   MyPre,
   MyH1,
@@ -12,11 +12,11 @@ import LayoutBlogPage, {
   MyList,
   MyListItem,
   MyParagraph,
-  Head,
-} from './LayoutBlogPage';
+} from './LayoutBlogPage.setup';
 import { backgroundImage, layoutBlogPostImage, loadSiteData, loadTranslations } from '../utils/mockresponses';
 import { faker } from '@faker-js/faker';
 import { render } from '@testing-library/react';
+import LayoutBlogPage, { Head } from './LayoutBlogPage';
 
 beforeEach(() => (useStaticQuery as jest.Mock).mockReturnValue({ ...loadSiteData, ...loadTranslations }));
 
