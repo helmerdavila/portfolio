@@ -5,7 +5,7 @@
   "version": "1.0.0",
   "author": "Helmer Davila",
   "scripts": {
-    "build": "gatsby build --verbose",
+    "build": "NODE_OPTIONS=--max-old-space-size=8192 gatsby build --verbose",
     "prebuild": "npm run clean",
     "clean": "gatsby clean",
     "develop": "cross-env GATSBY_GRAPHQL_IDE=playground gatsby develop",
