@@ -52,6 +52,38 @@ it('renders without issues', () => {
   );
 });
 
+it('renders with link in another language', () => {
+  const props: Partial<PageProps<Queries.LayoutBlogPageQuery>> = {
+    data: {
+      site: { siteMetadata: { author: '', siteUrl: '' } },
+      mdx: {
+        excerpt: faker.lorem.words(5),
+        fields: { locale: 'es', isDefault: false, slug: faker.lorem.slug(), translatedPostUrl: faker.lorem.slug() },
+        frontmatter: {
+          title: faker.lorem.words(),
+          description: faker.lorem.words(5),
+          date: '',
+          image: backgroundImage.backgroundImage,
+          imageAlt: faker.lorem.word(),
+        },
+      },
+      defaultBlogPostImage: backgroundImage.backgroundImage,
+    },
+  };
+  const { queryByTestId } = customRender(
+    <LayoutBlogPage {...(props as unknown as PageProps<Queries.LayoutBlogPageQuery>)}>{undefined}</LayoutBlogPage>,
+    {
+      localeContextProps: { locale: 'es' },
+    },
+  );
+
+  expect(queryByTestId('post-image')).toBeInTheDocument();
+  expect(queryByTestId('post-image')).toHaveAttribute(
+    'src',
+    props.data.mdx.frontmatter.image.childImageSharp.gatsbyImageData.images.fallback.src,
+  );
+});
+
 it('renders without imageAlt and description', () => {
   const props: Partial<PageProps<Queries.LayoutBlogPageQuery>> = {
     data: {
@@ -63,7 +95,7 @@ it('renders without imageAlt and description', () => {
           title: faker.lorem.words(),
           description: null,
           date: '',
-          image: backgroundImage.backgroundImage,
+          image: null,
           imageAlt: null,
         },
       },
@@ -80,7 +112,7 @@ it('renders without imageAlt and description', () => {
   expect(queryByTestId('post-image')).toBeInTheDocument();
   expect(queryByTestId('post-image')).toHaveAttribute(
     'src',
-    props.data.mdx.frontmatter.image.childImageSharp.gatsbyImageData.images.fallback.src,
+    props.data.defaultBlogPostImage.childImageSharp.gatsbyImageData.images.fallback.src,
   );
 });
 

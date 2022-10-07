@@ -73,7 +73,7 @@ export const components = {
 
 // Don't change the Head name here. Used by Gatsby
 export const HeadForMeta = ({ data }: DeepPartial<PageProps<Queries.LayoutBlogPageQuery>>): JSX.Element => {
-  const imageRendered = getImage(data.mdx?.frontmatter?.image?.childImageSharp?.gatsbyImageData) ?? null;
+  const imageRendered = getImage(data.mdx.frontmatter.image.childImageSharp.gatsbyImageData);
   const imageAsSrc = imageRendered?.images?.fallback?.src ?? '/randomPathForTesting';
   const imageUrl = `${data.site.siteMetadata.siteUrl}${imageAsSrc}`;
   const title = data.mdx?.frontmatter?.title ?? 'Demo title';

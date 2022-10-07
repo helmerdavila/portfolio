@@ -29,7 +29,7 @@ const LayoutBlogPage = (props) => {
   const imageSource =
     mdx.frontmatter.image?.childImageSharp?.gatsbyImageData ??
     data.defaultBlogPostImage?.childImageSharp?.gatsbyImageData;
-  const imageRendered = getImage(imageSource) ?? null;
+  const imageRendered = getImage(imageSource);
   const pathFileForGithub = mdx.fields.isDefault
     ? `${mdx.fields.slug}/index.mdx`
     : `${mdx.fields.slug}/index.${mdx.fields.locale}.mdx`;
@@ -38,7 +38,7 @@ const LayoutBlogPage = (props) => {
     <LayoutBlog>
       <div className="container max-w-3xl py-5 mx-auto xl:max-w-6xl">
         <div className={classNames(pageBackground, 'border-2')}>
-          {imageRendered ? <GatsbyImage image={imageRendered} alt={imageAlt} data-testid="post-image" /> : null}
+          <GatsbyImage image={imageRendered} alt={imageAlt} data-testid="post-image" />
           <div className="p-12 blog-page">
             <MDXProvider components={components}>{children}</MDXProvider>
             <div className="flex justify-end mt-32">
