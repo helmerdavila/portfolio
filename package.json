@@ -6,7 +6,6 @@
   "author": "Helmer Davila",
   "scripts": {
     "build": "NODE_OPTIONS=--max-old-space-size=8192 gatsby build --verbose",
-    "prebuild": "npm run clean",
     "clean": "gatsby clean",
     "develop": "cross-env GATSBY_GRAPHQL_IDE=playground gatsby develop",
     "start": "gatsby clean && npm run develop",
@@ -19,7 +18,7 @@
     "prepare": "husky install"
   },
   "lint-staged": {
-    "**/*.{ts,tsx}": [
+    "**/*.{ts,tsx,jsx,json,mdx,css}": [
       "npm run lint:fix",
       "prettier --write"
     ]
