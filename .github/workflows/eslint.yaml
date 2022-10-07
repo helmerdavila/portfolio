@@ -16,7 +16,9 @@ jobs:
           cache: npm
       - name: Installing dependencies
         run: npm ci
-      - name: Running typescript check
+      - name: Creating build
+        run: npm run build
+      - name: Running eslint
         run: npm run lint
       - name: Running eslint
         run: npm run ts:check
