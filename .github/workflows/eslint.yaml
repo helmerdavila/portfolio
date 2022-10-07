@@ -20,5 +20,5 @@ jobs:
         run: npm run build
       - name: Running eslint
         run: npm run lint
-      - name: Running eslint
+      - name: Running types check
         run: npm run ts:check
