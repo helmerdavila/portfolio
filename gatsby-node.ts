@@ -17,7 +17,6 @@ export const onCreatePage: GatsbyNode['onCreatePage'] = ({ page, actions }) => {
   ) {
     return;
   }
-  console.log(page.path);
 
   deletePage(page);
 
