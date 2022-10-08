@@ -5,7 +5,7 @@ import type { GatsbyNode } from 'gatsby';
 import { FileSystemNode } from 'gatsby-source-filesystem';
 
 export const onCreatePage: GatsbyNode['onCreatePage'] = ({ page, actions }) => {
-  const { createPage, deletePage } = actions;
+  const { createPage, deletePage, createRedirect } = actions;
 
   // First delete the incoming page that was automatically created by Gatsby
   // So everything in src/pages/
@@ -23,14 +23,27 @@ export const onCreatePage: GatsbyNode['onCreatePage'] = ({ page, actions }) => {
   // Grab the keys ('en' & 'de') of locales and map over them
   Object.keys(locales).map((lang) => {
     // Use the values defined in "locales" to construct the path
-    const localizedPath = locales[lang].default ? page.path : `${locales[lang].path}${page.path}`;
+    const newLocalizedPath = removeTrailingSlash(
+      locales[lang].default ? page.path : `${page.path}${locales[lang].path}`,
+    );
+    const oldLocalizedPath = removeTrailingSlash(
+      locales[lang].default ? page.path : `${locales[lang].path}${page.path}`,
+    );
+    console.log(oldLocalizedPath, newLocalizedPath);
+
+    if (!locales[lang].default) {
+      createRedirect({
+        fromPath: oldLocalizedPath,
+        toPath: newLocalizedPath,
+      });
+    }
 
     return createPage({
       // Pass on everything from the original page
       ...page,
       // Since page.path returns with a trailing slash (e.g. "/de/")
       // We want to remove that
-      path: removeTrailingSlash(localizedPath),
+      path: newLocalizedPath,
       // Pass in the locale as context to every page
       // This context also gets passed to the src/components/layout file
       // This should ensure that the locale is available on every page
