@@ -3,10 +3,11 @@ on:
     branches:
       - main
 jobs:
-  lint_and_typecheck:
+  build_lint_and_typecheck:
     runs-on: ubuntu-latest
     env:
       FONTAWESOME_GITHUB_NPM_TOKEN: ${{ secrets.FONTAWESOME_GITHUB_NPM_TOKEN }}
+      NODE_OPTIONS: --max-old-space-size=4096
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -15,7 +16,9 @@ jobs:
           cache: npm
       - name: Installing dependencies
         run: npm ci
-      - name: Running typescript check
-        run: npm run lint
+      - name: Creating build
+        run: npm run build
       - name: Running eslint
+        run: npm run lint
+      - name: Running types check
         run: npm run ts:check

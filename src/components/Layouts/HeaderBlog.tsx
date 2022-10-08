@@ -42,17 +42,17 @@ const HeaderBlog = (): JSX.Element => {
             </Link>
           </li>
           <li key="es">
-            <Link to="/es/blog" className={stylesLink}>
+            <Link to="/blog/es" className={stylesLink}>
               ES
             </Link>
           </li>
           <li key="fr">
-            <Link to="/fr/blog" className={stylesLink}>
+            <Link to="/blog/fr" className={stylesLink}>
               FR
             </Link>
           </li>
           <li key="pt">
-            <Link to="/pt/blog" className={stylesLink}>
+            <Link to="/blog/pt" className={stylesLink}>
               PT
             </Link>
           </li>

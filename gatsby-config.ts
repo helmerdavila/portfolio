@@ -1,7 +1,9 @@
 import { GatsbyConfig } from 'gatsby';
 
 const config: GatsbyConfig = {
-  graphqlTypegen: true,
+  graphqlTypegen: {
+    generateOnBuild: true,
+  },
   siteMetadata: {
     title: `Helmer Dávila`,
     description: `Web Developer.`,
@@ -17,6 +19,7 @@ const config: GatsbyConfig = {
     `gatsby-plugin-typescript`,
     `gatsby-transformer-json`,
     `gatsby-transformer-sharp`,
+    `gatsby-plugin-client-side-redirect`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -51,6 +54,17 @@ const config: GatsbyConfig = {
     },
     {
       resolve: 'gatsby-plugin-mdx',
+      options: {
+        gatsbyRemarkPlugins: [
+          {
+            resolve: `gatsby-remark-images`,
+            options: {
+              tracedSVG: true,
+              maxWidth: 800,
+            },
+          },
+        ],
+      },
     },
     {
       resolve: 'gatsby-plugin-google-analytics',

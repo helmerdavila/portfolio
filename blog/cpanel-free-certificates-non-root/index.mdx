@@ -4,11 +4,7 @@ description: Just using the acme script, because some shared hosting providers a
 date: 2022-05-01
 published: true
 image: ../../src/images/blog/keys.jpg
-embeddedImagesLocal:
-  - cpanel.png
 ---
-
-import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 
 # CPanel SSL: Issue free certificates in a non-root server
 
@@ -16,7 +12,7 @@ Since some shared hosting providers are tied to an option to buy a SSL certifica
 
 ## 📈 Go to the Terminal into your CPanel or SSH there
 
-<GatsbyImage image={getImage(props.localImages[0])} alt="CPanel" />
+![Cpanel](./cpanel.png)
 
 ## ⬇️ Get the [acme.sh](http://acme.sh/) script
 

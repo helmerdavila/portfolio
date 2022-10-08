@@ -8,7 +8,7 @@ const LocalizedLink = ({ to, ...props }: { to: string; [x: string]: unknown }): 
   const { locale } = useContext(LocaleContext);
 
   const isIndex = to === `/`;
-  const ifNotDefaultUrl = `/${locales[locale].path}${isIndex ? `` : `/${to}`}`;
+  const ifNotDefaultUrl = `${isIndex ? `` : `/${to}`}/${locales[locale].path}`;
 
   // If it's the default language, don't do anything
   // If it's another language, add the "path"
@@ -17,14 +17,6 @@ const LocalizedLink = ({ to, ...props }: { to: string; [x: string]: unknown }): 
   const path = locales[locale].default ? to : ifNotDefaultUrl;
 
   return <Link {...props} to={path} />;
-};
-
-export const LocalizedBlogLink = ({ to, ...props }: { to: string; [x: string]: unknown }): JSX.Element => {
-  const { locale } = useContext(LocaleContext);
-
-  const url = locale === 'en' ? `/blog/${to}` : `/${locales[locale].path}/blog/${to}`;
-
-  return <Link {...props} to={url} />;
 };
 
 export default LocalizedLink;

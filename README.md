@@ -6,6 +6,7 @@ This is my current portfolio, I'm updating it as soon I dominate a specific tech
 - React
 - Gatsby
 - SCSS + Tailwind
+- Vercel
 
 ## Can I copy your portfolio?
 For sure. Just make sure that you change at least the colors. I really like the colors that I chose for this project.

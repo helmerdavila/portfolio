@@ -1,7 +1,7 @@
 import React from 'react';
 import { PageProps, useStaticQuery } from 'gatsby';
 import { customRender } from '../utils/testing';
-import LayoutBlogPage, {
+import {
   MyBlockquote,
   MyPre,
   MyH1,
@@ -12,11 +12,11 @@ import LayoutBlogPage, {
   MyList,
   MyListItem,
   MyParagraph,
-  Head,
-} from './LayoutBlogPage';
+} from './LayoutBlogPage.setup';
 import { backgroundImage, layoutBlogPostImage, loadSiteData, loadTranslations } from '../utils/mockresponses';
 import { faker } from '@faker-js/faker';
 import { render } from '@testing-library/react';
+import LayoutBlogPage, { Head } from './LayoutBlogPage';
 
 beforeEach(() => (useStaticQuery as jest.Mock).mockReturnValue({ ...loadSiteData, ...loadTranslations }));
 
@@ -26,17 +26,16 @@ it('renders without issues', () => {
       site: { siteMetadata: { author: '', siteUrl: '' } },
       mdx: {
         excerpt: faker.lorem.words(5),
-        body: faker.lorem.paragraphs(),
-        fields: { locale: 'en', isDefault: true, slug: faker.lorem.slug() },
+        fields: { locale: 'en', isDefault: true, slug: faker.lorem.slug(), translatedPostUrl: faker.lorem.slug() },
         frontmatter: {
           title: faker.lorem.words(),
           description: faker.lorem.words(5),
           date: '',
           image: backgroundImage.backgroundImage,
           imageAlt: faker.lorem.word(),
-          embeddedImagesLocal: [],
         },
       },
+      defaultBlogPostImage: backgroundImage.backgroundImage,
     },
   };
   const { queryByTestId } = customRender(
@@ -53,23 +52,54 @@ it('renders without issues', () => {
   );
 });
 
+it('renders with link in another language', () => {
+  const props: Partial<PageProps<Queries.LayoutBlogPageQuery>> = {
+    data: {
+      site: { siteMetadata: { author: '', siteUrl: '' } },
+      mdx: {
+        excerpt: faker.lorem.words(5),
+        fields: { locale: 'es', isDefault: false, slug: faker.lorem.slug(), translatedPostUrl: faker.lorem.slug() },
+        frontmatter: {
+          title: faker.lorem.words(),
+          description: faker.lorem.words(5),
+          date: '',
+          image: backgroundImage.backgroundImage,
+          imageAlt: faker.lorem.word(),
+        },
+      },
+      defaultBlogPostImage: backgroundImage.backgroundImage,
+    },
+  };
+  const { queryByTestId } = customRender(
+    <LayoutBlogPage {...(props as unknown as PageProps<Queries.LayoutBlogPageQuery>)}>{undefined}</LayoutBlogPage>,
+    {
+      localeContextProps: { locale: 'es' },
+    },
+  );
+
+  expect(queryByTestId('post-image')).toBeInTheDocument();
+  expect(queryByTestId('post-image')).toHaveAttribute(
+    'src',
+    props.data.mdx.frontmatter.image.childImageSharp.gatsbyImageData.images.fallback.src,
+  );
+});
+
 it('renders without imageAlt and description', () => {
   const props: Partial<PageProps<Queries.LayoutBlogPageQuery>> = {
     data: {
       site: { siteMetadata: { author: '', siteUrl: '' } },
       mdx: {
         excerpt: faker.lorem.words(5),
-        body: faker.lorem.paragraphs(),
-        fields: { locale: 'en', isDefault: true, slug: faker.lorem.slug() },
+        fields: { locale: 'en', isDefault: true, slug: faker.lorem.slug(), translatedPostUrl: faker.lorem.slug() },
         frontmatter: {
           title: faker.lorem.words(),
           description: null,
           date: '',
-          image: backgroundImage.backgroundImage,
+          image: null,
           imageAlt: null,
-          embeddedImagesLocal: [],
         },
       },
+      defaultBlogPostImage: backgroundImage.backgroundImage,
     },
   };
   const { queryByTestId } = customRender(
@@ -82,7 +112,7 @@ it('renders without imageAlt and description', () => {
   expect(queryByTestId('post-image')).toBeInTheDocument();
   expect(queryByTestId('post-image')).toHaveAttribute(
     'src',
-    props.data.mdx.frontmatter.image.childImageSharp.gatsbyImageData.images.fallback.src,
+    props.data.defaultBlogPostImage.childImageSharp.gatsbyImageData.images.fallback.src,
   );
 });
 
@@ -166,7 +196,6 @@ it('renders Head component without issues', () => {
       site: { siteMetadata: { author: '', siteUrl: '' } },
       mdx: {
         excerpt: faker.lorem.words(5),
-        body: faker.lorem.paragraphs(),
         fields: { locale: 'en', isDefault: true, slug: faker.lorem.slug() },
         frontmatter: {
           title: postTitle,
@@ -174,7 +203,6 @@ it('renders Head component without issues', () => {
           date: '',
           image: layoutBlogPostImage.mdx.frontmatter.image,
           imageAlt: faker.lorem.word(),
-          embeddedImagesLocal: [],
         },
       },
     },

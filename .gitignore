@@ -71,6 +71,7 @@ yarn-error.log
 .idea
 .vscode
 .wordpress-cache
+src/gatsby-types.d.ts
 
 # Vim stuff
 *.vim

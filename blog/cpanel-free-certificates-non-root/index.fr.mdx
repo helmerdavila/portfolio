@@ -4,11 +4,7 @@ description: On utilise le script acme
 date: 2022-05-01
 published: true
 image: ../../src/images/blog/keys.jpg
-embeddedImagesLocal:
-  - cpanel.png
 ---
-
-import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 
 # CPanel: Obtenez des certificats SSL gratuits (non-root)
 
@@ -16,7 +12,7 @@ Depuis quelques hébergements partagés sont liés seulement d’une option d’
 
 ## 📈 Allez au terminal dans ton CPanel ou SSH là
 
-<GatsbyImage image={getImage(props.localImages[0])} alt="CPanel" />
+![Cpanel](./cpanel.png)
 
 ## ⬇️ Obtiens le script [acme.sh](http://acme.sh/)
 
@@ -38,7 +34,7 @@ source ~/.bashrc
 acme.sh —-register-account —-accountemail youremail@yourdomain.com
 ```
 
-## ⏰ Vérifie si le cronjob a été habilité par acme
+## ⏰ Vérifie si le cronjob a été habilité par acme
 
 ```bash
 crontab -l | grep acme.sh
@@ -85,7 +81,7 @@ Si tu as reçu des checks / messages verts. Félicitations! Maintenant tu peux g
 acme.sh —-issue —-webroot ${DOMAINPATH} -d ${DOMAIN} -d ${WWWDOMAIN} —-force
 ```
 
-## ➕ Ajoute ton certificat dans CPanel
+## ➕ Ajoute ton certificat dans CPanel
 
 ```bash
 acme.sh —-deploy —-deploy-hook cpanel_uapi —-domain ${DOMAIN} --domain ${WWWDOMAIN}

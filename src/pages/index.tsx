@@ -40,6 +40,7 @@ export const query = graphql`
       limit: 2
     ) {
       nodes {
+        id
         frontmatter {
           title
           imageAlt
@@ -48,10 +49,14 @@ export const query = graphql`
           }
           date
         }
+        internal {
+          contentFilePath
+        }
         fields {
           locale
           slug
           isDefault
+          translatedPostUrl
         }
         parent {
           ... on File {

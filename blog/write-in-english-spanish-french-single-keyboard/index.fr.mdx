@@ -4,15 +4,8 @@ description: Clavier en anglais. Mac, Windows y Linux
 date: 2022-04-13
 published: true
 image: ../../src/images/blog/keyboard.jpg
-embeddedImagesLocal:
-  - win_layouts.png
-  - debian_layout_one.png
-  - debian_layout_two.png
-  - mint_layout.png
 ---
 
-
-import {GatsbyImage, getImage} from 'gatsby-plugin-image';
 
 # Ecrivez en Français, Espagnol et Anglais, en utilisant le même clavier
 
@@ -40,7 +33,7 @@ Selon moi, c’est le moyen plus facile, ensemble avec Linux, car elle vient par
 
 Assure-toi que ton clavier supporte la configuration internationale des États-Unis. Tu peux le changer entre plusieurs de langues et configurations de clavier avec le raccourci `Windows Key` + `Barre d'espace`. Dans le prochain exemple, ignore la langue que j’ai choisie (le français du Canada) car je l’utilise pour les corrections. Jetez un œil au texte là-bas, c’est la configuration.
 
-<GatsbyImage image={getImage(props.localImages[0])} alt="Windows" />
+![Windows](./win_layouts.png)
 
 ### Shortcuts
 
@@ -66,12 +59,12 @@ Alors, les raccourcis suivants seront affichés comme suit.
 
 ### La configuration de Debian
 
-<GatsbyImage image={getImage(props.localImages[1])} alt="Debian" />
-<GatsbyImage image={getImage(props.localImages[2])} alt="Debian" />
+![Debian](./debian_layout_one.png)
+![Debian](./debian_layout_two.png)
 
 ### La configuration de Linux Mint
 
-<GatsbyImage image={getImage(props.localImages[3])} alt="Linux Mint" />
+![Linux Mint](./mint_layout.png)
 
 ### Shortcuts
 

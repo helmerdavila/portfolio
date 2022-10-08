@@ -1,8 +1,9 @@
-module.exports = {
+import type { Config } from 'jest';
+
+const config: Config = {
   testEnvironment: 'jsdom',
   preset: 'ts-jest',
   transform: {
-    '^.+\\.jsx?$': `<rootDir>/jest-preprocess.js`,
     '^.+\\.[jt]sx?$': '<rootDir>/jest-preprocess.js',
   },
   moduleNameMapper: {
@@ -20,3 +21,5 @@ module.exports = {
   setupFiles: [`<rootDir>/loadershim.js`],
   setupFilesAfterEnv: ['<rootDir>/jest-setup.js'],
 };
+
+export default config;

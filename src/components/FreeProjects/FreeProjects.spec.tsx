@@ -22,7 +22,7 @@ it('renders Slide without issues', () => {
     codeUrl: faker.internet.url(),
     backend: faker.lorem.words(),
     frontend: faker.lorem.words(),
-    image: <img src={faker.image.imageUrl()} />,
+    image: <img src={faker.image.imageUrl()} alt="" />,
   };
   const { queryByText } = customRender(<Slide slide={slide} />);
 
@@ -43,7 +43,7 @@ it('renders Slide without bakend and frontend', () => {
     codeUrl: faker.internet.url(),
     backend: null,
     frontend: null,
-    image: <img src={faker.image.imageUrl()} />,
+    image: <img src={faker.image.imageUrl()} alt="" />,
   };
   const { queryByText } = customRender(<Slide slide={slide} />);
 

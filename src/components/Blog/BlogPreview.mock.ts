@@ -1,8 +1,10 @@
+/* istanbul ignore file */
 import { faker } from '@faker-js/faker';
 
 export enum POSTS {
   POST_WITH_IMAGE,
   POST_WITHOUT_IMAGE,
+  POST_WITHOUT_PARENT,
 }
 
 export default {
@@ -42,6 +44,7 @@ export default {
         fields: {
           locale: 'en',
           slug: faker.lorem.slug(),
+          translatedPostUrl: faker.lorem.slug(),
         },
         parent: {
           relativeDirectory: faker.lorem.slug(),
@@ -55,10 +58,23 @@ export default {
         },
         fields: {
           locale: 'en',
+          translatedPostUrl: faker.lorem.slug(),
         },
         parent: {
           relativeDirectory: faker.lorem.slug(),
         },
+      },
+      {
+        frontmatter: {
+          title: faker.lorem.words(5),
+          imageAlt: null,
+          date: '2022-02-02T00:00:00.000Z',
+        },
+        fields: {
+          locale: 'en',
+          translatedPostUrl: faker.lorem.slug(),
+        },
+        parent: {},
       },
     ],
   },
