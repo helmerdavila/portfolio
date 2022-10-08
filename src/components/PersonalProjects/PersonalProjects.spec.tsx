@@ -27,7 +27,7 @@ it('renders AppCard without issues', () => {
     id: faker.datatype.uuid(),
     title: faker.company.bsNoun(),
     description_key: 'sample_key',
-    image: <img src={faker.image.imageUrl()} />,
+    image: <img src={faker.image.imageUrl()} alt="" />,
   };
   const { queryByText, queryByRole } = customRender(<AppCard app={app} translations={translations_en} />);
 
@@ -40,7 +40,7 @@ it('renders AppCard with app links', () => {
     id: faker.datatype.uuid(),
     title: faker.company.bsNoun(),
     description_key: 'sample_key',
-    image: <img src={faker.image.imageUrl()} />,
+    image: <img src={faker.image.imageUrl()} alt="" />,
     apple: faker.internet.url(),
     android: faker.internet.url(),
   };

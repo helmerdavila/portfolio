@@ -51,7 +51,7 @@ export const onCreateNode: GatsbyNode['onCreateNode'] = async ({ node, actions, 
 
   // Check for "Mdx" type so that other files (e.g. images) are exluded
   if (node.internal.type === `Mdx`) {
-    const parentNode = getNode(<string>node.parent) as FileSystemNode;
+    const parentNode = getNode(node.parent as string) as FileSystemNode;
     // Use path.basename
     // https://nodejs.org/api/path.html#path_path_basename_path_ext
     // const name = path.basename(<string>node.internal.contentFilePath, `.mdx`);

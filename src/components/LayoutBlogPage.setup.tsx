@@ -1,24 +1,41 @@
-import React, { useContext } from 'react';
+import React, { ReactNode, useContext } from 'react';
 import { PageProps } from 'gatsby';
 import { ThemeContext } from './Layout';
 import classNames from 'classnames';
 import Code from './Mdx/Code';
 import { getImage } from 'gatsby-plugin-image';
 
-export const MyH1 = (props) => {
+interface Props {
+  [key: string]: unknown;
+  children: ReactNode;
+}
+
+export const MyH1 = (props: Props) => {
   const context = useContext(ThemeContext);
   const themeStyles = { 'text-black': context.isLightTheme, 'text-white': !context.isLightTheme };
-  return <h1 className={classNames(themeStyles, 'mb-6 text-5xl font-bold leading-normal')} {...props} />;
+  return (
+    <h1 className={classNames(themeStyles, 'mb-6 text-5xl font-bold leading-normal')} {...props}>
+      {props.children}
+    </h1>
+  );
 };
-export const MyH2 = (props) => {
+export const MyH2 = (props: Props) => {
   const context = useContext(ThemeContext);
   const themeStyles = { 'text-black': context.isLightTheme, 'text-white': !context.isLightTheme };
-  return <h2 className={classNames(themeStyles, 'mt-7 mb-5 text-4xl font-bold')} {...props} />;
+  return (
+    <h2 className={classNames(themeStyles, 'mt-7 mb-5 text-4xl font-bold')} {...props}>
+      {props.children}
+    </h2>
+  );
 };
-export const MyH3 = (props) => {
+export const MyH3 = (props: Props) => {
   const context = useContext(ThemeContext);
   const themeStyles = { 'text-black': context.isLightTheme, 'text-white': !context.isLightTheme };
-  return <h3 className={classNames(themeStyles, 'mt-3 mb-2 text-3xl font-bold')} {...props} />;
+  return (
+    <h3 className={classNames(themeStyles, 'mt-3 mb-2 text-3xl font-bold')} {...props}>
+      {props.children}
+    </h3>
+  );
 };
 export const MyList = (props) => {
   const context = useContext(ThemeContext);
@@ -55,7 +72,9 @@ export const MyInlineCode = (props) => {
   };
   return <span className={classNames(themeStyles, 'rounded text-base px-1 font-mono')} {...props} />;
 };
-export const MyPre = (props) => <Code {...props.children.props} />;
+export const MyPre = (props: { children: { props: Record<string, unknown> }; className: string }) => (
+  <Code {...props.children.props} />
+);
 export const MyImage = (props: Record<string, unknown>) => <img className="shadow-lg rounded" alt="" {...props} />;
 
 export const components = {
