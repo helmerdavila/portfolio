@@ -19,7 +19,7 @@ const config: GatsbyConfig = {
     `gatsby-plugin-typescript`,
     `gatsby-transformer-json`,
     `gatsby-transformer-sharp`,
-    `gatsby-plugin-gatsby-cloud`,
+    `gatsby-plugin-client-side-redirect`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
