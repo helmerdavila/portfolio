@@ -22,7 +22,7 @@
       "npm run lint:fix",
       "prettier --write"
     ],
-    "**/*.{mdx}": "prettier --write"
+    "**/*.mdx": "prettier --write"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "6.2.0",
