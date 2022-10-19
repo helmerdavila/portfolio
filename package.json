@@ -18,10 +18,11 @@
     "prepare": "husky install"
   },
   "lint-staged": {
-    "**/*.{ts,tsx,jsx,mdx,css}": [
+    "**/*.{ts,tsx,jsx,css}": [
       "npm run lint:fix",
       "prettier --write"
-    ]
+    ],
+    "**/*.mdx": "prettier --write"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "6.2.0",

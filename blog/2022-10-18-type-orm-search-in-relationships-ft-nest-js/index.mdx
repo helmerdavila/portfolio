@@ -1,0 +1,310 @@
+---
+title: 'TypeORM: search in relationships (ft. NestJS)'
+description: Using TypeORM and NestJS
+date: 2022-10-18
+image: ../../src/images/blog/magnifying-glass.jpg
+imageAlt: Photo by Mediamodifier on Unsplash
+published: true
+---
+
+# TypeORM: search in relationships (ft. NestJS)
+
+## 🤔 Why?
+
+Because I didn’t want to perform a full search once I brought all the records. Since SQL is really optimized for queries. For this case, I wanted to filter some records based on their relationship attributes.
+
+I’ll use a simple test case.
+
+## 💡 First, we need two TypeORM entities
+
+For the most simple of cases, let’s suppose we have two classes. A `Pet` and an `Owner`. A Pet will belong to only one Owner. Both entities live in the same folder.
+
+```tsx
+// ./entities/pet.ts
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Owner } from './owner';
+
+@Entity()
+export class Pet {
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column({ name: 'owner_id' })
+  ownerId: number;
+
+  @ManyToOne(() => Owner)
+  @JoinColumn({ name: 'owner_id' })
+  owner: Owner;
+}
+```
+
+And
+
+```tsx
+// ./entities/owner.ts
+import { Column, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Pet } from './pet';
+
+@Entity()
+export class Owner {
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column({ name: 'first_name' })
+  firstName: string;
+
+  @Column({ name: 'last_name' })
+  lastName: string;
+
+  @OneToMany(() => Pet, () => Owner)
+  @JoinColumn({ name: 'owner_id' })
+  pets: Pet[];
+}
+```
+
+## 🔨 Creating the method for the controller
+
+We will use NestJS. A simple NestJS controller seems like the following example.
+
+```tsx
+@Controller('pets')
+export default class AppController {
+  @Get()
+  async search() {
+    // TODO: Implement search
+  }
+}
+```
+
+As you see here. The URL for the search will be `/pets/search`
+
+## 🚛 Using Repositories
+
+This is the method Typescript friendly. I prefer this since I’ll have type validation if I update any field in the future.
+
+```tsx
+// ./app.ts
+import { Controller, Get, Query } from '@nestjs/common';
+import { Pet } from './entities/pet';
+import { FindManyOptions, FindOptionsWhere, Like, Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+
+@Controller('pets')
+export default class AppController {
+  constructor(@InjectRepository(Pet) private petRepository: Repository<Pet>) {}
+
+  @Get('/repository')
+  async searchUsingRepository(@Query('search') search?: string) {
+    // By default we load the relationship in the default options
+    const options: FindManyOptions<Pet> = { relations: { owner: true } };
+
+    if (search?.length) {
+      // if search request query param was sent. Create an array of words
+      const searchFormattedText = search.trim().split(' ');
+      const where: FindOptionsWhere<Pet>[] = [];
+
+      // Create OR WHERE queries by each word into first and last name
+      for (const word of searchFormattedText) {
+        where.push({ owner: { firstName: Like(`%${word}%`) } });
+        where.push({ owner: { lastName: Like(`%${word}%`) } });
+      }
+
+      // Adding those where to options
+      options.where = where;
+    }
+
+    const pets = await this.petRepository.find(options);
+
+    return { pets };
+  }
+}
+```
+
+It will produce the following query
+
+```sql
+SELECT `Pet`.`id`                    AS `Pet_id`,
+       `Pet`.`owner_id`              AS `Pet_owner_id`,
+       `Pet__Pet_owner`.`id`         AS `Pet__Pet_owner_id`,
+       `Pet__Pet_owner`.`first_name` AS `Pet__Pet_owner_first_name`,
+       `Pet__Pet_owner`.`last_name`  AS `Pet__Pet_owner_last_name`
+FROM `pet` `Pet`
+         INNER JOIN `owner` `Pet__Pet_owner` ON `Pet__Pet_owner`.`id` = `Pet`.`owner_id`
+WHERE ((`Pet__Pet_owner`.`first_name` LIKE ?) OR (`Pet__Pet_owner`.`last_name` LIKE ?))
+```
+
+## 🚛 Using Query Builder from repositories
+
+This method is more close to SQL. Useful if you’re more comfortable with it.
+
+```tsx
+// ./app.ts
+import { Controller, Get, Query } from '@nestjs/common';
+import { Pet } from './entities/pet';
+import { Brackets, SelectQueryBuilder, Like, Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+
+@Controller('pets')
+export default class AppController {
+  constructor(@InjectRepository(Pet) private petRepository: Repository<Pet>) {}
+
+  @Get('/querybuilder')
+  async searchUsingQueryBuilder(@Query('search') search?: string) {
+    // This is how we load relationships here
+    let query = this.petRepository.createQueryBuilder('p').innerJoinAndSelect('p.owner', 'o');
+
+    if (search?.length) {
+      // By default we load relationship in the default options
+      const searchFormattedText = search.trim().split(' ');
+
+      // With query builder we specify the AND or OR queries
+      // Brackets is a way to group queries within a ( )
+      query = query.andWhere(
+        new Brackets((queryPart: SelectQueryBuilder<Pet>) => {
+          for (const word of searchFormattedText) {
+            queryPart.orWhere('o.first_name like :firstName', {
+              firstName: `%${word}%`,
+            });
+            queryPart.orWhere('o.last_name like :lastName', {
+              lastName: `%${word}%`,
+            });
+          }
+        }),
+      );
+    }
+
+    const pets = await query.getMany();
+
+    return { pets };
+  }
+}
+```
+
+The query for the function above will result as
+
+```sql
+SELECT `p`.`id`         AS `p_id`,
+       `p`.`owner_id`   AS `p_owner_id`,
+       `o`.`id`         AS `o_id`,
+       `o`.`first_name` AS `o_first_name`,
+       `o`.`last_name`  AS `o_last_name`
+FROM `pet` `p`
+         INNER JOIN `owner` `o` ON `o`.`id` = `p`.`owner_id`
+WHERE (`o`.`first_name` like ? OR `o`.`last_name` like ?)
+```
+
+## ⭐ Final result
+
+This is the final controller. I’ll add a docker-compose file if you want to try it by yourself. Also, there is a `/fake` method to create records if you want to test the search.
+
+> Remember, this is _ONLY_ the main controller. Check my _FULL_ [demo on Github here](https://github.com/helmerdavila/nestjs-typeorm-search-example)
+
+```tsx
+// ./app.ts
+import { Controller, Get, Post, Query } from '@nestjs/common';
+import { Pet } from './entities/pet';
+import {
+  Brackets,
+  FindManyOptions,
+  FindOptionsWhere,
+  InsertResult,
+  Like,
+  Repository,
+  SelectQueryBuilder,
+} from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Owner } from './entities/owner';
+
+@Controller('pets')
+export class AppController {
+  constructor(
+    @InjectRepository(Pet) private petRepository: Repository<Pet>,
+    @InjectRepository(Owner) private ownerRepository: Repository<Owner>,
+  ) {}
+
+  @Get('/repository')
+  async searchUsingRepository(@Query('search') search?: string) {
+    const options: FindManyOptions<Pet> = { relations: { owner: true } };
+
+    if (search?.length) {
+      const searchFormattedText = search.trim().split(' ');
+      const where: FindOptionsWhere<Pet>[] = [];
+
+      for (const word of searchFormattedText) {
+        where.push({ owner: { firstName: Like(`%${word}%`) } });
+        where.push({ owner: { lastName: Like(`%${word}%`) } });
+      }
+
+      options.where = where;
+    }
+
+    const pets = await this.petRepository.find(options);
+
+    return { pets };
+  }
+
+  @Get('/querybuilder')
+  async searchUsingQueryBuilder(@Query('search') search?: string) {
+    let query = this.petRepository.createQueryBuilder('p').innerJoinAndSelect('p.owner', 'o');
+
+    if (search?.length) {
+      const searchFormattedText = search.trim().split(' ');
+
+      query = query.andWhere(
+        new Brackets((queryPart: SelectQueryBuilder<Pet>) => {
+          for (const word of searchFormattedText) {
+            queryPart.orWhere('o.first_name like :firstName', {
+              firstName: `%${word}%`,
+            });
+            queryPart.orWhere('o.last_name like :lastName', {
+              lastName: `%${word}%`,
+            });
+          }
+        }),
+      );
+    }
+
+    const pets = await query.getMany();
+
+    return { pets };
+  }
+
+  @Post('/fakes')
+  async fakes() {
+    const ownerPromises: Promise<InsertResult>[] = [];
+    let ownerCount = await this.ownerRepository.count();
+
+    for (let i = ownerCount + 1; i <= ownerCount + 100; i++) {
+      const owner = new Owner();
+      owner.firstName = `first_${i} name_${i}`;
+      owner.lastName = `last_${i} name_${i}`;
+      ownerPromises.push(this.ownerRepository.insert(owner));
+    }
+
+    await Promise.all(ownerPromises);
+
+    ownerCount = await this.ownerRepository.count();
+
+    const petPromises: Promise<InsertResult>[] = [];
+    let petCount = await this.petRepository.count();
+
+    for (let j = petCount + 1; j <= petCount + 100; j++) {
+      const pet = new Pet();
+      pet.ownerId = this.#randomInteger(1, ownerCount);
+      petPromises.push(this.petRepository.insert(pet));
+    }
+
+    await Promise.all(petPromises);
+
+    petCount = await this.petRepository.count();
+
+    return { ownerCount, petCount };
+  }
+
+  #randomInteger(min: number, max: number) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min) + min);
+  }
+}
+```
