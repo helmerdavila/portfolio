@@ -17,6 +17,7 @@ require('prismjs/components/prism-bash');
 require('prismjs/components/prism-ignore');
 require('prismjs/components/prism-vim');
 require('prismjs/components/prism-jsonp');
+require('prismjs/components/prism-nginx');
 
 interface Props {
   children?: string;

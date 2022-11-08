@@ -1,0 +1,39 @@
+---
+title: 'Tmux: Prefijo Ctrl-Espacio no funciona en macOS'
+description: Una solución que a los usuarios de Tmux les gustará
+date: 2022-11-07
+published: true
+image: ../../src/images/blog/tmux-screenshot.png
+imageAlt: 'Tmux'
+---
+
+# Tmux: Prefijo Ctrl-Espacio no funciona en macOS
+
+## 🤔 ¿Cómo pasó?
+
+Estaba configurando una nueva mac. Y después de instalar mi perfil Tmux con todos los plugins que necesitaba, el atajo no estaba funcionando. Intenté el mismo comando en todas las terminales que tengo instaladas: Kitty, Alacritty y la Terminal.app.
+
+Había cambiado el atajo por defecto en Tmux de `Ctrl-B` o `^-B` a `^-Espacio` , ya que siento que es más flexible.
+
+Era realmente extraño que no funcionara, porque el mismo atajo funcionaba en mi antigua (pero aún fuerte) Macbook de 2019.
+
+A continuación la configuración que yo uso en mi `~/.tmux.conf`
+
+```nginx
+# Cambiando el prefijo
+unbind C-b
+set-option -g prefix C-Space
+bind-key C-Space send-prefix
+```
+
+## 🔨 La solución
+
+Hay un atajo por defecto en Mac para moverse entre entradas de información (textbox, etc). Tienes que ir a `Configuración de Sistema` → `Teclado` → `Atajos de teclado` → `Fuentes de entrada` . Después, deshabilitar ambos atajos allí.
+
+## 📷 Capturas de pantalla
+
+Ya que encontrar la opción podría ser un poco difícil. Voy a poner algunas capturas (en inglés), mostrando donde puedes encontrar la opción en macOS Ventura.
+
+![Atajo habilitado](./tmux-shortcut-not-working-one.png)
+
+![Atajo deshabilitado](./tmux-shortcut-not-working-two.png)
