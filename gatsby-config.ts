@@ -67,9 +67,9 @@ const config: GatsbyConfig = {
       },
     },
     {
-      resolve: 'gatsby-plugin-google-analytics',
+      resolve: `gatsby-plugin-google-gtag`,
       options: {
-        trackingId: 'UA-129069726-1',
+        trackingIds: ['G-CT2PGSNRC4'],
       },
     },
     {
