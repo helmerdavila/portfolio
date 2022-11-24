@@ -23,7 +23,7 @@ For this purpose, I’m currently using the following framework versions:
 - React Native: 0.70.2
 - Jest: 29.1
 - Typescript: 4.8
-- `@testing-library/react-native` : 11.2.0 (for testing JSX components)
+- `@testing-library/react-native`: 11.2.0 (for testing JSX components)
 
 ## 💻 Mocking device OS
 
@@ -31,7 +31,7 @@ For this purpose, I’m currently using the following framework versions:
 
 As you might know, we have the `Platform.OS` option to detect over which platform we are running our code. To make testing and/or reusing the code in our project more straightforward, I prefer to have a “Helper” file. For the next example, I’m using ESM syntax, but you can still use CommonJS module one.
 
-Let’s add a static method so we won’t need to instantiate the class. Rather than `new Helpers().isIpad()`we can just use `Helpers.isIpad()` .
+Let’s add a static method so we won’t need to instantiate the class. Rather than `new Helpers().isIpad()` we can just use `Helpers.isIpad()`.
 
 ```tsx
 import { Platform } from 'react-native';
@@ -77,11 +77,11 @@ jest.spyOn(Platform as PlatformIOSStatic, 'isPad', 'get').mockReturnValueOnce(tr
 jest.spyOn(Platform, 'isPad', 'get').mockReturnValueOnce(true);
 ```
 
-An iPad device will be treated as they use `ios` operating system. So, how do we force React Native always to retrieve `true`in its `Platform.isIpad()`function?
+An iPad device will be treated as they use `ios` operating system. So, how do we force React Native always to retrieve `true`in its `Platform.isIpad()` function?
 
-Here is where spies come to help us. Since `isIpad`is a getter function, this is an easier way to override it. Then I’d prefer to use `mockReturnValueOnce` here to specify when the functions execute once, it will retrieve that first time the value that I need.
+Here is where spies come to help us. Since `isIpad` is a getter function, this is an easier way to override it. Then I’d prefer to use `mockReturnValueOnce` here to specify when the functions execute once, it will retrieve that first time the value that I need.
 
-For Typescript, we will use `PlatformIOSStatic` . This is a way to tell TS that `Platform` types (and functions) will be referring to an iOS / iPad device.
+For Typescript, we will use `PlatformIOSStatic`. This is a way to tell TS that `Platform` types (and functions) will be referring to an iOS / iPad device.
 
 Once we learned that, we could add some tests to cover any uncommon or edge case.
 
@@ -134,7 +134,7 @@ describe('Here they come all your tests', () => {
 
 ## 🎨 Mocking useColorScheme hook
 
-Ok, now we can override the platform. But what about dark mode? Whether you are using Android or iOS, dark mode will be useful, especially at night or in dark environments. From React Native, we can conditional code some styles based on that. And we have native access to the `useColorScheme`hook. But how can we mock it?
+Ok, now we can override the platform. But what about dark mode? Whether you are using Android or iOS, dark mode will be useful, especially at night or in dark environments. From React Native, we can conditional code some styles based on that. And we have native access to the `useColorScheme` hook. But how can we mock it?
 
 First, let’s see an example using the hook to implement the dark mode inside a component.
 
