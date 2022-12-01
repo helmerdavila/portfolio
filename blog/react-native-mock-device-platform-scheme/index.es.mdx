@@ -1,0 +1,207 @@
+---
+title: 'React Native & Jest: Hacer un mock del dispositivo y del tema actual '
+description: Probando el código como dispositivo iOS, iPad o Android. Modo claro y modo oscuro.
+date: 2022-12-02
+image: ../../src/images/blog/mobile-device-ios.jpg
+imageAlt: Photo by Omid Armin on Unsplash
+published: true
+---
+
+# React Native & Jest: Hacer un mock del dispositivo y del tema actual
+
+Cuando tienes una aplicación React Native y quieres testear algunos componentes. Probablemente tarde o temprano tendrás la necesidad de renderizar esos componentes desde un dispositivo iOS, iPad o Android.
+
+La parte difícil no es agregar soporte para el dispositivo, eso viene por defecto en el framework. La parte complicada es decirle al framework de testing como quieres renderizar a ese componente.
+
+A continuación voy a listar las soluciones que encontré en el proceso de agregar esos tests.
+
+## 🔨 ¿Qué librerías estoy usando?
+
+Para el siguiente tutorial, estoy utilizando:
+
+- React: 18
+- React Native: 0.70.2
+- Jest: 29.1
+- Typescript: 4.8
+- `@testing-library/react-native` : 11.2.0 (para hacer testing de componentes JSX)
+
+## 💻 Haciendo un mock del dispositivo
+
+### Detectando el sistema operativo con una función Helper
+
+Como sabrás, debemos utilizar `Platform.OS` para detectar desde que plataforma estamos ejecutando nuestro código. Para hacer más fácil de probar y / o reutilizar el código en diversos lugares de nuestro proyecto, prefiero tener un archivo “Helper”. En el siguiente ejemplo voy a utilizar la sintaxis de ESM pero, por supuesto, puedes utilizar la de CommonJS.
+
+Agreguemos un método estático para evitar inicializar la clase. En lugar de `new Helpers().isIpad()` , podemos utilizar `Helpers.isIpad()` simplemente.
+
+```tsx
+import { Platform } from 'react-native';
+
+export default class Helpers {
+  static isIpad(): boolean {
+    const devicePlatform = Platform;
+    if (devicePlatform.OS !== 'ios') {
+      return false;
+    }
+
+    return devicePlatform.isPad ?? false;
+  }
+}
+```
+
+### Escribiendo los tests
+
+Vamos a probar que nuestra función puede correr sobre Android
+
+```tsx
+import { Platform } from 'react-native';
+
+it('comprobar si isIpad retorna falso si el dispositivo es Android', () => {
+  Platform.OS = 'android';
+  const isIpadDefault = Helpers.isIpad();
+  expect(isIpadDefault).toBe(false);
+});
+```
+
+Como puedes ver, utilizamos `Platform.OS`para sobrescribir nuestra plataforma por cada test.
+
+```tsx
+// Typescript
+jest.spyOn(Platform as PlatformIOSStatic, 'isPad', 'get').mockReturnValueOnce(true);
+// Javascript
+jest.spyOn(Platform, 'isPad', 'get').mockReturnValueOnce(true);
+```
+
+Por cierto, un dispositivo iPad será tratado como un dispositivo `ios`. Entonces, ¿cómo podemos forzar a React Native para siempre retornar `true`en la función `Platform.isIpad()`?
+
+Acá es donde los _spies de Jest_ vienen en nuestra ayuda. Ya que `isIpad`es una función _getter,_ con los spies, hay una manera fácil de sobrescribirla. Utilizo `mockReturnValueOnce`para especificar el retorno de la función la primera vez que es ejecutada.
+
+> En español, `mockReturnValueOnce`, se traduciría a algo como `hacerMockRetornarUnaSolaVez`
+
+Para Typescript utilizaremos `PlatformIOSStatic`, esta es una manera de decirle a TS que los tipos de `Platform` se refieren a un dispositivo iOS y iPad.
+
+Una vez aprendido eso. Podemos comenzar a agregar tests para cubrir cualquier caso raro.
+
+```tsx
+import { Platform } from 'react-native';
+import type { PlatformIOSStatic } from 'react-native';
+
+it('comprobar si isIpad retorna falso si el dispositivo es Android', () => {
+  Platform.OS = 'android';
+  const isIpadDefault = Helpers.isIpad();
+  expect(isIpadDefault).toBe(false);
+});
+
+// Validación de casos pocos comunes
+it('comprobar si isIpad retorna falso si dispositivo es iOS y iPad retorna undefined', () => {
+  Platform.OS = 'ios';
+  jest.spyOn(Platform as PlatformIOSStatic, 'isPad', 'get').mockReturnValueOnce(undefined);
+  const isIpadDefault = Helpers.isIpad();
+  expect(isIpadDefault).toBe(false);
+});
+
+it('comprobar si isIpad retorna falso si dispositivo es iOS pero no iPad', () => {
+  Platform.OS = 'ios';
+  jest.spyOn(Platform as PlatformIOSStatic, 'isPad', 'get').mockReturnValueOnce(false);
+  const isIpadDefault = Helpers.isIpad();
+  expect(isIpadDefault).toBe(false);
+});
+
+it('comprobar si isIpad retorna verdadero si dispositivo es iOS y iPad', () => {
+  Platform.OS = 'ios';
+  jest.spyOn(Platform as PlatformIOSStatic, 'isPad', 'get').mockReturnValueOnce(true);
+  const isIpadDefault = Helpers.isIpad();
+  expect(isIpadDefault).toBe(true);
+});
+```
+
+### Contaminación de tests
+
+Ya que algunos tests pueden ejecutarse en paralelo. Podríamos tener una polución de tests. Significa que algunos valores de un test pueden influir en otros del mismo grupo. ¿Puedes ver cómo cada uno tiene un `Platform.OS = 'ios'` ?. Si quieres poner una plataforma por defecto, puedes encerrar tus tests dentro de una función `describe` y después agregar un `afterEach` . Con esto, podemos sobrescribirla y devolverla al estado inicial después de cada test.
+
+```tsx
+describe('Función con tests', () => {
+  afterEach(() => {
+    Platform.OS = 'ios';
+  });
+
+  // ... Acá puedes colocar todos tus tests
+});
+```
+
+## 🎨 Hacer un mock del hook useColorScheme
+
+Listo, ahora podemos sobrescribir la plataforma. Pero ¿qué hay del modo oscuro?. Ya sea que estés usando Android o iOS, el modo oscuro será útil especialmente durante las noches o en entornos oscuros. Desde React Native, podemos codificar unas condiciones para estilos basados en él. Y tenemos acceso a `useColorScheme` . ¿Cómo podemos hacerle un mock?
+
+Primero, veamos un ejemplo de cómo se utiliza el hook para implementar el modo oscuro en un componente.
+
+### Mi componente ColoredStatusBar (Barra de Estado Coloreada)
+
+Esta función cambia el color de la barra de estado validando si el Sistema Operativo es `ios` y si está en modo claro. El archivo `GlobalStyles` contiene declaraciones de los [estilos de React Native](https://reactnative.dev/docs/style) como objetos. El hook `useIsFocused` viene desde [React Navigation](https://reactnavigation.org/docs/use-is-focused/) para detectar si la aplicación se encuentra “enfocada” (activa).
+
+```tsx
+import React from 'react';
+import { StatusBar, StatusBarProps, useColorScheme } from 'react-native';
+import { useIsFocused } from '@react-navigation/native';
+import EstilosGlobales from '../constants/GlobalStyles';
+import Helpers from '../services/Helpers';
+
+export default function ColoredStatusBar(props: StatusBarProps) {
+  // 🇪🇸 Para facilitar el entendimiento las variables están traducidas
+  const appEstaActiva = useIsFocused();
+  const tema = useColorScheme();
+  const dispositivoSO = Helpers.getOS();
+
+  const color =
+    dispositivoSO === 'ios' && tema === 'light'
+      ? EstilosGlobales.headerStyle.backgroundColor
+      : EstilosGlobales.headerStyleDark.backgroundColor;
+
+  return appEstaActiva ? <StatusBar backgroundColor={color} {...props} /> : null;
+}
+```
+
+### Implementación actual del hook
+
+Si vamos al código fuente de `useColorScheme` nos encontraremos lo siguiente. Este es código de React Native de la versión mencionada antes.
+
+```tsx
+import { useSyncExternalStore } from 'use-sync-external-store/shim';
+import Appearance from './Appearance';
+import type { ColorSchemeName } from './NativeAppearance';
+
+export default function useColorScheme(): ?ColorSchemeName {
+  return useSyncExternalStore(
+    (callback) => {
+      const appearanceSubscription = Appearance.addChangeListener(callback);
+      return () => appearanceSubscription.remove();
+    },
+    () => Appearance.getColorScheme(),
+  );
+}
+```
+
+Están utilizando un `export` del tipo ESM para exportar una función por defecto. Hacerle un mock será un poco diferente.
+
+Veamos como podemos hacer un [test snapshot](https://jestjs.io/docs/snapshot-testing) al componente.
+
+### Creando un test si el dispositivo es iPad y en modo oscuro
+
+```tsx
+it('se renderiza para iOS y el tema es oscuro', () => {
+  Platform.OS = 'ios';
+  jest.doMock('react-native/Libraries/Utilities/useColorScheme', () => ({
+    default: jest.fn().mockReturnValueOnce('dark'),
+  }));
+  (useIsFocused as jest.Mock).mockReturnValue(true);
+  const { toJSON } = render(<ColoredStatusBar />);
+
+  expect(useIsFocused).toHaveBeenCalledTimes(1);
+  expect(toJSON()).toMatchSnapshot();
+});
+```
+
+Algunas notas aquí
+
+- Usamos acá `doMock` para evitar la polución de tests. Lee la documentación [aquí](https://jestjs.io/docs/jest-object#jestdomockmodulename-factory-options). Y retornamos `dark` a la primera llamada, porque si no lo hacemos, regresará `light` por defecto.
+- Estamos comprobando también que el hook `useIsFocused` es llamado al menos una vez (primer render)
+- Usamos `toJSON` para hacer un _test snapshot_ del componente.
