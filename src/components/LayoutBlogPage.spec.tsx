@@ -12,6 +12,7 @@ import {
   MyList,
   MyListItem,
   MyParagraph,
+  MyPostLink,
 } from './LayoutBlogPage.setup';
 import { backgroundImage, layoutBlogPostImage, loadSiteData, loadTranslations } from '../utils/mockresponses';
 import { faker } from '@faker-js/faker';
@@ -210,4 +211,14 @@ it('renders Head component without issues', () => {
   const { queryByText } = render(<Head {...props}>{undefined}</Head>);
 
   expect(queryByText(postTitle)).toBeInTheDocument();
+});
+
+it('renders MyPostLink without issues', () => {
+  const text = faker.lorem.words(3);
+  const { queryByText } = render(<MyPostLink>{text}</MyPostLink>);
+
+  const link = queryByText(text);
+
+  expect(link).toBeInTheDocument();
+  expect(link).toHaveAttribute('target', '_blank');
 });

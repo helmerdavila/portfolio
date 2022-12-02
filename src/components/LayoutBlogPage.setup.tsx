@@ -77,6 +77,10 @@ export const MyPre = (props: { children: { props: Record<string, unknown> }; cla
 );
 export const MyImage = (props: Record<string, unknown>) => <img className="shadow-lg rounded" alt="" {...props} />;
 
+export const MyPostLink = (props) => (
+  <a className={classNames('underline underline-offset-4')} {...props} target="_blank" />
+);
+
 export const components = {
   h1: MyH1,
   h2: MyH2,
@@ -88,6 +92,7 @@ export const components = {
   pre: MyPre,
   code: MyInlineCode,
   img: MyImage,
+  a: MyPostLink,
 };
 
 // Don't change the Head name here. Used by Gatsby

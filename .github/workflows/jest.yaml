@@ -1,9 +1,11 @@
+name: Jest
 on:
   pull_request:
     branches:
       - main
 jobs:
   coverage:
+    name: Coverage
     runs-on: ubuntu-latest
     env:
       FONTAWESOME_GITHUB_NPM_TOKEN: ${{ secrets.FONTAWESOME_GITHUB_NPM_TOKEN }}
