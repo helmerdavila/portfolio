@@ -9,7 +9,7 @@ published: true
 
 # React Native: Faire un mock d’un appareil et du thème
 
-Si tu as une application React Native et tu veux tester quelques composants. Tôt ou tard, tu auras besoin de **\*\***render**\*\*** ces composants dans un appareil iOS, iPad ou Android.
+Si tu as une application React Native et tu veux tester quelques composants. Tôt ou tard, tu auras besoin de _render_ ces composants dans un appareil iOS, iPad ou Android.
 
 L’étage, le plus difficile, ce n’est pas d’ajouter de support pour l’appareil, ça vient par défaut. C’est de dire au composant comment tu en veux rendre.
 
@@ -73,11 +73,11 @@ jest.spyOn(Platform, 'isPad', 'get').mockReturnValueOnce(true);
 
 D’ailleurs, un appareil iPad serait considéré comme `iOS` . Alors, comment pouvons-nous forcer toujours React Native pour retourner `true` dans sa fonction `Platform.isIpad()`?
 
-Et voilà les **\***spies**\*** de Jest nos aident. Même si `isIpad`est une fonction **\*\***getter,**\*\*** on peut le replacer. J’utilise `mockReturnValueOnce`pour spécifier le retour de la fonction la première fois qui est exécuté.
+Et voilà les _spies_ de Jest nos aident. Même si `isIpad`est une fonction _getter_ on peut le replacer. J’utilise `mockReturnValueOnce`pour spécifier le retour de la fonction la première fois qui est exécuté.
 
 > En français, `mockReturnValueOnce`, serait traduit par `faireMockRetournerUneFois`
 
-Pout Typescript, on ajoute `PlatformIOSStatic`, c’est une façon de dire en TS que les **\***types**\*** de `Platform` se réfèrent aux appareils iOS et iPad.
+Pour Typescript, on ajoute `PlatformIOSStatic`, c’est une façon de dire en TS que les _types_ de `Platform` se réfèrent aux appareils iOS et iPad.
 
 Donc, on peut commencer à ajouter des tests pour traiter quelque cas étrange.
 
