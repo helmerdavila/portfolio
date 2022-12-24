@@ -21,7 +21,7 @@ import PostPage, { Head } from './PostPage';
 
 beforeEach(() => (useStaticQuery as jest.Mock).mockReturnValue({ ...loadSiteData, ...loadTranslations }));
 
-it('renders without issues', () => {
+it('renders without issues with tags', () => {
   const props: Partial<PageProps<Queries.LayoutBlogPageQuery>> = {
     data: {
       site: { siteMetadata: { author: '', siteUrl: '' } },
@@ -34,7 +34,7 @@ it('renders without issues', () => {
           date: '',
           image: backgroundImage.backgroundImage,
           imageAlt: faker.lorem.word(),
-          tags: [],
+          tags: faker.lorem.words(5).split(''),
         },
       },
       defaultBlogPostImage: backgroundImage.backgroundImage,
@@ -54,7 +54,7 @@ it('renders without issues', () => {
   );
 });
 
-it('renders with link in another language', () => {
+it('renders with link in another language without tags', () => {
   const props: Partial<PageProps<Queries.LayoutBlogPageQuery>> = {
     data: {
       site: { siteMetadata: { author: '', siteUrl: '' } },
@@ -67,7 +67,7 @@ it('renders with link in another language', () => {
           date: '',
           image: backgroundImage.backgroundImage,
           imageAlt: faker.lorem.word(),
-          tags: [],
+          tags: null,
         },
       },
       defaultBlogPostImage: backgroundImage.backgroundImage,
