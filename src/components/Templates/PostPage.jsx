@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import LayoutBlog from '../LayoutBlog';
-import { graphql } from 'gatsby';
+import { graphql, Link } from 'gatsby';
 import { ThemeContext } from '../Layout';
 import classNames from 'classnames';
 import { MDXProvider } from '@mdx-js/react';
@@ -15,13 +15,14 @@ import { v4 as uuidv4 } from 'uuid';
 // Don't change the Head name here. Used by Gatsby
 export const Head = (props) => <HeadForMeta {...props} />;
 
-const Tags = ({ tags, pageBackground, textStyle }) => {
+const Tags = ({ tags, locale, pageBackground, textStyle }) => {
   return tags.length ? (
     <div className={classNames(pageBackground, 'my-7 py-7 px-12 container max-w-3xl  mx-auto xl:max-w-6xl')}>
       <h2 className={classNames(textStyle, 'text-4xl font-bold')}>Tags</h2>
       <div className="flex flex-wrap mt-4">
         {tags.map((tag) => (
-          <span
+          <Link
+            to={`/tags/${locale}/${tag}`}
             key={uuidv4()}
             className={classNames(
               'mr-4 text-xl font-quicksand p-2 bg-zinc-100 hover:bg-zinc-200 rounded-xl cursor-pointer',
@@ -29,7 +30,7 @@ const Tags = ({ tags, pageBackground, textStyle }) => {
             )}
           >
             #{tag}
-          </span>
+          </Link>
         ))}
       </div>
     </div>
@@ -55,6 +56,7 @@ const PostPage = (props) => {
     ? `${mdx.fields.slug}/index.mdx`
     : `${mdx.fields.slug}/index.${mdx.fields.locale}.mdx`;
   const tags = mdx.frontmatter.tags ?? [];
+  const locale = mdx.fields.locale;
 
   return (
     <LayoutBlog>
@@ -75,7 +77,7 @@ const PostPage = (props) => {
             </div>
           </div>
         </div>
-        <Tags tags={tags} pageBackground={pageBackground} textStyle={textStyle} />
+        <Tags tags={tags} locale={locale} pageBackground={pageBackground} textStyle={textStyle} />
         <div className={classNames(pageBackground, 'my-7 py-7 px-12 container max-w-3xl  mx-auto xl:max-w-6xl')}>
           <h2 className={classNames(textStyle, 'text-4xl font-bold')}>{author}</h2>
           <div className="flex justify-between mt-6">
