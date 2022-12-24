@@ -5,14 +5,33 @@ import React, { useContext } from 'react';
 import { ThemeContext } from '../components/Layout';
 import LayoutBlog from '../components/LayoutBlog';
 import SEO from '../components/Seo';
+import { v4 as uuidv4 } from 'uuid';
 
 type BlogPost = Queries.BlogQuery['allMdx']['nodes'][0];
 
+const BlogPostCardTags = ({ tags }: { tags: readonly string[] }) => {
+  const context = useContext(ThemeContext);
+  const textStyles = { 'text-zinc-500': context.isLightTheme, 'text-zinc-400': !context.isLightTheme };
+
+  return tags.length ? (
+    <div className="flex flex-wrap px-6 py-3">
+      {tags.map((tag) => (
+        <span key={uuidv4()} className={classNames(textStyles, 'mr-2 text-lg')}>
+          #{tag}
+        </span>
+      ))}
+    </div>
+  ) : (
+    <div className="mb-6"></div>
+  );
+};
+
 const BlogPostCard = ({ post }: { post: BlogPost }) => {
   const context = useContext(ThemeContext);
-  const themeStyles = { 'text-black': context.isLightTheme, 'text-white': !context.isLightTheme };
-
+  const textStyles = { 'text-black': context.isLightTheme, 'text-white': !context.isLightTheme };
+  const tags = post.frontmatter.tags ?? [];
   const imageRendered = getImage(post.frontmatter.image?.childImageSharp.gatsbyImageData);
+
   return (
     <Link
       to={post.fields.translatedPostUrl}
@@ -23,10 +42,11 @@ const BlogPostCard = ({ post }: { post: BlogPost }) => {
       key={post.id}
     >
       <GatsbyImage image={imageRendered} alt={post?.frontmatter?.imageAlt ?? ''} />
-      <div className="p-6">
-        <h2 className={classNames(themeStyles, 'text-4xl font-bold')}>{post?.frontmatter?.title}</h2>
-        <h5 className={classNames(themeStyles, 'mt-2 text-xl')}>{post?.frontmatter?.description}</h5>
+      <div className="px-6 pt-6">
+        <h2 className={classNames(textStyles, 'text-4xl font-bold')}>{post?.frontmatter?.title}</h2>
+        <h5 className={classNames(textStyles, 'mt-5 text-2xl')}>{post?.frontmatter?.description}</h5>
       </div>
+      <BlogPostCardTags tags={tags} />
     </Link>
   );
 };
