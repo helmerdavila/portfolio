@@ -14,8 +14,7 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": false,
-    "target": "esnext"
+   "target": "esnext"
   },
-  "include": ["./jest-setup.ts", "./src/**/*", "./gatsby-node.ts", "./gatsby-config.ts"],
-  "exclude": ["node_modules", "public", ".cache"]
+  "include": ["./jest-setup.ts", "./src/**/*", "./gatsby-node.ts", "./gatsby-config.ts"]
 }
