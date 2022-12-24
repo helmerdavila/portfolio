@@ -14,7 +14,7 @@ import { components, HeadForMeta } from './LayoutBlogPage.setup';
 // Don't change the Head name here. Used by Gatsby
 export const Head = (props) => <HeadForMeta {...props} />;
 
-/** @param {PageProps<Queries.LayoutBlogPageQuery>} props */
+/** @param {import("gatsby").PageProps<Queries.LayoutBlogPageQuery>} props */
 const LayoutBlogPage = (props) => {
   const context = useContext(ThemeContext);
   const { data, children } = props;
