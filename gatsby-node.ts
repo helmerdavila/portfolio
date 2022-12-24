@@ -1,7 +1,7 @@
 import locales from './config/i18n';
 import { findKey, localizedSlug, removeTrailingSlash, translatedPostUrl } from './src/utils/gatsby-node-helpers';
 import path from 'path';
-import type { GatsbyNode } from 'gatsby';
+import type { Actions, CreatePagesArgs, GatsbyNode } from 'gatsby';
 import { FileSystemNode } from 'gatsby-source-filesystem';
 
 export const onCreatePage: GatsbyNode['onCreatePage'] = ({ page, actions }) => {
@@ -99,12 +99,8 @@ export const onCreateNode: GatsbyNode['onCreateNode'] = async ({ node, actions, 
   }
 };
 
-export const createPages: GatsbyNode['createPages'] = async ({ graphql, actions }) => {
-  const { createPage, createRedirect } = actions;
-
-  // Adding sort here to generate the HTMl pages in descending order by date
-  // Almost same type that Index Page Query
-  const result = await graphql<Queries.IndexQuery>(
+const gqlGetAllPosts = async (graphql: CreatePagesArgs['graphql']) =>
+  await graphql<Queries.CreatePagesQuery>(
     `
       query CreatePages {
         allMdx(sort: { fields: [frontmatter___date], order: DESC }) {
@@ -134,6 +130,37 @@ export const createPages: GatsbyNode['createPages'] = async ({ graphql, actions 
     `,
   );
 
+const createPageFromPost = (
+  post,
+  postTemplate: string,
+  createRedirect: Actions['createRedirect'],
+  createPage: Actions['createPage'],
+) => {
+  // All files for a blogpost are stored in a folder
+  // relativeDirectory is the name of the folder
+  const mdxPath = post.internal.contentFilePath;
+
+  // Use the fields created in exports.onCreateNode
+  const locale = post.fields.locale;
+
+  const newPath = translatedPostUrl(post.frontmatter.title, locale);
+
+  const contentForCreatePage = {
+    path: newPath,
+    component: `${postTemplate}?__contentFilePath=${mdxPath}`,
+    context: { id: post.id, locale },
+  };
+
+  createPage(contentForCreatePage);
+};
+
+const createBlogPosts = async (
+  graphql: CreatePagesArgs['graphql'],
+  createRedirect: Actions['createRedirect'],
+  createPage: Actions['createPage'],
+) => {
+  const result = await gqlGetAllPosts(graphql);
+
   if (result.errors) {
     console.error(result.errors);
     return;
@@ -143,30 +170,11 @@ export const createPages: GatsbyNode['createPages'] = async ({ graphql, actions 
 
   const postTemplate = path.resolve(`./src/components/LayoutBlogPage.jsx`);
 
-  postList.forEach((post) => {
-    // All files for a blogpost are stored in a folder
-    // relativeDirectory is the name of the folder
-    const slug = (post.parent as { relativeDirectory: string }).relativeDirectory;
-    const mdxPath = post.internal.contentFilePath;
+  postList.forEach((post) => createPageFromPost(post, postTemplate, createRedirect, createPage));
+};
 
-    // Use the fields created in exports.onCreateNode
-    const locale = post.fields.locale;
-    const isDefault = post.fields.isDefault;
+export const createPages: GatsbyNode['createPages'] = async ({ graphql, actions }) => {
+  const { createPage, createRedirect } = actions;
 
-    const oldPath = localizedSlug({ isDefault, locale, slug });
-    const newPath = translatedPostUrl(post.frontmatter.title, locale);
-
-    const contentForCreatePage = {
-      path: newPath,
-      component: `${postTemplate}?__contentFilePath=${mdxPath}`,
-      context: { id: post.id, locale },
-    };
-    createRedirect({
-      fromPath: oldPath,
-      toPath: newPath,
-      isPermanent: true,
-    });
-
-    createPage(contentForCreatePage);
-  });
+  await createBlogPosts(graphql, createRedirect, createPage);
 };
