@@ -26,7 +26,7 @@ const BlogPostCardTags = ({ tags }: { tags: readonly string[] }) => {
   );
 };
 
-const BlogPostCard = ({ post }: { post: BlogPost }) => {
+export const BlogPostCard = ({ post }: { post: BlogPost }) => {
   const context = useContext(ThemeContext);
   const textStyles = { 'text-black': context.isLightTheme, 'text-white': !context.isLightTheme };
   const tags = post.frontmatter.tags ?? [];
@@ -76,27 +76,25 @@ const Blog = ({ data }: PageProps<Queries.BlogQuery>): JSX.Element => {
 export const query = graphql`
   query Blog($locale: String!) {
     allMdx(filter: { fields: { locale: { eq: $locale } } }, sort: { fields: [frontmatter___date], order: DESC }) {
-      nodes {
-        id
-        excerpt(pruneLength: 100)
-        frontmatter {
-          title
-          imageAlt
-          date
-          description
-          tags
-          image {
-            childImageSharp {
-              gatsbyImageData(layout: FULL_WIDTH, placeholder: TRACED_SVG)
-            }
+      ...BlogPostCardInfo
+    }
+  }
+
+  fragment BlogPostCardInfo on MdxConnection {
+    nodes {
+      id
+      fields {
+        translatedPostUrl
+      }
+      frontmatter {
+        title
+        imageAlt
+        description
+        tags
+        image {
+          childImageSharp {
+            gatsbyImageData(layout: FULL_WIDTH, placeholder: TRACED_SVG)
           }
-        }
-        fields {
-          locale
-          localizedSlug
-          isDefault
-          slug
-          translatedPostUrl
         }
       }
     }

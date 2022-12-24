@@ -4,6 +4,8 @@ import path from 'path';
 import type { Actions, CreatePagesArgs, GatsbyNode } from 'gatsby';
 import { FileSystemNode } from 'gatsby-source-filesystem';
 
+const allLanguages = Object.keys(locales);
+
 export const onCreatePage: GatsbyNode['onCreatePage'] = ({ page, actions }) => {
   const { createPage, deletePage, createRedirect } = actions;
 
@@ -21,7 +23,7 @@ export const onCreatePage: GatsbyNode['onCreatePage'] = ({ page, actions }) => {
   deletePage(page);
 
   // Grab the keys ('en' & 'de') of locales and map over them
-  Object.keys(locales).map((lang) => {
+  allLanguages.map((lang) => {
     // Use the values defined in "locales" to construct the path
     const newLocalizedPath = removeTrailingSlash(
       locales[lang].default ? page.path : `${page.path}${locales[lang].path}`,
@@ -171,11 +173,44 @@ const createBlogPosts = async (
 
   const postTemplate = path.resolve(`./src/components/Templates/PostPage.jsx`);
 
-  postList.forEach((post) => createPageFromPost(post, postTemplate, createRedirect, createPage));
+  for (const post of postList) {
+    createPageFromPost(post, postTemplate, createRedirect, createPage);
+  }
+};
+
+const createTagsPage = async (graphql: CreatePagesArgs['graphql'], createPage: Actions['createPage']) => {
+  const tagTemplate = path.resolve('./src/components/Templates/PostsByTagAndLocale.tsx');
+  for (const locale of allLanguages) {
+    const result = await graphql<Queries.AllTagsByLocaleQuery>(
+      `
+        query AllTagsByLocale($locale: String!) {
+          tagsGroup: allMdx(filter: { fields: { locale: { eq: $locale } } }) {
+            group(field: frontmatter___tags) {
+              fieldValue
+            }
+          }
+        }
+      `,
+      { locale: locale },
+    );
+    const tags = result.data?.tagsGroup.group;
+    for (const tag of tags) {
+      createPage({
+        path: `/tags/${locale}/${tag.fieldValue}/`,
+        component: tagTemplate,
+        context: {
+          tag: tag.fieldValue,
+          locale,
+          tagsForSeo: tags,
+        },
+      });
+    }
+  }
 };
 
 export const createPages: GatsbyNode['createPages'] = async ({ graphql, actions }) => {
   const { createPage, createRedirect } = actions;
 
   await createBlogPosts(graphql, createRedirect, createPage);
+  await createTagsPage(graphql, createPage);
 };
