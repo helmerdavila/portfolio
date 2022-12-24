@@ -6,6 +6,31 @@ import { ThemeContext } from '../components/Layout';
 import LayoutBlog from '../components/LayoutBlog';
 import SEO from '../components/Seo';
 
+type BlogPost = Queries.BlogQuery['allMdx']['nodes'][0];
+
+const BlogPostCard = ({ post }: { post: BlogPost }) => {
+  const context = useContext(ThemeContext);
+  const themeStyles = { 'text-black': context.isLightTheme, 'text-white': !context.isLightTheme };
+
+  const imageRendered = getImage(post.frontmatter.image?.childImageSharp.gatsbyImageData);
+  return (
+    <Link
+      to={post.fields.translatedPostUrl}
+      className={classNames(
+        { 'bg-white border-2 shadown-sm': context.isLightTheme, 'bg-gray-800': !context.isLightTheme },
+        'block mt-10 rounded-md first:mt-3',
+      )}
+      key={post.id}
+    >
+      <GatsbyImage image={imageRendered} alt={post?.frontmatter?.imageAlt ?? ''} />
+      <div className="p-6">
+        <h2 className={classNames(themeStyles, 'text-4xl font-bold')}>{post?.frontmatter?.title}</h2>
+        <h5 className={classNames(themeStyles, 'mt-2 text-xl')}>{post?.frontmatter?.description}</h5>
+      </div>
+    </Link>
+  );
+};
+
 const Blog = ({ data }: PageProps<Queries.BlogQuery>): JSX.Element => {
   const context = useContext(ThemeContext);
   const themeStyles = { 'text-black': context.isLightTheme, 'text-white': !context.isLightTheme };
@@ -20,25 +45,9 @@ const Blog = ({ data }: PageProps<Queries.BlogQuery>): JSX.Element => {
       />
       <div className="container max-w-3xl pb-3 mx-auto xl:max-w-6xl">
         <h1 className={classNames('text-6xl font-bold mt-10', themeStyles)}>Blog</h1>
-        {posts.map((post) => {
-          const imageRendered = getImage(post.frontmatter.image?.childImageSharp.gatsbyImageData);
-          return (
-            <Link
-              to={post.fields.translatedPostUrl}
-              className={classNames(
-                { 'bg-white border-2 shadown-sm': context.isLightTheme, 'bg-gray-800': !context.isLightTheme },
-                'block mt-10 rounded-md first:mt-3',
-              )}
-              key={post.id}
-            >
-              <GatsbyImage image={imageRendered} alt={post?.frontmatter?.imageAlt ?? ''} />
-              <div className="p-6">
-                <h2 className={classNames(themeStyles, 'text-4xl font-bold')}>{post?.frontmatter?.title}</h2>
-                <h5 className={classNames(themeStyles, 'mt-2 text-xl')}>{post?.frontmatter?.description}</h5>
-              </div>
-            </Link>
-          );
-        })}
+        {posts.map((post) => (
+          <BlogPostCard key={post.id} post={post} />
+        ))}
       </div>
     </LayoutBlog>
   );
@@ -53,13 +62,14 @@ export const query = graphql`
         frontmatter {
           title
           imageAlt
+          date
+          description
+          tags
           image {
             childImageSharp {
               gatsbyImageData(layout: FULL_WIDTH, placeholder: TRACED_SVG)
             }
           }
-          date
-          description
         }
         fields {
           locale
