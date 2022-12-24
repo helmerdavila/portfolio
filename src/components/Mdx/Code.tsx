@@ -44,6 +44,7 @@ const Code = ({ children, className }: Props): JSX.Element => {
         >
           {tokens.map((line, index) => {
             const lineProps = getLineProps({ line, key: index });
+
             return (
               <div key={index} {...lineProps} className="flex flex-row">
                 <div className={styleLineNumbers}>{index + 1}</div>

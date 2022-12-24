@@ -18,9 +18,12 @@ export const findKey = (object, predicate) => {
     const value = object[key];
     if (predicate(value, key, object)) {
       result = key;
+
       return true;
     }
+
     return false;
   });
+
   return result;
 };

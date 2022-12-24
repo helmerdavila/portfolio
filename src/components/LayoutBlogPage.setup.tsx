@@ -13,6 +13,7 @@ interface Props {
 export const MyH1 = (props: Props) => {
   const context = useContext(ThemeContext);
   const themeStyles = { 'text-black': context.isLightTheme, 'text-white': !context.isLightTheme };
+
   return (
     <h1 className={classNames(themeStyles, 'mb-6 text-5xl font-bold leading-normal')} {...props}>
       {props.children}
@@ -22,6 +23,7 @@ export const MyH1 = (props: Props) => {
 export const MyH2 = (props: Props) => {
   const context = useContext(ThemeContext);
   const themeStyles = { 'text-black': context.isLightTheme, 'text-white': !context.isLightTheme };
+
   return (
     <h2 className={classNames(themeStyles, 'mt-7 mb-5 text-4xl font-bold')} {...props}>
       {props.children}
@@ -31,6 +33,7 @@ export const MyH2 = (props: Props) => {
 export const MyH3 = (props: Props) => {
   const context = useContext(ThemeContext);
   const themeStyles = { 'text-black': context.isLightTheme, 'text-white': !context.isLightTheme };
+
   return (
     <h3 className={classNames(themeStyles, 'mt-3 mb-2 text-3xl font-bold')} {...props}>
       {props.children}
@@ -40,20 +43,24 @@ export const MyH3 = (props: Props) => {
 export const MyList = (props) => {
   const context = useContext(ThemeContext);
   const themeStyles = { 'text-black': context.isLightTheme, 'text-white': !context.isLightTheme };
+
   return <ul className={classNames(themeStyles, 'list-disc pl-6 block my-5 text-xl')} {...props} />;
 };
 export const MyListItem = (props) => {
   const context = useContext(ThemeContext);
   const themeStyles = { 'text-black': context.isLightTheme, 'text-white': !context.isLightTheme };
+
   return <li className={classNames(themeStyles, 'py-2 text-xl')} {...props} />;
 };
 export const MyParagraph = (props) => {
   const context = useContext(ThemeContext);
   const themeStyles = { 'text-black': context.isLightTheme, 'text-white': !context.isLightTheme };
+
   return <div className={classNames(themeStyles, 'paragraph my-6 text-xl')} {...props} />;
 };
 export const MyBlockquote = (props) => {
   const context = useContext(ThemeContext);
+
   return (
     <blockquote
       className={classNames(
@@ -70,6 +77,7 @@ export const MyInlineCode = (props) => {
     'text-blue-600 bg-gray-100': context.isLightTheme,
     'text-gray-300 bg-blue-800': !context.isLightTheme,
   };
+
   return <span className={classNames(themeStyles, 'rounded text-base px-1 font-mono')} {...props} />;
 };
 export const MyPre = (props: { children: { props: Record<string, unknown> }; className: string }) => (
