@@ -25,7 +25,7 @@ const HeaderBlog = (): JSX.Element => {
     <nav className={navbarClass}>
       <div className="flex flex-row items-center">
         <LocalizedLink
-          to="/blog"
+          to="blog"
           className={classNames('mr-3', {
             'text-white': !context.isLightTheme,
             'text-black': context.isLightTheme,
