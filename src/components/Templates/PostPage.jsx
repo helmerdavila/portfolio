@@ -9,7 +9,7 @@ import useTranslations from '../UseTranslations';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import { faGlobe } from '@helmerdavila/fontawesomehelmer/pro-duotone-svg-icons';
-import { components, HeadForMeta } from '../LayoutBlogPage.setup';
+import { components, HeadForMeta } from '../Mdx/Custom';
 import { v4 as uuidv4 } from 'uuid';
 
 // Don't change the Head name here. Used by Gatsby
