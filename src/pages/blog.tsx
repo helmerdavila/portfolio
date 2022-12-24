@@ -19,7 +19,7 @@ const Blog = ({ data }: PageProps<Queries.BlogQuery>): JSX.Element => {
         description="My technical blog"
       />
       <div className="container max-w-3xl pb-3 mx-auto xl:max-w-6xl">
-        <h1 className="text-6xl font-bold mt-10">Blog</h1>
+        <h1 className={classNames('text-6xl font-bold mt-10', themeStyles)}>Blog</h1>
         {posts.map((post) => {
           const imageRendered = getImage(post.frontmatter.image?.childImageSharp.gatsbyImageData);
           return (
