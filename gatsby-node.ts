@@ -163,12 +163,13 @@ const createBlogPosts = async (
 
   if (result.errors) {
     console.error(result.errors);
+
     return;
   }
 
   const postList = result.data?.allMdx?.nodes ?? [];
 
-  const postTemplate = path.resolve(`./src/components/LayoutBlogPage.jsx`);
+  const postTemplate = path.resolve(`./src/components/Templates/PostPage.jsx`);
 
   postList.forEach((post) => createPageFromPost(post, postTemplate, createRedirect, createPage));
 };

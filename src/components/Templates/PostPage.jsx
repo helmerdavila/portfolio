@@ -1,15 +1,15 @@
 import React, { useContext } from 'react';
-import LayoutBlog from './LayoutBlog';
+import LayoutBlog from '../LayoutBlog';
 import { graphql } from 'gatsby';
-import { ThemeContext } from './Layout';
+import { ThemeContext } from '../Layout';
 import classNames from 'classnames';
 import { MDXProvider } from '@mdx-js/react';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
-import useTranslations from './UseTranslations';
+import useTranslations from '../UseTranslations';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import { faGlobe } from '@helmerdavila/fontawesomehelmer/pro-duotone-svg-icons';
-import { components, HeadForMeta } from './LayoutBlogPage.setup';
+import { components, HeadForMeta } from '../LayoutBlogPage.setup';
 import { v4 as uuidv4 } from 'uuid';
 
 // Don't change the Head name here. Used by Gatsby
@@ -36,7 +36,7 @@ const Tags = ({ tags, pageBackground, textStyle }) => {
   ) : null;
 };
 /** @param {import("gatsby").PageProps<Queries.LayoutBlogPageQuery>} props */
-const LayoutBlogPage = (props) => {
+const PostPage = (props) => {
   const context = useContext(ThemeContext);
   const { data, children } = props;
   const { author, edit_posts_on_github, written_by } = useTranslations();
@@ -98,7 +98,7 @@ const LayoutBlogPage = (props) => {
   );
 };
 
-export default LayoutBlogPage;
+export default PostPage;
 
 export const query = graphql`
   query LayoutBlogPage($id: String!) {

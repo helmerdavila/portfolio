@@ -1,6 +1,6 @@
 import React from 'react';
 import { PageProps, useStaticQuery } from 'gatsby';
-import { customRender } from '../utils/testing';
+import { customRender } from '../../utils/testing';
 import {
   MyBlockquote,
   MyPre,
@@ -13,11 +13,11 @@ import {
   MyListItem,
   MyParagraph,
   MyPostLink,
-} from './LayoutBlogPage.setup';
-import { backgroundImage, layoutBlogPostImage, loadSiteData, loadTranslations } from '../utils/mockresponses';
+} from '../LayoutBlogPage.setup';
+import { backgroundImage, layoutBlogPostImage, loadSiteData, loadTranslations } from '../../utils/mockresponses';
 import { faker } from '@faker-js/faker';
 import { render } from '@testing-library/react';
-import LayoutBlogPage, { Head } from './LayoutBlogPage';
+import PostPage, { Head } from './PostPage';
 
 beforeEach(() => (useStaticQuery as jest.Mock).mockReturnValue({ ...loadSiteData, ...loadTranslations }));
 
@@ -34,13 +34,14 @@ it('renders without issues', () => {
           date: '',
           image: backgroundImage.backgroundImage,
           imageAlt: faker.lorem.word(),
+          tags: [],
         },
       },
       defaultBlogPostImage: backgroundImage.backgroundImage,
     },
   };
   const { queryByTestId } = customRender(
-    <LayoutBlogPage {...(props as unknown as PageProps<Queries.LayoutBlogPageQuery>)}>{undefined}</LayoutBlogPage>,
+    <PostPage {...(props as unknown as PageProps<Queries.LayoutBlogPageQuery>)}>{undefined}</PostPage>,
     {
       localeContextProps: { locale: 'en' },
     },
@@ -66,13 +67,14 @@ it('renders with link in another language', () => {
           date: '',
           image: backgroundImage.backgroundImage,
           imageAlt: faker.lorem.word(),
+          tags: [],
         },
       },
       defaultBlogPostImage: backgroundImage.backgroundImage,
     },
   };
   const { queryByTestId } = customRender(
-    <LayoutBlogPage {...(props as unknown as PageProps<Queries.LayoutBlogPageQuery>)}>{undefined}</LayoutBlogPage>,
+    <PostPage {...(props as unknown as PageProps<Queries.LayoutBlogPageQuery>)}>{undefined}</PostPage>,
     {
       localeContextProps: { locale: 'es' },
     },
@@ -98,13 +100,14 @@ it('renders without imageAlt and description', () => {
           date: '',
           image: null,
           imageAlt: null,
+          tags: [],
         },
       },
       defaultBlogPostImage: backgroundImage.backgroundImage,
     },
   };
   const { queryByTestId } = customRender(
-    <LayoutBlogPage {...(props as PageProps<Queries.LayoutBlogPageQuery>)}>{undefined}</LayoutBlogPage>,
+    <PostPage {...(props as PageProps<Queries.LayoutBlogPageQuery>)}>{undefined}</PostPage>,
     {
       localeContextProps: { locale: 'en' },
     },
