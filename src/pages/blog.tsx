@@ -93,7 +93,7 @@ export const query = graphql`
         tags
         image {
           childImageSharp {
-            gatsbyImageData(layout: FULL_WIDTH, placeholder: TRACED_SVG)
+            gatsbyImageData(layout: FULL_WIDTH)
           }
         }
       }

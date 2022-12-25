@@ -78,7 +78,7 @@ export const query = graphql`
 
   fragment ImageOnIndexPost on File {
     childImageSharp {
-      gatsbyImageData(layout: FULL_WIDTH, placeholder: TRACED_SVG, aspectRatio: 1.7)
+      gatsbyImageData(layout: FULL_WIDTH, aspectRatio: 1.7)
     }
   }
 `;

@@ -22,7 +22,6 @@ export const slidesNative: ISlide[] = [
         src="../../images/biteline_mobile.jpg"
         layout="fullWidth"
         alt="Biteline"
-        placeholder="tracedSVG"
         className="filter grayscale hover:grayscale-0 transition-all ease-in duration-500"
       />
     ),
@@ -38,7 +37,6 @@ export const slidesNative: ISlide[] = [
         src="../../images/fitnesspass_mobile.jpg"
         layout="fullWidth"
         alt="Biteline"
-        placeholder="tracedSVG"
         className="filter grayscale hover:grayscale-0 transition-all ease-in duration-500"
       />
     ),
@@ -57,7 +55,6 @@ export const slidesDesktop: ISlide[] = [
         src="../../images/ambrea_mockup.png"
         layout="fullWidth"
         alt="Biteline"
-        placeholder="tracedSVG"
         className="filter grayscale hover:grayscale-0 transition-all ease-in duration-500"
       />
     ),
@@ -73,7 +70,6 @@ export const slidesDesktop: ISlide[] = [
         src="../../images/bipolar_mockup.png"
         layout="fullWidth"
         alt="Biteline"
-        placeholder="tracedSVG"
         className="filter grayscale hover:grayscale-0 transition-all ease-in duration-500"
       />
     ),
@@ -89,7 +85,6 @@ export const slidesDesktop: ISlide[] = [
         src="../../images/fitnesspass_mockup.png"
         layout="fullWidth"
         alt="Biteline"
-        placeholder="tracedSVG"
         className="filter grayscale hover:grayscale-0 transition-all ease-in duration-500"
       />
     ),
