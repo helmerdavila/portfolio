@@ -4,6 +4,7 @@ description: Downloading the installer as a deb package
 date: 2020-04-20
 published: true
 image: ../../src/images/blog/bat-screenshot.png
+tags: ['shell', 'terminal', 'bash', 'wsl', 'tools']
 ---
 
 # Installing Bat in Ubuntu Windows WSL
@@ -12,7 +13,7 @@ image: ../../src/images/blog/bat-screenshot.png
 
 I migrated to Windows and when I was installing Ubuntu through WSL I missed some tools that I have in my current MacBook, **BAT** was one of them. So as soon as I found a couple of guides online, here I will try to leave it as a reminder and with simple steps.
 
-First, open your Windows Terminal (with Ubuntu) and search for the [latest version on Github](https://github.com/sharkdp/bat/releases) . It was `0.18.2` for me.
+First, open your Windows Terminal (with Ubuntu) and search for the [latest version on GitHub](https://github.com/sharkdp/bat/releases) . It was `0.22.1` for me.
 
 Then check if you have wget working. The most common way to do it is checking it with `wget --version`, else use the following script:
 
@@ -24,8 +25,8 @@ Now you can download Bat with the following script, remember replacing `VERSION`
 
 ```bash
 wget https://github.com/sharkdp/bat/releases/download/v${VERSION}/bat_${VERSION}_amd64.deb
-# If we use 0.18.2 e.g:
-# wget https://github.com/sharkdp/bat/releases/download/v0.18.2/bat_0.18.2_amd64.deb
+# If we use 0.22.1 e.g:
+# wget https://github.com/sharkdp/bat/releases/download/v0.22.1/bat_0.22.1_amd64.deb
 ```
 
 ## Installing it using dpkg
@@ -33,7 +34,7 @@ wget https://github.com/sharkdp/bat/releases/download/v${VERSION}/bat_${VERSION}
 Then you can use dpkg to install Debian packages
 
 ```bash
-sudo dpkg -i bat_0.18.2_amd64.deb
+sudo dpkg -i bat_0.22.1_amd64.deb
 ```
 
-And that’s all, now you can use bat to see the content of your files inside of the terminal.
+And that’s all, now you can use bat to see the content of your files inside the terminal.

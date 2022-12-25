@@ -4,9 +4,10 @@ description: Para diferentes lenguajes de programación
 date: 2022-08-03
 published: true
 image: ../../src/images/blog/code-block-green.jpg
+tags: ['gatsby', 'javascript', 'typescript', 'react']
 ---
 
-# Gatsby - colorizar código usando react-prism-renderer
+# Gatsby: colorizar código usando react-prism-renderer
 
 Escribo tutoriales de programación para distintos lenguajes.
 
@@ -14,11 +15,11 @@ Como yo uso Gatsby, para tener código colorido utilizo `react-prism-renderer`. 
 
 Pero cuando estaba escribiendo unos bloques de código, vi que algunos lenguajes no estaban colorizados por defecto. ¿Qué estaba pasando?
 
-## 🧱 Mi componente para colorear el código
+## 🧱 Mi componente para colorear el código
 
 Tras el telón. React prism renderer utiliza PrismJS, y podemos utilizarlo para nuestro beneficio. Necesitamos importar el lenguaje que necesitemos para agregarle soporte.
 
-Aquí está el código. Con este _snippet,_ podemos crear un componente React en Gatsby. Pon atención a las líneas con `require`.
+Aquí está el código. Con este _snippet_, podemos crear un componente React en Gatsby. Pon atención a las líneas con `require`.
 
 ```tsx
 import React, { useContext } from 'react';
