@@ -4,13 +4,14 @@ description: Rails 6 + MySQL + PHPMyAdmin
 date: 2021-12-22
 published: true
 image: ../../src/images/blog/docker-rails-image.jpg
+tags: ['rails', 'ruby', 'phpmyadmin', 'docker', 'mysql']
 ---
 
 # Rails 6: Execution de Docker avec PHPMyAdmin
 
 Depuis WSL est arrivé à Windows, je veux pratiquer dans une application en Rails. Ça était seulement amusant pour pratiquer mes habiletés en Docker. L’unique exigence? Utiliser Alpine Linux, très populaire par le petit lourd d’images qui génère.
 
-Après deux heures de douleur et de souffrance, je le faire. Mes conteneurs Docker fonctionnaient comment je le voulais et ensuite, je suis prêt pour travailler. Je vous présente ici tous les fichiers.
+Après deux heures de douleur et de souffrance, je l'ai fait. Mes conteneurs Docker fonctionnaient comment je le voulais et ensuite, je suis prêt pour travailler. Je vous présente ici tous les fichiers.
 
 ## 🐳 Dockerfile
 
@@ -105,9 +106,9 @@ volumes:
   node-modules:
 ```
 
-Dans le conteneur PHPMyAdmin, on a besoin de mot de passe pour l’utiliser root, parce qu’on veut exécuter des opérations de haut niveau en nôtres base de données.
+Dans le conteneur PHPMyAdmin, on a besoin de mot de passe pour l’utiliser root, parce qu’on veut exécuter des opérations de haut niveau en notre base de données.
 
-Les dossiers supplémentaires `dbdocker` et `dbdocker_init` , tu les peut ajouter à votre projet si tu veux exécuter des commandes dans ton conteneur MySQL. N’oublier pas qu’une fois sont ajoutés, tu dois les ignorer depuis Git, où les fichiers de la base de données resteront. C’est une bonne pratique créer un ficher vide `.gitkeep` ou `.keep` dans le dossier et de l’ignorer. Ensuite, la règle que j’utilise dans mon `.gitignore`.
+Les dossiers supplémentaires `dbdocker` et `dbdocker_init` , tu les peux ajouter à votre projet si tu veux exécuter des commandes dans ton conteneur MySQL. Pas oublier qu’une fois ils sont ajoutés, tu dois les ignorer depuis Git, où les fichiers de la base de données resteront. C’est une bonne pratique créer un ficher vide `.gitkeep` ou `.keep` dans le dossier et de l’ignorer. Ensuite, la règle que j’utilise dans mon `.gitignore`.
 
 ```ignore
 /dockerdb/*

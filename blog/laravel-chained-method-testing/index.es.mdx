@@ -4,13 +4,14 @@ description: Usando el poder de Mockery
 date: 2022-09-11
 published: true
 image: ../../src/images/blog/chains.jpg
+tags: ['laravel', 'php', 'testing', 'mockery', 'phpunit']
 ---
 
 # Laravel Facades y Mockery: Creando tests de métodos encadenados
 
 ## 🤔 ¿Cómo sucedió?
 
-Estaba intentando probar Laravel con PHPUnit. Y necesitaba probar los Facades de Laravel, y sobretodo, era un método encadenado.
+Estaba intentando probar Laravel con PHPUnit. Y necesitaba probar los Facades de Laravel, y sobre todo, era un método encadenado.
 
 ```php
 <?php
@@ -33,7 +34,7 @@ class ChainController extends Controller
 
 Después de esto, mis tests estaban fallando, debido a que no podía ejecutar `put` en `null`. Eso significaba, por algún motivo, que `disk` estaba retornando `null`, lo cual no era verdad.
 
-## 🔨 Solución
+## 🔨 Solución
 
 Después de una búsqueda. Encontré en la documentación de Mockery, usado por Laravel para hacer los mocks. En la siguiente línea si no especificas el retorno, devolverá `null` por defecto. Y causará que los _assertions_ fallen.
 
@@ -71,6 +72,6 @@ class ChainControllerTest extends TestCase
 }
 ```
 
-## 🔗 Enlaces
+## 🔗 Enlaces
 
-Puedes ver un ejemplo funcionando, [click aquí](https://github.com/helmerdavila/blog-tutorials-laravel/blob/1.0.1/tests/Feature/ChainControllerTest.php).
+Puedes ver un ejemplo funcionando, [clic aquí](https://github.com/helmerdavila/blog-tutorials-laravel/blob/1.0.1/tests/Feature/ChainControllerTest.php).
