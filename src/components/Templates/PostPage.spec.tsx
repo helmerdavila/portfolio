@@ -13,7 +13,13 @@ it('renders without issues with tags', () => {
       site: { siteMetadata: { author: '', siteUrl: '' } },
       mdx: {
         excerpt: faker.lorem.words(5),
-        fields: { locale: 'en', isDefault: true, slug: faker.lorem.slug(), translatedPostUrl: faker.lorem.slug() },
+        fields: {
+          locale: 'en',
+          isDefault: true,
+          directory: faker.lorem.slug(),
+          filename: 'index',
+          translatedPostUrl: faker.lorem.slug(),
+        },
         frontmatter: {
           title: faker.lorem.words(),
           description: faker.lorem.words(5),
@@ -46,7 +52,13 @@ it('renders with link in another language without tags', () => {
       site: { siteMetadata: { author: '', siteUrl: '' } },
       mdx: {
         excerpt: faker.lorem.words(5),
-        fields: { locale: 'es', isDefault: false, slug: faker.lorem.slug(), translatedPostUrl: faker.lorem.slug() },
+        fields: {
+          locale: 'es',
+          isDefault: false,
+          directory: faker.lorem.slug(),
+          filename: 'index',
+          translatedPostUrl: faker.lorem.slug(),
+        },
         frontmatter: {
           title: faker.lorem.words(),
           description: faker.lorem.words(5),
@@ -79,7 +91,13 @@ it('renders without imageAlt and description', () => {
       site: { siteMetadata: { author: '', siteUrl: '' } },
       mdx: {
         excerpt: faker.lorem.words(5),
-        fields: { locale: 'en', isDefault: true, slug: faker.lorem.slug(), translatedPostUrl: faker.lorem.slug() },
+        fields: {
+          locale: 'en',
+          isDefault: true,
+          directory: faker.lorem.slug(),
+          filename: 'index',
+          translatedPostUrl: faker.lorem.slug(),
+        },
         frontmatter: {
           title: faker.lorem.words(),
           description: null,
