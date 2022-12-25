@@ -59,7 +59,6 @@ const config: GatsbyConfig = {
           {
             resolve: `gatsby-remark-images`,
             options: {
-              tracedSVG: true,
               maxWidth: 800,
             },
           },
