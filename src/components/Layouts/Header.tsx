@@ -3,8 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { withScroll } from 'react-window-decorators';
 import classNames from 'classnames';
 import { animateScroll as scroll } from 'react-scroll';
-import { faDownload, faHSquare } from '@helmerdavila/fontawesomehelmer/pro-duotone-svg-icons';
-import DarkModeToggle from 'react-dark-mode-toggle';
+import { faDownload, faHSquare, faMoon, faSun } from '@helmerdavila/fontawesomehelmer/pro-duotone-svg-icons';
 import useTranslations from '../UseTranslations';
 import { ThemeContext } from '../Layout';
 import { Link } from 'gatsby';
@@ -23,21 +22,16 @@ export const HeaderComponent = (props: Props) => {
     },
   );
   const { cv_link, download_cv } = useTranslations();
-  const stylesLink = classNames('mr-3 uppercase', {
+  const stylesText = {
     'text-white': props.scrollPositionY === 0 || !context.isLightTheme,
     'text-black': props.scrollPositionY > 0 && context.isLightTheme,
-  });
+  };
+  const stylesLink = classNames('mr-3 uppercase', stylesText);
 
   return (
     <nav className={navbarClass}>
       <div className="flex flex-row items-center">
-        <div
-          onClick={scroll.scrollToTop}
-          className={classNames('mr-3', {
-            'text-white': props.scrollPositionY === 0 || !context.isLightTheme,
-            'text-black': props.scrollPositionY > 0 && context.isLightTheme,
-          })}
-        >
+        <div onClick={scroll.scrollToTop} className={classNames('mr-3', stylesText)}>
           <FontAwesomeIcon icon={faHSquare} size="2x" />
         </div>
       </div>
@@ -64,7 +58,9 @@ export const HeaderComponent = (props: Props) => {
             </Link>
           </li>
         </ul>
-        <DarkModeToggle size={50} onChange={context.toggleTheme} checked={!context.isLightTheme} />
+        <button className={classNames('cursor-pointer w-10 h-full', stylesText)} onClick={context.toggleTheme}>
+          {context.isLightTheme ? <FontAwesomeIcon icon={faMoon} /> : <FontAwesomeIcon icon={faSun} />}
+        </button>
         <a
           href={cv_link}
           target="_blank"
