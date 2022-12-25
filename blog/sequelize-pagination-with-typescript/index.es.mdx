@@ -4,6 +4,7 @@ description: El otro día estaba buscando si existía alguna función para poder
 date: 2021-08-20
 published: true
 image: ../../src/images/blog/book.jpg
+tags: ['sequelize', 'typescript', 'javascript', 'orm']
 ---
 
 # Paginación con Sequelize (Typescript)
@@ -45,9 +46,7 @@ export default class Paginator<T extends Model> {
 
     const totalRecords = resultsTotal.length;
 
-    const [error, results] = await to(
-      this.model.findAll<T>({ ...options, offset, limit: limitTo })
-    );
+    const [error, results] = await to(this.model.findAll<T>({ ...options, offset, limit: limitTo }));
 
     if (error) {
       throw error;
