@@ -67,14 +67,12 @@ export const onCreateNode: GatsbyNode['onCreateNode'] = async ({ node, actions, 
   // Check for "Mdx" type so that other files (e.g. images) are exluded
   if (node.internal.type === `Mdx`) {
     const parentNode = getNode(node.parent as string) as FileSystemNode;
-    // Use path.basename
-    // https://nodejs.org/api/path.html#path_path_basename_path_ext
-    // const name = path.basename(<string>node.internal.contentFilePath, `.mdx`);
-    const name = path.basename(node.internal.contentFilePath, `.mdx`);
+
+    const filename = path.basename(node.internal.contentFilePath, `.mdx`);
 
     // Check if post.name is "index" -- because that's the file for default language
     // (In this case "en")
-    const isDefault = name === `index`;
+    const isDefault = filename === `index`;
 
     // Find the key that has "default: true" set (in this case it returns "en")
     const defaultKey = findKey(locales, (nodeAttribute) => nodeAttribute.default === true);
@@ -83,16 +81,14 @@ export const onCreateNode: GatsbyNode['onCreateNode'] = async ({ node, actions, 
     // name returns "name-with-dashes.lang"
     // So grab the lang from that string
     // If it's the default language, pass the locale for that
-    const locale: string = isDefault ? defaultKey : name.split(`.`)[1];
+    const locale: string = isDefault ? defaultKey : filename.split(`.`)[1];
 
     const slug = parentNode.relativeDirectory ?? '';
 
-    const localizedSlugResult = localizedSlug({ isDefault, locale, slug });
-
-    createNodeField({ node, name: `localizedSlug`, value: localizedSlugResult });
-    createNodeField({ node, name: `slug`, value: slug });
+    createNodeField({ node, name: `directory`, value: slug });
     createNodeField({ node, name: `locale`, value: locale });
     createNodeField({ node, name: `isDefault`, value: isDefault });
+    createNodeField({ node, name: 'filename', value: filename });
     createNodeField({
       node,
       name: `translatedPostUrl`,
@@ -117,7 +113,7 @@ const gqlGetAllPosts = async (graphql: CreatePagesArgs['graphql']) =>
             }
             fields {
               locale
-              slug
+              directory
               isDefault
               translatedPostUrl
             }

@@ -54,8 +54,9 @@ export const query = graphql`
         }
         fields {
           locale
-          slug
           isDefault
+          filename
+          directory
           translatedPostUrl
         }
         parent {

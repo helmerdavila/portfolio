@@ -53,8 +53,8 @@ const PostPage = (props) => {
     data.defaultBlogPostImage?.childImageSharp?.gatsbyImageData;
   const imageRendered = getImage(imageSource);
   const pathFileForGithub = mdx.fields.isDefault
-    ? `${mdx.fields.slug}/index.mdx`
-    : `${mdx.fields.slug}/index.${mdx.fields.locale}.mdx`;
+    ? `${mdx.fields.directory}/index.mdx`
+    : `${mdx.fields.directory}/index.${mdx.fields.locale}.mdx`;
   const tags = mdx.frontmatter.tags ?? [];
   const locale = mdx.fields.locale;
 
@@ -106,7 +106,8 @@ export const query = graphql`
   query LayoutBlogPage($id: String!) {
     mdx(id: { eq: $id }) {
       fields {
-        slug
+        filename
+        directory
         locale
         isDefault
         translatedPostUrl
