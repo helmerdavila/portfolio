@@ -4,6 +4,7 @@ import { customRender } from '../../utils/testing';
 import { backgroundImage, loadSiteData, loadTranslations } from '../../utils/mockresponses';
 import { faker } from '@faker-js/faker';
 import PostPage from './PostPage';
+import { v4 as uuidv4 } from 'uuid';
 
 beforeEach(() => (useStaticQuery as jest.Mock).mockReturnValue({ ...loadSiteData, ...loadTranslations }));
 
@@ -12,12 +13,10 @@ it('renders without issues with tags', () => {
     data: {
       site: { siteMetadata: { author: '', siteUrl: '' } },
       mdx: {
-        excerpt: faker.lorem.words(5),
         fields: {
           locale: 'en',
           isDefault: true,
           directory: faker.lorem.slug(),
-          filename: 'index',
           translatedPostUrl: faker.lorem.slug(),
         },
         frontmatter: {
@@ -30,6 +29,26 @@ it('renders without issues with tags', () => {
         },
       },
       defaultBlogPostImage: backgroundImage.backgroundImage,
+      multilanguagePosts: {
+        nodes: [
+          {
+            id: uuidv4(),
+            fields: {
+              locale: '',
+              isDefault: false,
+              filename: '',
+              directory: '',
+              translatedPostUrl: '',
+            },
+            frontmatter: {
+              title: '',
+              imageAlt: '',
+              date: '',
+              image: backgroundImage.backgroundImage,
+            },
+          },
+        ],
+      },
     },
   };
   const { queryByTestId } = customRender(
@@ -51,12 +70,10 @@ it('renders with link in another language without tags', () => {
     data: {
       site: { siteMetadata: { author: '', siteUrl: '' } },
       mdx: {
-        excerpt: faker.lorem.words(5),
         fields: {
           locale: 'es',
           isDefault: false,
           directory: faker.lorem.slug(),
-          filename: 'index',
           translatedPostUrl: faker.lorem.slug(),
         },
         frontmatter: {
@@ -67,6 +84,26 @@ it('renders with link in another language without tags', () => {
           imageAlt: faker.lorem.word(),
           tags: null,
         },
+      },
+      multilanguagePosts: {
+        nodes: [
+          {
+            id: uuidv4(),
+            fields: {
+              locale: '',
+              isDefault: false,
+              filename: '',
+              directory: '',
+              translatedPostUrl: '',
+            },
+            frontmatter: {
+              title: '',
+              imageAlt: '',
+              date: '',
+              image: backgroundImage.backgroundImage,
+            },
+          },
+        ],
       },
       defaultBlogPostImage: backgroundImage.backgroundImage,
     },
@@ -90,12 +127,10 @@ it('renders without imageAlt and description', () => {
     data: {
       site: { siteMetadata: { author: '', siteUrl: '' } },
       mdx: {
-        excerpt: faker.lorem.words(5),
         fields: {
           locale: 'en',
           isDefault: true,
           directory: faker.lorem.slug(),
-          filename: 'index',
           translatedPostUrl: faker.lorem.slug(),
         },
         frontmatter: {
@@ -106,6 +141,26 @@ it('renders without imageAlt and description', () => {
           imageAlt: null,
           tags: [],
         },
+      },
+      multilanguagePosts: {
+        nodes: [
+          {
+            id: uuidv4(),
+            fields: {
+              locale: '',
+              isDefault: false,
+              filename: '',
+              directory: '',
+              translatedPostUrl: '',
+            },
+            frontmatter: {
+              title: '',
+              imageAlt: '',
+              date: '',
+              image: backgroundImage.backgroundImage,
+            },
+          },
+        ],
       },
       defaultBlogPostImage: backgroundImage.backgroundImage,
     },

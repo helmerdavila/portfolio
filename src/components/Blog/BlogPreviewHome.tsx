@@ -29,7 +29,7 @@ export const PostCard = ({ post }: { post: Queries.IndexPreviewPostsQuery['allMd
   const context = useContext(ThemeContext);
   const textColor = { 'text-white': !context.isLightTheme, 'text-black': context.isLightTheme };
   const imageAlt = post.frontmatter.imageAlt ?? 'Blog';
-  const image = getImage(post.frontmatter.image?.childImageSharp.gatsbyImageData);
+  const image = getImage(post.frontmatter.image.childImageSharp.gatsbyImageData);
 
   return (
     <Link

@@ -38,7 +38,7 @@ export const loadTranslations = {
   },
 };
 
-export const backgroundImage: { backgroundImage: Queries.IndexQuery['backgroundImage'] } = {
+export const backgroundImage: { backgroundImage: Queries.IndexPreviewPostsQuery['backgroundImage'] } = {
   backgroundImage: {
     childImageSharp: {
       gatsbyImageData: {

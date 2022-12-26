@@ -9,27 +9,12 @@ afterEach(cleanup);
 
 it('renders PostCard with image', () => {
   const post: BlogPostType = BlogPreviewHomeMock.allMdx.nodes[POSTS.POST_WITH_IMAGE];
-  const defaultImage = BlogPreviewHomeMock.homePostImage;
 
   const { queryByAltText, queryByRole } = customRender(<PostCard post={post} />);
 
   expect(queryByRole('link')).toBeInTheDocument();
   expect(queryByRole('link')).toHaveAttribute('href', post.fields.translatedPostUrl);
-  expect(queryByRole('img')).not.toHaveAttribute(
-    'data-src',
-    defaultImage.childImageSharp.gatsbyImageData.images.fallback.src,
-  );
   expect(queryByAltText(post.frontmatter.imageAlt)).toBeInTheDocument();
-});
-
-it('renders PostCard with no image, uses default', () => {
-  const post: BlogPostType = BlogPreviewHomeMock.allMdx.nodes[POSTS.POST_WITHOUT_IMAGE];
-
-  const { queryByAltText, queryByTestId } = customRender(<PostCard post={post} />);
-
-  expect(queryByTestId('postcard-link')).toBeInTheDocument();
-  expect(queryByTestId('postcard-link')).toHaveAttribute('href', post.fields.translatedPostUrl);
-  expect(queryByAltText('Blog')).toBeInTheDocument();
 });
 
 it('renders BlogPreviewHome', () => {
@@ -50,14 +35,7 @@ it('renders BlogPreviewHome with no posts', () => {
 });
 
 it('renders BlogPreviewHome with no posts', () => {
-  const { queryByRole } = customRender(
-    <BlogPreviewHome
-      data={{
-        allMdx: { nodes: [BlogPreviewHomeMock.allMdx.nodes[POSTS.POST_WITHOUT_PARENT]] },
-        backgroundImage: null,
-      }}
-    />,
-  );
+  const { queryByRole } = customRender(<BlogPreviewHome data={{ allMdx: { nodes: [] }, backgroundImage: null }} />);
 
   const link = queryByRole('link');
 
