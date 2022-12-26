@@ -44,6 +44,7 @@ const query = graphql`
             ecommerce_websites
             edit_posts_on_github
             hi_my_name_is
+            in_other_languages
             landing_pages
             mobile_and_web_projects
             mobile_applications

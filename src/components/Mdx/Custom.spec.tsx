@@ -97,8 +97,7 @@ it('renders Head component without issues', () => {
     data: {
       site: { siteMetadata: { author: '', siteUrl: '' } },
       mdx: {
-        excerpt: faker.lorem.words(5),
-        fields: { locale: 'en', isDefault: true, directory: faker.lorem.slug(), filename: 'index' },
+        fields: { locale: 'en', isDefault: true, directory: faker.lorem.slug() },
         frontmatter: {
           title: postTitle,
           description: faker.lorem.words(5),

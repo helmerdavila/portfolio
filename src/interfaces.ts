@@ -30,7 +30,7 @@ export interface ILocalJson {
   flag: string;
 }
 
-export type BlogPostNodesTypes = Queries.IndexQuery['allMdx']['nodes'];
+export type BlogPostNodesTypes = Queries.IndexPreviewPostsQuery['allMdx']['nodes'];
 export type BlogPostType = BlogPostNodesTypes[number];
 
 export interface ILayout extends Omit<Partial<PageProps<unknown, { locale: string }>>, 'children'> {

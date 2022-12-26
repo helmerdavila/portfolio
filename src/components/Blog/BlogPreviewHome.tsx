@@ -1,15 +1,13 @@
 import React, { useContext } from 'react';
 import classNames from 'classnames';
 import { ThemeContext } from '../Layout';
-import { GatsbyImage, getImage, IGatsbyImageData } from 'gatsby-plugin-image';
-import type { BlogPostType } from '../../interfaces';
+import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import { Link } from 'gatsby';
 
-const BlogPreviewHome = ({ data }: { data: Queries.IndexQuery }): JSX.Element => {
+const BlogPreviewHome = ({ data }: { data: Queries.IndexPreviewPostsQuery }): JSX.Element => {
   const context = useContext(ThemeContext);
   const textColor = { 'text-white': !context.isLightTheme, 'text-black': context.isLightTheme };
   const posts = data.allMdx.nodes;
-  const postDefaultImage = data.homePostImage.childImageSharp.gatsbyImageData;
 
   return posts.length ? (
     <section
@@ -17,37 +15,25 @@ const BlogPreviewHome = ({ data }: { data: Queries.IndexQuery }): JSX.Element =>
     >
       <div className="container mx-auto 2xl:max-w-7xl">
         <h2 className={classNames('text-5xl font-semibold text-center mb-4', textColor)}>Blog</h2>
-        <div className="flex flex-col sm:flex-row">
-          {posts?.map((post) =>
-            Object.keys(post.parent).length > 0 ? (
-              <PostCard
-                key={(post.parent as { relativeDirectory: string }).relativeDirectory}
-                post={post}
-                postDefaultImage={postDefaultImage}
-              />
-            ) : null,
-          )}
+        <div className="grid grid-cols-2 gap-4">
+          {posts?.map((post) => (
+            <PostCard key={post.id} post={post} />
+          ))}
         </div>
       </div>
     </section>
   ) : null;
 };
 
-export const PostCard = ({
-  post,
-  postDefaultImage,
-}: {
-  post: BlogPostType;
-  postDefaultImage: IGatsbyImageData;
-}): JSX.Element => {
+export const PostCard = ({ post }: { post: Queries.IndexPreviewPostsQuery['allMdx']['nodes'][0] }): JSX.Element => {
   const context = useContext(ThemeContext);
   const textColor = { 'text-white': !context.isLightTheme, 'text-black': context.isLightTheme };
   const imageAlt = post.frontmatter.imageAlt ?? 'Blog';
-  const image = getImage(post.frontmatter.image?.childImageSharp.gatsbyImageData ?? postDefaultImage);
+  const image = getImage(post.frontmatter.image.childImageSharp.gatsbyImageData);
 
   return (
     <Link
-      className={classNames('flex-1 sm:w-1/2 m-5 shadow-xl rounded-lg bg-gray-200', {
+      className={classNames('shadow-xl rounded-lg bg-gray-200', {
         'bg-gray-200': context.isLightTheme,
         'bg-gray-700': !context.isLightTheme,
       })}
