@@ -37,6 +37,27 @@ const Tags = ({ tags, locale, pageBackground, textStyle }) => {
     </div>
   ) : null;
 };
+
+const Author = ({ pageBackground, textStyle, author, writtenBy }) => (
+  <div className={classNames(pageBackground, 'my-7 py-7 px-12 container max-w-3xl  mx-auto xl:max-w-6xl')}>
+    <h2 className={classNames(textStyle, 'text-4xl font-bold')}>{author}</h2>
+    <div className="flex justify-between mt-6">
+      <span className={classNames(textStyle, 'text-xl')}>{writtenBy} Helmer Davila</span>
+      <div className={classNames(textStyle, 'text-xl')}>
+        <a href="https://www.helmerdavila.com" className="mr-2">
+          <FontAwesomeIcon icon={faGlobe} />
+        </a>
+        <a href="https://www.linkedin.com/in/helmerdavila" className="mr-2">
+          <FontAwesomeIcon icon={faLinkedin} />
+        </a>
+        <a href="https://www.github.com/helmerdavila">
+          <FontAwesomeIcon icon={faGithub} />
+        </a>
+      </div>
+    </div>
+  </div>
+);
+
 /** @param {import("gatsby").PageProps<Queries.LayoutBlogPageQuery>} props */
 const PostPage = (props) => {
   const context = useContext(ThemeContext);
@@ -79,23 +100,7 @@ const PostPage = (props) => {
           </div>
         </div>
         <Tags tags={tags} locale={locale} pageBackground={pageBackground} textStyle={textStyle} />
-        <div className={classNames(pageBackground, 'my-7 py-7 px-12 container max-w-3xl  mx-auto xl:max-w-6xl')}>
-          <h2 className={classNames(textStyle, 'text-4xl font-bold')}>{author}</h2>
-          <div className="flex justify-between mt-6">
-            <span className={classNames(textStyle, 'text-xl')}>{written_by} Helmer Davila</span>
-            <div className={classNames(textStyle, 'text-xl')}>
-              <a href="https://www.helmerdavila.com" className="mr-2">
-                <FontAwesomeIcon icon={faGlobe} />
-              </a>
-              <a href="https://www.linkedin.com/in/helmerdavila" className="mr-2">
-                <FontAwesomeIcon icon={faLinkedin} />
-              </a>
-              <a href="https://www.github.com/helmerdavila">
-                <FontAwesomeIcon icon={faGithub} />
-              </a>
-            </div>
-          </div>
-        </div>
+        <Author pageBackground={pageBackground} textStyle={textStyle} author={author} writtenBy={written_by} />
       </div>
     </LayoutBlog>
   );
