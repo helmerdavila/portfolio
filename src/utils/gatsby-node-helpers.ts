@@ -2,9 +2,6 @@ import slugify from '@sindresorhus/slugify';
 
 export const removeTrailingSlash = (path) => (path === `/` ? path : path.replace(/\/$/, ``));
 
-export const localizedSlug = ({ isDefault, locale, slug }: { isDefault: boolean; locale: string; slug: string }) =>
-  isDefault ? `/blog/${slug}` : `/${locale}/blog/${slug}`;
-
 export const translatedPostUrl = (postTitle: string, locale: string) => `/blog/${locale}/${slugify(postTitle)}`;
 
 // From lodash:

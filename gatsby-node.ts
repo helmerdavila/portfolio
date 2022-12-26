@@ -1,8 +1,9 @@
 import locales from './config/i18n';
-import { findKey, localizedSlug, removeTrailingSlash, translatedPostUrl } from './src/utils/gatsby-node-helpers';
+import { findKey, removeTrailingSlash, translatedPostUrl } from './src/utils/gatsby-node-helpers';
 import path from 'path';
 import type { Actions, CreatePagesArgs, GatsbyNode } from 'gatsby';
 import { FileSystemNode } from 'gatsby-source-filesystem';
+import { localizeUrl } from './src/components/LocalizedLink';
 
 const allLanguages = Object.keys(locales);
 
@@ -192,7 +193,7 @@ const createTagsPage = async (graphql: CreatePagesArgs['graphql'], createPage: A
     const tags = result.data?.tagsGroup.group;
     for (const tag of tags) {
       createPage({
-        path: `/tags/${locale}/${tag.fieldValue}/`,
+        path: localizeUrl(`/tags/${tag.fieldValue}`, locale),
         component: tagTemplate,
         context: {
           tag: tag.fieldValue,

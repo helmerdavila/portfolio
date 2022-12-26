@@ -11,6 +11,7 @@ import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import { faGlobe } from '@helmerdavila/fontawesomehelmer/pro-duotone-svg-icons';
 import { components, HeadForMeta } from '../Mdx/Custom';
 import { v4 as uuidv4 } from 'uuid';
+import { localizeUrl } from '../LocalizedLink';
 
 // Don't change the Head name here. Used by Gatsby
 export const Head = (props) => <HeadForMeta {...props} />;
@@ -22,7 +23,7 @@ const Tags = ({ tags, locale, pageBackground, textStyle }) => {
       <div className="flex flex-wrap mt-4">
         {tags.map((tag) => (
           <Link
-            to={`/tags/${locale}/${tag}`}
+            to={localizeUrl(`/tags/${tag}`, locale)}
             key={uuidv4()}
             className={classNames(
               'mr-4 text-xl font-quicksand p-2 bg-zinc-100 hover:bg-zinc-200 rounded-xl cursor-pointer',

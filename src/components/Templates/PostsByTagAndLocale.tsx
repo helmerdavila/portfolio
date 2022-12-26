@@ -2,9 +2,12 @@ import classNames from 'classnames';
 import { graphql, PageProps } from 'gatsby';
 import React, { useContext } from 'react';
 import { ThemeContext } from '../Layout';
-import LayoutBlog from '../LayoutBlog';
 import SEO from '../Seo';
 import { BlogPostCard } from '../../pages/blog';
+import HeaderBlog from '../Layouts/HeaderBlog';
+import { localizeUrl } from '../LocalizedLink';
+import localesJson from '../../../config/i18n';
+import { ILocalJson } from '../../interfaces';
 
 const PostsByTagAndLocale = ({ data, pageContext }: PageProps<Queries.BlogByTagAndLocaleQuery>): JSX.Element => {
   const context = useContext(ThemeContext);
@@ -12,18 +15,27 @@ const PostsByTagAndLocale = ({ data, pageContext }: PageProps<Queries.BlogByTagA
   const posts = data.allMdx.nodes.map((post) => <BlogPostCard key={post.id} post={post} />);
   const tag = pageContext['tag'];
   const locale = pageContext['locale'];
+  const localeJson: ILocalJson = localesJson[locale];
   const tagsForSeo = pageContext['tagsForSeo'];
+  const pageBackground = { 'bg-gray-200': context.isLightTheme, 'bg-gray-900': !context.isLightTheme };
+  const urlForIcon = localizeUrl(`/tags/${tag}`, locale);
 
   return (
-    <LayoutBlog>
-      <SEO title={`Tag: ${tag} ${locale}`} keywords={tagsForSeo} description="All blog posts by tag" />
-      <div className="container max-w-3xl pb-3 mx-auto xl:max-w-6xl">
-        <h1 className={classNames('text-6xl font-bold mt-10', themeStyles)}>
-          Tag: {tag} ({data.allMdx.totalCount} posts)
-        </h1>
-        {posts}
+    <>
+      <SEO title={`Tag: ${tag} ${localeJson.flag}`} keywords={tagsForSeo} description="All blog posts by tag" />
+      <HeaderBlog iconLink={urlForIcon} />
+      <div className={classNames(pageBackground, 'pt-20 h-full min-h-screen')}>
+        <div className="container max-w-3xl pb-3 mx-auto xl:max-w-6xl">
+          <div className="flex flex-wrap items-center justify-between mt-10">
+            <h1 className={classNames('text-6xl font-bold', themeStyles)}>
+              Tag: {tag} ({data.allMdx.totalCount} posts)
+            </h1>
+            <span className="text-6xl">{localeJson.flag}</span>
+          </div>
+          {posts}
+        </div>
       </div>
-    </LayoutBlog>
+    </>
   );
 };
 

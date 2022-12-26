@@ -2,10 +2,12 @@ import classNames from 'classnames';
 import { graphql, Link, PageProps } from 'gatsby';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import React, { useContext } from 'react';
-import { ThemeContext } from '../components/Layout';
+import { LocaleContext, ThemeContext } from '../components/Layout';
 import LayoutBlog from '../components/LayoutBlog';
 import SEO from '../components/Seo';
 import { v4 as uuidv4 } from 'uuid';
+import localesJson from '../../config/i18n';
+import { ILocalJson } from '../interfaces';
 
 type BlogPost = Queries.BlogQuery['allMdx']['nodes'][0];
 
@@ -53,8 +55,10 @@ export const BlogPostCard = ({ post }: { post: BlogPost }) => {
 
 const Blog = ({ data }: PageProps<Queries.BlogQuery>): JSX.Element => {
   const context = useContext(ThemeContext);
+  const { locale } = useContext(LocaleContext);
   const themeStyles = { 'text-black': context.isLightTheme, 'text-white': !context.isLightTheme };
   const posts = data?.allMdx?.nodes;
+  const localeJson: ILocalJson = localesJson[locale];
 
   return (
     <LayoutBlog>
@@ -64,7 +68,10 @@ const Blog = ({ data }: PageProps<Queries.BlogQuery>): JSX.Element => {
         description="My technical blog"
       />
       <div className="container max-w-3xl pb-3 mx-auto xl:max-w-6xl">
-        <h1 className={classNames('text-6xl font-bold mt-10', themeStyles)}>Blog</h1>
+        <div className="flex flex-wrap items-center justify-between mt-10">
+          <h1 className={classNames('text-6xl font-bold', themeStyles)}>Blog</h1>
+          <span className="text-6xl">{localeJson.flag}</span>
+        </div>
         {posts.map((post) => (
           <BlogPostCard key={post.id} post={post} />
         ))}

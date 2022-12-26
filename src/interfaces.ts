@@ -21,6 +21,15 @@ export interface IQueryAllMdxFiles {
   };
 }
 
+export interface ILocalJson {
+  default: boolean;
+  path: string;
+  locale: string;
+  dateFormat: string;
+  siteLanguage: string;
+  flag: string;
+}
+
 export type BlogPostNodesTypes = Queries.IndexQuery['allMdx']['nodes'];
 export type BlogPostType = BlogPostNodesTypes[number];
 

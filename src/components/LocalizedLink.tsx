@@ -1,22 +1,20 @@
 import React, { useContext } from 'react';
 import { Link } from 'gatsby';
 import { LocaleContext } from './Layout';
-import locales from '../../config/i18n';
+import localesJson from '../../config/i18n';
+import { ILocalJson } from '../interfaces';
 
-// Use the globally available context to choose the right path
+export const localizeUrl = (url: string, locale: string) => {
+  const localeInfo: ILocalJson = localesJson[locale];
+
+  return localeInfo.default ? url : `${url}/${locale}`;
+};
+
 const LocalizedLink = ({ to, ...props }: { to: string; [x: string]: unknown }): JSX.Element => {
   const { locale } = useContext(LocaleContext);
+  const url = to === '/' ? '' : to;
 
-  const isIndex = to === `/`;
-  const ifNotDefaultUrl = `${isIndex ? `` : `/${to}`}/${locales[locale].path}`;
-
-  // If it's the default language, don't do anything
-  // If it's another language, add the "path"
-  // However, if the homepage/index page is linked don't add the "to"
-  // Because otherwise this would add a trailing slash
-  const path = locales[locale].default ? to : ifNotDefaultUrl;
-
-  return <Link {...props} to={path} />;
+  return <Link {...props} to={localizeUrl(url, locale)} />;
 };
 
 export default LocalizedLink;
