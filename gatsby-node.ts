@@ -130,24 +130,19 @@ const gqlGetAllPosts = async (graphql: CreatePagesArgs['graphql']) =>
   );
 
 const createPageFromPost = (
-  post,
+  post: Queries.CreatePagesQuery['allMdx']['nodes'][0],
   postTemplate: string,
   createRedirect: Actions['createRedirect'],
   createPage: Actions['createPage'],
 ) => {
-  // All files for a blogpost are stored in a folder
-  // relativeDirectory is the name of the folder
   const mdxPath = post.internal.contentFilePath;
-
-  // Use the fields created in exports.onCreateNode
   const locale = post.fields.locale;
-
-  const newPath = translatedPostUrl(post.frontmatter.title, locale);
+  const url = translatedPostUrl(post.frontmatter.title, locale);
 
   const contentForCreatePage = {
-    path: newPath,
+    path: url,
     component: `${postTemplate}?__contentFilePath=${mdxPath}`,
-    context: { id: post.id, locale },
+    context: { id: post.id, directory: post.fields.directory, locale },
   };
 
   createPage(contentForCreatePage);
@@ -166,7 +161,7 @@ const createBlogPosts = async (
     return;
   }
 
-  const postList = result.data?.allMdx?.nodes ?? [];
+  const postList = result.data.allMdx.nodes ?? [];
 
   const postTemplate = path.resolve(`./src/components/Templates/PostPage.jsx`);
 

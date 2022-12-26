@@ -12,24 +12,23 @@ import { faGlobe } from '@helmerdavila/fontawesomehelmer/pro-duotone-svg-icons';
 import { components, HeadForMeta } from '../Mdx/Custom';
 import { v4 as uuidv4 } from 'uuid';
 import { localizeUrl } from '../LocalizedLink';
+import { PostCard } from '../Blog/BlogPreviewHome';
 
 // Don't change the Head name here. Used by Gatsby
 export const Head = (props) => <HeadForMeta {...props} />;
 
-const Tags = ({ tags, locale, pageBackground, textStyle }) => {
+const Tags = ({ tags, locale, cssBackground, cssText, isLightMode = true }) => {
+  const cssTags = classNames('mr-4 text-xl font-quicksand p-2 rounded-xl cursor-pointer', cssText, {
+    'bg-zinc-100 hover:bg-zinc-200': isLightMode,
+    'bg-gray-700 hover:bg-gray-600': !isLightMode,
+  });
+
   return tags.length ? (
-    <div className={classNames(pageBackground, 'my-7 py-7 px-12 container max-w-3xl  mx-auto xl:max-w-6xl')}>
-      <h2 className={classNames(textStyle, 'text-4xl font-bold')}>Tags</h2>
+    <div className={classNames(cssBackground, 'my-7 py-7 px-12 container max-w-3xl  mx-auto xl:max-w-6xl')}>
+      <h2 className={classNames(cssText, 'text-4xl font-bold')}>Tags</h2>
       <div className="flex flex-wrap mt-4">
         {tags.map((tag) => (
-          <Link
-            to={localizeUrl(`/tags/${tag}`, locale)}
-            key={uuidv4()}
-            className={classNames(
-              'mr-4 text-xl font-quicksand p-2 bg-zinc-100 hover:bg-zinc-200 rounded-xl cursor-pointer',
-              textStyle,
-            )}
-          >
+          <Link to={localizeUrl(`/tags/${tag}`, locale)} key={uuidv4()} className={cssTags}>
             #{tag}
           </Link>
         ))}
@@ -38,12 +37,12 @@ const Tags = ({ tags, locale, pageBackground, textStyle }) => {
   ) : null;
 };
 
-const Author = ({ pageBackground, textStyle, author, writtenBy }) => (
-  <div className={classNames(pageBackground, 'my-7 py-7 px-12 container max-w-3xl  mx-auto xl:max-w-6xl')}>
-    <h2 className={classNames(textStyle, 'text-4xl font-bold')}>{author}</h2>
+const Author = ({ cssBackground, cssText, author, writtenBy }) => (
+  <div className={classNames(cssBackground, 'my-7 py-7 px-12 container max-w-3xl  mx-auto xl:max-w-6xl')}>
+    <h2 className={classNames(cssText, 'text-4xl font-bold')}>{author}</h2>
     <div className="flex justify-between mt-6">
-      <span className={classNames(textStyle, 'text-xl')}>{writtenBy} Helmer Davila</span>
-      <div className={classNames(textStyle, 'text-xl')}>
+      <span className={classNames(cssText, 'text-xl font-quicksand')}>{writtenBy} Helmer Davila</span>
+      <div className={classNames(cssText, 'text-xl')}>
         <a href="https://www.helmerdavila.com" className="mr-2">
           <FontAwesomeIcon icon={faGlobe} />
         </a>
@@ -58,6 +57,29 @@ const Author = ({ pageBackground, textStyle, author, writtenBy }) => (
   </div>
 );
 
+/**
+ * @param {Queries.LayoutBlogPageQuery.multilanguagePosts.nodes} posts
+ * @param {string} currentLocale
+ * @param {object} cssText
+ * @param {object} cssBackground
+ * */
+const PostInOtherLanguages = ({ posts, currentLocale, cssText, cssBackground }) => {
+  const { in_other_languages } = useTranslations();
+
+  return posts ? (
+    <div className={classNames(cssBackground, 'my-7 py-7 px-12 container max-w-3xl  mx-auto xl:max-w-6xl')}>
+      <h2 className={classNames(cssText, 'text-4xl font-bold')}>{in_other_languages}</h2>
+      <div className="grid grid-cols-2 gap-4 mt-6">
+        {posts
+          .filter((post) => post.fields.locale !== currentLocale)
+          .map((post) => (
+            <PostCard key={post.id} post={post} />
+          ))}
+      </div>
+    </div>
+  ) : null;
+};
+
 /** @param {import("gatsby").PageProps<Queries.LayoutBlogPageQuery>} props */
 const PostPage = (props) => {
   const context = useContext(ThemeContext);
@@ -67,7 +89,7 @@ const PostPage = (props) => {
     'bg-white shadow-sm': context.isLightTheme,
     'bg-gray-800 border-gray-800': !context.isLightTheme,
   };
-  const { mdx } = data;
+  const { mdx, multilanguagePosts } = data;
   const textStyle = { 'text-black': context.isLightTheme, 'text-white': !context.isLightTheme };
   const imageAlt = mdx.frontmatter?.imageAlt ?? 'Photo by Unsplash';
   const imageSource =
@@ -99,8 +121,20 @@ const PostPage = (props) => {
             </div>
           </div>
         </div>
-        <Tags tags={tags} locale={locale} pageBackground={pageBackground} textStyle={textStyle} />
-        <Author pageBackground={pageBackground} textStyle={textStyle} author={author} writtenBy={written_by} />
+        <Tags
+          tags={tags}
+          locale={locale}
+          isLightMode={context.isLightTheme}
+          cssBackground={pageBackground}
+          cssText={textStyle}
+        />
+        <PostInOtherLanguages
+          posts={multilanguagePosts.nodes}
+          currentLocale={locale}
+          cssText={textStyle}
+          cssBackground={pageBackground}
+        />
+        <Author author={author} writtenBy={written_by} cssBackground={pageBackground} cssText={textStyle} />
       </div>
     </LayoutBlog>
   );
@@ -109,10 +143,9 @@ const PostPage = (props) => {
 export default PostPage;
 
 export const query = graphql`
-  query LayoutBlogPage($id: String!) {
+  query LayoutBlogPage($id: String!, $directory: String!) {
     mdx(id: { eq: $id }) {
       fields {
-        filename
         directory
         locale
         isDefault
@@ -128,7 +161,9 @@ export const query = graphql`
           ...ImageForBlogPage
         }
       }
-      excerpt(pruneLength: 100)
+    }
+    multilanguagePosts: allMdx(filter: { fields: { directory: { eq: $directory } } }) {
+      ...ContentOnIndexPosts
     }
     site {
       siteMetadata {

@@ -12,7 +12,7 @@ import Footer from '../components/Layouts/Footer';
 import BlogPreviewHome from '../components/Blog/BlogPreviewHome';
 import { graphql, PageProps } from 'gatsby';
 
-const IndexPage = ({ data }: PageProps<Queries.IndexQuery>): JSX.Element => (
+const IndexPage = ({ data }: PageProps<Queries.IndexPreviewPostsQuery>): JSX.Element => (
   <>
     <SEO
       title="Fullstack Web Developer"
@@ -33,46 +33,39 @@ const IndexPage = ({ data }: PageProps<Queries.IndexQuery>): JSX.Element => (
 );
 
 export const query = graphql`
-  query Index($locale: String!) {
+  query IndexPreviewPosts($locale: String!) {
     allMdx(
       filter: { fields: { locale: { eq: $locale } } }
       sort: { fields: [frontmatter___date], order: DESC }
       limit: 2
     ) {
-      nodes {
-        id
-        frontmatter {
-          title
-          imageAlt
-          image {
-            ...ImageOnIndexPost
-          }
-          date
-        }
-        internal {
-          contentFilePath
-        }
-        fields {
-          locale
-          isDefault
-          filename
-          directory
-          translatedPostUrl
-        }
-        parent {
-          ... on File {
-            relativeDirectory
-          }
-        }
-      }
+      ...ContentOnIndexPosts
     }
     backgroundImage: file(relativePath: { eq: "background.jpg" }) {
       childImageSharp {
         gatsbyImageData(layout: FULL_WIDTH, placeholder: BLURRED)
       }
     }
-    homePostImage: file(relativePath: { eq: "macbook-homepost.jpg" }) {
-      ...ImageOnIndexPost
+  }
+
+  fragment ContentOnIndexPosts on MdxConnection {
+    nodes {
+      id
+      fields {
+        locale
+        isDefault
+        filename
+        directory
+        translatedPostUrl
+      }
+      frontmatter {
+        title
+        imageAlt
+        image {
+          ...ImageOnIndexPost
+        }
+        date
+      }
     }
   }
 
