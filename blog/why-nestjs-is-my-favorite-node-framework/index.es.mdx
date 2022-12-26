@@ -1,19 +1,20 @@
 ---
 title: '¿Por qué NestJS es uno de los mejores frameworks para Node?'
-description: Y por que lo usaría para mi siguiente proyecto
+description: Y por qué lo usaría para mi siguiente proyecto
 date: 2022-02-02
 published: true
 imageCover: https://assets.taskalia.com/blog/nestjslogo.png
 image: ../../src/images/blog/nestjslogo.png
+tags: ['nestjs', 'typescript', 'javascript', 'frameworks']
 ---
 
 # ¿Por qué NestJS es uno de los mejores frameworks para Node?
 
 La comunidad Javascript es una de las más grandes de desarrollo en todo el mundo, no es de extrañarse entonces que sigue siendo uno de los lenguajes más usados cada año.
 
-Ya sea que estés desarrollando para Backend, tienes muchas opciones desde donde escoger. Si quieres hacer backend, la opción más popular por la cual van muchos desarrolladores es ExpressJS. Instalas un par de librerías en tu `package.json` y ya puedes comenzar la creación de tu API o vistas que retornen HTML desde el servidor.
+Ya sea que estés desarrollando para Backend, tienes muchas opciones desde donde escoger. Si quieres hacer backend, la opción más popular por la cual van muchos desarrolladores es ExpressJS. Instalas un par de librerías en tu `package.json` y ya puedes comenzar la creación de tu API o vistas que retornen HTML desde el servidor.
 
-Entonces al leer el título te preguntarás: *¿Por qué prefiero NestJS, si hay otras muchas más opciones populares como Express o Hapi?*
+Entonces al leer el título te preguntarás: _¿Por qué prefiero NestJS, si hay otras muchas más opciones populares como Express o Hapi?_
 
 Acá te daré algunas razones por las cuales he trabajado en algunos proyectos en NestJS y volvería a usarlo.
 
@@ -101,13 +102,13 @@ export class Photo {
 
 ## Documentación
 
-Lo que más me encanta de un framework es la documentación y ejemplos que se presenten en su sitio web. Una mala documentación es una de las principales razones por la cual un desarrollador junior – mid no se sienta tan motivado a trabajar con un framework web y por lo tanto evite su uso. Creo que en este punto NestJS cumple con este requerimiento. Es una de las mejores documentaciones de framework backend que he visto junto a otros proyectos como Laravel.
+Lo que más me encanta de un framework es la documentación y ejemplos que se presenten en su sitio web. Una mala documentación es una de las principales razones por la cual un desarrollador junior – mid no se sienta tan motivado a trabajar con un framework web y, por lo tanto, evite su uso. Creo que en este punto NestJS cumple con este requerimiento. Es una de las mejores documentaciones de framework backend que he visto junto a otros proyectos como Laravel.
 
 ## Soporte GraphQL, OpenAPI, ORM’s, etc.
 
 Con una sección llena de “recetas” (_snippets_) ([https://docs.nestjs.com/recipes](https://docs.nestjs.com/recipes)) con configuraciones por defecto para la generación de un CRUD, recarga “en caliente”, TypeORM, Sequelize, Swagger, Prisma y muchas otras herramientas ([https://docs.nestjs.com/microservices](https://docs.nestjs.com/microservices)).
 
-_¿Necesitar usar GraphQL?_, instala unas cuantas librerías y con menos de 10 líneas de código ya agrego soporte para eso. *¿Necesitar una manera visual de exponer ciertos endpoints?* NestJS te tiene cubierto con OpenAPI. *¿En un proyecto prefieres Sequelize como ORM, pero en otro TypeORM porque quieres ver cuál va mejor con tu estilo?* Cambia fácilmente entre cualquiera de los ORM haciendo uso de las librerías correspondientes y realizando unas modificaciones en la configuración. Además, si ya has trabajado con ExpressJS, las configuraciones generales son pan comido.
+_¿Necesitar usar GraphQL?_, instala unas cuantas librerías y con menos de 10 líneas de código ya agrego soporte para eso. *¿Necesitar una manera visual de exponer ciertos endpoints? *NestJS te tiene cubierto con OpenAPI. _¿En un proyecto prefieres Sequelize como ORM, pero en otro TypeORM porque quieres ver cuál va mejor con tu estilo?_ Cambia fácilmente entre cualquiera de los ORM haciendo uso de las librerías correspondientes y realizando unas modificaciones en la configuración. Además, si ya has trabajado con ExpressJS, las configuraciones generales son pan comido.
 
 ```ts
 // Agregando soporte para GraphQL en una sola línea
@@ -121,4 +122,4 @@ import { GraphQLModule } from '@nestjs/graphql';
 export class AppModule {}
 ```
 
-Éstas creo que son las 5 principales razones por las cuales en cualquier nuevo proyecto que requiera Node para el Backend, yo usaría NestJS sin ninguna duda. Por supuesto hay más *features* que hacen sencillo el trabajo en el backend, como *schedulers*, *websockets*, etc. Todo eso te dejo que lo descubras en su [documentación](https://docs.nestjs.com/).
+Estas creo que son las 5 principales razones por las cuales en cualquier nuevo proyecto que requiera Node para el Backend, yo usaría NestJS sin ninguna duda. Por supuesto hay más _features_ que hacen sencillo el trabajo en el backend, como _schedulers_, _websockets_, etc. Todo eso te dejo que lo descubras en su [documentación](https://docs.nestjs.com/).

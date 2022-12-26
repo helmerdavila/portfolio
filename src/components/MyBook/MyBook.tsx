@@ -25,7 +25,6 @@ const MyBook = (): JSX.Element => {
             className="filter grayscale hover:grayscale-0 transition-all ease-in duration-500"
             layout="fullWidth"
             alt="Ctbook"
-            placeholder="tracedSVG"
           />
         </div>
         <div className="flex-1 p-6">

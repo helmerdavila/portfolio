@@ -1,8 +1,11 @@
 import locales from './config/i18n';
-import { findKey, localizedSlug, removeTrailingSlash, translatedPostUrl } from './src/utils/gatsby-node-helpers';
+import { findKey, removeTrailingSlash, translatedPostUrl } from './src/utils/gatsby-node-helpers';
 import path from 'path';
-import type { GatsbyNode } from 'gatsby';
+import type { Actions, CreatePagesArgs, GatsbyNode } from 'gatsby';
 import { FileSystemNode } from 'gatsby-source-filesystem';
+import { localizeUrl } from './src/components/LocalizedLink';
+
+const allLanguages = Object.keys(locales);
 
 export const onCreatePage: GatsbyNode['onCreatePage'] = ({ page, actions }) => {
   const { createPage, deletePage, createRedirect } = actions;
@@ -21,7 +24,7 @@ export const onCreatePage: GatsbyNode['onCreatePage'] = ({ page, actions }) => {
   deletePage(page);
 
   // Grab the keys ('en' & 'de') of locales and map over them
-  Object.keys(locales).map((lang) => {
+  allLanguages.map((lang) => {
     // Use the values defined in "locales" to construct the path
     const newLocalizedPath = removeTrailingSlash(
       locales[lang].default ? page.path : `${page.path}${locales[lang].path}`,
@@ -65,14 +68,12 @@ export const onCreateNode: GatsbyNode['onCreateNode'] = async ({ node, actions, 
   // Check for "Mdx" type so that other files (e.g. images) are exluded
   if (node.internal.type === `Mdx`) {
     const parentNode = getNode(node.parent as string) as FileSystemNode;
-    // Use path.basename
-    // https://nodejs.org/api/path.html#path_path_basename_path_ext
-    // const name = path.basename(<string>node.internal.contentFilePath, `.mdx`);
-    const name = path.basename(node.internal.contentFilePath, `.mdx`);
+
+    const filename = path.basename(node.internal.contentFilePath, `.mdx`);
 
     // Check if post.name is "index" -- because that's the file for default language
     // (In this case "en")
-    const isDefault = name === `index`;
+    const isDefault = filename === `index`;
 
     // Find the key that has "default: true" set (in this case it returns "en")
     const defaultKey = findKey(locales, (nodeAttribute) => nodeAttribute.default === true);
@@ -81,16 +82,14 @@ export const onCreateNode: GatsbyNode['onCreateNode'] = async ({ node, actions, 
     // name returns "name-with-dashes.lang"
     // So grab the lang from that string
     // If it's the default language, pass the locale for that
-    const locale: string = isDefault ? defaultKey : name.split(`.`)[1];
+    const locale: string = isDefault ? defaultKey : filename.split(`.`)[1];
 
     const slug = parentNode.relativeDirectory ?? '';
 
-    const localizedSlugResult = localizedSlug({ isDefault, locale, slug });
-
-    createNodeField({ node, name: `localizedSlug`, value: localizedSlugResult });
-    createNodeField({ node, name: `slug`, value: slug });
+    createNodeField({ node, name: `directory`, value: slug });
     createNodeField({ node, name: `locale`, value: locale });
     createNodeField({ node, name: `isDefault`, value: isDefault });
+    createNodeField({ node, name: 'filename', value: filename });
     createNodeField({
       node,
       name: `translatedPostUrl`,
@@ -99,12 +98,8 @@ export const onCreateNode: GatsbyNode['onCreateNode'] = async ({ node, actions, 
   }
 };
 
-export const createPages: GatsbyNode['createPages'] = async ({ graphql, actions }) => {
-  const { createPage, createRedirect } = actions;
-
-  // Adding sort here to generate the HTMl pages in descending order by date
-  // Almost same type that Index Page Query
-  const result = await graphql<Queries.IndexQuery>(
+const gqlGetAllPosts = async (graphql: CreatePagesArgs['graphql']) =>
+  await graphql<Queries.CreatePagesQuery>(
     `
       query CreatePages {
         allMdx(sort: { fields: [frontmatter___date], order: DESC }) {
@@ -119,7 +114,7 @@ export const createPages: GatsbyNode['createPages'] = async ({ graphql, actions 
             }
             fields {
               locale
-              slug
+              directory
               isDefault
               translatedPostUrl
             }
@@ -134,39 +129,85 @@ export const createPages: GatsbyNode['createPages'] = async ({ graphql, actions 
     `,
   );
 
+const createPageFromPost = (
+  post,
+  postTemplate: string,
+  createRedirect: Actions['createRedirect'],
+  createPage: Actions['createPage'],
+) => {
+  // All files for a blogpost are stored in a folder
+  // relativeDirectory is the name of the folder
+  const mdxPath = post.internal.contentFilePath;
+
+  // Use the fields created in exports.onCreateNode
+  const locale = post.fields.locale;
+
+  const newPath = translatedPostUrl(post.frontmatter.title, locale);
+
+  const contentForCreatePage = {
+    path: newPath,
+    component: `${postTemplate}?__contentFilePath=${mdxPath}`,
+    context: { id: post.id, locale },
+  };
+
+  createPage(contentForCreatePage);
+};
+
+const createBlogPosts = async (
+  graphql: CreatePagesArgs['graphql'],
+  createRedirect: Actions['createRedirect'],
+  createPage: Actions['createPage'],
+) => {
+  const result = await gqlGetAllPosts(graphql);
+
   if (result.errors) {
     console.error(result.errors);
+
     return;
   }
 
   const postList = result.data?.allMdx?.nodes ?? [];
 
-  const postTemplate = path.resolve(`./src/components/LayoutBlogPage.jsx`);
+  const postTemplate = path.resolve(`./src/components/Templates/PostPage.jsx`);
 
-  postList.forEach((post) => {
-    // All files for a blogpost are stored in a folder
-    // relativeDirectory is the name of the folder
-    const slug = (post.parent as { relativeDirectory: string }).relativeDirectory;
-    const mdxPath = post.internal.contentFilePath;
+  for (const post of postList) {
+    createPageFromPost(post, postTemplate, createRedirect, createPage);
+  }
+};
 
-    // Use the fields created in exports.onCreateNode
-    const locale = post.fields.locale;
-    const isDefault = post.fields.isDefault;
+const createTagsPage = async (graphql: CreatePagesArgs['graphql'], createPage: Actions['createPage']) => {
+  const tagTemplate = path.resolve('./src/components/Templates/PostsByTagAndLocale.tsx');
+  for (const locale of allLanguages) {
+    const result = await graphql<Queries.AllTagsByLocaleQuery>(
+      `
+        query AllTagsByLocale($locale: String!) {
+          tagsGroup: allMdx(filter: { fields: { locale: { eq: $locale } } }) {
+            group(field: frontmatter___tags) {
+              fieldValue
+            }
+          }
+        }
+      `,
+      { locale: locale },
+    );
+    const tags = result.data?.tagsGroup.group;
+    for (const tag of tags) {
+      createPage({
+        path: localizeUrl(`/tags/${tag.fieldValue}`, locale),
+        component: tagTemplate,
+        context: {
+          tag: tag.fieldValue,
+          locale,
+          tagsForSeo: tags,
+        },
+      });
+    }
+  }
+};
 
-    const oldPath = localizedSlug({ isDefault, locale, slug });
-    const newPath = translatedPostUrl(post.frontmatter.title, locale);
+export const createPages: GatsbyNode['createPages'] = async ({ graphql, actions }) => {
+  const { createPage, createRedirect } = actions;
 
-    const contentForCreatePage = {
-      path: newPath,
-      component: `${postTemplate}?__contentFilePath=${mdxPath}`,
-      context: { id: post.id, locale },
-    };
-    createRedirect({
-      fromPath: oldPath,
-      toPath: newPath,
-      isPermanent: true,
-    });
-
-    createPage(contentForCreatePage);
-  });
+  await createBlogPosts(graphql, createRedirect, createPage);
+  await createTagsPage(graphql, createPage);
 };

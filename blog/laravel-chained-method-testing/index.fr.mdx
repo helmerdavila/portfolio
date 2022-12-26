@@ -4,11 +4,12 @@ description: On utilise la puissance de Mockery
 date: 2022-09-11
 published: true
 image: ../../src/images/blog/chains.jpg
+tags: ['laravel', 'php', 'testing', 'mockery', 'phpunit']
 ---
 
 # Laravel Facades et Mockery: faire de tests sur des méthodes enchaînées
 
-## 🤔 Comment c'est arrivé?’
+## 🤔 Comment c'est arrivé?’
 
 J’ai essayé de tester Laravel avec PHPUnit. Et j’ai besoin d’éxecuter les Facades de Laravel. Spécialement, les méthodes enchaînées.
 
@@ -33,7 +34,7 @@ class ChainController extends Controller
 
 Après ça, mes tests ont échoué car je n’ai peux pas exécuter `put` sur `null` . Cela signifiait que `disk` retourne `null`, complètement faux.
 
-## 🔨 La solution
+## 🔨 La solution
 
 Après que j’en ai recherché. J’ai trouvé la solution dans la documentation de Mockery. Il est utilisé par Laravel pour faire des mocks. La prochaine ligne de code retournera `null` par défaut et les _assertions_ vont échouer.
 
@@ -71,6 +72,6 @@ class ChainControllerTest extends TestCase
 }
 ```
 
-## 🔗 Des liens
+## 🔗 Des liens
 
 Tu pourras voir d’exemple, [click ici](https://github.com/helmerdavila/blog-tutorials-laravel/blob/1.0.1/tests/Feature/ChainControllerTest.php).

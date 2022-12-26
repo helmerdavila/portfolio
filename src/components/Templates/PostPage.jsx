@@ -1,21 +1,44 @@
 import React, { useContext } from 'react';
-import LayoutBlog from './LayoutBlog';
-import { graphql } from 'gatsby';
-import { ThemeContext } from './Layout';
+import LayoutBlog from '../LayoutBlog';
+import { graphql, Link } from 'gatsby';
+import { ThemeContext } from '../Layout';
 import classNames from 'classnames';
 import { MDXProvider } from '@mdx-js/react';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
-import useTranslations from './UseTranslations';
+import useTranslations from '../UseTranslations';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import { faGlobe } from '@helmerdavila/fontawesomehelmer/pro-duotone-svg-icons';
-import { components, HeadForMeta } from './LayoutBlogPage.setup';
+import { components, HeadForMeta } from '../Mdx/Custom';
+import { v4 as uuidv4 } from 'uuid';
+import { localizeUrl } from '../LocalizedLink';
 
 // Don't change the Head name here. Used by Gatsby
 export const Head = (props) => <HeadForMeta {...props} />;
 
-/** @param {PageProps<Queries.LayoutBlogPageQuery>} props */
-const LayoutBlogPage = (props) => {
+const Tags = ({ tags, locale, pageBackground, textStyle }) => {
+  return tags.length ? (
+    <div className={classNames(pageBackground, 'my-7 py-7 px-12 container max-w-3xl  mx-auto xl:max-w-6xl')}>
+      <h2 className={classNames(textStyle, 'text-4xl font-bold')}>Tags</h2>
+      <div className="flex flex-wrap mt-4">
+        {tags.map((tag) => (
+          <Link
+            to={localizeUrl(`/tags/${tag}`, locale)}
+            key={uuidv4()}
+            className={classNames(
+              'mr-4 text-xl font-quicksand p-2 bg-zinc-100 hover:bg-zinc-200 rounded-xl cursor-pointer',
+              textStyle,
+            )}
+          >
+            #{tag}
+          </Link>
+        ))}
+      </div>
+    </div>
+  ) : null;
+};
+/** @param {import("gatsby").PageProps<Queries.LayoutBlogPageQuery>} props */
+const PostPage = (props) => {
   const context = useContext(ThemeContext);
   const { data, children } = props;
   const { author, edit_posts_on_github, written_by } = useTranslations();
@@ -31,8 +54,10 @@ const LayoutBlogPage = (props) => {
     data.defaultBlogPostImage?.childImageSharp?.gatsbyImageData;
   const imageRendered = getImage(imageSource);
   const pathFileForGithub = mdx.fields.isDefault
-    ? `${mdx.fields.slug}/index.mdx`
-    : `${mdx.fields.slug}/index.${mdx.fields.locale}.mdx`;
+    ? `${mdx.fields.directory}/index.mdx`
+    : `${mdx.fields.directory}/index.${mdx.fields.locale}.mdx`;
+  const tags = mdx.frontmatter.tags ?? [];
+  const locale = mdx.fields.locale;
 
   return (
     <LayoutBlog>
@@ -53,6 +78,7 @@ const LayoutBlogPage = (props) => {
             </div>
           </div>
         </div>
+        <Tags tags={tags} locale={locale} pageBackground={pageBackground} textStyle={textStyle} />
         <div className={classNames(pageBackground, 'my-7 py-7 px-12 container max-w-3xl  mx-auto xl:max-w-6xl')}>
           <h2 className={classNames(textStyle, 'text-4xl font-bold')}>{author}</h2>
           <div className="flex justify-between mt-6">
@@ -75,13 +101,14 @@ const LayoutBlogPage = (props) => {
   );
 };
 
-export default LayoutBlogPage;
+export default PostPage;
 
 export const query = graphql`
   query LayoutBlogPage($id: String!) {
     mdx(id: { eq: $id }) {
       fields {
-        slug
+        filename
+        directory
         locale
         isDefault
         translatedPostUrl
@@ -91,6 +118,7 @@ export const query = graphql`
         title
         description
         date
+        tags
         image {
           ...ImageForBlogPage
         }
@@ -110,7 +138,7 @@ export const query = graphql`
 
   fragment ImageForBlogPage on File {
     childImageSharp {
-      gatsbyImageData(layout: FULL_WIDTH, placeholder: TRACED_SVG, aspectRatio: 1.7)
+      gatsbyImageData(layout: FULL_WIDTH, aspectRatio: 1.7)
     }
   }
 `;

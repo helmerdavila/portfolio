@@ -4,6 +4,7 @@ description: Estaba intentando probar algunas variables globales con Python, esp
 date: 2022-05-13
 published: true
 image: ../../src/images/blog/python-global-envs.jpg
+tags: ['python', 'mocking', 'pytest']
 ---
 
 # Testing en Python: Hacer mock de una variable global
@@ -59,9 +60,9 @@ Ya sé que el test se ve simple, pero se asegura al menos de retornar un valor c
 
 ### 👾 Sobreescribiendo y simulando (Mocking) las variables
 
-Pero como puedes ver, estamos llamando las variables de entorno de la computadora que usemos, y si tu escribes tus tests, esperando tenerlas en el servidor CI/CD, entonces los tests comenzarán a fallar. ¿Cómo podemos evitar eso y decirle a nuestro servidor de testing (o _pipeline_ de testing) que queremos valores fijos?
+Pero como puedes ver, estamos llamando las variables de entorno de la computadora que usemos, y si tú escribes tus tests, esperando tenerlas en el servidor CI/CD, entonces los tests comenzarán a fallar. ¿Cómo podemos evitar eso y decirle a nuestro servidor de testing (o _pipeline_ de testing) que queremos valores fijos?
 
-Si instalaste la librería mencionada arriba, en la sección de requerimientos, es muy fácil comenzar a _mockear_ valores. Así que sólo necesitamos agregar una sola línea.
+Si instalaste la librería mencionada arriba, en la sección de requerimientos, es muy fácil comenzar a _mockear_ valores. Así que solamente necesitamos agregar una sola línea.
 
 ```python
 # testeando_mis_envs.py
@@ -72,4 +73,4 @@ def testear_si_metodo_simple_funciona():
 		assert metodo_simple() == 0
 ```
 
-Y tus tests no ejecutarán la variable `ENVS`, y por lo tanto, tampoco llamarán a `os.environ`.
+Y tus tests no ejecutarán la variable `ENVS` y, por lo tanto, tampoco llamarán a `os.environ`.

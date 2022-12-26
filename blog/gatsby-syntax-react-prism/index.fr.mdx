@@ -4,15 +4,16 @@ description: Pour les différents langages de programmation
 date: 2022-08-03
 published: true
 image: ../../src/images/blog/code-block-green.jpg
+tags: ['gatsby', 'javascript', 'typescript', 'react']
 ---
 
-J’écris des tutoriels pour des langages de programmation différentes.
+J’écris des tutoriels pour des langages de programmation différents.
 
 Comme j’utilise Gatsby, pour montrer de code coloré, on peut employer `react-prism-renderer` . C’est un bon plugiciel pour le faire. Par défaut, il vient avec une grande variété de _coding languages_ actifs. C’est mon composant pour enseigner mes \*snippets **\***de code dans mon blogue.
 
 Mais quand j’écrivais des blocs de code, certains n’étaient pas colorés. Qu’est-ce qui est passé?
 
-## 🧱 Mon composant pour colorer le code
+## 🧱 Mon composant pour colorer le code
 
 React prism renderer utilise PrismJS, et on peut le profiter. On doit importer le langage qu’on a besoin de colorer.
 
@@ -93,7 +94,7 @@ Et puis, toutes tes balises HTML `<code>` auront son code coloré
 
 Le composant `<Highlight/>` est utilisé par React Prism Renderer pour ajouter de la couleur à la syntaxe du code.
 
-Certains langages devront être ajoutées explicitement. Je recommande de vérifier le dossier `/node_modules/prismjs/components/` pour plus d’information.
+Certains langages devront être ajoutés explicitement. Je recommande de vérifier le dossier `/node_modules/prismjs/components/` pour plus d’information.
 
 ```tsx
 require('prismjs/components/prism-php');

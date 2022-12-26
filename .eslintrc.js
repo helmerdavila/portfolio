@@ -29,4 +29,8 @@ module.exports = {
     ecmaVersion: 2020,
     sourceType: 'module',
   },
+  rules: {
+    'react/prop-types': 0,
+    'newline-before-return': 'error',
+  },
 };

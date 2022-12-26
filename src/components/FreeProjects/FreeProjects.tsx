@@ -113,7 +113,6 @@ const FreeProjects = (): JSX.Element => {
           className="filter grayscale hover:grayscale-0 transition-all ease-in duration-500"
           layout="fullWidth"
           alt="Roomie"
-          placeholder="tracedSVG"
         />
       ),
     },
@@ -131,7 +130,6 @@ const FreeProjects = (): JSX.Element => {
           className="filter grayscale hover:grayscale-0 transition-all ease-in duration-500"
           layout="fullWidth"
           alt="Battleship"
-          placeholder="tracedSVG"
         />
       ),
     },

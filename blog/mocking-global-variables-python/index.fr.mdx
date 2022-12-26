@@ -4,13 +4,14 @@ description: J’ai essayé de tester quelques variables globales dans Python, s
 date: 2022-05-13
 published: true
 image: ../../src/images/blog/python-global-envs.jpg
+tags: ['python', 'mocking', 'pytest']
 ---
 
 # Faire un mock pour une variable globale dans les tests de Python
 
 J’ai essayé de tester quelques variables globales dans Python, spécialement pour un script, qui contient des variables globales. Et après avoir essayé et essayé (et échouer), je pense que je peux te comment le faire.
 
-## 🏃 La solution la plus rapide
+## 🏃 La solution la plus rapide
 
 ```python
 # fichier_demo.py
@@ -22,13 +23,13 @@ mocker.patch("fichier_demo.ENVS", new={'MOCKED_NONE': None, 'MOCKED_VIDE': ''})
 
 Ensuite, dans ton `fichier_demo` , la variable ENVS sera comme _mocked._
 
-## ✏️ La solution avec des descriptions
+## ✏️ La solution avec des descriptions
 
-### 📔 Conditions
+### 📔 Conditions
 
 Pour faciliter le travail, je vais recommander l’outil suivant: [https://pypi.org/project/pytest-mock/](https://pypi.org/project/pytest-mock/)
 
-### 🤔 Qu’est-ce que je voulais faire?
+### 🤔 Qu’est-ce que je voulais faire?
 
 Tout d’abord, nous avons un fichier appelé `fichier_demo.py` avec le contenu suivant (et où est la variable globale).
 

@@ -43,7 +43,6 @@ const apps: IApp[] = [
         src="../../images/portfolio-httpixel.png"
         layout="fullWidth"
         alt="Httpixel"
-        placeholder="tracedSVG"
         quality={70}
       />
     ),
@@ -59,7 +58,6 @@ const apps: IApp[] = [
         src="../../images/portfolio-pills.png"
         layout="fullWidth"
         alt="Biteline"
-        placeholder="tracedSVG"
         quality={70}
       />
     ),

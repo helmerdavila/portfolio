@@ -1,14 +1,15 @@
 ---
 title: Faire une pagination avec Sequelize (sur Typescript)
-description: L'otre jour j'ai cherché un moyen pour realizer une pagination avec Sequelize sur Typescript. Il y a beaucoup de tutoriels sur comment vous pouvez calculer l'offset et les numeros de pages. Après que j'ai voir autre plugin, j'ai pensé à une solution similaire.
+description: C'est bien facile
 date: 2021-08-20
 published: true
 image: ../../src/images/blog/book.jpg
+tags: ['sequelize', 'typescript', 'javascript', 'orm']
 ---
 
 # Faire une pagination avec Sequelize (sur Typescript)
 
-L'otre jour j'ai cherché un moyen pour realizer une pagination avec Sequelize sur Typescript. Il y a beaucoup de tutoriels sur comment vous pouvez calculer l'offset et les numeros de pages. Après que j'ai voir autre plugin, j'ai pensé à une solution similaire.
+L'autre jour, j'ai cherché un moyen pour realizer une pagination avec Sequelize sur Typescript. Il y a beaucoup de tutoriels sur comment vous pouvez calculer l'offset et les numeros de pages. Après que j'ai vu autre plugin, j'ai pensé à une solution similaire.
 
 ```json
 {
@@ -20,7 +21,7 @@ L'otre jour j'ai cherché un moyen pour realizer une pagination avec Sequelize s
 }
 ```
 
-Ce que j'avais besoin était d'ajouter une pagination en utilisant différents modèles sur Sequelize. Donc, créer une clase et utiliser le pouvouir de `strong typing` en Typescript, le fichier était prêt à l'emploi. Si on passe le modèle comme type, l'editeur de code reconnaîtra que `data` est un _array_ avec le type de données établi. Ensuite ici, le fichier.
+Ce que j'avais besoin était d'ajouter une pagination en utilisant différents modèles sur Sequelize. Donc, créer une clase et utiliser le pouvoir de `strong typing` en Typescript, le fichier était prêt à l'emploi. Si on passe le modèle comme type, l'éditeur de code reconnaîtra que `data` est un _array_ avec le type de données établi. Ensuite ici, le fichier.
 
 ```ts
 import { Model, ModelCtor } from 'sequelize-typescript';
@@ -45,9 +46,7 @@ export default class Paginator<T extends Model> {
 
     const totalRecords = resultsTotal.length;
 
-    const [error, results] = await to(
-      this.model.findAll<T>({ ...options, offset, limit: limitTo })
-    );
+    const [error, results] = await to(this.model.findAll<T>({ ...options, offset, limit: limitTo }));
 
     if (error) {
       throw error;
@@ -61,15 +60,15 @@ export default class Paginator<T extends Model> {
 }
 ```
 
-Comme tu peux le voir pour le confor j'utilise `await-to-js`, c'est un capteur d'erreurs dans une fonction `async`, Et tu les peux retourner plutôt que faire un `throw`. Et, bien sûr, j'utilise le package `sequelize-typescript`.
+Comme tu peux le voir pour le confort, j'utilise `await-to-js`, c'est un capteur d'erreurs dans une fonction `async`, Et tu les peux retourner plutôt que faire un `throw`. Et, bien sûr, j'utilise le package `sequelize-typescript`.
 
-Après avoir copié e installé le fichier où vous voulez, donc vous pouvez l'utiliser dans votre projet.
+Après vous avez copié et installé le fichier où vous voulez, donc vous pouvez l'utiliser dans votre projet.
 
 Les paramètres sont les suivants:
 
-- **Options:** Les options de la query dans Sequelize. Voici où vous passez les _where_ et toute autre option. Même chose que vous passerais dans un _findAll_.
+- **Options:** Les options du query dans Sequelize. Voici où vous passez les _where_ et toute autre option. Même chose que vous passeriez dans un _findAll_.
 - **Page:** Le nombre de la page, d'habitude elle vient de votre _request_.
 - **Limit:** Limite d'enregistrements par page, aussi ils viennent du _request_.
-- **Options for calculating total people:** C'est optional, si vous ne la passez pas, elle prendre ce que tu mets dans le premier paramèter _options_. Elle faire un `COUNT` d'abord pour savoir le nombre total d'enregistrements. La _query_ ne doit pas être si gros pour une exécution rapide. Pour moi, c'était la même option mais sans les _include_ que Sequelize a besoin pour se connecter des tables distinctes, parce que ce n'est pas important pour le _count_.
+- **Options for calculating total people:** C'est optionnel, si vous ne la passez pas, elle prend ce que tu mets dans le premier paramètre _options_. Elle fait un `COUNT` d'abord pour savoir le nombre total d'enregistrements. Le _query_ ne doit pas être si gros pour une exécution rapide. Pour moi, c'était la même option, mais sans les _include_ que Sequelize a besoin pour se connecter des tables distinctes, parce que ce n'est pas important pour le _count_.
 
-Et `paginated` aurait la même structure que le json que vous pouvez voir. Ça va dépendre de votre framework web, qu'il convertit à  Json.
+Et `paginated` aurait la même structure que le json que vous pouvez voir. Ça va dépendre de votre framework web, qu'il convertit à Json.

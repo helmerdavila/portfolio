@@ -7,7 +7,7 @@ module.exports = {
     locale: `en-US`,
     dateFormat: `DD/MM/YYYY`,
     siteLanguage: `en`,
-    ogLanguage: `en_US`,
+    flag: '🇺🇸',
   },
   es: {
     default: false,
@@ -15,7 +15,7 @@ module.exports = {
     locale: `es-ES`,
     dateFormat: `DD/MM/YYYY`,
     siteLanguage: `es`,
-    ogLanguage: `es-ES`,
+    flag: '🇪🇸',
   },
   fr: {
     default: false,
@@ -23,7 +23,7 @@ module.exports = {
     locale: `fr-FR`,
     dateFormat: `DD/MM/YYYY`,
     siteLanguage: `fr`,
-    ogLanguage: `fr-FR`,
+    flag: '🇫🇷',
   },
   pt: {
     default: false,
@@ -31,6 +31,6 @@ module.exports = {
     locale: `pt-BR`,
     dateFormat: `DD/MM/YYYY`,
     siteLanguage: `pt`,
-    ogLanguage: `pt-BR`,
+    flag: '🇧🇷',
   },
 };

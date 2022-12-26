@@ -1,9 +1,10 @@
 ---
-title: "Sequelize Pagination with Typescript"
+title: 'Sequelize Pagination with Typescript'
 description: I was looking if there was a function to make a paginator for myself using Sequelize with Typescript. I found a lot of tutorials that teach you how to calculate the offset and the number of pages.
 date: 2021-08-20
 published: true
 image: ../../src/images/blog/book.jpg
+tags: ['sequelize', 'typescript', 'javascript', 'orm']
 ---
 
 # Sequelize pagination with Typescript
@@ -45,9 +46,7 @@ export default class Paginator<T extends Model> {
 
     const totalRecords = resultsTotal.length;
 
-    const [error, results] = await to(
-      this.model.findAll<T>({ ...options, offset, limit: limitTo })
-    );
+    const [error, results] = await to(this.model.findAll<T>({ ...options, offset, limit: limitTo }));
 
     if (error) {
       throw error;

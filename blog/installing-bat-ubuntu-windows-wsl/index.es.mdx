@@ -4,6 +4,7 @@ description: Descargando el instalador como paquete DEB
 date: 2020-04-20
 published: true
 image: ../../src/images/blog/bat-screenshot.png
+tags: ['shell', 'terminal', 'bash', 'wsl', 'tools']
 ---
 
 # Instalando Bat en Ubuntu Windows WSL
@@ -12,9 +13,9 @@ image: ../../src/images/blog/bat-screenshot.png
 
 Me migré a Windows y al instalar Ubuntu a través de WSL echaba de menos de algunas herramientas que poseo en mi MacBook actual, **BAT** estaba entre una de ellas. Entonces como apenas encontré un par de guías por internet acá trataré de dejarlo como un recordatorio y con pasos sencillos
 
-Primero abre tu terminal de Windows (con Ubuntu) y busca cual es la [última versión en Github](https://github.com/sharkdp/bat/releases). En mi caso era la `0.18.2`
+Primero abre tu terminal de Windows (con Ubuntu) y busca cual es la [última versión en Github](https://github.com/sharkdp/bat/releases). En mi caso era la `0.22.1`
 
-Después comprueba que tengas wget instalado. La manera más común de hacerlo es comprobando con `wget --version`. Si no lo tienes utiliza el siguiente script para hacerlo:
+Después comprueba que tengas wget instalado. La manera más común de hacerlo es revisarlo con `wget --version`. Si no lo tienes utiliza el siguiente script para hacerlo:
 
 ```bash
 sudo apt-get install wget
@@ -24,8 +25,8 @@ Ya puedes instalar Bat con el siguiente script, recuerda reemplazar `VERSION` po
 
 ```bash
 wget https://github.com/sharkdp/bat/releases/download/v${VERSION}/bat_${VERSION}_amd64.deb
-# Si usamos por ejemplo 0.18.2
-# wget https://github.com/sharkdp/bat/releases/download/v0.18.2/bat_0.18.2_amd64.deb
+# Si usamos por ejemplo 0.22.1
+# wget https://github.com/sharkdp/bat/releases/download/v0.22.1/bat_0.22.1_amd64.deb
 ```
 
 ## Instalándolo con dpkg
@@ -33,5 +34,5 @@ wget https://github.com/sharkdp/bat/releases/download/v${VERSION}/bat_${VERSION}
 Puedes usar dpkg para instalar paquetes Debian
 
 ```bash
-sudo dpkg -i bat_0.18.2_amd64.deb
+sudo dpkg -i bat_0.22.1_amd64.deb
 ```
