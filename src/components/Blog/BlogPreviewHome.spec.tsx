@@ -2,7 +2,7 @@ import React from 'react';
 import { cleanup } from '@testing-library/react';
 import BlogPreviewHome, { PostCard } from './BlogPreviewHome';
 import { customRender } from '../../utils/testing';
-import type { BlogPostType, IGatsbyFileImage } from '../../interfaces';
+import type { BlogPostType } from '../../interfaces';
 import BlogPreviewHomeMock, { POSTS } from './BlogPreview.mock';
 
 afterEach(cleanup);
@@ -11,9 +11,7 @@ it('renders PostCard with image', () => {
   const post: BlogPostType = BlogPreviewHomeMock.allMdx.nodes[POSTS.POST_WITH_IMAGE];
   const defaultImage = BlogPreviewHomeMock.homePostImage;
 
-  const { queryByAltText, queryByRole } = customRender(
-    <PostCard post={post} postDefaultImage={defaultImage.childImageSharp.gatsbyImageData} />,
-  );
+  const { queryByAltText, queryByRole } = customRender(<PostCard post={post} />);
 
   expect(queryByRole('link')).toBeInTheDocument();
   expect(queryByRole('link')).toHaveAttribute('href', post.fields.translatedPostUrl);
@@ -26,11 +24,8 @@ it('renders PostCard with image', () => {
 
 it('renders PostCard with no image, uses default', () => {
   const post: BlogPostType = BlogPreviewHomeMock.allMdx.nodes[POSTS.POST_WITHOUT_IMAGE];
-  const defaultImage = BlogPreviewHomeMock.homePostImage;
 
-  const { queryByAltText, queryByTestId } = customRender(
-    <PostCard post={post} postDefaultImage={defaultImage.childImageSharp.gatsbyImageData} />,
-  );
+  const { queryByAltText, queryByTestId } = customRender(<PostCard post={post} />);
 
   expect(queryByTestId('postcard-link')).toBeInTheDocument();
   expect(queryByTestId('postcard-link')).toHaveAttribute('href', post.fields.translatedPostUrl);
@@ -47,10 +42,7 @@ it('renders BlogPreviewHome', () => {
 });
 
 it('renders BlogPreviewHome with no posts', () => {
-  const defaultImage = BlogPreviewHomeMock.homePostImage as IGatsbyFileImage;
-  const { queryByRole } = customRender(
-    <BlogPreviewHome data={{ allMdx: { nodes: [] }, backgroundImage: null, homePostImage: defaultImage }} />,
-  );
+  const { queryByRole } = customRender(<BlogPreviewHome data={{ allMdx: { nodes: [] }, backgroundImage: null }} />);
 
   const link = queryByRole('link');
 
@@ -58,13 +50,11 @@ it('renders BlogPreviewHome with no posts', () => {
 });
 
 it('renders BlogPreviewHome with no posts', () => {
-  const defaultImage = BlogPreviewHomeMock.homePostImage as IGatsbyFileImage;
   const { queryByRole } = customRender(
     <BlogPreviewHome
       data={{
         allMdx: { nodes: [BlogPreviewHomeMock.allMdx.nodes[POSTS.POST_WITHOUT_PARENT]] },
         backgroundImage: null,
-        homePostImage: defaultImage,
       }}
     />,
   );
