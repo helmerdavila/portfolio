@@ -5,7 +5,10 @@
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "lib": ["dom", "esnext"],
+    "lib": [
+      "dom",
+      "esnext"
+    ],
     "module": "esnext",
     "moduleResolution": "node",
     "noEmit": true,
@@ -14,7 +17,15 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": false,
-   "target": "esnext"
+    "target": "esnext",
+    "types": [
+      "vitest/globals"
+    ]
   },
-  "include": ["./jest-setup.ts", "./src/**/*", "./gatsby-node.ts", "./gatsby-config.ts"]
+  "include": [
+    "./src/**/*",
+    "./gatsby-node.ts",
+    "./gatsby-config.ts",
+    "./vitest-setup.ts"
+  ]
 }
