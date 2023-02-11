@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react';
 import { LocaleContext, ThemeContext } from '../components/Layout';
 import { render, RenderOptions, RenderResult } from '@testing-library/react';
+import { vi } from 'vitest';
 
 interface ILocaleContextProps {
   locale: string;
@@ -23,7 +24,7 @@ export const customRender = (
 ): RenderResult => {
   const defaultContexts = {
     localeContextProps: { locale: 'en' },
-    themeContextProps: { isLightTheme: true, toggleTheme: jest.fn() },
+    themeContextProps: { isLightTheme: true, toggleTheme: vi.fn() },
   };
   const { localeContextProps, themeContextProps, ...renderOptions } = optionalParams ?? defaultContexts;
 
