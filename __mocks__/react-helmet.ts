@@ -1,5 +1,6 @@
 import React from 'react';
 import { v4 as uuid } from 'uuid';
+import { vi } from 'vitest';
 
 const mockHelmet = ({ htmlAttributes, titleTemplate, meta, ...props }) => {
   const children = [];
@@ -9,7 +10,7 @@ const mockHelmet = ({ htmlAttributes, titleTemplate, meta, ...props }) => {
       className: 'mock-helmet-title-template',
       name: 'helmer-title-template',
       value: titleTemplate,
-      onChange: jest.fn(),
+      onChange: vi.fn(),
     }),
   );
   for (const [key, value] of Object.entries(htmlAttributes)) {
@@ -19,7 +20,7 @@ const mockHelmet = ({ htmlAttributes, titleTemplate, meta, ...props }) => {
         className: 'mock-helmet-attribute',
         name: key,
         value,
-        onChange: jest.fn(),
+        onChange: vi.fn(),
       }),
     );
   }
@@ -30,10 +31,11 @@ const mockHelmet = ({ htmlAttributes, titleTemplate, meta, ...props }) => {
         className: 'mock-helmet-meta',
         name: value?.property ?? value?.name,
         value: value.content,
-        onChange: jest.fn(),
+        onChange: vi.fn(),
       }),
     );
   }
+
   return React.createElement('div', { ...props, className: 'mock-helmet' }, children);
 };
 

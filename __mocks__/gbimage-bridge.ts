@@ -1,3 +1,5 @@
+import { vi } from 'vitest';
+
 module.exports = {
-  convertToBgImage: jest.fn(),
+  convertToBgImage: vi.fn(),
 };
