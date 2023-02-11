@@ -1,4 +1,4 @@
-name: Jest
+name: Tests
 on:
   pull_request:
     branches:
@@ -18,11 +18,5 @@ jobs:
           cache: npm
       - name: Installing dependencies
         run: npm ci
-      - uses: ArtiomTr/jest-coverage-report-action@v2
-        id: coverage
-        with:
-          skip-step: install
-          output: report-markdown
-      - uses: marocchino/sticky-pull-request-comment@v2
-        with:
-          message: ${{ steps.coverage.outputs.report }}
+      - name: Running tests
+        run: npm run test:cov

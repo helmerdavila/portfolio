@@ -1,3 +1,4 @@
 import React from 'react';
+import { vi } from 'vitest';
 
-export default jest.fn().mockImplementation(({ children }) => React.createElement('div', null, children));
+export default vi.fn().mockImplementation(({ children }) => React.createElement('div', null, children));

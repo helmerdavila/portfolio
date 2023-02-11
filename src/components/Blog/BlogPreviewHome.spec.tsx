@@ -1,11 +1,8 @@
 import React from 'react';
-import { cleanup } from '@testing-library/react';
 import BlogPreviewHome, { PostCard } from './BlogPreviewHome';
 import { customRender } from '../../utils/testing';
 import type { BlogPostType } from '../../interfaces';
 import BlogPreviewHomeMock, { POSTS } from './BlogPreview.mock';
-
-afterEach(cleanup);
 
 it('renders PostCard with image', () => {
   const post: BlogPostType = BlogPreviewHomeMock.allMdx.nodes[POSTS.POST_WITH_IMAGE];
@@ -13,7 +10,7 @@ it('renders PostCard with image', () => {
   const { queryByAltText, queryByRole } = customRender(<PostCard post={post} />);
 
   expect(queryByRole('link')).toBeInTheDocument();
-  expect(queryByRole('link')).toHaveAttribute('href', post.fields.translatedPostUrl);
+  expect(queryByRole('link')).toHaveAttribute('href', `/${post.fields.translatedPostUrl}`);
   expect(queryByAltText(post.frontmatter.imageAlt)).toBeInTheDocument();
 });
 

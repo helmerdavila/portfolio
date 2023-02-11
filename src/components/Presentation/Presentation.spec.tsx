@@ -1,5 +1,4 @@
 import React from 'react';
-import { cleanup } from '@testing-library/react';
 import translations_en from '../../../config/translations/en.json';
 import translations_es from '../../../config/translations/es.json';
 import translations_fr from '../../../config/translations/fr.json';
@@ -7,12 +6,14 @@ import { customRender } from '../../utils/testing';
 import { useStaticQuery } from 'gatsby';
 import Presentation from './Presentation';
 import { backgroundImage, loadTranslations } from '../../utils/mockresponses';
+import type { Mock } from 'vitest';
+
+vi.mock('gatsby');
+vi.mock('react-type-animation');
 
 beforeEach(() => {
-  (useStaticQuery as jest.Mock).mockReturnValue(loadTranslations);
+  (useStaticQuery as Mock).mockReturnValue(loadTranslations);
 });
-
-afterEach(cleanup);
 
 it('renders in english', () => {
   const { queryByText } = customRender(

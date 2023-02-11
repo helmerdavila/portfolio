@@ -7,6 +7,9 @@ import translations_en from '../../../config/translations/en.json';
 import translations_es from '../../../config/translations/es.json';
 import translations_fr from '../../../config/translations/fr.json';
 
+vi.mock('gatsby');
+vi.mock('gatsby-plugin-image');
+
 beforeEach(() => (useStaticQuery as jest.Mock).mockReturnValueOnce(loadTranslations));
 
 it('renders without issues in english', () => {

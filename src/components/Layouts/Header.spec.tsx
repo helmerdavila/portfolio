@@ -1,6 +1,5 @@
 import React from 'react';
 import { customRender } from '../../utils/testing';
-import { cleanup } from '@testing-library/react';
 import { useStaticQuery } from 'gatsby';
 import { loadTranslations } from '../../utils/mockresponses';
 import translations_en from '../../../config/translations/en.json';
@@ -8,9 +7,11 @@ import translations_es from '../../../config/translations/es.json';
 import translations_fr from '../../../config/translations/fr.json';
 import Header, { HeaderComponent } from './Header';
 
-beforeEach(() => (useStaticQuery as jest.Mock).mockReturnValueOnce(loadTranslations));
+vi.mock('gatsby');
 
-afterEach(cleanup);
+beforeEach(() => {
+  (useStaticQuery as jest.Mock).mockReturnValueOnce(loadTranslations);
+});
 
 it('renders without issues in english', () => {
   const { queryByText } = customRender(<Header />);

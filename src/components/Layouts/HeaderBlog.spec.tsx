@@ -1,13 +1,15 @@
 import React from 'react';
 import { customRender } from '../../utils/testing';
-import { cleanup } from '@testing-library/react';
 import { useStaticQuery } from 'gatsby';
 import { loadTranslations } from '../../utils/mockresponses';
 import HeaderBlog from './HeaderBlog';
+import type { Mock } from 'vitest';
 
-beforeEach(() => (useStaticQuery as jest.Mock).mockReturnValueOnce(loadTranslations));
+vi.mock('gatsby');
 
-afterEach(cleanup);
+beforeEach(() => {
+  (useStaticQuery as Mock).mockReturnValueOnce(loadTranslations);
+});
 
 it('renders links to three languages', () => {
   const { queryByText } = customRender(<HeaderBlog />);

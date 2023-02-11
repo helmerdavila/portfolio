@@ -1,5 +1,7 @@
 import React from 'react';
-const gatsby = jest.requireActual('gatsby');
+import { vi } from 'vitest';
+
+const gatsby = await vi.importActual<object>('gatsby');
 
 const mockImage = ({ imgClassName, ...props }) => React.createElement('img', { ...props, className: imgClassName });
 
@@ -11,10 +13,10 @@ const mockLink = ({ activeClassName, activeStyle, getProps, innerRef, partiallyA
 
 module.exports = {
   ...gatsby,
-  graphql: jest.fn(),
-  Link: jest.fn().mockImplementation(mockLink),
-  StaticQuery: jest.fn(),
-  useStaticQuery: jest.fn(),
-  GatsbyImage: jest.fn().mockImplementation(mockImage),
-  StaticImage: jest.fn().mockImplementation(mockImage),
+  graphql: vi.fn(),
+  Link: vi.fn().mockImplementation(mockLink),
+  StaticQuery: vi.fn(),
+  useStaticQuery: vi.fn(),
+  GatsbyImage: vi.fn().mockImplementation(mockImage),
+  StaticImage: vi.fn().mockImplementation(mockImage),
 };

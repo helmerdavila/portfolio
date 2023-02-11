@@ -4,8 +4,13 @@ import { useStaticQuery } from 'gatsby';
 import { loadSiteData } from '../utils/mockresponses';
 import { customRender } from '../utils/testing';
 import SEO from './Seo';
+import type { Mock } from 'vitest';
 
-beforeEach(() => (useStaticQuery as jest.Mock).mockReturnValueOnce(loadSiteData));
+vi.mock('gatsby');
+
+beforeEach(() => {
+  (useStaticQuery as Mock).mockReturnValueOnce(loadSiteData);
+});
 
 it('renders without issues with description, title, author, keywords and light mode', () => {
   const title = faker.lorem.words();
@@ -27,7 +32,7 @@ it('renders without description and author, dark mode', () => {
   const title = faker.lorem.words();
   const description = faker.lorem.words();
   const { queryAllByDisplayValue } = customRender(<SEO title={title} />, {
-    themeContextProps: { isLightTheme: false, toggleTheme: jest.fn() },
+    themeContextProps: { isLightTheme: false, toggleTheme: vi.fn() },
   });
 
   for (const element of queryAllByDisplayValue(title)) {

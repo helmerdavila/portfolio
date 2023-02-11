@@ -2,10 +2,12 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import NotFoundPage from './404';
 import { useStaticQuery } from 'gatsby';
-import { jest } from '@jest/globals';
+import type { Mock } from 'vitest';
+
+vi.mock('gatsby');
 
 beforeEach(() => {
-  (useStaticQuery as jest.Mock).mockImplementationOnce(() => ({
+  (useStaticQuery as Mock).mockImplementationOnce(() => ({
     site: {
       siteMetadata: {
         title: `Default Starter`,

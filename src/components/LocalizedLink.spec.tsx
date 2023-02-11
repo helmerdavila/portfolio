@@ -21,6 +21,6 @@ describe('The localized link', () => {
     const randomUrl = 'demo';
     const { queryByRole } = customRender(<LocalizedLink to={randomUrl} />, { localeContextProps: { locale: 'fr' } });
 
-    expect(queryByRole('link')).toHaveAttribute('href', `${randomUrl}/fr`);
+    expect(queryByRole('link')).toHaveAttribute('href', `/${randomUrl}/fr`);
   });
 });

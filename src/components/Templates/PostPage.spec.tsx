@@ -5,8 +5,18 @@ import { backgroundImage, loadSiteData, loadTranslations } from '../../utils/moc
 import { faker } from '@faker-js/faker';
 import PostPage from './PostPage';
 import { v4 as uuidv4 } from 'uuid';
+import type { Mock } from 'vitest';
 
-beforeEach(() => (useStaticQuery as jest.Mock).mockReturnValue({ ...loadSiteData, ...loadTranslations }));
+vi.mock('gatsby');
+vi.mock('gatsby-plugin-image');
+
+beforeEach(() => {
+  (useStaticQuery as Mock).mockReturnValue({ ...loadSiteData, ...loadTranslations });
+});
+
+afterEach(() => {
+  vi.clearAllMocks();
+});
 
 it('renders without issues with tags', () => {
   const props: Partial<PageProps<Queries.LayoutBlogPageQuery>> = {
