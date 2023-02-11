@@ -1,16 +1,18 @@
 import React from 'react';
 import { customRender } from '../../utils/testing';
 import Footer from './Footer';
-import { cleanup } from '@testing-library/react';
 import { useStaticQuery } from 'gatsby';
 import { loadTranslations } from '../../utils/mockresponses';
 import translations_en from '../../../config/translations/en.json';
 import translations_es from '../../../config/translations/es.json';
 import translations_fr from '../../../config/translations/fr.json';
+import type { Mock } from 'vitest';
 
-beforeEach(() => (useStaticQuery as jest.Mock).mockReturnValueOnce(loadTranslations));
+vi.mock('gatsby');
 
-afterEach(cleanup);
+beforeEach(() => {
+  (useStaticQuery as Mock).mockReturnValueOnce(loadTranslations);
+});
 
 it('renders without issues in english', () => {
   const { queryByText } = customRender(<Footer />);

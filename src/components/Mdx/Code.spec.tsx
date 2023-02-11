@@ -1,11 +1,12 @@
 import React from 'react';
 import { customRender } from '../../utils/testing';
 import Code from './Code';
+import { vi } from 'vitest';
 
 it('renders edge cases: dark mode, no language', () => {
   const code = `sample`;
   const { getByTestId } = customRender(<Code className="">{code}</Code>, {
-    themeContextProps: { isLightTheme: false, toggleTheme: jest.fn() },
+    themeContextProps: { isLightTheme: false, toggleTheme: vi.fn() },
   });
 
   const preBlock = getByTestId('code-highlight');

@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { fireEvent, render } from '@testing-library/react';
 import { Layout, ThemeContext } from './Layout';
+import { vi } from 'vitest';
 
 it('renders without issues', () => {
   const { queryByText } = render(
@@ -13,8 +14,8 @@ it('renders without issues', () => {
 });
 
 it('executes ThemeContextProvider without issues', () => {
-  const getItemMock = jest.spyOn(window.localStorage.__proto__, 'getItem');
-  const setItemMock = jest.spyOn(window.localStorage.__proto__, 'setItem');
+  const getItemMock = vi.spyOn(window.localStorage.__proto__, 'getItem');
+  const setItemMock = vi.spyOn(window.localStorage.__proto__, 'setItem');
 
   const SmallComponent = () => {
     const context = useContext(ThemeContext);

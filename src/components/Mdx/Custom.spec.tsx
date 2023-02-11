@@ -1,3 +1,4 @@
+import React from 'react';
 import { faker } from '@faker-js/faker';
 import { render } from '@testing-library/react';
 import {
@@ -16,7 +17,6 @@ import {
 import { PageProps } from 'gatsby';
 import { layoutBlogPostImage } from '../../utils/mockresponses';
 import { Head } from '../Templates/PostPage';
-import React from 'react';
 
 vi.mock('gatsby');
 
