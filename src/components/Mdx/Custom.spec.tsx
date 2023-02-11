@@ -18,6 +18,8 @@ import { layoutBlogPostImage } from '../../utils/mockresponses';
 import { Head } from '../Templates/PostPage';
 import React from 'react';
 
+vi.mock('gatsby');
+
 it('renders MyH1 without issues', () => {
   const text = faker.lorem.words(3);
   const { queryByText } = render(<MyH1>{text}</MyH1>);
