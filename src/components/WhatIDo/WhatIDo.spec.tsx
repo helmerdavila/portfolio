@@ -8,8 +8,18 @@ import { loadTranslations } from '../../utils/mockresponses';
 import translations_en from '../../../config/translations/en.json';
 import translations_es from '../../../config/translations/es.json';
 import translations_fr from '../../../config/translations/fr.json';
+import type { Mock } from 'vitest';
 
-beforeEach(() => (useStaticQuery as jest.Mock).mockReturnValueOnce(loadTranslations));
+vi.mock('gatsby');
+vi.mock('gatsby-plugin-image');
+
+beforeEach(() => {
+  (useStaticQuery as Mock).mockReturnValueOnce(loadTranslations);
+});
+
+afterEach(() => {
+  vi.restoreAllMocks();
+});
 
 it('renders WhatIDoSection without issues', () => {
   const title = faker.lorem.words();
