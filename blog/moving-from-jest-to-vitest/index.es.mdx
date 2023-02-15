@@ -33,7 +33,7 @@ Como te puedes imaginar, lo primero por hacer, es instalar Vitest
 npm install -D vitest
 ```
 
-Pero, si quieres seguir utilizando React Test Utils, trabajar con React y tener **\*\*\*\***coverage**\*\*\*\*** de código, instala las siguientes librerías a continuación
+Pero, si quieres seguir utilizando React Test Utils, trabajar con React y tener _coverage_ de código, instala las siguientes librerías a continuación
 
 ```bash
 npm install -D @vitejs/plugin-react @vitest/coverage-c8 jsdom
@@ -88,7 +88,7 @@ Voy a explicar por qué agregué algunas opciones a la configuración:
 - `environment` como `jsdom` . Puedes comprobar cuando instalamos la biblioteca, agregará soporte para consultar el DOM cuando trabajamos con `react-test-utils`.
 - La propiedad `setupFiles` hace referencia a `./vitest-setup.ts`. Un archivo que cubriremos en profundidad más adelante.
 - En la parte `include`, puede agregar una expresión regular de formatos y nombres de archivos que se observarán en el comando de prueba. Como puedes ver, he agregado soporte incluso a `mjs, cjs`, sintaxis de módulo para futures versiones de Javascript.
-- `coverage`, donde puedes especificar los formatos de reporte de la herramienta de **\*\*\*\***coverage**\*\*\*\***.
+- `coverage`, donde puedes especificar los formatos de reporte de la herramienta de _coverage_
 
 ### vitest-setup.ts
 
