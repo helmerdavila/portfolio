@@ -1,0 +1,266 @@
+---
+title: J’ai changé tous mes tests de Jest à Vitest en moins de 3 heures
+description:
+date: 2023-02-14
+published: true
+image: ../../src/images/blog/moved-from-jest.png
+imageAlt: 'Depuis Jest à Vitest'
+tags: ['react', 'jest', 'vitest', 'testing', 'typescript', 'gatsby']
+---
+
+# J’ai changé tous mes tests de Jest à Vitest en moins de 3 heures
+
+## 🤔 Et pourquoi?
+
+J'avais lu des nombreux avantages de Vitest, tels que la vitesse, la facilité de migration depuis Jest et l’implémentation d’une configuration simple pour intégrer Typescript.
+
+Alors, j'ai calculé une migration de ma pile de tests en environ 6 heures et cela m'a pris seulement 3 heures. Pour être honnête, cela aurait pu être encore moins, tout dépend de votre vitesse à écrire du code, de la complexité du projet et de la façon dont le code est organisé.
+
+## ⚒️ Mon stack actuel
+
+Ensuite, mon stack actuel. Tu peux voir chaque plugin dans [mon dépôt](https://github.com/helmerdavila/portfolio/blob/ac0e7d94d48e867c30eb48784aaa349b412c91de/package.json) (avant de la mise à jour). Les technologies principales sont:
+
+- Gatsby + Typescript sur Node 18
+- Jest
+- React test utils
+- Eslint + Prettier
+
+## ⚙️ Installer et créer ton fichier de configuration
+
+La première chose à faire, c’est installer Vitest
+
+```bash
+npm install -D vitest
+```
+
+Mais, si tu veux continuer à utiliser React Test Utils, travailler avec React et avoir un _coverage_ de code, installe les plugiciels suivants.
+
+```bash
+npm install -D @vitejs/plugin-react @vitest/coverage-c8 jsdom
+```
+
+<aside>
+💡 Si tu demandes pourquoi on utilise `@vitest/coverage-c8` , c’est l’outil que Vitest utilise par défaut, si tu veux le changer à Istanbul, [suivre les étapes suivantes ici](https://vitest.dev/guide/coverage.html#ignoring-code).
+
+</aside>
+
+### Configuration pour Typescript
+
+Puisqu’on va travailler sur les définitions globales pour Vitest, ajoute ce code suivant dans ton fichier `tsconfig.json`
+
+```json
+{
+  "compilerOptions": {
+    ...
+    "types": [
+      "vitest/globals"
+    ]
+  }
+}
+```
+
+### vitest.config.ts
+
+Après l’installation des plugiciels, crée un fichier `vitest.config.ts` à la racine de ton projet.
+
+```tsx
+import { defineConfig } from 'vitest/config';
+import react from '@vitejs/plugin-react';
+
+export default defineConfig({
+  plugins: [react()],
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: './vitest-setup.ts',
+    include: ['src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
+    coverage: {
+      reporter: ['html', 'json', 'text'],
+    },
+  },
+});
+```
+
+Je vais expliquer pourquoi j’ai ajouté des options à la configuration:
+
+- La fonctionne `react()`, dans la section des plugiciels, ajoute de support pour la syntaxe de React.
+- La propriété `globals` établit toutes les fonctionnes communes de test, parmi eux, `describe`, `it`, `expects` et comme ça.
+- `environment` comment `jsdom` . Lorsqu’on a installé le plugiciel, il ajoute de support pour faire des consultations sur le DOM quand on travaille avec `react-test-utils`.
+- La proprieté `setupFiles` fait allusion à `./vitest-setup.ts` . Un fichier qu’on abordera plus en profondeur plus tard.
+- Dans `include`, tu peux ajouter une expression régulière de formats et noms de fichiers qui s’observent avec la commande de test. J’ai ajouté de support aussi pour `mjs, cjs`, les syntaxes de modules pour versions futures de Javascript.
+- `coverage`, dont tu peux spécifier le format du rapport pour l’outil de _coverage._
+
+### vitest-setup.ts
+
+Ce fichier de configuration est l’endroit où on peut spécifier quelques actions, avant d’exécuter tous les tests. Ceci, j’ai ajouté une connexion entre Testing Library et Vitest.
+
+Après chaque test, nous nettoierons les résultats au rendre les composants de React (`afterEach`).
+
+```tsx
+import { afterEach } from 'vitest';
+import '@testing-library/jest-dom';
+import matchers from '@testing-library/jest-dom/matchers';
+import { cleanup } from '@testing-library/react';
+
+expect.extend(matchers);
+
+afterEach(() => {
+  cleanup();
+});
+```
+
+## ♻️ Mise à jour des Mocks
+
+Fréquemment, si tu fais des Mocks de Jest dans ton projet, ça peut causer retards à la migration. Vitest offre une compatibilité facile avec les mocks crées en Jest. Ensuite, quelques astuces que j’ai utilisées (ou découvertes) pendant la migration. Toujours je recommande de [lire la documentation officielle.](https://vitest.dev/guide/mocking.html)
+
+### Replace `jest` avec `vi`
+
+Par exemple: l’usage de `vi.fn()` . Pour ce fichier dans mon portfolio, `__mocks__/gatsby-background-image.ts`, observe comment je faire le replace.
+
+```diff
+
+import React from 'react';
++ import { vi } from 'vitest';
+
+- export default jest.fn().mockImplementation(({ children }) => React.createElement('div', null, children));
++ export default vi.fn().mockImplementation(({ children }) => React.createElement('div', null, children));
+```
+
+### Replace `requireActual` avec `importActual`
+
+On utilise par exemple mon fichier `__mocks__/gatsby.ts` . De plus, vérifie l’usage de `await`
+
+```diff
+import React from 'react';
+- const gatsby = jest.requireActual('gatsby');
++ import { vi } from 'vitest';
+
++ const gatsby = await vi.importActual<object>('gatsby');
+
+const mockImage = ({ imgClassName, ...props }) => React.createElement('img', { ...props, className: imgClassName });
+
+module.exports = {
+  ...gatsby,
+-  graphql: jest.fn(),
+-  Link: jest.fn().mockImplementation(mockLink),
+-  StaticQuery: jest.fn(),
+-  useStaticQuery: jest.fn(),
+-  GatsbyImage: jest.fn().mockImplementation(mockImage),
+-  StaticImage: jest.fn().mockImplementation(mockImage),
++  graphql: vi.fn(),
++  Link: vi.fn().mockImplementation(mockLink),
++  StaticQuery: vi.fn(),
++  useStaticQuery: vi.fn(),
++  GatsbyImage: vi.fn().mockImplementation(mockImage),
++  StaticImage: vi.fn().mockImplementation(mockImage),
+};
+```
+
+### Avant utiliser un Mock aux tests, appelle le Mock
+
+Et si je voulais utiliser mon fichier présenté ci-dessus? Importe-le avant les tests, ou selon les cas que tu codes.
+
+```tsx
+vi.mock('gatsby');
+```
+
+Si tu as besoin de mocks multiples, ensuite une démo.
+
+```tsx
+vi.mock('gatsby');
+vi.mock('gatsby-plugin-image');
+vi.mock('react-slick');
+```
+
+### Créer un mock avant chaque test
+
+Veux-tu avoir l’autocomplétion pour les mocks écrits en Typescript seulement pour un fichier? Regarde comment je l’ai ajouté.
+
+L’autocomplétion commencera lorsqu’on finit d’écrire `(useStaticQuery as Mock)` .
+
+```tsx
+import { loadTranslations } from '../../utils/mockresponses';
+import type { Mock } from 'vitest';
+
+beforeEach(() => {
+  (useStaticQuery as Mock).mockReturnValueOnce(loadTranslations);
+});
+```
+
+### Souhaites de changer spyes?, utilise `vi.spyOn`
+
+```diff
+- const getItemMock = jest.spyOn(window.localStorage.__proto__, 'getItem');
++ const getItemMock = vi.spyOn(window.localStorage.__proto__, 'getItem');
+```
+
+## ⏬ Mise à jour des commandes NPM
+
+Les commandes Vitest s’exécutent par défaut en mode `watch`. Utilise l’option `run` pour éviter de les laisser en cours d’exécution.
+
+J’ai créé des commandes alternatives que je peux employer dans Github Actions. Regarde mon `package.json` .
+
+```json
+{
+	"scripts": {
+		...
+    "test": "vitest",
+    "test:ci": "vitest run",
+    "test:cov": "vitest run --coverage"
+  },
+}
+```
+
+## 🔨 Github Actions
+
+Malheureusement, [le plugiciel que j’utilise pour créer les rapports](https://github.com/ArtiomTr/jest-coverage-report-action) de mon coverage de code n’est pas compatible avec Vitest. J’espère en trouver un similaire à l’avenir, car j’ai pas de temps de faire un fork et de le modifier.
+
+Sur Github Actions, c’est ainsi comment j’exécute et valide toujours mes tests.
+
+```yaml
+name: Tests
+on:
+  pull_request:
+    branches:
+      - main
+jobs:
+  coverage:
+    name: Coverage
+    runs-on: ubuntu-latest
+    env:
+      NODE_OPTIONS: --max-old-space-size=4096
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+          cache: npm
+      - name: Installing dependencies
+        run: npm ci
+      - name: Running tests
+        run: npm run test:cov
+```
+
+## 🗑️ Retire les références de Jest
+
+Pour mon portfolio, je n’avais plus besoin des plugiciels:
+
+- `@types/jest`
+- `babel-jest`
+- `jest`
+- `ts-jest`
+- De plus, j’ai supprimé trois fichiers de configuration à la racine de mon projet.
+
+## 🏎️ Exécuter des tests et comparaisons de vitesse
+
+Pour 74 que j’ai le jour où j’écris ceci, la différence entre Jest et Vitest n’est que de 1 seconde, où Vitest est le gagnant. Cela peut donner l’impression qui est peu, mais quand la quantité des tests commencera à augmenter, la différence augmentera, bien sûr.
+
+Voici une comparaison entre Jest et Vitest en exécutant la même suite de tests.
+
+## ☑️ Conclusion
+
+Puisque j’écris sur les dépendances d'un environnement de développement et d'un petit projet, utiliser Vitest dans ce cas sera une bonne idée. L’augmentation de la vitesse d'exécution des tests, de la configuration Typescript par défaut et du support de Jetbrains et Vscode.
+
+Cependant, si vous avez un grand projet dans Jest, cela dépend d'une longue liste de dépendances. Ma réponse est NON, tu n’as pas besoin de migrer à Vitest, l'effort pourrait être le double ou le triple de ce que tu penses. Envisage de petites avancées, commence à déplacer de petits tests qui ne causent pas de risque, _sprint_ par _sprint_, en _milestones_.
+
+Tu peux consulter mon PR de mon portefeuille [dans ce lien.](https://github.com/helmerdavila/portfolio/pull/96)
