@@ -24,7 +24,7 @@ it('renders BlogPreviewHome', () => {
 });
 
 it('renders BlogPreviewHome with no posts', () => {
-  const { queryByRole } = customRender(<BlogPreviewHome data={{ allMdx: { nodes: [] }, backgroundImage: null }} />);
+  const { queryByRole } = customRender(<BlogPreviewHome data={{ allMdx: { nodes: [] } }} />);
 
   const link = queryByRole('link');
 
@@ -32,7 +32,7 @@ it('renders BlogPreviewHome with no posts', () => {
 });
 
 it('renders BlogPreviewHome with no posts', () => {
-  const { queryByRole } = customRender(<BlogPreviewHome data={{ allMdx: { nodes: [] }, backgroundImage: null }} />);
+  const { queryByRole } = customRender(<BlogPreviewHome data={{ allMdx: { nodes: [] } }} />);
 
   const link = queryByRole('link');
 
