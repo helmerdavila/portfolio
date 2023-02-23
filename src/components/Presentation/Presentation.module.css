@@ -1,0 +1,28 @@
+.FirstSectionBackgroundImage {
+  background-image: url('../../images/background.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100vw;
+  height: 100vh;
+}
+
+.FirstSectionBackgroundImage .Overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  background-color: var(--dark-at-day);
+  opacity: 0.4;
+}
+
+.FirstSectionBackgroundImage .Overlay-night {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  background-color: var(--dark-at-night);
+  opacity: 0.4;
+}

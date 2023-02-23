@@ -3,12 +3,10 @@ import Header from '../Layouts/Header';
 import classNames from 'classnames';
 import useTranslations from '../UseTranslations';
 import { ThemeContext } from '../Layout';
-import { getImage, IGatsbyImageData } from 'gatsby-plugin-image';
-import { convertToBgImage } from 'gbimage-bridge';
-import BackgroundImage from 'gatsby-background-image';
 import { TypeAnimation } from 'react-type-animation';
+import * as PresentationStyles from './Presentation.module.css';
 
-const Presentation = (props: { backgroundImage: IGatsbyImageData }): JSX.Element => {
+const Presentation = (): JSX.Element => {
   const context = useContext(ThemeContext);
   const {
     hi_my_name_is,
@@ -19,14 +17,13 @@ const Presentation = (props: { backgroundImage: IGatsbyImageData }): JSX.Element
     web_applications,
     mobile_applications,
   } = useTranslations();
-  const image = getImage(props.backgroundImage);
-  const bgImage = convertToBgImage(image);
+  const overlayClass = context.isLightTheme ? PresentationStyles.Overlay : PresentationStyles.OverlayNight;
 
   return (
-    <BackgroundImage Tag="section" className="first-section" {...bgImage} preserveStackingContext>
+    <section className={PresentationStyles.FirstSectionBackgroundImage}>
       <Header />
       <div id="who_am_i" className="min-h-screen flex justify-center items-center">
-        <div className={classNames({ overlay: context.isLightTheme, 'overlay-night': !context.isLightTheme })} />
+        <div className={classNames(overlayClass)} />
         <div className="text-center z-10">
           <h3 className="text-3xl font-bold text-white">{hi_my_name_is}</h3>
           <h1 className="text-6xl font-bold text-white">Helmer Dávila</h1>
@@ -41,7 +38,7 @@ const Presentation = (props: { backgroundImage: IGatsbyImageData }): JSX.Element
           </h2>
         </div>
       </div>
-    </BackgroundImage>
+    </section>
   );
 };
 

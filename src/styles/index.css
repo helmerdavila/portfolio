@@ -70,26 +70,6 @@ p {
   filter: grayscale(0%);
 }
 
-.first-section .overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  background-color: var(--dark-at-day);
-  opacity: 0.4;
-}
-
-.first-section .overlay-night {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  background-color: var(--dark-at-night);
-  opacity: 0.4;
-}
-
 .icon-spacer svg {
   margin-left: 0.3em;
   margin-right: 0.3em;
