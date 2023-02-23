@@ -34,11 +34,7 @@ const IndexPage = ({ data }: PageProps<Queries.IndexPreviewPostsQuery>): JSX.Ele
 
 export const query = graphql`
   query IndexPreviewPosts($locale: String!) {
-    allMdx(
-      filter: { fields: { locale: { eq: $locale } } }
-      sort: { fields: [frontmatter___date], order: DESC }
-      limit: 2
-    ) {
+    allMdx(filter: { fields: { locale: { eq: $locale } } }, sort: { frontmatter: { date: DESC } }, limit: 2) {
       ...ContentOnIndexPosts
     }
     backgroundImage: file(relativePath: { eq: "background.jpg" }) {

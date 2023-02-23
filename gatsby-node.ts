@@ -102,7 +102,7 @@ const gqlGetAllPosts = async (graphql: CreatePagesArgs['graphql']) =>
   await graphql<Queries.CreatePagesQuery>(
     `
       query CreatePages {
-        allMdx(sort: { fields: [frontmatter___date], order: DESC }) {
+        allMdx(sort: { frontmatter: { date: DESC } }) {
           nodes {
             id
             frontmatter {
@@ -177,7 +177,7 @@ const createTagsPage = async (graphql: CreatePagesArgs['graphql'], createPage: A
       `
         query AllTagsByLocale($locale: String!) {
           tagsGroup: allMdx(filter: { fields: { locale: { eq: $locale } } }) {
-            group(field: frontmatter___tags) {
+            group(field: { frontmatter: { tags: SELECT } }) {
               fieldValue
             }
           }
