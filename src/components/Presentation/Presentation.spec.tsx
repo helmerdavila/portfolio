@@ -5,7 +5,7 @@ import translations_fr from '../../../config/translations/fr.json';
 import { customRender } from '../../utils/testing';
 import { useStaticQuery } from 'gatsby';
 import Presentation from './Presentation';
-import { backgroundImage, loadTranslations } from '../../utils/mockresponses';
+import { loadTranslations } from '../../utils/mockresponses';
 import type { Mock } from 'vitest';
 
 vi.mock('gatsby');
@@ -16,9 +16,7 @@ beforeEach(() => {
 });
 
 it('renders in english', () => {
-  const { queryByText } = customRender(
-    <Presentation backgroundImage={backgroundImage.backgroundImage.childImageSharp.gatsbyImageData} />,
-  );
+  const { queryByText } = customRender(<Presentation />);
 
   expect(queryByText(translations_en.hi_my_name_is)).toBeInTheDocument();
   expect(queryByText(translations_fr.hi_my_name_is)).not.toBeInTheDocument();
@@ -42,12 +40,9 @@ it('renders in english', () => {
 
 it('renders in spanish', () => {
   const localeContextProps = { locale: 'es' };
-  const { queryByText } = customRender(
-    <Presentation backgroundImage={backgroundImage.backgroundImage.childImageSharp.gatsbyImageData} />,
-    {
-      localeContextProps,
-    },
-  );
+  const { queryByText } = customRender(<Presentation />, {
+    localeContextProps,
+  });
 
   expect(queryByText(translations_en.hi_my_name_is)).not.toBeInTheDocument();
   expect(queryByText(translations_fr.hi_my_name_is)).not.toBeInTheDocument();
@@ -71,12 +66,9 @@ it('renders in spanish', () => {
 
 it('renders in french', () => {
   const localeContextProps = { locale: 'fr' };
-  const { queryByText } = customRender(
-    <Presentation backgroundImage={backgroundImage.backgroundImage.childImageSharp.gatsbyImageData} />,
-    {
-      localeContextProps,
-    },
-  );
+  const { queryByText } = customRender(<Presentation />, {
+    localeContextProps,
+  });
 
   expect(queryByText(translations_en.hi_my_name_is)).not.toBeInTheDocument();
   expect(queryByText(translations_fr.hi_my_name_is)).toBeInTheDocument();

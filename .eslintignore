@@ -2,3 +2,4 @@ src/images/
 node_modules
 dist
 coverage
+*.css
