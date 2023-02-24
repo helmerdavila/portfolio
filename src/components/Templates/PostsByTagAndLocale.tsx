@@ -43,7 +43,7 @@ export const query = graphql`
   query BlogByTagAndLocale($tag: String!, $locale: String!) {
     allMdx(
       filter: { fields: { locale: { eq: $locale } }, frontmatter: { tags: { in: [$tag] } } }
-      sort: { fields: [frontmatter___date], order: DESC }
+      sort: { frontmatter: { date: DESC } }
     ) {
       totalCount
       ...BlogPostCardInfo

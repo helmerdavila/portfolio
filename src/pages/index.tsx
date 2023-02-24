@@ -19,7 +19,7 @@ const IndexPage = ({ data }: PageProps<Queries.IndexPreviewPostsQuery>): JSX.Ele
       keywords={['helmer davila', 'fullstack', 'developer', 'react', 'vue', 'angular', 'react native']}
       description="My personal portfolio"
     />
-    <Presentation backgroundImage={data.backgroundImage.childImageSharp.gatsbyImageData} />
+    <Presentation />
     <AboutMe />
     <WhatIDo />
     <MyStack />
@@ -34,17 +34,8 @@ const IndexPage = ({ data }: PageProps<Queries.IndexPreviewPostsQuery>): JSX.Ele
 
 export const query = graphql`
   query IndexPreviewPosts($locale: String!) {
-    allMdx(
-      filter: { fields: { locale: { eq: $locale } } }
-      sort: { fields: [frontmatter___date], order: DESC }
-      limit: 2
-    ) {
+    allMdx(filter: { fields: { locale: { eq: $locale } } }, sort: { frontmatter: { date: DESC } }, limit: 2) {
       ...ContentOnIndexPosts
-    }
-    backgroundImage: file(relativePath: { eq: "background.jpg" }) {
-      childImageSharp {
-        gatsbyImageData(layout: FULL_WIDTH, placeholder: BLURRED)
-      }
     }
   }
 

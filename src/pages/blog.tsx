@@ -82,7 +82,7 @@ const Blog = ({ data }: PageProps<Queries.BlogQuery>): JSX.Element => {
 
 export const query = graphql`
   query Blog($locale: String!) {
-    allMdx(filter: { fields: { locale: { eq: $locale } } }, sort: { fields: [frontmatter___date], order: DESC }) {
+    allMdx(filter: { fields: { locale: { eq: $locale } } }, sort: { frontmatter: { date: DESC } }) {
       ...BlogPostCardInfo
     }
   }
