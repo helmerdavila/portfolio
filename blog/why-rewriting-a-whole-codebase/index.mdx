@@ -1,0 +1,127 @@
+---
+title: 'Why rewriting a whole codebase is the last option to improve it?'
+description: Let’s do this from scratch, show how junior you are
+date: 2023-03-20
+published: true
+image: ../../src/images/blog/construction-excavator.jpg
+imageAlt: 'Photo by Tobias Kleeb on Unsplash'
+tags: ['refactoring', 'legacy', 'rewrite']
+---
+
+# Why rewriting a whole codebase is the last option to improve it?
+
+## A developer joins a company
+
+Let’s start with a _mea culpa_. I was that kind of developer in my first year of experience. I was not prepared to read about code. I wanted to use the knowledge that I had in X framework.
+
+After some years, you see it.
+
+It’s happening again.
+
+The newcomer in your company where you are working, starts shouting out:
+
+- _This is useless_
+- _Let’s do it from scratch_
+- _This code is a big dump_ (or some variations: trash, shit, spaghetti, you name it)
+
+The downside of this idea, is that you need to deal with some cumbersome stuff:
+
+- _Existent bugs:_ The code that you are complaining about might work with some bugs that, due to the different mysteries of the universe, make the executing algorithm infallible. You will need to rewrite those in the new rewrite. Otherwise, the algorithm could have some unexpected behaviors.
+- _Magic numbers:_ Now you need to think what those are and how to get those magic values, but now, using a dynamic approach. This increments the development’s time.
+- _Update or create tests:_ When the code is created, it is not simply moving business rules. It depends if the tests were written, or if you need to update them to make them pass. If you were lucky enough. Because if there is nothing created, now it is your responsibility to do it. In a few years, your code will be legacy whether you want it to or not.
+
+## What is bad code?
+
+We usually say bad code is code that we don’t understand quickly. This is a trial impression and is subjective. I think a more accurate definition will be:
+
+Bad code, is all that code where you want to add, update or remove more from it, there is a high chance to fail on it, due to its poor legibility, organization or lack of testing.
+
+It can be caused for two reasons:
+
+### Under-engineering
+
+It is the absence of engineering or process abstraction. We can identify it because a big chunk of the business logic can be found in different places or just in a single one, but in a disorganized way. We can also identify it as repeating code.
+
+I saw as well cases of the usage of magic numbers, IDs and passwords hardcoded.
+
+To add fuel to the fire, the production deployments were manual or tedious.
+
+Inside this group, I saw many startups or development agencies. Where launching features is the priority number one.
+
+And I understand, getting money is a priority.
+
+But if you are lost in the desert. Do you want to build a house there? Or would you prefer eventually leave it?
+
+### Over-engineering
+
+The opposite side of under engineering. Processes here and there. A lot of abstractions for simple procesdures, which extend the creation of new business rules.
+
+Applied by people who heard the last five edgy and trendy tech words in the last meetup in their city and now they want to add it to their product.
+
+With almost ten years of experience, there have been three to four times where from day number one they want to create a solution _that scales_, when inside of the application, they have only few people registered: the investors and CEO’s mom.
+
+Anyways, here are my three main memories:
+
+- _Let’s use microservices:_ The developers’ team had only three folks with ten users registered.
+- _Let’s use Kubernetes, we should horizontally scale:_ ECS with load balancers were doing their job like a charm. But the developers wanted to move to Kubernetes without a strong reason behind it.
+- _We must separate backend from frontend:_ and those were a group of two developers taking care of a single project. Many monolithic frameworks allow to separate both sides of development, backend and frontend, without compromising the security or development’s speed. As a matter of fact, the integration between them is pretty easy. It’s an excuse to not learn from each other one. Whether is the backend learning from frontend, or the frontend learning from backend.
+
+## The dangers of going with a trend
+
+If you see something new, use it in a place where you can’t harm anyone or if it isn’t delaying your product.
+
+Do experiments, play with them.
+
+But that should not be your primary blocker.
+
+Don’t try to use it without trying it before.
+
+When you master a tool, recommending it and showing the benefits is way easier.
+
+Be the pro of a tool, not simply a fan of it.
+
+## Doing Incremental Improvements
+
+There are four steps that I use. They can be useful to you to improve a project. Small improvements can help you deal with a legacy codebase.
+
+### Understand
+
+The time that you spend on this stage will depend on your experience as a developer. The more code you have seen and understood, the less time it will take from you.
+
+Read and try to understand the code.
+
+Use a debugger. Try to understand the meaning of the variables.
+
+Write down the processes involved in a user flow in a language that you can easily understand and take notes.
+
+Talk with people who have more experience than you and who have worked on similar projects or have had related experiences.
+
+### Research and think
+
+I put two steps into a single one because I think they complement each other.
+
+It is better if you seek for some programming patterns or from similar cases using different blogs or Youtube videos. There are people who have experienced situations like ours. Asking in forums or communities is also a valid option.
+
+After that, you should think how you can use those knowledge to improve the code. This is where experience comes into play, and if you don’t have it, experimentation is key.
+
+I combined two steps because I think they complement each other.
+
+### Plan
+
+The transition between thinking and planning is often subtle, as they frequently go hand in hand.
+
+Planning involves creating an approximation of the time and resources needed to improve a project.
+
+It is well known that many developers, like ourselves, struggle with proper estimation. If you have experienced underestimation before, I recommend multiplying the time estimate by two or three, and keeping track of the actual time taken at the end of the project. This will help you get a more accurate understanding of your work style or that of your team, if you are working with others.
+
+Additionally, it is important to use tests to check if your code is not going to fail. Otherwise, you will need to create them, which should be included in your estimate.
+
+### Code and test
+
+Once you have created your plan, get to work! Don't forget that once you've finished improving the code, your tests work and the change doesn't have negative consequences for your users. With incremental improvements, you'll have a project that any developer will be motivated to work on.
+
+## Conclusion
+
+As with any other question in life, the answer to whether a project needs to be rewritten from scratch is: "It depends on your situation." Experience is what gives you the intuition to know when a project needs to be rewritten, or at least when a slice of it needs to be remade.
+
+Always have research and critical thinking by your side.

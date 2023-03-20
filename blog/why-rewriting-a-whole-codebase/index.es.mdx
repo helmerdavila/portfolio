@@ -1,0 +1,134 @@
+---
+title: 'Por qué rescribir todo el código es la última opción para mejorarlo'
+description: Vamos a hacerlo desde cero solo muestra que eres Junior
+date: 2023-03-20
+published: true
+image: ../../src/images/blog/construction-excavator.jpg
+imageAlt: 'Photo by Tobias Kleeb on Unsplash'
+tags: ['refactoring', 'legacy', 'rewrite']
+---
+
+# Por qué rescribir todo el código es la última opción para mejorarlo
+
+## Cuando un desarrollador entra a la empresa
+
+Hay que empezar con un _mea culpa_. Yo fui así desde el principio. No estaba preparado para leer código, quería utilizar los conocimientos que ya tenía en X framework.
+
+Después cuando pasa el tiempo, lo ves.
+
+Vuelve a suceder.
+
+El nuevo que entra a la compañia donde tu trabajas y empieza a decir a los cuatro vientos:
+
+- _Esto no sirve_
+- _Hagamos esto desde cero_
+- _El código es una mierda_ (o variaciones: basura, horrible, spaghetti, etc).
+
+Lo malo de esta idea, es que vas a tener que lidiar con algunas cosas:
+
+- Bug existentes: El código del cual te quejas, podría funcionar sobre ciertos bugs que, debido a los misterios del universo, hacen que el algoritmo ejecutado no se rompa. Los cuales vas a tener que replicar en la nueva rescritura, pues sino, el algoritmo puede tener comportamientos inesperados.
+- Números mágicos: Ahora tienes que pensar que son y cómo obtener esos valores mágicos escritos allí, pero ahora de manera dinámica. Esto incrementa tus tiempos de desarrollo.
+- Actualizar o crear tests: Cuando el código se crea, no es simplemente mover las reglas. Depende si los tests ya fueron escritos, o si ahora tienes que actualizarlos para que puedan pasar. Y eso si es que fueron escritos. Porque, si no hay nada creado, ahora es tu responsabilidad hacerlo. Dentro de unos años quieras o no tu código será _legacy_ de todos modos.
+
+## ¿Qué es mal código?
+
+Solemos decir mal código al que no entendemos fácilmente. Esto es una mera impresión y subjetivo. Creo que una definición más exacta sería:
+
+Mal código, es todo ese código sobre el cual quieras añadir, actualizar o remover más, habrá una gran oportunidad de que falle debido a su mala legibilidad, organización o falta de pruebas.
+
+Esto puede ser causado debido a dos razones:
+
+### Infraingeniería
+
+Es la falta de ingeniería o abstración en los procesos. Suele identificarse porque gran parte de la lógica de negocio se encuentra en unos diferentes lugares o en uno solo pero de manera desordenada. También se identifica por la repetición del código.
+
+He visto casos también de números mágicos, ID’s y contraseñas escritos en el código.
+
+Para añadir más salsa, los despliegues a producción podrían ser manuales o tediosos.
+
+Dentro de este grupo, he visto a varias startups o agencias de desarrollo. Donde lanzar features es la opción número uno.
+
+Y lo entiendo, obtener dinero es la prioridad.
+
+Pero si estás perdido en el desierto, ¿quieres construir tu hogar allí?. O, eventualmente buscar una solución para salir.
+
+### Sobreingeniería
+
+El lado opuesto de la infraingeniería. Procesos a diestra y siniestra. Un montón de abstracción para procesos simples que extiende la creación de nuevas reglas de negocio.
+
+Aplicado por personas que escucharon las cinco últimas tecnologías en el último meetup de su ciudad, y quieren agregarlos a su producto actual.
+
+Con casi 10 años de experiencia, han habido tres a cuatro ocasiones importantes donde desde el día número uno quieren crear una solución _que escale_, cuando dentro del app sólo están registrados 2 inversores y la mamá del CEO.
+
+De todos modos, acá tres veces que recuerdo:
+
+- _Usemos microservicios_: el equipo de desarrollo era de 3 personas y apenas tenían 10 usuarios registrados.
+- _Usemos Kubernetes,“tenemos que escalar horizontal”:_ ECS con Balanceadores de carga funcionaba de maravillas. Pero los desarrolladores querían moverse a Kubernetes cuando nadie en el equipo podía fundamentar su uso.
+- _Debemos separar el backend del frontend:_ Cuando han sido uno o dos desarrolladores encargados del proyecto. Muchos framework monolíticos te permiten ya incluso separar ambos lados del desarrollo, backend y frontend, usando un mismo proyecto. Sin comprometer la seguridad o la velocidad de desarrollo. E incluso la integración entre ambos es muy sencilla. Una excusa para no aprender cada desarrollador uno del otro lado de desarrollo, ya sea backend aprendiendo de frontend o un frontend aprendiendo de backend.
+
+## Los peligros de una tendencia
+
+Si ves algo nuevo, úsalo en un lugar donde no puedas dañar a nadie o que no retrace tu producto de cara al usuario.
+
+Haz experimentos, juega con ella.
+
+Pero no debe ser tu principal bloqueo.
+
+No trates de usarlo sin antes haber experimentado.
+
+Cuando dominas una herramienta, es mucho más fácil recomendarla y mostrar los beneficios de ella.
+
+Sé el pro de la herramienta, no el fan.
+
+## ¿Cuándo se debe realizar desde cero?
+
+Han sido pocas las ocasiones donde he visto que una proyecto se tenga que hacer REALMENTE desde cero.
+
+Han sido situaciones donde:
+
+- El código está en un lenguaje antiguo o es dificil conseguir desarrolladores expertos que puedan darle mantenimiento.
+- Los equipos comienzan a crecer y se necesita hacer una separación de dominio. Ej: un equipo de Autentificación va a necesitar crear un microservicio que sólo se encargue de registrar, loguear o actualizar la contraseña de los usuarios.
+
+## Cómo evitar hacer todo desde cero: usando mejoras incrementales
+
+Hay cuatro pasos que uso que pueden servirte también para mejorar un proyecto. Las pequeñas mejores pueden ayudarte a lidiar con un código _legacy_.
+
+### Entender
+
+El tiempo que uses en esta etapa depende de tu experiencia como desarrollador. Mientras más código hayas visto y entendido, tomará mucho menos de tu tiempo.
+
+Lee y trata de entender el código.
+
+Usa un debugger, analiza las variables.
+
+Escribe los procesos envueltos en un flujo, en un lenguaje que TÚ puedas entender y toma notas.
+
+Habla con personas con más experiencia que tú y que hayan visto proyectos similares o que hayan vivido experiencias afines.
+
+### Investigar y pensar
+
+He puesto estos dos pasos en uno sólo porque creo que se complementan uno con el otro.
+
+Si te informas de patrones de programación o de casos similares en distintos blogs o videos de Youtube, mucho mejor. Hay muchas personas que ya han vivido situaciones como la nuestra. Preguntar en foros o comunidades también es una opción válida.
+
+Después toca pensar, cómo puedes utilizar ese conocimiento para mejorar el código. Aquí también entra en juego la experiencia, y si no la tienes, la experimentación que estés dispuesto a hacer.
+
+### Planear
+
+La transición desde pensar y planear es sutil. También suelen ir de la mano muchas veces.
+
+Planear es crear un aproximado de cuánto y cómo será el esfuerzo para mejorar el proyecto.
+
+Es muy sabido que como desarrolladores nosotros muchas veces no estimamos bien, para lo cual recomiendo: Si antes has sufrido de infra-estimación. Agrega dos o tres veces el tiempo que piensas que te tomará y toma en nota cuanto tiempo realmente te tomó al finalizar. Así mas o menos tendrás un promedio de como trabajas, o tus compañeros si trabajas en equipo.
+
+Acá también entra en plan si usas _tests_ para comprobar si tu código no fallará. Sino, tendrás que crearlos. Lo cual también cuenta dentro de tu tiempo de desarrollo.
+
+### Hacer y probar
+
+Una vez que has creado tu plan, ¡manos a la obra!. No olvides una vez finalizado la mejora de código, que tus tests funcionen y que el cambio no tenga consecuencias negativas para tu usuario. Con mejoras incrementales tendrás un proyecto que a cualquier desarrollador le motivará trabajar.
+
+## Conclusión
+
+Como a la mayoría de preguntas en la vida la respuesta es “depende de tu situación”. La experiencia es la que suele darte la intuición de que un proyecto necesita ser rescrito desde cero. O al menos separar una parte y rehacerla.
+
+Siempre ten a tu lado el poder de la investigación y pensamiento crítico.
