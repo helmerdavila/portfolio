@@ -57,6 +57,19 @@ const Author = ({ cssBackground, cssText, author, writtenBy }) => (
   </div>
 );
 
+const Disclaimer = ({ cssBackground, cssText, message }) => {
+  return (
+    <section
+      className={classNames(
+        cssBackground,
+        'flex justify-center my-7 py-7 px-12 container max-w-3xl mx-auto xl:max-w-6xl font-quicksand',
+      )}
+    >
+      <span className={classNames(cssText, 'italic')}>{message}</span>
+    </section>
+  );
+};
+
 /**
  * @param {Queries.LayoutBlogPageQuery.multilanguagePosts.nodes} posts
  * @param {string} currentLocale
@@ -84,7 +97,7 @@ const PostInOtherLanguages = ({ posts, currentLocale, cssText, cssBackground }) 
 const PostPage = (props) => {
   const context = useContext(ThemeContext);
   const { data, children } = props;
-  const { author, edit_posts_on_github, written_by } = useTranslations();
+  const { author, edit_posts_on_github, written_by, disclaimer } = useTranslations();
   const pageBackground = {
     'bg-white shadow-sm': context.isLightTheme,
     'bg-gray-800 border-gray-800': !context.isLightTheme,
@@ -121,6 +134,7 @@ const PostPage = (props) => {
             </div>
           </div>
         </div>
+        <Disclaimer cssBackground={pageBackground} cssText={textStyle} message={disclaimer} />
         <Tags
           tags={tags}
           locale={locale}

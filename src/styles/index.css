@@ -13,6 +13,10 @@
   --dark-at-night: #1a202c;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 h1,
 h2,
 h3,
