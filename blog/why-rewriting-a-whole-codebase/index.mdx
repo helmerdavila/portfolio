@@ -10,7 +10,7 @@ tags: ['refactoring', 'legacy', 'rewrite']
 
 # Why rewriting a whole codebase is the last option to improve it?
 
-## A developer joins a company
+## 💼 A developer joins a company
 
 Let’s start with a _mea culpa_. I was that kind of developer in my first year of experience. I was not prepared to read about code. I wanted to use the knowledge that I had in X framework.
 
@@ -30,7 +30,7 @@ The downside of this idea, is that you need to deal with some cumbersome stuff:
 - _Magic numbers:_ Now you need to think what those are and how to get those magic values, but now, using a dynamic approach. This increments the development’s time.
 - _Update or create tests:_ When the code is created, it is not simply moving business rules. It depends if the tests were written, or if you need to update them to make them pass. If you were lucky enough. Because if there is nothing created, now it is your responsibility to do it. In a few years, your code will be legacy whether you want it to or not.
 
-## What is bad code?
+## 🗑️ What is bad code?
 
 We usually say bad code is code that we don’t understand quickly. This is a trial impression and is subjective. I think a more accurate definition will be:
 
@@ -66,7 +66,7 @@ Anyways, here are my three main memories:
 - _Let’s use Kubernetes, we should horizontally scale:_ ECS with load balancers were doing their job like a charm. But the developers wanted to move to Kubernetes without a strong reason behind it.
 - _We must separate backend from frontend:_ and those were a group of two developers taking care of a single project. Many monolithic frameworks allow to separate both sides of development, backend and frontend, without compromising the security or development’s speed. As a matter of fact, the integration between them is pretty easy. It’s an excuse to not learn from each other one. Whether is the backend learning from frontend, or the frontend learning from backend.
 
-## The dangers of going with a trend
+## 📈 The dangers of going with a trend
 
 If you see something new, use it in a place where you can’t harm anyone or if it isn’t delaying your product.
 
@@ -80,7 +80,14 @@ When you master a tool, recommending it and showing the benefits is way easier.
 
 Be the pro of a tool, not simply a fan of it.
 
-## Doing Incremental Improvements
+## 💡 When should you migrate to a project from scratch?
+
+There have been only a couple of situations where I REALLY saw the need of redo a project from scratch. These situations are:
+
+- The code is written an old or outdated language and it is difficult to get expert developers who can maintain the codebase.
+- The teams start growing, and you need to create domain separation. E.g: an authentication team will need to create a microservice that handles registration, login or users’ password updates.
+
+## ♾️ How to avoid doing all from scratch: doing incremental improvements
 
 There are four steps that I use. They can be useful to you to improve a project. Small improvements can help you deal with a legacy codebase.
 
@@ -120,7 +127,7 @@ Additionally, it is important to use tests to check if your code is not going to
 
 Once you have created your plan, get to work! Don't forget that once you've finished improving the code, your tests work and the change doesn't have negative consequences for your users. With incremental improvements, you'll have a project that any developer will be motivated to work on.
 
-## Conclusion
+## ✅ Conclusion
 
 As with any other question in life, the answer to whether a project needs to be rewritten from scratch is: "It depends on your situation." Experience is what gives you the intuition to know when a project needs to be rewritten, or at least when a slice of it needs to be remade.
 
