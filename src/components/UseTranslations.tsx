@@ -36,6 +36,7 @@ const query = graphql`
             about_me_description
             and_i_build
             battleship_description
+            disclaimer
             code_samples
             ctbook_description
             ctbook_readsample
