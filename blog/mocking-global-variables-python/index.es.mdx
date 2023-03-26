@@ -25,11 +25,11 @@ Después en tu `archivo_demo` la variable ENVS estará como _mocked_.
 
 ## ✏️ La solución detallada
 
-### 📔 Requerimientos
+### Requerimientos
 
 - Para facilidad del trabajo. Recomiendo la siguiente librería: [https://pypi.org/project/pytest-mock/](https://pypi.org/project/pytest-mock/)
 
-### 🤔 ¿Qué estaba intentando hacer?
+### ¿Qué estaba intentando hacer?
 
 Primero, supongamos que tengo un archivo llamado `archivo_demo.py` con el siguiente contenido (y donde la variable global está localizada).
 
@@ -58,7 +58,7 @@ def testear_si_metodo_simple_funciona():
 
 Ya sé que el test se ve simple, pero se asegura al menos de retornar un valor cero después de mostrar los valores ENVs.
 
-### 👾 Sobreescribiendo y simulando (Mocking) las variables
+## 👾 Sobreescribiendo y simulando (hacer un mock de) las variables
 
 Pero como puedes ver, estamos llamando las variables de entorno de la computadora que usemos, y si tú escribes tus tests, esperando tenerlas en el servidor CI/CD, entonces los tests comenzarán a fallar. ¿Cómo podemos evitar eso y decirle a nuestro servidor de testing (o _pipeline_ de testing) que queremos valores fijos?
 

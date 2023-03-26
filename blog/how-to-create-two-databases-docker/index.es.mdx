@@ -1,0 +1,66 @@
+---
+title: 'Docker MySQL - Cómo crear dos bases de datos dentro del mismo contenedor'
+description: Solo quería no contaminar mi base de datos dentro de Docker con un montón de nombres falsos o contenido de Lorem Ipsum
+date: 2023-03-26
+image: ../../src/images/blog/containers-many.jpg
+imageAlt: Photo by Timelab on Unsplash
+published: true
+tags: ['docker', 'mysql', 'database', 'docker-compose']
+---
+
+# Docker MySQL - Cómo crear dos bases de datos dentro del mismo contenedor
+
+## 🤔 ¿Por qué?
+
+Ya estaba cansado.
+
+Solo quería no contaminar mi base de datos dentro de Docker con un montón de nombres falsos o contenido de Lorem Ipsum. Porque cuando quiero listar todos los registros o fotos en mi aplicación actual, quiero los originales, para la presentación al cliente.
+
+Además, quería una base de datos adicional, donde si mis migraciones fallan, pueda volver atrás fácilmente. O destruir la base de datos y crearla de nuevo, sin ejecutar _seeders_ o usar una copia de seguridad con datos casi reales.
+
+Muchos _frameworks_ tienen un enfoque diferente para esto. Ejecutar pruebas dentro de transacciones, post-limpieza, etc.
+
+Pero no quiero aprender una manera independiente de acuerdo al _framework_ en el que voy a trabajar.
+
+Se me ocurrió una forma más simple.
+
+¿Qué pasa si creo una segunda base de datos en el contenedor? Mejor aún, ¡de forma automática!
+
+## 🔨 ¿Cómo?
+
+Para demostrar que no uso IA para generar contenido formal en mis publicaciones, utilizaré `potato` (patata, papa) como nombre de proyecto en este tutorial.
+
+En primer lugar, crea una carpeta donde quieras almacenar los scripts. Para este tutorial, la llamaremos `dockerdb_init`. Luego, crea un archivo llamado `create_test_database.sql` con el siguiente contenido:
+
+> Docker solo crea una base de datos con las variables de entorno escritas. Dado que el proyecto utilizará una base de datos de prueba, este script agregará un sufijo _test_.
+
+```sql
+CREATE DATABASE IF NOT EXISTS `potato_db_test`;
+GRANT ALL ON `potato_db_test`.* TO 'potato_db_user'@'%'
+```
+
+Si estás usando `docker-compose.yml`, esta es la especificación para el contenedor.
+
+```yaml
+db:
+  container_name: potato_db
+  image: 'mysql:8.0'
+  volumes:
+    - './dockerdb:/var/lib/mysql'
+    - './dockerdb_init:/docker-entrypoint-initdb.d'
+  env_file:
+    - .env
+  ports:
+    - '3306:3306'
+```
+
+Ya que prefiero mantener mis variables de entorno en un archivo separado, puedes colocar el siguiente contenido en tu archivo `.env`:
+
+```bash
+MYSQL_ROOT_PASSWORD=rootpassword
+MYSQL_DATABASE=potato_db
+MYSQL_USER=potato_db_user
+MYSQL_PASSWORD=potato_db_pass
+```
+
+La primera vez que se ejecute el contenedor, se ejecutará el script y ahora tendrás dos bases de datos: `potato_db` y `potato_db_test`.

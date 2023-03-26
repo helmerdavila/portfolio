@@ -1,0 +1,68 @@
+---
+title: 'Fazer mocks de variáveis globais em testes Python'
+description: Estava tentando testar algumas variáveis globais com Python, especialmente para um script que contém variáveis globais
+date: 2022-05-13
+published: true
+image: ../../src/images/blog/python-global-envs.jpg
+tags: ['python', 'mocking', 'pytest']
+---
+
+# Fazer mocks de variáveis globais em testes Python
+
+Estava tentando testar algumas variáveis globais com Python, especialmente para um script que contém variáveis globais. E depois de tentar e falhar, acho que posso mostrar a versão mais simples para fazê-lo.
+
+## 🏃 A solução rápida
+
+```python
+# demo_file.py
+ENVS = { 'real_value': True, 'another_real_value': False }
+
+# test_your_demo_file.py
+mocker.patch("demo_file.ENVS", new={'MOCKED_NONE': None, 'MOCKED_EMPTY': ''})
+```
+
+Depois disso, em seu arquivo `demo_file`, a variável ENVS seria mocks.
+
+## ✏️ Solução com descrição
+
+### Requisitos
+
+Para simplicidade do trabalho. Eu recomendo a seguinte biblioteca: [https://pypi.org/project/pytest-mock/](https://pypi.org/project/pytest-mock/)
+
+### Que eu estava tentando fazer?
+
+Primeiro, vamos supor que você tenha um arquivo chamado `demo_file.py` com o seguinte conteúdo (e onde a variável global está localizada).
+
+```python
+# demo_file.py
+import os
+
+ENVS = { 'real_value': os.environ('REAL_VALUE'), 'another_real_value': os.environ('ANOTHER_REAL_VALUE') }
+
+def simple_method():
+		print(ENVS)
+		return 0
+```
+
+Se você tentar executar `simple_method`, ele imprimirá o dicionário com `real_value` e `another_real_value` lá.
+
+Agora temos o seguinte arquivo de teste.
+
+Sei que o teste parece simples, mas está garantindo que pelo menos está retornando um valor zero após imprimir os valores do ENV.
+
+## 👾 Fazer mock da variável
+
+Mas como você vê, estamos chamando as variáveis de ambiente no computador atual e, se você escrever seus testes esperando tê-los em seu servidor CI/CD, os testes começarão a falhar. Como podemos evitar isso e dizer a nosso servidor de teste (ou pipeline de teste) que queremos valores fixos específicos?
+
+Se você instalou o pacote mencionado acima, na seção de requisitos, é muito fácil começar a fazer mocks de valores. Então, só precisamos adicionar uma única linha.
+
+```python
+# test_my_envs.py
+from demo_file import simple_method
+
+@mocker.patch("demo_file.ENVS", new={'MOCKED_REAL_VALUE': None, 'MOCKED_ANOTHER_REAL_VALUE': ''})
+def test_if_simple_method_is_working():
+		assert simple_method() == 0
+```
+
+E seus testes não executarão a variável ENVS real e, portanto, não chamarão os `os.environ`.

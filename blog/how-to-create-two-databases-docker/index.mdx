@@ -1,0 +1,66 @@
+---
+title: 'Docker MySQL - How to create two databases within the same container'
+description: I only wanted to not pollute my Docker database with a bunch of fake names or lorem ipsum content
+date: 2023-03-26
+image: ../../src/images/blog/containers-many.jpg
+imageAlt: Photo by Timelab on Unsplash
+published: true
+tags: ['docker', 'mysql', 'database', 'docker-compose']
+---
+
+# Docker MySQL - How to create two databases within the same container
+
+## 🤔 Why?
+
+I was tired.
+
+I only wanted to not pollute my Docker database with a bunch of fake names or lorem ipsum content. Because when I want to list all the records or photos in my current app, I want the original ones, for customer presentation.
+
+Also, I wanted a dummy database where if my migrations fail, I can rolback them easily. Or destroy the database and create it again, without running seeders or using a backup with almost-real-data.
+
+Many frameworks have different approach for this. Run tests inside transactions, do a cleanup, etc.
+
+But I don’t want to learn if they have it for every framework that I need to work over it.
+
+However, the simplest way that I thought was...
+
+What if I create a second database in the container? Better yet, in an automatic way?
+
+## 🔨 How?
+
+To demonstrate that I don't use AI to generate formal content in my posts, I will use `potato` as the project name in this tutorial.
+
+First, create a folder where you want to store the scripts. For this tutorial, we'll call it `dockerdb_init`. Then, create a file called `create_test_database.sql` with the following content:
+
+> Docker only creates one database with the environment variables passed. Since the project will use a test database, we could add a test suffix.
+
+```sql
+CREATE DATABASE IF NOT EXISTS `potato_db_test`;
+GRANT ALL ON `potato_db_test`.* TO 'potato_db_user'@'%'
+```
+
+Then, if you’re using `docker-compose.yml` this is the specification for the container.
+
+```yaml
+db:
+  container_name: potato_db
+  image: 'mysql:8.0'
+  volumes:
+    - './dockerdb:/var/lib/mysql'
+    - './dockerdb_init:/docker-entrypoint-initdb.d'
+  env_file:
+    - .env
+  ports:
+    - '3306:3306'
+```
+
+Since I prefer to keep my environment variables in a separate file, you can place the following content in your `.env` file:
+
+```bash
+MYSQL_ROOT_PASSWORD=rootpassword
+MYSQL_DATABASE=potato_db
+MYSQL_USER=potato_db_user
+MYSQL_PASSWORD=potato_db_pass
+```
+
+The first time the container turns on, it will run the script and now you’ll have two databases: `potato_db` and `potato_db_test`.
