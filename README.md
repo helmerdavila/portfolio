@@ -15,6 +15,6 @@ For sure. Just make sure that you change at least the colors. I really like the 
 
 1. Clone the repo
 2. Install the dependencies with `npm install`
-3. Run the project with `npm run start`. This will clean the build folder and start the project
+3. Run the project with `npm start`. This will clean the build folder and start the project
 4. Open the project in your browser at `http://localhost:8000`
 5. Enjoy!
