@@ -105,5 +105,9 @@
     "babel-plugin-lodash": {
       "@babel/types": "~7.20.0"
     }
+  },
+  "volta": {
+    "node": "18.16.1",
+    "npm": "9.7.2"
   }
 }
