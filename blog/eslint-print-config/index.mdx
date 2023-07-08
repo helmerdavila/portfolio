@@ -1,7 +1,7 @@
 ---
 title: 'Eslint: How to print the current configuration from a project'
-description: As json file
-date: 2023-07-07
+description: As a JSON file
+date: 2023-07-08
 published: true
 image: ../../src/images/blog/printer-canon.jpg
 imageAlt: Joshua Fuller
@@ -42,6 +42,8 @@ For both examples, let's assume that I'm using the eslint configuration from thi
 npx eslint --print-config .eslintrc.js | less
 ```
 
+![Less](./eslint-config-less.png)
+
 ### Use Bat if you want syntax coloring
 
 Remember to use the `-l` option to specify the type of language:
@@ -49,6 +51,8 @@ Remember to use the `-l` option to specify the type of language:
 ```bash
 npx eslint --print-config .eslintrc.js | bat -l json
 ```
+
+![Bat](./eslint-config-bat.png)
 
 ### Saving it to a file
 
@@ -62,11 +66,13 @@ This will create a `eslintconfig.json` file in the same directory, which you can
 
 ### Using rg to query it
 
-You can use `rg` command to start searching for an specific key. Let’s suppose that we want to find `no-unused-vars` default value. Also, I’m adding 3 lines of context, `-C 3`, since the config is a multiline json.
+You can use `rg` command to start searching for a specific key. Let’s suppose that we want to find `no-unused-vars` default value. Also, I’m adding 3 lines of context, `-C 3`, since the config is a multiline json.
 
 ```bash
 npx eslint --print-config .eslintrc.js | rg -C 3 "no-unused-vars"
 ```
+
+![rg](./eslint-config-rg.png)
 
 ### And you can use grep as well
 
@@ -75,3 +81,5 @@ Rg doesn't come by default in many Linux OS. If you really need to check it in a
 ```bash
 npx eslint --print-config .eslintrc.js | grep -C 3 "no-unused-vars"
 ```
+
+![grep](./eslint-config-grep.png)
