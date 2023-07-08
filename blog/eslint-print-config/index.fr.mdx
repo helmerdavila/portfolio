@@ -1,0 +1,75 @@
+---
+title: "Eslint : Comment afficher la configuration complète d'un projet?"
+description: Comment un fichier JSON
+date: 2023-07-08
+published: true
+image: ../../src/images/blog/printer-canon.jpg
+imageAlt: Joshua Fuller
+tags: [eslint, javascript, nodejs, typescript]
+---
+
+# Eslint : Comment afficher la configuration complète d'un projet?
+
+## Tout d’abord, montrons les commandes
+
+Si tu ne veux pas regarder les détails, utilise la commande suivante:
+
+Rappelle-toi que tu dois remplacer `<ton-fichier-config.js|.json>` par le nom de ton fichier de configuration.
+
+```bash
+eslint --print-config <ton-fichier-config.js|.json>
+```
+
+Si pour une raison quelconque la commande n’est pas trouvée, souviens-toi que tu peux utiliser `npx` pour l'obtenir depuis le registre npm ou depuis ton `node_modules`.
+
+```bash
+npx eslint --print-config <ton-fichier-config.js|.json>
+```
+
+## Et, pourquoi?
+
+Parfois, tu veux savoir ce qui se passe dans ta configuration d'ESLint. Surtout si tu commences à utiliser des plugins différents (Allô Typescript!) ou si tu veux t'assurer que la configuration par défaut est activée / désactivée.
+
+## Et ausssi
+
+Rappelle-toi que c'est une commande du terminal. Tu peux la combiner avec des outils tels que Bat, Less, Rg ou Grep.
+
+Pour les deux exemples, on supposera que le fichier de configuration d'ESLint est le même que celui de ce blog. Il s'agit d'un fichier appelé `.estlintrc.js`.
+
+### Utilise Less si tu ne veux pas de la syntaxe colorée
+
+```bash
+npx eslint --print-config .eslintrc.js | less
+```
+
+### Utilise Bat si tu veux de la syntaxe colorée
+
+Et aussi, tu peux utiliser l’option `-l` pour spécifier la langue de programmation :
+
+```bash
+npx eslint --print-config .eslintrc.js | bat -l json
+```
+
+### Stocke-le dans un fichier
+
+Alternativement, tu peux sauvegarder le contenu dans un fichier que tu pourras utiliser ensuite pour le filtrer avec ton outil préféré ou avec ton éditeur de code :
+
+```bash
+npx eslint --print-config .eslintrc.js >> ./eslintconfig.json
+```
+
+### Utilise rg pour le filtrer
+
+Tu peux utiliser la commande `rg` pour rechercher une clé spécifiée. On va supposer que l'on veut trouver la valeur de la clé `no-unused-vars`. De plus, je vais ajouter 3 lignes de contexte avec `C 3`, car la configuration est un JSON multiligne.
+
+```bash
+npx eslint --print-config .eslintrc.js | rg -C 3 "no-unused-vars"
+```
+
+### Ou utilise également grep
+
+`rg` ne vient pas par défaut sur plusieurs systèmes Linux. Si tu veux vraiment les filtrer dans un environnement où `rg` n’est pas installé, tu peux toujours utiliser `grep`. Nous allons réutiliser la même option que `rg` pour ajouter un peu de contexte.
+
+```bash
+npx eslint --print-config .eslintrc.js | grep -C 3 "no-unused-vars"
+```
