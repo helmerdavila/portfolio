@@ -1,0 +1,66 @@
+---
+title: 'Docker MySQL: Comment creér deux bases de données dans un conteneur'
+description: Je n’ai pas voulu contaminer ma base de données dans Docker avec plusieurs faux noms ou du contenu de Lorem Ipsum
+date: 2023-03-26
+image: ../../src/images/blog/containers-many.jpg
+imageAlt: Photo by Timelab on Unsplash
+published: true
+tags: ['docker', 'mysql', 'database', 'docker-compose']
+---
+
+# Docker MySQL: Comment creér deux bases de données dans un conteneur
+
+## 🤔 Pourquoi?
+
+J'en étais fatigué.
+
+Je n’ai pas voulu contaminer ma base de données dans Docker avec plusieurs faux noms ou du contenu de Lorem Ipsum. Parce que lorsque je veux afficher tous les enregistrements ou des photos dans l'application actuelle, je veux les originaux pour la présentation au client.
+
+De plus, j'ai voulu une base de données additionnelle, où si les migrations échouent, je peux retourner à la dernière version facilement, ou la détruire et la recréer sans exécuter les seeders ou utiliser une copie de sauvegarde avec des données presque réelles.
+
+De nombreux frameworks ont une approche différente pour le faire, comme l'exécution des tests dans les transactions, la vidange des données, etc.
+
+Mais je ne veux pas apprendre d'une autre façon pour le faire.
+
+J'ai trouvé une méthode différente.
+
+Qu'arriverait-il si nous ajoutions d'autres bases de données dans le conteneur ? Mieux encore, de manière automatique.
+
+## 🔨 Comment?
+
+Pour démontrer que je n'utilise pas l'IA pour générer des tutoriels sérieux dans mes posts, je vais utiliser `potato` (pomme de terre) comme nom de projet dans ce tutoriel.
+
+Tout d'abord, crée un dossier où tu veux sauvegarder les **scripts**. Pour ce tutoriel, on va l'appeler `dockerdb_init`. Ensuite, crée un fichier appelé `create_test_database.sql` avec le contenu suivant :
+
+```sql
+CREATE DATABASE IF NOT EXISTS `potato_db_test`;
+GRANT ALL ON `potato_db_test`.* TO 'potato_db_user'@'%'
+```
+
+> Docker crée simplement une base de données en utilisant les variables d'environnement fournies. Puisque le projet utilise une base de données de test, nous allons ajouter le suffixe "test".
+
+Si tu utilises un fichier `docker-compose.yml`, c'est la spécification pour le conteneur.
+
+```yaml
+db:
+  container_name: potato_db
+  image: 'mysql:8.0'
+  volumes:
+    - './dockerdb:/var/lib/mysql'
+    - './dockerdb_init:/docker-entrypoint-initdb.d'
+  env_file:
+    - .env
+  ports:
+    - '3306:3306'
+```
+
+Pour la raison que je veux garder mes variables d'environnement dans un fichier séparé, tu peux les mettre dans ton fichier `.env`:
+
+```bash
+MYSQL_ROOT_PASSWORD=rootpassword
+MYSQL_DATABASE=potato_db
+MYSQL_USER=potato_db_user
+MYSQL_PASSWORD=potato_db_pass
+```
+
+La première fois que tu exécutes le conteneur, le script s'exécutera et tu auras désormais deux bases de données : `potato_db` et `potato_db_test`.

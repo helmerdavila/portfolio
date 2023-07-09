@@ -14,13 +14,13 @@ tags: ['docker', 'mysql', 'database', 'docker-compose']
 
 Ya estaba cansado.
 
-Solo quería no contaminar mi base de datos dentro de Docker con un montón de nombres falsos o contenido de Lorem Ipsum. Porque cuando quiero listar todos los registros o fotos en mi aplicación actual, quiero los originales, para la presentación al cliente.
+Sólo quería no contaminar mi base de datos dentro de Docker con un montón de nombres falsos o contenido de Lorem Ipsum. Porque cuando quiero listar todos los registros o fotos en mi aplicación actual, quiero los originales, para la presentación al cliente.
 
 Además, quería una base de datos adicional, donde si mis migraciones fallan, pueda volver atrás fácilmente. O destruir la base de datos y crearla de nuevo, sin ejecutar _seeders_ o usar una copia de seguridad con datos casi reales.
 
 Muchos _frameworks_ tienen un enfoque diferente para esto. Ejecutar pruebas dentro de transacciones, post-limpieza, etc.
 
-Pero no quiero aprender una manera independiente de acuerdo al _framework_ en el que voy a trabajar.
+Pero no quería aprender una manera de hacerlo desde el framwork.
 
 Se me ocurrió una forma más simple.
 
@@ -32,14 +32,14 @@ Para demostrar que no uso IA para generar contenido formal en mis publicaciones,
 
 En primer lugar, crea una carpeta donde quieras almacenar los scripts. Para este tutorial, la llamaremos `dockerdb_init`. Luego, crea un archivo llamado `create_test_database.sql` con el siguiente contenido:
 
-> Docker solo crea una base de datos con las variables de entorno escritas. Dado que el proyecto utilizará una base de datos de prueba, este script agregará un sufijo _test_.
-
 ```sql
 CREATE DATABASE IF NOT EXISTS `potato_db_test`;
 GRANT ALL ON `potato_db_test`.* TO 'potato_db_user'@'%'
 ```
 
-Si estás usando `docker-compose.yml`, esta es la especificación para el contenedor.
+> Docker solo crea una base de datos con las variables de entorno escritas. Dado que el proyecto utilizará una base de datos de prueba, este script agregará un sufijo _test_.
+
+Si estás usando un archivo `docker-compose.yml`, esta es la especificación para el contenedor.
 
 ```yaml
 db:
