@@ -1,7 +1,7 @@
 import classNames from 'classnames';
-import { graphql, Link, PageProps } from 'gatsby';
+import { graphql, Link, PageProps, navigate } from 'gatsby';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
-import React, { useContext } from 'react';
+import React, { useContext, useState, ChangeEvent, KeyboardEvent } from 'react';
 import { LocaleContext, ThemeContext } from '../components/Layout';
 import LayoutBlog from '../components/LayoutBlog';
 import SEO from '../components/Seo';
@@ -53,6 +53,31 @@ export const BlogPostCard = ({ post }: { post: BlogPost }) => {
   );
 };
 
+const SearchBar = () => {
+  const [searchText, setSearchText] = useState('');
+
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => setSearchText(event.target.value);
+
+  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      navigate(`/search?query=${searchText}`);
+    }
+  };
+
+  return (
+    <section className="w-full mt-9">
+      <input
+        type="text"
+        placeholder="Type and press enter..."
+        className="w-full py-5 px-4 text-2xl"
+        onChange={handleInputChange}
+        onKeyDown={handleKeyDown}
+        value={searchText}
+      />
+    </section>
+  );
+};
+
 const Blog = ({ data }: PageProps<Queries.BlogQuery>): JSX.Element => {
   const context = useContext(ThemeContext);
   const { locale } = useContext(LocaleContext);
@@ -72,6 +97,7 @@ const Blog = ({ data }: PageProps<Queries.BlogQuery>): JSX.Element => {
           <h1 className={classNames('text-6xl font-bold', themeStyles)}>Blog</h1>
           <span className="text-6xl">{localeJson.flag}</span>
         </div>
+        <SearchBar />
         {posts.map((post) => (
           <BlogPostCard key={post.id} post={post} />
         ))}
