@@ -32,12 +32,12 @@ To demonstrate that I don't use AI to generate formal content in my posts, I wil
 
 First, create a folder where you want to store the scripts. For this tutorial, we'll call it `dockerdb_init`. Then, create a file called `create_test_database.sql` with the following content:
 
-> Docker only creates one database with the environment variables passed. Since the project will use a test database, we could add a test suffix.
-
 ```sql
 CREATE DATABASE IF NOT EXISTS `potato_db_test`;
 GRANT ALL ON `potato_db_test`.* TO 'potato_db_user'@'%'
 ```
+
+> Docker only creates one database with the environment variables passed. Since the project will use a test database, we could add a test suffix.
 
 Then, if you’re using `docker-compose.yml` this is the specification for the container.
 
