@@ -8,6 +8,7 @@ import SEO from '../components/Seo';
 import { v4 as uuidv4 } from 'uuid';
 import localesJson from '../../config/i18n';
 import { ILocalJson } from '../interfaces';
+import useTranslations from '../components/UseTranslations';
 
 type BlogPost = Queries.BlogQuery['allMdx']['nodes'][0];
 
@@ -55,6 +56,7 @@ export const BlogPostCard = ({ post }: { post: BlogPost }) => {
 
 const SearchBar = () => {
   const [searchText, setSearchText] = useState('');
+  const { type_and_press_enter } = useTranslations();
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => setSearchText(event.target.value);
 
@@ -68,7 +70,7 @@ const SearchBar = () => {
     <section className="w-full mt-9">
       <input
         type="text"
-        placeholder="Type and press enter..."
+        placeholder={type_and_press_enter}
         className="w-full py-5 px-4 text-2xl"
         onChange={handleInputChange}
         onKeyDown={handleKeyDown}

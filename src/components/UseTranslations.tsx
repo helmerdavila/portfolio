@@ -59,6 +59,7 @@ const query = graphql`
             projects
             roomie_description
             software_engineer
+            type_and_press_enter
             web_applications
             what_i_do
             what_i_do_backend
