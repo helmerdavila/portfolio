@@ -9,7 +9,6 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:jest-dom/recommended',
     'prettier',
-    'react-app',
   ],
   settings: {
     react: {
