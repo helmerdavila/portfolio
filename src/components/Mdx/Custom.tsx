@@ -86,7 +86,6 @@ export const MyPre = (props: { children: { props: Record<string, unknown> }; cla
 export const MyImage = (props: Record<string, unknown>) => <img className="shadow-lg rounded" alt="" {...props} />;
 
 export const MyPostLink = (props) => (
-  // eslint-disable-next-line jsx-a11y/anchor-has-content
   <a className={classNames('underline underline-offset-4')} {...props} target="_blank" />
 );
 

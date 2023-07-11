@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import Helmet from 'react-helmet';
-import { graphql } from 'gatsby';
-import { useStaticQuery } from 'gatsby';
+import { useStaticQuery, graphql } from 'gatsby';
 import { ThemeContext } from './Layout';
 
 interface Props {
@@ -18,7 +17,17 @@ interface Props {
 const SEO = (props: Props): JSX.Element => {
   const { lang, meta, keywords, title, image, ogType } = props;
   const context = useContext(ThemeContext);
-  const { site } = useStaticQuery(detailsQuery);
+  const { site } = useStaticQuery(graphql`
+    query DefaultSEO {
+      site {
+        siteMetadata {
+          title
+          description
+          author
+        }
+      }
+    }
+  `);
   const metaDescription = props.description ?? site.siteMetadata.description;
   const author = props.author ?? site.siteMetadata.author;
 
@@ -92,15 +101,3 @@ SEO.defaultProps = {
 };
 
 export default SEO;
-
-const detailsQuery = graphql`
-  query DefaultSEO {
-    site {
-      siteMetadata {
-        title
-        description
-        author
-      }
-    }
-  }
-`;
