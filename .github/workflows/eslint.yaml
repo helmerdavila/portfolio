@@ -15,8 +15,6 @@ jobs:
       - uses: volta-cli/action@v4
       - name: Installing dependencies
         run: npm ci
-      - name: Creating build
-        run: npm run build
       - name: Running eslint
         run: npm run lint
       - name: Running types check
