@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { graphql, Link, PageProps, navigate } from 'gatsby';
+import { graphql, Link, PageProps } from 'gatsby';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import React, { useContext, useState, ChangeEvent, KeyboardEvent } from 'react';
 import { LocaleContext, ThemeContext } from '../components/Layout';
@@ -54,15 +54,14 @@ export const BlogPostCard = ({ post }: { post: BlogPost }) => {
   );
 };
 
-const SearchBar = () => {
-  const [searchText, setSearchText] = useState('');
+const SearchBar = (props: { searchQuery: string; setSearchQuery: (value: string) => void }) => {
   const { type_and_press_enter } = useTranslations();
 
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => setSearchText(event.target.value);
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => props.setSearchQuery(event.target.value);
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
-      navigate(`/search?query=${searchText}`);
+      props.setSearchQuery(props.searchQuery);
     }
   };
 
@@ -74,7 +73,7 @@ const SearchBar = () => {
         className="w-full py-5 px-4 text-2xl"
         onChange={handleInputChange}
         onKeyDown={handleKeyDown}
-        value={searchText}
+        value={props.searchQuery}
       />
     </section>
   );
@@ -86,6 +85,28 @@ const Blog = ({ data }: PageProps<Queries.BlogQuery>): JSX.Element => {
   const themeStyles = { 'text-black': context.isLightTheme, 'text-white': !context.isLightTheme };
   const posts = data?.allMdx?.nodes;
   const localeJson: ILocalJson = localesJson[locale];
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredPosts, setFilteredPosts] = useState([]);
+
+  const handleSearchQuery = (searchText: string) => {
+    setSearchQuery(searchText);
+    if (searchText !== '') {
+      const postsFiltered = posts.filter((post) => {
+        const { title, description, tags } = post.frontmatter;
+        const query = searchText.toLowerCase();
+
+        return (
+          title.toLowerCase().includes(query) ||
+          description.toLowerCase().includes(query) ||
+          tags?.some((tag) => tag.toLowerCase().includes(query))
+        );
+      });
+
+      return setFilteredPosts(postsFiltered);
+    }
+
+    return setFilteredPosts([]);
+  };
 
   return (
     <LayoutBlog>
@@ -99,10 +120,11 @@ const Blog = ({ data }: PageProps<Queries.BlogQuery>): JSX.Element => {
           <h1 className={classNames('text-6xl font-bold', themeStyles)}>Blog</h1>
           <span className="text-6xl">{localeJson.flag}</span>
         </div>
-        <SearchBar />
-        {posts.map((post) => (
+        <SearchBar searchQuery={searchQuery} setSearchQuery={handleSearchQuery} />
+        {filteredPosts.map((post) => (
           <BlogPostCard key={post.id} post={post} />
         ))}
+        {filteredPosts.length === 0 ? posts.map((post) => <BlogPostCard key={post.id} post={post} />) : null}
       </div>
     </LayoutBlog>
   );
