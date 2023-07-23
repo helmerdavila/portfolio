@@ -1,9 +1,10 @@
-import React, { ReactNode, useContext } from 'react';
+import React, { ReactElement, ReactNode, useContext } from 'react';
 import { PageProps } from 'gatsby';
 import { ThemeContext } from '../Layout';
 import classNames from 'classnames';
 import Code from './Code';
 import { getImage } from 'gatsby-plugin-image';
+import { Components } from '@mdx-js/react/lib';
 
 interface Props {
   [key: string]: unknown;
@@ -80,16 +81,14 @@ export const MyInlineCode = (props) => {
 
   return <span className={classNames(themeStyles, 'rounded text-base px-1 font-mono')} {...props} />;
 };
-export const MyPre = (props: { children: { props: Record<string, unknown> }; className: string }) => (
-  <Code {...props.children.props} />
-);
-export const MyImage = (props: Record<string, unknown>) => <img className="shadow-lg rounded" alt="" {...props} />;
+export const MyPre: React.FC<{ children: ReactElement }> = (props) => <Code {...props.children.props} />;
+export const MyImage = (props: Record<string, unknown>) => <img className="shadow-lg rounded py-3" alt="" {...props} />;
 
 export const MyPostLink = (props) => (
   <a className={classNames('underline underline-offset-4')} {...props} target="_blank" />
 );
 
-export const components = {
+export const components: Components = {
   h1: MyH1,
   h2: MyH2,
   h3: MyH3,
@@ -99,7 +98,8 @@ export const components = {
   blockquote: MyBlockquote,
   pre: MyPre,
   code: MyInlineCode,
-  img: MyImage,
+  image: MyImage,
+  figure: MyImage,
   a: MyPostLink,
 };
 
