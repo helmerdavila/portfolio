@@ -1,0 +1,127 @@
+---
+title: 'Rails 7 avec Ruby 3, MySQL 8 et Redis sur Docker Alpine'
+description: 'En utilisant Docker pour créer des environnements dans des conteneurs'
+date: 2023-07-23
+published: true
+image: ../../src/images/blog/ruby.jpg
+imageAlt: 'Photo par Victoria Priessnitz en Unsplash'
+tags: ['rails', 'redis', 'ruby', 'alpine', 'docker', 'mysql']
+---
+
+# Rails 7 avec Ruby 3, MySQL 8 et Redis sur Docker Alpine
+
+Dans le passé, j'utilisais Rails et j'ai toujours admiré sa capacité à augmenter la vitesse de développement des logiciels grâce à sa flexibilité et sa facilité d'utilisation. Étant donné qu'il y a de nombreux développeurs qui travaillent sur différentes versions de Rails et que je voulais tester la dernière version disponible (2023), j'ai décidé de créer un guide pour exécuter Rails sur Docker sans utiliser d'outil natif.
+
+Cet article donne un guide sur la configuration de Rails 7 avec Ruby 3, MySQL 8 et Redis dans Docker Alpine. Cela comprend une courte explication du fichier Dockerfile, du fichier d'environnement et du fichier Docker Compose pour la configuration du backend.
+
+## On presente…, le fichier Dockerfile!
+
+Le fichier Dockerfile est notre premier point d'entrée vers le backend, et c'est l'un des services les plus compliqués à maintenir. Que peut-on faire?
+
+Vu les temps actuels, tu peux demander à ChatGPT d'interpréter le code suivant, mais si tu veux éviter d'ouvrir un autre onglet de navigateur, reste ici. Encore mieux, je vais essayer de simplifier chaque étape.
+
+J'utilise Alpine pour construire l'application. On doit installer quelques dépendances, c'est pourquoi on utilise la commande `apk`. Évidemment, tu peux remplacer le système d'exploitation par Ubuntu ou Debian, mais tu devrais mettre à jour l'étape d'installation des dépendances.
+
+Puisque je manque de créativité pour inventer un grand nombre de services, j'utilise souvent `potato` (pomme de terre) comme nom d'application ou comme préfixe de service. Tu peux le changer selon tes préférences.
+
+```docker
+# Dockerfile
+FROM ruby:3.1.4-alpine
+RUN \
+    # update packages
+    apk update && apk upgrade && \
+    apk --no-cache add make gcc libc-dev && \
+    apk add --update --no-cache \
+    build-base curl-dev git libxslt-dev libxml2-dev ruby-rdoc mysql-dev \
+    yaml-dev zlib-dev nodejs yarn tzdata
+
+WORKDIR /app
+
+# Gems nécessaires
+RUN gem install nokogiri -- --use-system-libraries
+RUN gem install bundler
+
+COPY Gemfile Gemfile.lock ./
+RUN bundle install
+
+COPY . .
+
+# Nettoyer les résidus des dépendances après l'installation
+RUN rm -rf /var/cache/apk/*
+
+ENV PATH=./bin:$PATH
+
+EXPOSE 3000
+CMD ["rails", "console"]
+```
+
+## Pour le prochain acte, un fichier .env!
+
+Un fichier d'environnement est utilisé pour transmettre des variables à l'application Rails. Ici, on configure notre accès à la base de données et en même temps, on envoie certaines valeurs d'environnement à l'application.
+
+Fais attention lorsque vous créez un commit pour ce fichier, ou ignore-le dans Git.
+
+Si tu souhaites avoir la même structure de fichier, mais avec des valeurs vides, laisse les clés et supprime les valeurs à droite. Tu peux utiliser `.env.example` comme nom de fichier.
+
+```bash
+# Utilisé par Rails, le conteneur d'application
+RAILS_ENV=development
+DATABASE_HOST=db
+DATABASE_USER=potato_db_user
+DATABASE_PASSWORD=potato_db_password
+REDIS_URL=redis://redis:6379
+# Utilisé par le conteneur de MySQL
+MYSQL_ROOT_PASSWORD=rails
+MYSQL_DATABASE=potato_development
+MYSQL_USER=potato_db_user
+MYSQL_PASSWORD=potato_db_password
+```
+
+## Enfin, et non des moindres: le fichier Docker compose!
+
+Ici, on peut définir comment travailler sur Rails, le conteneur MySQL et Redis, tous ensemble.
+
+Si tu utilises les ports d'application suivants : Rails `3000`, MySQL `3306` et Redis `6379`, n'hésite pas à les changer.
+
+De plus, dans le conteneur de l'application, tout le code est monté dans le dossier `/app`.
+
+Chaque fois que tu démarres le conteneur, il exécute `bundle install` pour s'assurer que l'application a toutes les dépendances requises et utilisées. Ensuite, il commence le serveur de développement sur le port `3000`, qui sera redirigé vers le host de Docker, c'est-à-dire ton ordinateur.
+
+```yaml
+version: '3.8'
+services:
+  app:
+    container_name: potato_backend
+    command: sh -c "bundle install && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    depends_on:
+      - mysql
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    restart: always
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+  mysql:
+    container_name: potato_db
+    image: mysql:8.0
+    env_file:
+      - .env
+    ports:
+      - 3306:3306
+  redis:
+    container_name: potato_redis
+    image: redis:6.2.6-alpine
+    restart: always
+    ports:
+      - 6379:6379
+```
+
+## Derniers détails
+
+Ce sont toutes les étapes dont tu as besoin pour exécuter ton application à partir de Docker.
+
+Une fois terminé, tu peux utiliser `docker compose up -d`.
