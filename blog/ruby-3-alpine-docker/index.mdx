@@ -1,0 +1,127 @@
+---
+title: 'Rails 7 with Ruby 3, MySQL 8 and Redis in Docker Alpine'
+description: 'Using Docker compose to create a Dockerized environment'
+date: 2023-07-23
+published: true
+image: ../../src/images/blog/ruby.jpg
+imageAlt: 'Photo by Victoria Priessnitz on Unsplash'
+tags: ['rails', 'redis', 'ruby', 'alpine', 'docker', 'mysql']
+---
+
+# Rails 7 with Ruby 3, with MySQL 8 and Redis in Docker Alpine
+
+I have used Rails in the past and have always admired its ability to increase software development speed due to its flexibility, ease of use, and fun factor. Since I know that there are still many developers who maintain different versions of Rails in the market, and I also wanted to test the latest version available (2023), I decided to create a guide where I run Rails over Docker without using any native tools.
+
+This article provides a guide on how to set up Rails 7 with Ruby 3, MySQL 8, and Redis in Docker Alpine. It includes a brief walkthrough of the Dockerfile, environment file, and Docker compose file necessary for setting up the backend.
+
+## Presenting to you…. The Dockerfile
+
+The Dockerfile is our first entrypoint to our backend, being one of the most complicated services to maintain. What are we going to do?
+
+Well, giving the current times, you can ask ChatGPT about what the following code does, but if you don’t want to open another tab, application and stay reading in the same place, stay with me. Even better, I’ll try to simplify each step.
+
+I'm using the Alpine version to build the app. We need to install some dependencies, and that's the reason behind the `apk` command. Of course, you can replace it with the Ubuntu or Debian version. But you must need to update the package installation step.
+
+Since I have no creativity to come up with a service name, I'll often use `potato` as the application name, or prefix services with it. Feel free to update it as you wish.
+
+```docker
+# Dockerfile
+FROM ruby:3.1.4-alpine
+RUN \
+    # update packages
+    apk update && apk upgrade && \
+    apk --no-cache add make gcc libc-dev && \
+    apk add --update --no-cache \
+    build-base curl-dev git libxslt-dev libxml2-dev ruby-rdoc mysql-dev \
+    yaml-dev zlib-dev nodejs yarn tzdata
+
+WORKDIR /app
+
+# Required gems
+RUN gem install nokogiri -- --use-system-libraries
+RUN gem install bundler
+
+COPY Gemfile Gemfile.lock ./
+RUN bundle install
+
+COPY . .
+
+# Clear package trash after installation
+RUN rm -rf /var/cache/apk/*
+
+ENV PATH=./bin:$PATH
+
+EXPOSE 3000
+CMD ["rails", "console"]
+```
+
+## For the next act… an .env file
+
+An environment file is used by Docker to pass environment variables to the Rails application. Here, we can set our database access and at the same time, send some environment values to the application.
+
+Be careful not to commit this file or ignore it from Git.
+
+If you want to have a skeleton, leave the keys and remove the values from the right, and name the file as `.env.example`.
+
+```bash
+# Used by Rails, the app container
+RAILS_ENV=development
+DATABASE_HOST=db
+DATABASE_USER=potato_db_user
+DATABASE_PASSWORD=potato_db_password
+REDIS_URL=redis://redis:6379
+# Used by MySQL container
+MYSQL_ROOT_PASSWORD=rails
+MYSQL_DATABASE=potato_development
+MYSQL_USER=potato_db_user
+MYSQL_PASSWORD=potato_db_password
+```
+
+## Last but not least: the Docker compose file
+
+Here, we can define how we are going to work with Rails, the MySQL container, and Redis, all together.
+
+If you are using the following ports: Rails `3000`, MySQL `3306`, and Redis `6379`, feel free to change them. I am using the default ones just to be consistent with the native tools.
+
+Also, inside the app container, the entire codebase is mounted to the `/app` directory within the container.
+
+Every time you start the container, it will run `bundle install` to ensure the application has all the dependencies needed and used by it. After that, it will start the development server on port `3000`, which is also forwarded to the Docker host, your computer.
+
+```yaml
+version: '3.8'
+services:
+  app:
+    container_name: potato_backend
+    command: sh -c "bundle install && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    depends_on:
+      - mysql
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    restart: always
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+  mysql:
+    container_name: potato_db
+    image: mysql:8.0
+    env_file:
+      - .env
+    ports:
+      - 3306:3306
+  redis:
+    container_name: potato_redis
+    image: redis:6.2.6-alpine
+    restart: always
+    ports:
+      - 6379:6379
+```
+
+## Last steps
+
+These are the only changes that you need to run your application from docker.
+
+Once finished you can `docker compose up -d`.
