@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode, useContext } from 'react';
+import React, { ReactNode, useContext } from 'react';
 import { PageProps } from 'gatsby';
 import { ThemeContext } from '../Layout';
 import classNames from 'classnames';
@@ -81,7 +81,7 @@ export const MyInlineCode = (props) => {
 
   return <span className={classNames(themeStyles, 'rounded text-base px-1 font-mono')} {...props} />;
 };
-export const MyPre: React.FC<{ children: ReactElement }> = (props) => <Code {...props.children.props} />;
+export const MyPre = (props) => <Code {...props.children.props} />;
 export const MyImage = (props: Record<string, unknown>) => <img className="shadow-lg rounded py-3" alt="" {...props} />;
 
 export const MyPostLink = (props) => (
