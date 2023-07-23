@@ -32,7 +32,6 @@ export const onCreatePage: GatsbyNode['onCreatePage'] = ({ page, actions }) => {
     const oldLocalizedPath = removeTrailingSlash(
       locales[lang].default ? page.path : `${locales[lang].path}${page.path}`,
     );
-    console.log(oldLocalizedPath, newLocalizedPath);
 
     if (!locales[lang].default) {
       createRedirect({
