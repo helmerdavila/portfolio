@@ -2,10 +2,15 @@ name: On pull request opened
 
 on:
   pull_request:
-    branches:
-      - main
+    branches: main
+    types: [opened, ready_for_review]
 
 jobs:
+  add-reviews:
+    name: Auto assign owner
+    runs-on: ubuntu-latest
+    steps:
+      - uses: kentaro-m/auto-assign-action@v1.2.5
   build_lint_and_typecheck:
     name: Lint and check types
     runs-on: ubuntu-latest
