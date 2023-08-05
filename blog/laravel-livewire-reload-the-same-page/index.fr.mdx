@@ -1,0 +1,45 @@
+---
+title: 'Laravel Livewire: Recharger la page après d’un événement et quelques secondes'
+description: En utilisant une astuce simple de Javascript
+date: 2023-09-05
+published: true
+image: ../../src/images/blog/wires-led.jpg
+tags: ['laravel', 'php', 'livewire', 'javascript', 'blade']
+---
+
+# Laravel Livewire: Recharger la page après d’un événement et quelques secondes
+
+Pour améliorer l'expérience de l'utilisateur sur ton site e-commerce, on peut ajouter une petite pause avant que le message de confirmation n'apparaisse. On peut le réaliser avec Livewire, une bibliothèque qui permet la création d'interfaces réactives sur Laravel. En utilisant Livewire, tu peux recharger la page après une pause de deux secondes, par exemple. Cela donne à l'utilisateur le temps de confirmer le produit qu'il a ajouté dans son panier. Ce simple mais efficace astuce peut faire une grande différence dans la satisfaction des acheteurs.
+
+## Et comment?
+
+Pour être honnête, la solution est si facile. Il suffit d'avoir une valeur dans la vue, dans ce cas on peut l'appeler `$evenementActive`.
+
+```jsx
+@if($evenementActive)
+  <section>Le produit{{ $produit->nom }} a été ajouté au panier</section>
+@endif
+```
+
+Pour recharger la page après quelques secondes, il est nécessaire d'avoir le support de Javascript. Créez une balise `<script>`, et à l'intérieur, utilisez `window.location.reload` pour rafraîchir la page.
+
+```jsx
+<script>setTimeout(function () {window.location.reload()}, 2000)</script>
+```
+
+Comme tu peux le voir, on a ajouté un temps fixé de deux secondes. Sens-toi libre d'expérimenter avec d'autres valeurs selon les besoins de ton projet. Tu peux même obtenir la valeur comme valeur PHP depuis le backend.
+
+Voici le script final.
+
+```jsx
+@if($evenementActive)
+  <section>Le produit{{ $produit->nom }} a été ajouté au panier</section>
+  <script>
+    setTimeout(function () { window.location.reload() }, 2000)
+  </script>
+@endif
+```
+
+## Conclusion
+
+Rappelle-toi que Livewire est en fin de compte du Javascript, donc certaines techniques utilisées pour une application SPA sont également valables pour Livewire.

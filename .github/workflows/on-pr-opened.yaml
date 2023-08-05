@@ -1,8 +1,9 @@
-name: Eslint
+name: On pull request opened
+
 on:
   pull_request:
-    branches:
-      - main
+    branches: main
+
 jobs:
   build_lint_and_typecheck:
     name: Lint and check types
@@ -21,3 +22,16 @@ jobs:
         run: npm run lint
       - name: Running types check
         run: npm run ts:check
+  coverage:
+    name: Coverage
+    runs-on: ubuntu-latest
+    env:
+      FONTAWESOME_GITHUB_NPM_TOKEN: ${{ secrets.FONTAWESOME_GITHUB_NPM_TOKEN }}
+      NODE_OPTIONS: --max-old-space-size=4096
+    steps:
+      - uses: actions/checkout@v3
+      - uses: volta-cli/action@v4
+      - name: Installing dependencies
+        run: npm ci
+      - name: Running tests
+        run: npm run test:cov
