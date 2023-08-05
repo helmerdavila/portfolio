@@ -1,0 +1,45 @@
+---
+title: 'Laravel Livewire: Reload same page after some event and time'
+description: Using a simple Javascript trick
+date: 2023-09-05
+published: true
+image: ../../src/images/blog/wires-led.jpg
+tags: ['laravel', 'php', 'livewire', 'javascript', 'blade']
+---
+
+# Laravel Livewire: Reload same page after some event and time
+
+In order to enhance the user experience on your e-commerce site, it may be beneficial to implement a delay before the success message appears. This can be achieved using Livewire, a library that allows you to create reactive interfaces in Laravel. By utilizing Livewire, you can reload the page after a short delay of two seconds, giving the user time to review the product they have added to their cart. This simple yet effective feature can make a big difference in the overall purchase experience of your customers.
+
+## How?
+
+To be honest, the solution is pretty simple. You just need to have a variable in the view, which in this case can be named `$eventWasTriggered`.
+
+```jsx
+@if($eventWasTriggered)
+  <section>Product {{ $product->name }} added to the cart</section>
+@endif
+```
+
+For live page refresh after an specific amount of time, we need to take advantage from Javascript. Create a `<script>` tag, and inside, use `window.location.reload` to refresh the page.
+
+```jsx
+<script>setTimeout(function () {window.location.reload()}, 2000)</script>
+```
+
+As you see, we have added a fixed time of 2 seconds. Feel free to use another value according your application needs. Another variant could be getting the time as PHP variable from the backend.
+
+Here is the final script.
+
+```jsx
+@if($eventWasTriggered)
+  <section>Product {{ $product->name }} added to the cart</section>
+  <script>
+    setTimeout(function () { window.location.reload() }, 2000)
+  </script>
+@endif
+```
+
+## Conclusion
+
+Remember that at the end of the day, Livewire is JavaScript, so some single-page application approaches are still valid for it.

@@ -1,0 +1,45 @@
+---
+title: 'Laravel Livewire: Recargar la página después de un evento y algunos segundos'
+description: Usando un simple truco en Javascript
+date: 2023-09-05
+published: true
+image: ../../src/images/blog/wires-led.jpg
+tags: ['laravel', 'php', 'livewire', 'javascript', 'blade']
+---
+
+# Laravel Livewire: Recargar la página después de un evento y algunos segundos
+
+Para poder mejorar la experiencia de usuario en tu sitio e-commerce, podemos implementar una pequeña pausa antes de que el mensaje de confirmación aparezca. Esto puede realizarse con Livewire, una librería que permite crear interfaces reactivas en Laravel. Al utilizar Livewire, puedes recargar la página después de una demora de dos segundos, brindándole al usuario un tiempo para verificar el producto que agregaron al carro de compras. Este simple pero efectivo truco puede hacer una gran diferencia en la satisfacción en el momento de compra para tus usuarios.
+
+## ¿Cómo?
+
+Para ser sinceros, la solución es muy sencilla. Sólo necesitas tener una variable en la vista, en este caso puede ser llamada `$eventoFueActivado` .
+
+```jsx
+@if($eventoFueActivado)
+  <section>Producto{{ $producto->nombre }} agregado al carrito</section>
+@endif
+```
+
+Para recargar la página después de algunos segundos, necesitamos el apoyo de Javascript. Crea un tag `<script>` , y dentro, usa `window.location.reload` para refrescar la página.
+
+```jsx
+<script>setTimeout(function () {window.location.reload()}, 2000)</script>
+```
+
+Como puedes ver, hemos agregado un tiempo fijo de dos segundos. Ten la libertad de usar otro valor de acuerdo a las necesidades de tu aplicación. Otra variante podría ser obteniendo el tiempo como variable PHP desde el backend.
+
+Aquí el script final.
+
+```jsx
+@if($eventoFueActivado)
+  <section>Producto{{ $producto->nombre }} agregado al carrito</section>
+  <script>
+    setTimeout(function () { window.location.reload() }, 2000)
+  </script>
+@endif
+```
+
+## Conclusión
+
+Recuerda que después de todo, Livewire es Javascript, así que algunos técnicas usadas para una aplicación SPA, aún son válidas para Livewire.
