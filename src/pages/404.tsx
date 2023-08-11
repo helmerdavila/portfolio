@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import SEO from '../components/Seo';
 
-const NotFoundPage = (): JSX.Element => (
+const NotFoundPage = (): ReactElement => (
   <>
     <SEO title="404: Not found" description="Page not found" />
     <h1>NOT FOUND</h1>

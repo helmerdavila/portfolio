@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { graphql, PageProps } from 'gatsby';
-import React, { useContext } from 'react';
+import React, { ReactElement, useContext } from 'react';
 import { ThemeContext } from '../Layout';
 import SEO from '../Seo';
 import { BlogPostCard } from '../../pages/blog';
@@ -9,7 +9,7 @@ import { localizeUrl } from '../LocalizedLink';
 import localesJson from '../../../config/i18n';
 import { ILocalJson } from '../../interfaces';
 
-const PostsByTagAndLocale = ({ data, pageContext }: PageProps<Queries.BlogByTagAndLocaleQuery>): JSX.Element => {
+const PostsByTagAndLocale = ({ data, pageContext }: PageProps<Queries.BlogByTagAndLocaleQuery>): ReactElement => {
   const context = useContext(ThemeContext);
   const themeStyles = { 'text-black': context.isLightTheme, 'text-white': !context.isLightTheme };
   const posts = data.allMdx.nodes.map((post) => <BlogPostCard key={post.id} post={post} />);

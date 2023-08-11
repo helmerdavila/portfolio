@@ -20,7 +20,7 @@ React prism renderer utilise PrismJS, et on peut le profiter. On doit importer l
 Ceci le code. Avec ce snippet, on peut créer un composant React dans Gatsby. Faire attention des lignes avec `require`.
 
 ```tsx
-import React, { useContext } from 'react';
+import React, { ReactElement, useContext } from 'react';
 import Highlight, { defaultProps, Language } from 'prism-react-renderer';
 // Ajouter des thèmes pour Prism
 import nightOwlNight from 'prism-react-renderer/themes/nightOwlLight';
@@ -42,7 +42,7 @@ interface Props {
   className: string;
 }
 
-const Code = ({ children, className }: Props): JSX.Element => {
+const Code = ({ children, className }: Props): ReactElement => {
   const context = useContext(ThemeContext);
   const language = (className.replace(/language-/, '') || '') as Language;
 

@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from 'react';
+import React, { ReactElement, ReactNode, useState } from 'react';
 import { ILayout } from '../interfaces';
 
 const LocaleContext = React.createContext(null);
@@ -7,7 +7,7 @@ const ThemeContext = React.createContext<{ isLightTheme: boolean; toggleTheme: (
   toggleTheme: null,
 });
 
-const ThemeContextProvider = ({ children }: { children: ReactNode }): JSX.Element => {
+const ThemeContextProvider = ({ children }: { children: ReactNode }): ReactElement => {
   const windowGlobal = typeof window !== 'undefined' && (window as WindowLocalStorage);
   let themeValueInMemory =
     (windowGlobal?.localStorage?.getItem('helmer_portfolio_is_light') as unknown as boolean) ?? true;
@@ -26,7 +26,7 @@ const ThemeContextProvider = ({ children }: { children: ReactNode }): JSX.Elemen
 // This e.g. enables the LocalizedLink to function correctly
 // As this component wraps every page (due to the wrapPageElement API) we can be sure to have
 // the locale available everywhere!
-const Layout = ({ children, pageContext: { locale } }: ILayout): JSX.Element => (
+const Layout = ({ children, pageContext: { locale } }: ILayout): ReactElement => (
   <LocaleContext.Provider value={{ locale }}>
     <ThemeContextProvider>{children}</ThemeContextProvider>
   </LocaleContext.Provider>

@@ -1,4 +1,4 @@
-import React, { ReactNode, useContext } from 'react';
+import React, { ReactElement, ReactNode, useContext } from 'react';
 import { PageProps } from 'gatsby';
 import { ThemeContext } from '../Layout';
 import classNames from 'classnames';
@@ -104,7 +104,7 @@ export const components: Components = {
 };
 
 // Don't change the Head name here. Used by Gatsby
-export const HeadForMeta = ({ data }: DeepPartial<PageProps<Queries.LayoutBlogPageQuery>>): JSX.Element => {
+export const HeadForMeta = ({ data }: DeepPartial<PageProps<Queries.LayoutBlogPageQuery>>): ReactElement => {
   const imageRendered = getImage(data.mdx.frontmatter.image.childImageSharp.gatsbyImageData);
   const imageAsSrc = imageRendered?.images?.fallback?.src ?? '/randomPathForTesting';
   const imageUrl = `${data.site.siteMetadata.siteUrl}${imageAsSrc}`;

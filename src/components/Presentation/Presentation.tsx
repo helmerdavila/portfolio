@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { ReactElement, useContext } from 'react';
 import Header from '../Layouts/Header';
 import classNames from 'classnames';
 import useTranslations from '../UseTranslations';
@@ -6,7 +6,7 @@ import { ThemeContext } from '../Layout';
 import { TypeAnimation } from 'react-type-animation';
 import * as PresentationStyles from './Presentation.module.css';
 
-const Presentation = (): JSX.Element => {
+const Presentation = (): ReactElement => {
   const context = useContext(ThemeContext);
   const {
     hi_my_name_is,

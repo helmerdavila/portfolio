@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { ReactElement, useContext } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -18,7 +18,7 @@ export interface ISlide {
   codeUrl: string;
   backend: string | null;
   frontend: string | null;
-  image: JSX.Element;
+  image: ReactElement;
 }
 
 export const Slide = ({ slide }: { slide: ISlide }) => {
@@ -94,7 +94,7 @@ export const Slide = ({ slide }: { slide: ISlide }) => {
   );
 };
 
-const FreeProjects = (): JSX.Element => {
+const FreeProjects = (): ReactElement => {
   const context = useContext(ThemeContext);
   const { roomie_description, battleship_description, code_samples } = useTranslations();
 

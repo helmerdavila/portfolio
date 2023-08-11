@@ -1,0 +1,97 @@
+---
+title: 'Pourquoi la réécriture de tout le code est la dernière option pour l’améliorer'
+description: Nous allons le faire à partir de zéro pour montrer que vous êtes Junior.
+date: 2023-03-20
+published: true
+image: ../../src/images/blog/construction-excavator.jpg
+imageAlt: 'Photo by Tobias Kleeb on Unsplash'
+tags: ['refactoring', 'legacy', 'rewrite']
+---
+
+# Pourquoi la réécriture de tout le code est la dernière option pour l’améliorer
+
+## Quand un développeur entre dans l’entreprise
+
+Il faut commencer par un mea culpa. J'étais comme ça depuis le début. Je n'étais pas prêt à lire du code, je voulais utiliser les connaissances que j'avais déjà dans le cadre X.
+
+Puis, quand le temps passe, on le voit.
+
+Cela se reproduit.
+
+Le nouveau qui entre dans l'entreprise où vous travaillez et se met à dire aux quatre vents:
+
+- Cela ne fonctionne pas.
+- Faisons cela à partir de zéro.
+- Le code est de la merde (ou des variantes : poubelle, horrible, spaghetti, etc.).
+
+La mauvaise chose à propos de cette idée est que vous allez devoir faire face à quelques choses :
+
+- Bogues existants : le code dont vous vous plaignez pourrait fonctionner sur certains bogues qui, en raison des mystères de l'univers.
+- Numéros magiques : maintenant, vous devez réfléchir à ce qu'ils sont et comment obtenir ces valeurs magiques qui y sont inscrites.
+
+## Pourquoi les tendances sont dangereuses
+
+Si tu découvres quelque chose de nouveau, utilise-le à l'endroit où tu ne peux pas affecter ou retarder ton produit.
+
+Fais des expériences, joue avec elles.
+
+Mais cela ne peut pas être ton principal blocage.
+
+N'essaie pas de l'utiliser avant de l'avoir expérimenté.
+
+Lorsque tu as maîtrisé un outil, il est plus facile de le recommander et de montrer ses avantages.
+
+Sois un expert de cet outil, pas un fan.
+
+## Quand doit-on créer un projet à partir de zéro?
+
+Il y a certaines occasions où j'ai vu qu'un projet doit être créé VRAIMENT à partir de zéro.
+
+Voici les occasions suivantes:
+
+- Le code fonctionne sur une langue ancienne ou il est difficile d'obtenir des développeurs experts qui pourraient le maintenir.
+- Les équipes commencent à augmenter et il est nécessaire de faire une séparation de domaine. Par exemple: une équipe d'authentification va créer un microservice qui doit enregistrer, authentifier et mettre à jour le mot de passe des utilisateurs.
+
+## Comment eviter faire tout dès zero: en utilisant des avantages incrémentiels
+
+Il y a quatre étapes que j'utilise pour faire un projet. Les petits avantages peuvent t'aider à lutter contre un code hérité.
+
+### Comprendre
+
+Le temps que tu utilises dans cette étape dépend de ton expérience en tant que développeur. Plus tu as vu de code, moins cela prendra de temps.
+
+Lis et essaie de comprendre le code.
+
+Utilise un débogueur pour analyser les valeurs.
+
+Écris les procédures dans des organigrammes, dans une langue que tu peux comprendre, et prends des notes.
+
+Discute avec ceux qui ont plus d'expérience que toi et qui ont vu des projets similaires ou qui ont vécu des expériences similaires.
+
+### Recherche et réflexion
+
+J'ai regroupé ces deux étapes car je crois qu'elles se complètent mutuellement.
+
+Si tu cherches des modèles de programmation ou des cas similaires dans plusieurs blogs ou vidéos YouTube, c'est mieux. Il y a des gens qui ont déjà vécu des situations comme la nôtre. Demander dans les forums ou les communautés est une option valable.
+
+Ensuite, nous devons réfléchir à la façon dont nous pouvons utiliser les connaissances pour améliorer le code. Nous pouvons utiliser l'expérience que vous avez, et si nous en manquons, l'expérimentation qui est disponible pour toi.
+
+### Planification
+
+La transition de la réflexion à la planification est subtile. Habituellement, ils viennent côte à côte.
+
+Planifier, c'est créer une estimation de quand et comment l'effort sera déployé pour améliorer le projet.
+
+Il est bien connu que les développeurs comme nous n'estiment pas bien, donc je recommande : si tu as souffert d'une sous-estimation, ajoute deux ou trois fois le temps que tu penses qu'il faudra et compare-le avec le temps réel. Tu auras une moyenne de ta façon de travailler, ou de celle de tes collègues.
+
+Il est important de planifier et d'utiliser des tests pour vérifier si ton code ne va pas échouer. Cependant, la création de ces tests peut augmenter le temps de développement.
+
+### Faire et tester
+
+Une fois que tu as fini ta planification, c'est parti ! N'oublie pas, une fois que tu as terminé d'améliorer le code, de vérifier que les tests fonctionnent et que les changements ne vont pas entraîner de conséquences négatives dans ton travail. Avec des améliorations incrémentielles, tu auras un projet qui motive n'importe quel développeur.
+
+## Conclusion
+
+Comme la plupart des questions dans la vie, la réponse est "ça dépend". L'expérience est ce qui te donne l'intuition qu'un projet doit être refait à zéro. Ou, au moins, qu'il faut en séparer une partie et la refaire.
+
+Tu as toujours à tes côtés le pouvoir de l'investigation et de la pensée critique.

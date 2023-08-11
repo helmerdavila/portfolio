@@ -1,9 +1,9 @@
-import React, { useContext } from 'react';
+import React, { ReactElement, useContext } from 'react';
 import classNames from 'classnames';
 import { ThemeContext } from '../Layout';
 import useTranslations from '../UseTranslations';
 
-const AboutMe = (): JSX.Element => {
+const AboutMe = (): ReactElement => {
   const context = useContext(ThemeContext);
   const textColor = { 'text-black': context.isLightTheme, 'text-white': !context.isLightTheme };
   const { about_me, about_me_description } = useTranslations();

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { ReactElement, useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBook } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
@@ -6,7 +6,7 @@ import useTranslations from '../UseTranslations';
 import { ThemeContext } from '../Layout';
 import { StaticImage } from 'gatsby-plugin-image';
 
-const MyBook = (): JSX.Element => {
+const MyBook = (): ReactElement => {
   const context = useContext(ThemeContext);
   const textColor = { 'text-white': !context.isLightTheme, 'text-black': context.isLightTheme };
   const { ctbook_description, ctbook_readsample } = useTranslations();

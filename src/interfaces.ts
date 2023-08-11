@@ -9,7 +9,7 @@ export interface ISlide {
   url: string;
   backend: string;
   frontend: string;
-  image: JSX.Element;
+  image: ReactElement;
 }
 export interface IGatsbyFileImage extends FileSystemNode {
   childImageSharp: { gatsbyImageData: IGatsbyImageData };

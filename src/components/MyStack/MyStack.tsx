@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { ReactElement, useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faAngular,
@@ -32,7 +32,7 @@ export const MyStackSection = (props: { title: string; description: string; icon
   );
 };
 
-const MyStack = (): JSX.Element => {
+const MyStack = (): ReactElement => {
   const context = useContext(ThemeContext);
   const textColor = { 'text-white': !context.isLightTheme, 'text-black': context.isLightTheme };
   const { my_stack, my_stack_backend, my_stack_frontend, my_stack_sysops } = useTranslations();

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { ReactElement, useContext } from 'react';
 import Helmet from 'react-helmet';
 import { useStaticQuery, graphql } from 'gatsby';
 import { ThemeContext } from './Layout';
@@ -14,7 +14,7 @@ interface Props {
   ogType?: string;
 }
 
-const SEO = (props: Props): JSX.Element => {
+const SEO = (props: Props): ReactElement => {
   const { lang, meta, keywords, title, image, ogType } = props;
   const context = useContext(ThemeContext);
   const { site } = useStaticQuery(graphql`
