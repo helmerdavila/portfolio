@@ -22,7 +22,7 @@ Under the hood, _React prism renderer_ uses PrismJS, and we can use it as our ad
 Here is the code. With this snippet, we can create a Gatsby React’s component. Pay attention to the `require` lines.
 
 ```tsx
-import React, { useContext } from 'react';
+import React, { ReactElement, useContext } from 'react';
 import Highlight, { defaultProps, Language } from 'prism-react-renderer';
 // Loading some themes for Prism
 import nightOwlNight from 'prism-react-renderer/themes/nightOwlLight';
@@ -44,7 +44,7 @@ interface Props {
   className: string;
 }
 
-const Code = ({ children, className }: Props): JSX.Element => {
+const Code = ({ children, className }: Props): ReactElement => {
   const context = useContext(ThemeContext);
   const language = (className.replace(/language-/, '') || '') as Language;
 

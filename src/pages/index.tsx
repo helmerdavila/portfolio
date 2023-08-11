@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import SEO from '../components/Seo';
 import Presentation from '../components/Presentation/Presentation';
 import Projects from '../components/Projects/Projects';
@@ -12,7 +12,7 @@ import Footer from '../components/Layouts/Footer';
 import BlogPreviewHome from '../components/Blog/BlogPreviewHome';
 import { graphql, PageProps } from 'gatsby';
 
-const IndexPage = ({ data }: PageProps<Queries.IndexPreviewPostsQuery>): JSX.Element => (
+const IndexPage = ({ data }: PageProps<Queries.IndexPreviewPostsQuery>): ReactElement => (
   <>
     <SEO
       title="Fullstack Web Developer"

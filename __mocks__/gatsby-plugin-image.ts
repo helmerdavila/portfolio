@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { IGatsbyImageData } from 'gatsby-plugin-image';
 import { faker } from '@faker-js/faker';
 import { vi } from 'vitest';
 
 const mockImage = ({ imgClassName, ...props }) => React.createElement('img', { ...props, className: imgClassName });
 
-const mockGatsbyImage = ({ image, imgClassName, ...props }: { image: JSX.Element; imgClassName: string }) => {
+const mockGatsbyImage = ({ image, imgClassName, ...props }: { image: ReactElement; imgClassName: string }) => {
   return React.cloneElement(image, { className: imgClassName, ...props });
 };
 

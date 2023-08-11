@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { ReactElement, useContext } from 'react';
 import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAppStore, faGooglePlay } from '@fortawesome/free-brands-svg-icons';
@@ -17,7 +17,7 @@ interface IApp {
   description_key: string;
   apple?: string;
   android?: string;
-  image: JSX.Element;
+  image: ReactElement;
 }
 
 const sliderSettings = {
@@ -64,7 +64,7 @@ const apps: IApp[] = [
   },
 ];
 
-const PersonalProjects = (): JSX.Element => {
+const PersonalProjects = (): ReactElement => {
   const context = useContext(ThemeContext);
   const translations = useTranslations();
   const textColor = { 'text-white': !context.isLightTheme, 'text-black': context.isLightTheme };

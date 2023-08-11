@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { ReactElement, useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconDefinition } from '@fortawesome/free-brands-svg-icons';
 import classNames from 'classnames';
@@ -30,7 +30,7 @@ export const WhatIDoSection = (props: { icon: IconDefinition; title: string; con
   );
 };
 
-const WhatIDo = (): JSX.Element => {
+const WhatIDo = (): ReactElement => {
   const context = useContext(ThemeContext);
   const textColor = { 'text-white': !context.isLightTheme, 'text-black': context.isLightTheme };
   const { what_i_do, what_i_do_mobile, what_i_do_frontend, what_i_do_backend, what_i_do_sysops } = useTranslations();

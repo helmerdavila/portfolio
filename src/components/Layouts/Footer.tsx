@@ -1,11 +1,11 @@
-import React, { useContext } from 'react';
+import React, { ReactElement, useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub, faLinkedinIn } from '@fortawesome/free-brands-svg-icons';
 import classNames from 'classnames';
 import { ThemeContext } from '../Layout';
 import useTranslations from '../UseTranslations';
 
-const Footer = (): JSX.Element => {
+const Footer = (): ReactElement => {
   const context = useContext(ThemeContext);
   const { powered_by_gatsby } = useTranslations();
 

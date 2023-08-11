@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { ReactElement, useContext } from 'react';
 import classNames from 'classnames';
 import { ThemeContext } from '../Layout';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
@@ -6,7 +6,7 @@ import { Link } from 'gatsby';
 import useTranslations from '../UseTranslations';
 import LocalizedLink from '../LocalizedLink';
 
-const BlogPreviewHome = ({ data }: { data: Queries.IndexPreviewPostsQuery }): JSX.Element => {
+const BlogPreviewHome = ({ data }: { data: Queries.IndexPreviewPostsQuery }): ReactElement => {
   const context = useContext(ThemeContext);
   const textColor = { 'text-white': !context.isLightTheme, 'text-black': context.isLightTheme };
   const posts = data.allMdx.nodes;
@@ -37,7 +37,7 @@ const BlogPreviewHome = ({ data }: { data: Queries.IndexPreviewPostsQuery }): JS
   ) : null;
 };
 
-export const PostCard = ({ post }: { post: Queries.IndexPreviewPostsQuery['allMdx']['nodes'][0] }): JSX.Element => {
+export const PostCard = ({ post }: { post: Queries.IndexPreviewPostsQuery['allMdx']['nodes'][0] }): ReactElement => {
   const context = useContext(ThemeContext);
   const textColor = { 'text-white': !context.isLightTheme, 'text-black': context.isLightTheme };
   const imageAlt = post.frontmatter.imageAlt ?? 'Blog';

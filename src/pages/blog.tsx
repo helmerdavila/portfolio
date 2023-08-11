@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { graphql, Link, PageProps } from 'gatsby';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
-import React, { useContext, useState, ChangeEvent, KeyboardEvent } from 'react';
+import React, { useContext, useState, ChangeEvent, KeyboardEvent, ReactElement } from 'react';
 import { LocaleContext, ThemeContext } from '../components/Layout';
 import LayoutBlog from '../components/LayoutBlog';
 import SEO from '../components/Seo';
@@ -79,7 +79,7 @@ const SearchBar = (props: { searchQuery: string; setSearchQuery: (value: string)
   );
 };
 
-const Blog = ({ data }: PageProps<Queries.BlogQuery>): JSX.Element => {
+const Blog = ({ data }: PageProps<Queries.BlogQuery>): ReactElement => {
   const context = useContext(ThemeContext);
   const { locale } = useContext(LocaleContext);
   const themeStyles = { 'text-black': context.isLightTheme, 'text-white': !context.isLightTheme };

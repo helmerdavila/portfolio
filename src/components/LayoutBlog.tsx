@@ -1,9 +1,9 @@
-import React, { ReactNode, useContext } from 'react';
+import React, { ReactElement, ReactNode, useContext } from 'react';
 import HeaderBlog from './Layouts/HeaderBlog';
 import { ThemeContext } from './Layout';
 import classNames from 'classnames';
 
-const LayoutBlog = ({ children }: { children: ReactNode }): JSX.Element => {
+const LayoutBlog = ({ children }: { children: ReactNode }): ReactElement => {
   const context = useContext(ThemeContext);
   const pageBackground = { 'bg-gray-200': context.isLightTheme, 'bg-gray-900': !context.isLightTheme };
 
