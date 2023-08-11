@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { ReactElement, useContext } from 'react';
 import { Link } from 'gatsby';
 import { LocaleContext } from './Layout';
 import localesJson from '../../config/i18n';
@@ -10,7 +10,7 @@ export const localizeUrl = (url: string, locale: string) => {
   return localeInfo.default ? url : `${url}/${locale}`;
 };
 
-const LocalizedLink = ({ to, ...props }: { to: string; [x: string]: unknown }): JSX.Element => {
+const LocalizedLink = ({ to, ...props }: { to: string; [x: string]: unknown }): ReactElement => {
   const { locale } = useContext(LocaleContext);
   const url = to === '/' ? '' : to;
 
