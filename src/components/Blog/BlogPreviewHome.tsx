@@ -3,11 +3,14 @@ import classNames from 'classnames';
 import { ThemeContext } from '../Layout';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import { Link } from 'gatsby';
+import useTranslations from '../UseTranslations';
+import LocalizedLink from '../LocalizedLink';
 
 const BlogPreviewHome = ({ data }: { data: Queries.IndexPreviewPostsQuery }): JSX.Element => {
   const context = useContext(ThemeContext);
   const textColor = { 'text-white': !context.isLightTheme, 'text-black': context.isLightTheme };
   const posts = data.allMdx.nodes;
+  const { see_full_post_list } = useTranslations();
 
   return posts.length ? (
     <section
@@ -15,11 +18,20 @@ const BlogPreviewHome = ({ data }: { data: Queries.IndexPreviewPostsQuery }): JS
     >
       <div className="container mx-auto 2xl:max-w-7xl">
         <h2 className={classNames('text-5xl font-semibold text-center mb-4', textColor)}>Blog</h2>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid xs:grid-cols-1 md:grid-cols-2 gap-4">
           {posts?.map((post) => (
             <PostCard key={post.id} post={post} />
           ))}
         </div>
+        <LocalizedLink
+          to="/blog"
+          className={classNames('block rounded-full px-5 py-3 mt-7 mx-auto max-w-md text-center', {
+            'bg-black text-white': context.isLightTheme,
+            'bg-gray-900 text-white': !context.isLightTheme,
+          })}
+        >
+          <span className="font-semibold">{see_full_post_list}</span>
+        </LocalizedLink>
       </div>
     </section>
   ) : null;

@@ -40,6 +40,7 @@ const useTranslations = (): Record<string, string> => {
               powered_by_gatsby
               projects
               roomie_description
+              see_full_post_list
               software_engineer
               type_and_press_enter
               web_applications
