@@ -8,12 +8,16 @@ const ThemeContext = React.createContext<{ isLightTheme: string; toggleTheme: ()
 });
 
 const ThemeContextProvider = ({ children }: { children: ReactNode }): ReactElement => {
-  const [isLightTheme, setIsLightTheme] = useState<string>(localStorage.getItem('is_light_theme') ?? 'light');
+  const localStorageKey = 'is_light_theme';
+  const windowGlobal = typeof window !== 'undefined' && (window as WindowLocalStorage);
+  const [isLightTheme, setIsLightTheme] = useState<string>(
+    windowGlobal?.localStorage?.getItem(localStorageKey) ?? 'light',
+  );
 
   const changeTheme = () => {
     if (
-      localStorage.is_light_theme === 'dark' ||
-      (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
+      windowGlobal?.localStorage?.getItem(localStorageKey) === 'dark' ||
+      (!(localStorageKey in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
     ) {
       document.documentElement.classList.add('dark');
     } else {
@@ -25,7 +29,7 @@ const ThemeContextProvider = ({ children }: { children: ReactNode }): ReactEleme
 
   const onToggleTheme = () => {
     const updateLightTheme = isLightTheme === 'light' ? 'dark' : 'light';
-    localStorage.setItem('is_light_theme', updateLightTheme);
+    windowGlobal?.localStorage.setItem(localStorageKey, updateLightTheme);
     setIsLightTheme(updateLightTheme);
     changeTheme();
   };

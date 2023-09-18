@@ -23,7 +23,6 @@ interface Props {
 const Code = ({ children, className }: Props) => {
   const context = useContext(ThemeContext);
   const language = (className?.replace(/language-/, '') || '') as Language;
-  console.log('light theme: ', context.isLightTheme);
 
   return (
     <Highlight
