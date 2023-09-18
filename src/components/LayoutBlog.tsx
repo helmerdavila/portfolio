@@ -1,16 +1,11 @@
-import React, { ReactElement, ReactNode, useContext } from 'react';
+import React, { ReactElement, ReactNode } from 'react';
 import HeaderBlog from './Layouts/HeaderBlog';
-import { ThemeContext } from './Layout';
-import classNames from 'classnames';
 
 const LayoutBlog = ({ children }: { children: ReactNode }): ReactElement => {
-  const context = useContext(ThemeContext);
-  const pageBackground = { 'bg-gray-200': context.isLightTheme, 'bg-gray-900': !context.isLightTheme };
-
   return (
     <>
       <HeaderBlog />
-      <div className={classNames(pageBackground, 'pt-20 h-full min-h-screen')}>{children}</div>
+      <div className="pt-20 h-full min-h-screen bg-gray-200 dark:bg-gray-900">{children}</div>
     </>
   );
 };

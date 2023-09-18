@@ -1,8 +1,6 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import LayoutBlog from '../LayoutBlog';
 import { graphql, Link } from 'gatsby';
-import { ThemeContext } from '../Layout';
-import classNames from 'classnames';
 import { MDXProvider } from '@mdx-js/react';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import useTranslations from '../UseTranslations';
@@ -17,18 +15,17 @@ import { PostCard } from '../Blog/BlogPreviewHome';
 // Don't change the Head name here. Used by Gatsby
 export const Head = (props) => <HeadForMeta {...props} />;
 
-const Tags = ({ tags, locale, cssBackground, cssText, isLightMode = true }) => {
-  const cssTags = classNames('mr-4 text-xl font-quicksand p-2 rounded-xl cursor-pointer', cssText, {
-    'bg-zinc-100 hover:bg-zinc-200': isLightMode,
-    'bg-gray-700 hover:bg-gray-600': !isLightMode,
-  });
-
+const Tags = ({ tags, locale }) => {
   return tags.length ? (
-    <div className={classNames(cssBackground, 'my-7 py-7 px-12 container max-w-3xl  mx-auto xl:max-w-6xl')}>
-      <h2 className={classNames(cssText, 'text-4xl font-bold')}>Tags</h2>
+    <div className="my-7 py-7 px-12 container max-w-3xl mx-auto xl:max-w-6xl bg-white shadow-sm dark:bg-gray-800 dark:border-gray-800">
+      <h2 className="text-4xl font-bold text-black dark:text-white">Tags</h2>
       <div className="flex flex-wrap mt-4">
         {tags.map((tag) => (
-          <Link to={localizeUrl(`/tags/${tag}`, locale)} key={uuidv4()} className={cssTags}>
+          <Link
+            to={localizeUrl(`/tags/${tag}`, locale)}
+            key={uuidv4()}
+            className="mr-4 text-xl font-quicksand p-2 rounded-xl cursor-pointer bg-zinc-100 hover:bg-zinc-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-black dark:text-white"
+          >
             #{tag}
           </Link>
         ))}
@@ -37,12 +34,12 @@ const Tags = ({ tags, locale, cssBackground, cssText, isLightMode = true }) => {
   ) : null;
 };
 
-const Author = ({ cssBackground, cssText, author, writtenBy }) => (
-  <div className={classNames(cssBackground, 'my-7 py-7 px-12 container max-w-3xl  mx-auto xl:max-w-6xl')}>
-    <h2 className={classNames(cssText, 'text-4xl font-bold')}>{author}</h2>
+const Author = ({ author, writtenBy }) => (
+  <div className="my-7 py-7 px-12 container max-w-3xl mx-auto xl:max-w-6xl bg-white shadow-sm dark:bg-gray-800 dark:border-gray-800">
+    <h2 className="text-4xl font-bold text-black dark:text-white">{author}</h2>
     <div className="flex justify-between mt-6">
-      <span className={classNames(cssText, 'text-xl font-quicksand')}>{writtenBy} Helmer Davila</span>
-      <div className={classNames(cssText, 'text-xl')}>
+      <span className="text-xl font-quicksand text-black dark:text-white">{writtenBy} Helmer Davila</span>
+      <div className="text-xl text-black dark:text-white">
         <a href="https://www.helmerdavila.com" className="mr-2">
           <FontAwesomeIcon icon={faGlobe} />
         </a>
@@ -57,31 +54,26 @@ const Author = ({ cssBackground, cssText, author, writtenBy }) => (
   </div>
 );
 
-const Disclaimer = ({ cssBackground, cssText, message }) => {
-  return (
-    <section
-      className={classNames(
-        cssBackground,
-        'flex justify-center my-7 py-7 px-12 container max-w-3xl mx-auto xl:max-w-6xl font-quicksand',
-      )}
-    >
-      <span className={classNames(cssText, 'italic')}>{message}</span>
-    </section>
-  );
-};
+const Disclaimer = ({ message }) => (
+  <section
+    className={
+      'flex justify-center my-7 py-7 px-12 container max-w-3xl mx-auto xl:max-w-6xl font-quicksand bg-white shadow-sm dark:bg-gray-800 dark:border-gray-800'
+    }
+  >
+    <span className="italic text-black dark:text-white">{message}</span>
+  </section>
+);
 
 /**
  * @param {Queries.LayoutBlogPageQuery.multilanguagePosts.nodes} posts
  * @param {string} currentLocale
- * @param {object} cssText
- * @param {object} cssBackground
  * */
-const PostInOtherLanguages = ({ posts, currentLocale, cssText, cssBackground }) => {
+const PostInOtherLanguages = ({ posts, currentLocale }) => {
   const { in_other_languages } = useTranslations();
 
   return posts ? (
-    <div className={classNames(cssBackground, 'my-7 py-7 px-12 container max-w-3xl  mx-auto xl:max-w-6xl')}>
-      <h2 className={classNames(cssText, 'text-4xl font-bold')}>{in_other_languages}</h2>
+    <div className="my-7 py-7 px-12 container max-w-3xl mx-auto xl:max-w-6xl bg-white shadow-sm dark:bg-gray-800 dark:border-gray-800">
+      <h2 className="text-4xl font-bold text-black dark:text-white">{in_other_languages}</h2>
       <div className="grid grid-cols-2 gap-4 mt-6">
         {posts
           .filter((post) => post.fields.locale !== currentLocale)
@@ -95,15 +87,9 @@ const PostInOtherLanguages = ({ posts, currentLocale, cssText, cssBackground }) 
 
 /** @param {import("gatsby").PageProps<Queries.LayoutBlogPageQuery>} props */
 const PostPage = (props) => {
-  const context = useContext(ThemeContext);
   const { data, children } = props;
   const { author, edit_posts_on_github, written_by, disclaimer } = useTranslations();
-  const pageBackground = {
-    'bg-white shadow-sm': context.isLightTheme,
-    'bg-gray-800 border-gray-800': !context.isLightTheme,
-  };
   const { mdx, multilanguagePosts } = data;
-  const textStyle = { 'text-black': context.isLightTheme, 'text-white': !context.isLightTheme };
   const imageAlt = mdx.frontmatter?.imageAlt ?? 'Photo by Unsplash';
   const imageSource =
     mdx.frontmatter.image?.childImageSharp?.gatsbyImageData ??
@@ -118,7 +104,7 @@ const PostPage = (props) => {
   return (
     <LayoutBlog>
       <div className="container max-w-3xl py-5 mx-auto xl:max-w-6xl">
-        <div className={classNames(pageBackground, 'border-2')}>
+        <div className="border-2 bg-white shadow-sm dark:bg-gray-800 dark:border-gray-800">
           <GatsbyImage image={imageRendered} alt={imageAlt} data-testid="post-image" />
           <div className="p-12 blog-page">
             <MDXProvider components={components}>{children}</MDXProvider>
@@ -126,7 +112,7 @@ const PostPage = (props) => {
               <a
                 href={`https://github.com/helmerdavila/portfolio/edit/main/blog/${pathFileForGithub}`}
                 target="_blank"
-                className={classNames(textStyle, 'font-bold hover:underline text-right')}
+                className="font-bold hover:underline text-right text-black dark:text-white"
                 rel="noreferrer"
               >
                 {edit_posts_on_github}
@@ -134,21 +120,10 @@ const PostPage = (props) => {
             </div>
           </div>
         </div>
-        <Disclaimer cssBackground={pageBackground} cssText={textStyle} message={disclaimer} />
-        <Tags
-          tags={tags}
-          locale={locale}
-          isLightMode={context.isLightTheme}
-          cssBackground={pageBackground}
-          cssText={textStyle}
-        />
-        <PostInOtherLanguages
-          posts={multilanguagePosts.nodes}
-          currentLocale={locale}
-          cssText={textStyle}
-          cssBackground={pageBackground}
-        />
-        <Author author={author} writtenBy={written_by} cssBackground={pageBackground} cssText={textStyle} />
+        <Disclaimer message={disclaimer} />
+        <Tags tags={tags} locale={locale} />
+        <PostInOtherLanguages posts={multilanguagePosts.nodes} currentLocale={locale} />
+        <Author author={author} writtenBy={written_by} />
       </div>
     </LayoutBlog>
   );

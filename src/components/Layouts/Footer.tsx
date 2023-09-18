@@ -1,16 +1,13 @@
-import React, { ReactElement, useContext } from 'react';
+import React, { ReactElement } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub, faLinkedinIn } from '@fortawesome/free-brands-svg-icons';
-import classNames from 'classnames';
-import { ThemeContext } from '../Layout';
 import useTranslations from '../UseTranslations';
 
 const Footer = (): ReactElement => {
-  const context = useContext(ThemeContext);
   const { powered_by_gatsby } = useTranslations();
 
   return (
-    <footer className={classNames({ 'bg-black': context.isLightTheme, 'bg-gray-800': !context.isLightTheme })}>
+    <footer className="bg-black dark:bg-gray-800">
       <div className="container flex flex-col items-center py-6 mx-auto">
         <div className="flex flex-row pt-5">
           <a
