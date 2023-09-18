@@ -14,17 +14,17 @@ interface Props {
 
 export const HeaderComponent = (props: Props) => {
   const context = useContext(ThemeContext);
+  const isLightTheme = context.isLightTheme === 'light';
   const navbarClass = classNames(
     'fixed flex flex-row w-screen h-16 px-5 md:px-8 justify-between z-20 transition duration-200 ease-in-out',
     {
-      'bg-white shadow-xl': props.scrollPositionY > 0 && context.isLightTheme,
-      'bg-gray-800': props.scrollPositionY > 0 && !context.isLightTheme,
+      'bg-white dark:bg-gray-800 shadow-xl': props.scrollPositionY > 0,
     },
   );
   const { cv_link, download_cv } = useTranslations();
   const stylesText = {
-    'text-white': props.scrollPositionY === 0 || !context.isLightTheme,
-    'text-black': props.scrollPositionY > 0 && context.isLightTheme,
+    'text-white': props.scrollPositionY === 0 || !isLightTheme,
+    'text-black dark:text-white': props.scrollPositionY > 0 && isLightTheme,
   };
   const stylesLink = classNames('mr-3 uppercase', stylesText);
 
@@ -68,9 +68,8 @@ export const HeaderComponent = (props: Props) => {
           className={classNames(
             'border text-white ml-3 px-3 py-2 rounded-full font-semibold hover:bg-white hover:text-black transition duration-200 ease-in-out',
             {
-              'border-white': props.scrollPositionY === 0 && context.isLightTheme,
-              'border-black bg-black': props.scrollPositionY > 0 && context.isLightTheme,
-              'bg-gray-900 text-white border-gray-900': props.scrollPositionY > 0 && !context.isLightTheme,
+              'border-white': props.scrollPositionY === 0 && isLightTheme,
+              'border-black dark:border-gray-900 bg-black dark:bg-gray-900': props.scrollPositionY > 0,
             },
           )}
         >

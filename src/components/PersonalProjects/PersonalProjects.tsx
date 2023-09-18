@@ -1,5 +1,4 @@
-import React, { ReactElement, useContext } from 'react';
-import classNames from 'classnames';
+import React, { ReactElement } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAppStore, faGooglePlay } from '@fortawesome/free-brands-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
@@ -8,7 +7,6 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { v4 as uuidv4 } from 'uuid';
 import useTranslations from '../UseTranslations';
-import { ThemeContext } from '../Layout';
 import { StaticImage } from 'gatsby-plugin-image';
 
 interface IApp {
@@ -65,18 +63,13 @@ const apps: IApp[] = [
 ];
 
 const PersonalProjects = (): ReactElement => {
-  const context = useContext(ThemeContext);
   const translations = useTranslations();
-  const textColor = { 'text-white': !context.isLightTheme, 'text-black': context.isLightTheme };
   const AppCards = apps.map((app) => <AppCard key={app.id} app={app} translations={translations} />);
 
   return (
-    <section
-      id="projects"
-      className={classNames('py-10', { 'bg-gray-200': context.isLightTheme, 'bg-gray-900': !context.isLightTheme })}
-    >
+    <section id="projects" className="py-10 bg-gray-200 dark:bg-gray-900">
       <div className="container mx-auto 2xl:max-w-7xl">
-        <h1 className={classNames('text-5xl text-center font-semibold mb-3', textColor)}>{translations.projects}</h1>
+        <h1 className="text-5xl text-center font-semibold mb-3 text-black dark:text-white">{translations.projects}</h1>
         <Slider {...sliderSettings}>{AppCards}</Slider>
       </div>
     </section>
@@ -84,15 +77,12 @@ const PersonalProjects = (): ReactElement => {
 };
 
 export const AppCard = (props: { app: IApp; translations: Record<string, string> }) => {
-  const context = useContext(ThemeContext);
-  const textColor = { 'text-white': !context.isLightTheme, 'text-black': context.isLightTheme };
-
   return (
     <div className="flex flex-col sm:flex-row">
       <div className="flex-1 p-10">{props.app.image}</div>
       <div className="flex-1 p-6">
-        <h2 className={classNames('text-4xl font-semibold', textColor)}>{props.app.title}</h2>
-        <p className={classNames('block mb-3 leading-loose', textColor)}>
+        <h2 className="text-4xl font-semibold text-black dark:text-white">{props.app.title}</h2>
+        <p className="block mb-3 leading-loose text-black dark:text-white">
           {props.translations[props.app.description_key]}
         </p>
         <div className="flex">
@@ -105,18 +95,13 @@ export const AppCard = (props: { app: IApp; translations: Record<string, string>
 };
 
 export const StoreButton = (props: { title: string; icon: IconProp; link: string }) => {
-  const context = useContext(ThemeContext);
-
   return (
     <a
       href={props.link}
       target="_blank"
       data-testid="store-button-target"
       rel="noopener noreferrer"
-      className={classNames('inline-flex rounded-full px-5 py-3 items-center mr-2', {
-        'bg-black text-white': context.isLightTheme,
-        'bg-gray-700 text-white': !context.isLightTheme,
-      })}
+      className="inline-flex rounded-full px-5 py-3 items-center mr-2 bg-black text-white dark:bg-gray-700 dark:text-white"
     >
       <FontAwesomeIcon icon={props.icon} size="2x" />
       <span className="ml-3 font-semibold">{props.title}</span>

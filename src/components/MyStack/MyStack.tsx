@@ -1,4 +1,4 @@
-import React, { ReactElement, useContext } from 'react';
+import React, { ReactElement } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faAngular,
@@ -11,39 +11,29 @@ import {
   IconDefinition,
 } from '@fortawesome/free-brands-svg-icons';
 import { v4 as uuidv4 } from 'uuid';
-import classNames from 'classnames';
 import useTranslations from '../UseTranslations';
-import { ThemeContext } from '../Layout';
 
 export const MyStackSection = (props: { title: string; description: string; icons: IconDefinition[] }) => {
-  const context = useContext(ThemeContext);
-  const textColor = { 'text-white': !context.isLightTheme, 'text-black': context.isLightTheme };
-
   return (
     <div className="flex-1 flex flex-col items-center my-4">
-      <div className={classNames('icon-spacer mb-3', textColor)} data-testid="icon-spacer">
+      <div className="icon-spacer mb-3 text-black dark:text-white" data-testid="icon-spacer">
         {props.icons.map((icon) => (
           <FontAwesomeIcon key={uuidv4()} icon={icon} size="3x" />
         ))}
       </div>
-      <h4 className={classNames('text-2xl font-semibold', textColor)}>{props.title}</h4>
-      <span className={classNames(textColor)}>{props.description}</span>
+      <h4 className="text-2xl font-semibold text-black dark:text-white">{props.title}</h4>
+      <span className="text-black dark:text-white">{props.description}</span>
     </div>
   );
 };
 
 const MyStack = (): ReactElement => {
-  const context = useContext(ThemeContext);
-  const textColor = { 'text-white': !context.isLightTheme, 'text-black': context.isLightTheme };
   const { my_stack, my_stack_backend, my_stack_frontend, my_stack_sysops } = useTranslations();
 
   return (
-    <section
-      id="my_stack"
-      className={classNames('py-10', { 'bg-white': context.isLightTheme, 'bg-gray-800': !context.isLightTheme })}
-    >
+    <section id="my_stack" className="py-10 bg-white dark:bg-gray-800">
       <div className="container mx-auto">
-        <h1 className={classNames('text-5xl font-semibold text-center mb-3', textColor)}>{my_stack}</h1>
+        <h1 className="text-5xl font-semibold text-center mb-3 text-black dark:text-white">{my_stack}</h1>
         <div className="flex flex-col sm:flex-row justify-around">
           <MyStackSection icons={[faPhp, faNodeJs]} title="PHP | NodeJS" description={my_stack_backend} />
           <MyStackSection

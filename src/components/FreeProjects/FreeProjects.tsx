@@ -1,12 +1,10 @@
-import React, { ReactElement, useContext } from 'react';
+import React, { ReactElement } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCode, faExternalLinkAlt } from '@helmerdavila/fontawesomehelmer/pro-duotone-svg-icons';
 import useTranslations from '../UseTranslations';
-import { ThemeContext } from '../Layout';
 import { StaticImage } from 'gatsby-plugin-image';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -22,50 +20,32 @@ export interface ISlide {
 }
 
 export const Slide = ({ slide }: { slide: ISlide }) => {
-  const context = useContext(ThemeContext);
-
-  const lightLabelColor = {
-    'bg-gray-200 text-black': context.isLightTheme,
-    'bg-gray-700 text-white': !context.isLightTheme,
-  };
-  const darkLabelColor = {
-    'bg-black text-white': context.isLightTheme,
-    'bg-gray-400 text-black': !context.isLightTheme,
-  };
-  const textColor = { 'text-white': !context.isLightTheme, 'text-black': context.isLightTheme };
-  const borderColors = { 'border-gray-900': !context.isLightTheme, 'border-gray-400': context.isLightTheme };
-
   const backend = slide.backend ? (
     <div className="px-1 py-2">
-      <span className={classNames('text-sm p-1 rounded-l', lightLabelColor)}>Backend</span>
-      <span className={classNames('text-sm p-1 rounded-r', darkLabelColor)}>{slide.backend}</span>
+      <span className="text-sm p-1 rounded-l bg-gray-200 text-black dark:bg-gray-800 dark:text-white">Backend</span>
+      <span className="text-sm p-1 rounded-r bg-black text-white dark:bg-gray-400 dark:text-black">
+        {slide.backend}
+      </span>
     </div>
   ) : null;
 
   const frontend = slide.frontend ? (
     <div className="px-1 py-2">
-      <span className={classNames('text-sm p-1 rounded-l', lightLabelColor)}>Frontend</span>
-      <span className={classNames('text-sm p-1 rounded-r', darkLabelColor)}>{slide.frontend}</span>
+      <span className="text-sm p-1 rounded-l bg-gray-200 text-black dark:bg-gray-800 dark:text-white">Frontend</span>
+      <span className="text-sm p-1 rounded-r bg-black text-white dark:bg-gray-400 dark:text-black">
+        {slide.frontend}
+      </span>
     </div>
   ) : null;
 
   return (
-    <div
-      className={classNames({
-        'bg-white': context.isLightTheme,
-        'bg-gray-800': !context.isLightTheme,
-      })}
-      key={slide.id}
-    >
+    <div className="bg-white dark:bg-gray-800" key={slide.id}>
       <figure className="relative">
         {slide.image}
         <a
           href={slide.url}
           target="_blank"
-          className={classNames(
-            'absolute bottom-0 right-0 mb-3 mr-3 p-3 flex justify-center items-center rounded-full font-semibold w-16 h-16',
-            { 'bg-white text-black': context.isLightTheme, 'bg-gray-900 text-white': !context.isLightTheme },
-          )}
+          className="absolute bottom-0 right-0 mb-3 mr-3 p-3 flex justify-center items-center rounded-full font-semibold w-16 h-16 bg-white text-black dark:bg-gray-900 dark:text-white"
           rel="noopener noreferrer"
         >
           <FontAwesomeIcon icon={faExternalLinkAlt} size="2x" fixedWidth />
@@ -73,18 +53,15 @@ export const Slide = ({ slide }: { slide: ISlide }) => {
         <a
           href={slide.codeUrl}
           target="_blank"
-          className={classNames(
-            'absolute bottom-0 left-0 mb-3 ml-3 p-3 flex justify-center items-center rounded-full font-semibold w-16 h-16',
-            { 'bg-white text-black': context.isLightTheme, 'bg-gray-900 text-white': !context.isLightTheme },
-          )}
+          className="absolute bottom-0 left-0 mb-3 ml-3 p-3 flex justify-center items-center rounded-full font-semibold w-16 h-16 bg-white text-black dark:bg-gray-900 dark:text-white"
           rel="noopener noreferrer"
         >
           <FontAwesomeIcon icon={faCode} size="2x" fixedWidth />
         </a>
       </figure>
-      <div className={classNames('flex flex-col justify-center border text-center h-48', borderColors)}>
-        <h3 className={classNames('text-3xl font-semibold', textColor)}>{slide.name}</h3>
-        <h4 className={classNames('text-xl', textColor)}>{slide.subtitle}</h4>
+      <div className="flex flex-col justify-center border text-center h-48 border-gray-400 dark:border-gray-900">
+        <h3 className="text-3xl font-semibold text-black dark:text-white">{slide.name}</h3>
+        <h4 className="text-xl text-black dark:text-white">{slide.subtitle}</h4>
         <div className="flex flex-wrap justify-center mt-3">
           {backend}
           {frontend}
@@ -95,7 +72,6 @@ export const Slide = ({ slide }: { slide: ISlide }) => {
 };
 
 const FreeProjects = (): ReactElement => {
-  const context = useContext(ThemeContext);
   const { roomie_description, battleship_description, code_samples } = useTranslations();
 
   const slides: ISlide[] = [
@@ -170,16 +146,9 @@ const FreeProjects = (): ReactElement => {
   const slidesMapped = slides.map((slide) => <Slide key={uuidv4()} slide={slide} />);
 
   return (
-    <section className={classNames({ 'bg-gray-200': context.isLightTheme, 'bg-gray-900': !context.isLightTheme })}>
+    <section className="bg-gray-200 dark:bg-gray-900">
       <div className="container mx-auto 2xl:max-w-7xl py-10">
-        <h2
-          className={classNames('text-5xl font-semibold text-center pb-4', {
-            'text-dark': context.isLightTheme,
-            'text-white': !context.isLightTheme,
-          })}
-        >
-          {code_samples}
-        </h2>
+        <h2 className="text-5xl font-semibold text-center pb-4 text-dark text-white">{code_samples}</h2>
         <Slider {...sliderSettings}>{slidesMapped}</Slider>
       </div>
     </section>
