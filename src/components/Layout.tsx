@@ -8,7 +8,7 @@ const ThemeContext = React.createContext<{ isLightTheme: string; toggleTheme: ()
 });
 
 const ThemeContextProvider = ({ children }: { children: ReactNode }): ReactElement => {
-  const [isLightTheme, setIsLightTheme] = useState<string>('light');
+  const [isLightTheme, setIsLightTheme] = useState<string>(localStorage.getItem('is_light_theme') ?? 'light');
 
   const changeTheme = () => {
     if (
