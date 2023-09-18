@@ -1,7 +1,5 @@
-import React, { ReactElement, ReactNode, useContext } from 'react';
+import React, { ReactElement, ReactNode } from 'react';
 import { PageProps } from 'gatsby';
-import { ThemeContext } from '../Layout';
-import classNames from 'classnames';
 import Code from './Code';
 import { getImage } from 'gatsby-plugin-image';
 import { Components } from '@mdx-js/react/lib';
@@ -11,82 +9,42 @@ interface Props {
   children: ReactNode;
 }
 
-export const MyH1 = (props: Props) => {
-  const context = useContext(ThemeContext);
-  const themeStyles = { 'text-black': context.isLightTheme, 'text-white': !context.isLightTheme };
-
-  return (
-    <h1 className={classNames(themeStyles, 'mb-6 text-5xl font-bold leading-normal')} {...props}>
-      {props.children}
-    </h1>
-  );
-};
-export const MyH2 = (props: Props) => {
-  const context = useContext(ThemeContext);
-  const themeStyles = { 'text-black': context.isLightTheme, 'text-white': !context.isLightTheme };
-
-  return (
-    <h2 className={classNames(themeStyles, 'mt-7 mb-5 text-4xl font-bold')} {...props}>
-      {props.children}
-    </h2>
-  );
-};
-export const MyH3 = (props: Props) => {
-  const context = useContext(ThemeContext);
-  const themeStyles = { 'text-black': context.isLightTheme, 'text-white': !context.isLightTheme };
-
-  return (
-    <h3 className={classNames(themeStyles, 'mt-3 mb-2 text-3xl font-bold')} {...props}>
-      {props.children}
-    </h3>
-  );
-};
-export const MyList = (props) => {
-  const context = useContext(ThemeContext);
-  const themeStyles = { 'text-black': context.isLightTheme, 'text-white': !context.isLightTheme };
-
-  return <ul className={classNames(themeStyles, 'list-disc pl-6 block my-5 text-xl')} {...props} />;
-};
-export const MyListItem = (props) => {
-  const context = useContext(ThemeContext);
-  const themeStyles = { 'text-black': context.isLightTheme, 'text-white': !context.isLightTheme };
-
-  return <li className={classNames(themeStyles, 'py-2 text-xl')} {...props} />;
-};
-export const MyParagraph = (props) => {
-  const context = useContext(ThemeContext);
-  const themeStyles = { 'text-black': context.isLightTheme, 'text-white': !context.isLightTheme };
-
-  return <div className={classNames(themeStyles, 'paragraph my-6 text-xl')} {...props} />;
-};
-export const MyBlockquote = (props) => {
-  const context = useContext(ThemeContext);
-
-  return (
-    <blockquote
-      className={classNames(
-        { 'text-black border-black': context.isLightTheme, 'text-white border-white': !context.isLightTheme },
-        'border-b-4 border-t-4 text-center py-4 my-8',
-      )}
-      {...props}
-    />
-  );
-};
-export const MyInlineCode = (props) => {
-  const context = useContext(ThemeContext);
-  const themeStyles = {
-    'text-blue-600 bg-gray-100': context.isLightTheme,
-    'text-gray-300 bg-blue-800': !context.isLightTheme,
-  };
-
-  return <span className={classNames(themeStyles, 'rounded text-base px-1 font-mono')} {...props} />;
-};
+export const MyH1 = (props: Props) => (
+  <h1 className="mb-6 text-5xl font-bold leading-normal text-black dark:text-white" {...props}>
+    {props.children}
+  </h1>
+);
+export const MyH2 = (props: Props) => (
+  <h2 className="mt-7 mb-5 text-4xl font-bold text-black dark:text-white" {...props}>
+    {props.children}
+  </h2>
+);
+export const MyH3 = (props: Props) => (
+  <h3 className="mt-3 mb-2 text-3xl font-bold text-black dark:text-white" {...props}>
+    {props.children}
+  </h3>
+);
+export const MyList = (props) => (
+  <ul className="list-disc pl-6 block my-5 text-xl text-black dark:text-white" {...props} />
+);
+export const MyListItem = (props) => <li className="py-2 text-xl text-black dark:text-white" {...props} />;
+export const MyParagraph = (props) => <div className="paragraph my-6 text-xl text-black dark:text-white" {...props} />;
+export const MyBlockquote = (props) => (
+  <blockquote
+    className="border-b-4 border-t-4 text-center py-4 my-8 text-black border-black dark:text-white dark:border-white"
+    {...props}
+  />
+);
+export const MyInlineCode = (props) => (
+  <span
+    className={'rounded text-base px-1 font-mono text-blue-600 bg-gray-100 dark:text-gray-300 dark:bg-blue-800'}
+    {...props}
+  />
+);
 export const MyPre = (props) => <Code {...props.children.props} />;
 export const MyImage = (props: Record<string, unknown>) => <img className="shadow-lg rounded py-3" alt="" {...props} />;
 
-export const MyPostLink = (props) => (
-  <a className={classNames('underline underline-offset-4')} {...props} target="_blank" />
-);
+export const MyPostLink = (props) => <a className="underline underline-offset-4" {...props} target="_blank" />;
 
 export const components: Components = {
   h1: MyH1,

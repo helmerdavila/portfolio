@@ -6,7 +6,7 @@ import { vi } from 'vitest';
 it('renders edge cases: dark mode, no language', () => {
   const code = `sample`;
   const { getByTestId } = customRender(<Code className="">{code}</Code>, {
-    themeContextProps: { isLightTheme: false, toggleTheme: vi.fn() },
+    themeContextProps: { isLightTheme: 'dark', toggleTheme: vi.fn() },
   });
 
   const preBlock = getByTestId('code-highlight');

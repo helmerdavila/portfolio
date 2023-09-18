@@ -1,22 +1,34 @@
-import React, { ReactElement, ReactNode, useState } from 'react';
+import React, { ReactElement, ReactNode, useEffect, useState } from 'react';
 import { ILayout } from '../interfaces';
 
 const LocaleContext = React.createContext(null);
-const ThemeContext = React.createContext<{ isLightTheme: boolean; toggleTheme: () => void }>({
-  isLightTheme: true,
+const ThemeContext = React.createContext<{ isLightTheme: string; toggleTheme: () => void }>({
+  isLightTheme: 'light',
   toggleTheme: null,
 });
 
 const ThemeContextProvider = ({ children }: { children: ReactNode }): ReactElement => {
+  const localStorageKey = 'is_light_theme';
   const windowGlobal = typeof window !== 'undefined' && (window as WindowLocalStorage);
-  let themeValueInMemory =
-    (windowGlobal?.localStorage?.getItem('helmer_portfolio_is_light') as unknown as boolean) ?? true;
-  themeValueInMemory = typeof themeValueInMemory === 'string' ? JSON.parse(themeValueInMemory) : themeValueInMemory;
-  const [isLightTheme, setIsLightTheme] = useState<boolean>(themeValueInMemory);
+  const [isLightTheme, setIsLightTheme] = useState<string>(
+    windowGlobal?.localStorage?.getItem(localStorageKey) ?? 'light',
+  );
+
+  const changeTheme = () => {
+    if (windowGlobal?.localStorage?.getItem(localStorageKey) === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  };
+
+  useEffect(() => changeTheme(), []);
 
   const onToggleTheme = () => {
-    localStorage.setItem('helmer_portfolio_is_light', (!isLightTheme).toString());
-    setIsLightTheme(!isLightTheme);
+    const updateLightTheme = isLightTheme === 'light' ? 'dark' : 'light';
+    windowGlobal?.localStorage.setItem(localStorageKey, updateLightTheme);
+    setIsLightTheme(updateLightTheme);
+    changeTheme();
   };
 
   return <ThemeContext.Provider value={{ isLightTheme, toggleTheme: onToggleTheme }}>{children}</ThemeContext.Provider>;

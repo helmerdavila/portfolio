@@ -1,13 +1,11 @@
-import React, { ReactElement, useContext } from 'react';
+import React, { ReactElement } from 'react';
 import Header from '../Layouts/Header';
-import classNames from 'classnames';
 import useTranslations from '../UseTranslations';
-import { ThemeContext } from '../Layout';
 import { TypeAnimation } from 'react-type-animation';
+import classNames from 'classnames';
 import * as PresentationStyles from './Presentation.module.css';
 
 const Presentation = (): ReactElement => {
-  const context = useContext(ThemeContext);
   const {
     hi_my_name_is,
     software_engineer,
@@ -17,13 +15,17 @@ const Presentation = (): ReactElement => {
     web_applications,
     mobile_applications,
   } = useTranslations();
-  const overlayClass = context.isLightTheme ? PresentationStyles.Overlay : PresentationStyles.OverlayNight;
 
   return (
-    <section className={PresentationStyles.FirstSectionBackgroundImage}>
+    <section
+      className={classNames(
+        PresentationStyles.FirstSectionBackgroundImage,
+        'bg-center bg-no-repeat bg-cover w-screen h-screen',
+      )}
+    >
       <Header />
       <div id="who_am_i" className="min-h-screen flex justify-center items-center">
-        <div className={classNames(overlayClass)} />
+        <div className="absolute top-0 left-0 h-screen w-full opacity-40 bg-gray-900 dark:bg-gray-700" />
         <div className="text-center z-10">
           <h3 className="text-3xl font-bold text-white">{hi_my_name_is}</h3>
           <h1 className="text-6xl font-bold text-white">Helmer Dávila</h1>

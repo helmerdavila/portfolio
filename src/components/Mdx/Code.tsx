@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { Highlight, Prism, Language, themes } from 'prism-react-renderer';
 import { ThemeContext } from '../Layout';
-import classNames from 'classnames';
 
 /* istanbul ignore next */
 (typeof global !== 'undefined' ? global : window).Prism = Prism;
@@ -24,14 +23,10 @@ interface Props {
 const Code = ({ children, className }: Props) => {
   const context = useContext(ThemeContext);
   const language = (className?.replace(/language-/, '') || '') as Language;
-  const styleLineNumbers = classNames(
-    context.isLightTheme ? 'text-slate-300' : 'text-slate-400',
-    'select-none pr-3 w-8',
-  );
 
   return (
     <Highlight
-      theme={context.isLightTheme ? themes.github : themes.nightOwl}
+      theme={context.isLightTheme === 'light' ? themes.github : themes.nightOwl}
       code={children.trim()}
       language={language}
     >
@@ -46,7 +41,7 @@ const Code = ({ children, className }: Props) => {
 
             return (
               <div key={index} {...lineProps} className="flex flex-row">
-                <div className={styleLineNumbers}>{index + 1}</div>
+                <div className="select-none pr-3 w-8 text-slate-300 dark:text-slate-400">{index + 1}</div>
                 {line.map((token, key) => (
                   <span key={key} {...getTokenProps({ token, key })} />
                 ))}

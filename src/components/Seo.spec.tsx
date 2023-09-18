@@ -32,7 +32,7 @@ it('renders without description and author, dark mode', () => {
   const title = faker.lorem.words();
   const description = faker.lorem.words();
   const { queryAllByDisplayValue } = customRender(<SEO title={title} />, {
-    themeContextProps: { isLightTheme: false, toggleTheme: vi.fn() },
+    themeContextProps: { isLightTheme: 'dark', toggleTheme: vi.fn() },
   });
 
   for (const element of queryAllByDisplayValue(title)) {

@@ -8,7 +8,7 @@ interface ILocaleContextProps {
 }
 
 interface IThemeContextProps {
-  isLightTheme: boolean;
+  isLightTheme: string;
   toggleTheme: () => void;
 }
 
@@ -24,7 +24,7 @@ export const customRender = (
 ): RenderResult => {
   const defaultContexts = {
     localeContextProps: { locale: 'en' },
-    themeContextProps: { isLightTheme: true, toggleTheme: vi.fn() },
+    themeContextProps: { isLightTheme: 'light', toggleTheme: vi.fn() },
   };
   const { localeContextProps, themeContextProps, ...renderOptions } = optionalParams ?? defaultContexts;
 

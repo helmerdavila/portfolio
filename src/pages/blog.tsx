@@ -1,8 +1,7 @@
-import classNames from 'classnames';
 import { graphql, Link, PageProps } from 'gatsby';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
-import React, { useContext, useState, ChangeEvent, KeyboardEvent, ReactElement } from 'react';
-import { LocaleContext, ThemeContext } from '../components/Layout';
+import React, { ChangeEvent, KeyboardEvent, ReactElement, useContext, useState } from 'react';
+import { LocaleContext } from '../components/Layout';
 import LayoutBlog from '../components/LayoutBlog';
 import SEO from '../components/Seo';
 import { v4 as uuidv4 } from 'uuid';
@@ -13,13 +12,10 @@ import useTranslations from '../components/UseTranslations';
 type BlogPost = Queries.BlogQuery['allMdx']['nodes'][0];
 
 const BlogPostCardTags = ({ tags }: { tags: readonly string[] }) => {
-  const context = useContext(ThemeContext);
-  const textStyles = { 'text-zinc-500': context.isLightTheme, 'text-zinc-400': !context.isLightTheme };
-
   return tags.length ? (
     <div className="flex flex-wrap px-6 py-3">
       {tags.map((tag) => (
-        <span key={uuidv4()} className={classNames(textStyles, 'mr-2 text-lg')}>
+        <span key={uuidv4()} className="mr-2 text-lg text-zinc-500 dark:text-zinc-400">
           #{tag}
         </span>
       ))}
@@ -30,24 +26,19 @@ const BlogPostCardTags = ({ tags }: { tags: readonly string[] }) => {
 };
 
 export const BlogPostCard = ({ post }: { post: BlogPost }) => {
-  const context = useContext(ThemeContext);
-  const textStyles = { 'text-black': context.isLightTheme, 'text-white': !context.isLightTheme };
   const tags = post.frontmatter.tags ?? [];
   const imageRendered = getImage(post.frontmatter.image?.childImageSharp.gatsbyImageData);
 
   return (
     <Link
       to={post.fields.translatedPostUrl}
-      className={classNames(
-        { 'bg-white border-2 shadown-sm': context.isLightTheme, 'bg-gray-800': !context.isLightTheme },
-        'block mt-10 rounded-md first:mt-3',
-      )}
+      className="block mt-10 rounded-md first:mt-3 bg-white border-2 shadow-sm dark:bg-gray-800 dark:border-gray-900"
       key={post.id}
     >
       <GatsbyImage image={imageRendered} alt={post?.frontmatter?.imageAlt ?? ''} />
       <div className="px-6 pt-6">
-        <h2 className={classNames(textStyles, 'text-4xl font-bold')}>{post?.frontmatter?.title}</h2>
-        <h5 className={classNames(textStyles, 'mt-5 text-2xl')}>{post?.frontmatter?.description}</h5>
+        <h2 className="text-4xl font-bold text-black dark:text-white">{post?.frontmatter?.title}</h2>
+        <h5 className="mt-5 text-2xl text-black dark:text-white">{post?.frontmatter?.description}</h5>
       </div>
       <BlogPostCardTags tags={tags} />
     </Link>
@@ -70,7 +61,7 @@ const SearchBar = (props: { searchQuery: string; setSearchQuery: (value: string)
       <input
         type="text"
         placeholder={type_and_press_enter}
-        className="w-full py-5 px-4 text-2xl"
+        className="w-full py-5 px-4 text-2xl bg-white border-2 rounded-md shadow-sm dark:bg-gray-800 dark:border-gray-900 caret-blue-200 dark:text-white"
         onChange={handleInputChange}
         onKeyDown={handleKeyDown}
         value={props.searchQuery}
@@ -80,9 +71,7 @@ const SearchBar = (props: { searchQuery: string; setSearchQuery: (value: string)
 };
 
 const Blog = ({ data }: PageProps<Queries.BlogQuery>): ReactElement => {
-  const context = useContext(ThemeContext);
   const { locale } = useContext(LocaleContext);
-  const themeStyles = { 'text-black': context.isLightTheme, 'text-white': !context.isLightTheme };
   const posts = data?.allMdx?.nodes;
   const localeJson: ILocalJson = localesJson[locale];
   const [searchQuery, setSearchQuery] = useState('');
@@ -117,7 +106,7 @@ const Blog = ({ data }: PageProps<Queries.BlogQuery>): ReactElement => {
       />
       <div className="container max-w-3xl pb-3 mx-auto xl:max-w-6xl">
         <div className="flex flex-wrap items-center justify-between mt-10">
-          <h1 className={classNames('text-6xl font-bold', themeStyles)}>Blog</h1>
+          <h1 className="text-6xl font-bold text-black dark:text-white">Blog</h1>
           <span className="text-6xl">{localeJson.flag}</span>
         </div>
         <SearchBar searchQuery={searchQuery} setSearchQuery={handleSearchQuery} />
