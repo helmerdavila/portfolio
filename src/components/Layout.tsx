@@ -15,10 +15,7 @@ const ThemeContextProvider = ({ children }: { children: ReactNode }): ReactEleme
   );
 
   const changeTheme = () => {
-    if (
-      windowGlobal?.localStorage?.getItem(localStorageKey) === 'dark' ||
-      (!(localStorageKey in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
-    ) {
+    if (windowGlobal?.localStorage?.getItem(localStorageKey) === 'dark') {
       document.documentElement.classList.add('dark');
     } else {
       document.documentElement.classList.remove('dark');
