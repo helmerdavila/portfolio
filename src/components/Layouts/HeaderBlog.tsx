@@ -52,7 +52,7 @@ const HeaderBlog = ({ iconLink }: { iconLink?: string }): ReactElement => {
           </li>
         </ul>
         <button className={classNames('cursor-pointer w-10 h-full', stylesText)} onClick={context.toggleTheme}>
-          {context.isLightTheme ? <FontAwesomeIcon icon={faMoon} /> : <FontAwesomeIcon icon={faSun} />}
+          {context.isLightTheme === 'light' ? <FontAwesomeIcon icon={faMoon} /> : <FontAwesomeIcon icon={faSun} />}
         </button>
       </div>
     </nav>
